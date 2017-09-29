@@ -7,15 +7,12 @@ node_modules
 
 /memes
 /meme-thumb
-/build
 
 memes/
 meme-thumb/
-build/
 
 /memes/
 /meme-thumb/
-/build/
 
 /storage.json
 /memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.json
