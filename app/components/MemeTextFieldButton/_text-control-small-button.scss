@@ -1,0 +1,39 @@
+
+$text-control-btn : #637a91;
+
+.text-control__btn{
+  flex-grow: 1;
+  border-right: 1px solid darken($text-control-btn,10%);
+  height:35px;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  background: #637a91;
+  border-bottom: 4px solid darken($text-control-btn, 10%);
+  color: white;
+  cursor:pointer;
+
+  &.bold{
+    font-weight:bold !important;
+  }
+  &.lite{
+    font-weight: 100 !important;
+  }
+  &.black{
+    color:black;
+  }
+
+  &:first-child{
+    border-radius: 0 0 0 5px;
+  }
+  &:last-child{
+    border-radius: 0 0 5px 0;
+  }
+
+  &:hover{
+    background : darken($text-control-btn, 10%);
+  }
+  &:active{
+    background : darken($text-control-btn, 20%);
+  }
+}

@@ -1,0 +1,74 @@
+$thirdColor : #3EB87F;
+
+
+html{
+  overflow-y: scroll;
+}
+
+body{
+  direction: rtl;
+  font-family: "Open Sans Hebrew" !important;
+  direction: rtl !important;
+  language: 'he';
+  overflow-x:hidden !important;
+  font-size:16px;
+  background : lighten(#d7d7d7, 16%);
+  min-height: 100vh;
+
+
+}
+
+.cover{
+  background-color: rgba(0,0,0,0.7);
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+}
+.loader{
+  display:none;
+  height:120px;
+  width:120px;
+  position: fixed;
+  z-index: 9998 !important;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  &-visible{
+    @extend .loader;
+    display:block;
+
+  }
+}
+
+.hebrew{
+  direction :rtl;
+}
+a:hover, a:active{
+  text-decoration : none !important;
+}
+::selection {
+  background: $mainColor;
+}
+::-moz-selection {
+  background: $mainColor;
+}
+
+
+*:focus{
+  outline: 0 !important;
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
+}
+

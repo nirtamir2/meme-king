@@ -1,0 +1,22 @@
+
+
+.box-meme-section-bar {
+  background: white;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  border-radius: 5px;
+  height: 40px;
+  z-index: 9999;
+  min-width: 200px;
+
+  & > div {
+    border :1px solid $mainColor;
+    display:flex;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    height: 100%
+  }
+}

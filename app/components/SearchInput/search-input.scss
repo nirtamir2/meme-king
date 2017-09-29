@@ -1,0 +1,49 @@
+.search-input-wrapper {
+
+  width: 300px;
+  margin: 30px auto;
+  position:relative;
+
+  & > label {
+    position: absolute;
+    left: 15px;
+    top: 19px;
+    color: $mainColor;
+
+    &.glyphicon-remove {
+
+      cursor:pointer;
+      position: absolute;
+      color: $mainColor;
+      top: 14px;
+      font-size: 26px;
+
+      &:hover{
+        color: darken($mainColor, 10%);
+      }
+      &.active{
+        color: darken($mainColor, 20%);
+
+      }
+    }
+  }
+
+  @include mobile-medium{
+    max-width: 70%;
+  }
+
+  input{
+
+    @extend %input;
+    height: 50px;
+    font-weight: 200;
+    padding:17px;
+    font-size: 25px;
+
+    @include placeholder{
+      color: $mainColor;
+      font-family: "Open Sans Hebrew";
+    }
+
+  }
+}

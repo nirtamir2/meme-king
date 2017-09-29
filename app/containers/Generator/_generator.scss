@@ -1,0 +1,101 @@
+$closeColor : darkgray;
+
+.generator{
+  position:fixed;
+  height:96%;
+  width: 95%;
+  max-width: 1300px;
+  margin-right:auto;
+  margin-left:auto;
+  top:10px;
+  left:0;
+  right:0;
+  background-color: $lightGray;
+  border-radius: 5px;
+  box-shadow: 0px 0px 16px -2px rgba(0,0,0,0.4);
+
+  overflow:scroll;
+  z-index: 12;
+
+  canvas{
+    width: 100%;
+  }
+
+  @include mobile-medium{
+    border-radius: 0;
+    top: 0px;
+    height: 100%;
+    width:100%;
+  }
+
+  &__close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size:4rem;
+    color:$closeColor ;
+    cursor:pointer;
+    @include mobile-medium{
+      position: fixed;
+      top : 0;
+      right : -2px;
+      color:darken($closeColor, 8%);
+
+    }
+
+    &:hover{
+      color: darken($closeColor, 10%)
+    }
+    &:active{
+      color: darken($closeColor, 20%)
+    }
+  }
+
+  &__wrapper{
+    margin : 0 auto;
+    width:80%;
+    padding: 15px;
+    border: 1px solid #8d8d8d;
+    border-radius: 5px;
+    display:flex;
+    direction: ltr;
+    @include mobile-medium{
+      flex-direction: column;
+      width: 95%;
+      border:none;
+      padding: 5px;
+    }
+  }
+
+  &__title{
+    @include  mobile-medium{
+      display:none;
+    }
+  }
+  &__dashboard{
+    .space-between{
+      @include mobile-medium{
+        flex-direction: column;
+      }
+    }
+  }
+
+}
+
+.bottom_details{
+  @include mobile-medium{
+    margin: 0 auto;
+    max-width: 80%;
+  }
+  h4{
+    @include mobile-medium{
+      font-size:16px;
+      line-height:1.3;
+    }
+  }
+  p{
+    @include mobile-medium{
+      font-size:11px;
+    }
+  }
+}

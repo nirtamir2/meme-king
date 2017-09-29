@@ -1,0 +1,37 @@
+@import './utils/_variables.scss';
+
+@import 'vendors/all';
+@import 'layout/all';
+@import 'utils/all';
+@import 'base/all';
+
+
+
+// containers
+@import '../containers/Generator/generator';
+@import '../containers/Header/header';
+@import '../containers/SideMenu/sidebar';
+@import '../containers/Home/home';
+@import '../containers/Searcher/searcher';
+
+
+// components
+@import '../components/MemeTextField/text-input';
+@import '../components/MemeTextFieldButton/text-control-small-button';
+@import '../components/GeneratorDashboardButton/generator-dashboard-button';
+@import '../components/ItemsArea/items_area';
+@import '../components/GeneratorFooter/generator-footer';
+@import '../components/MemeThumb/meme-thumb';
+@import '../components/BtnScrollToTop/back-to-top';
+@import '../components/SearchInput/search-input.scss';
+@import '../components/SideBarItem/side-bar-item.scss';
+@import '../components/Cropper/cropper';
+@import '../components/Button/button';
+@import '../components/Uploader/uploader';
+@import '../components/Loader/loader';
+@import '../components/MemeSectionBar/meme_section_bar';
+@import '../components/EmptyState/empty-state';
+
+
+@import 'components/all';
+

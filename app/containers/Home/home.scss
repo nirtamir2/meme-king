@@ -1,0 +1,52 @@
+.home{
+  background : $main-bg;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+
+  @include mobile-medium{
+    height: auto;
+    padding-bottom:50px;
+    padding-top: 90px;
+    display:block;
+  }
+
+
+  img {
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+
+    @include mobile-medium {
+      max-width: 60px;
+    }
+  }
+
+  &__main-title {
+    color: $mainColor;
+    text-align: center;
+    font-size: 5rem;
+    margin-top: 15px;
+    margin-bottom: 40px;
+    @include mobile-medium {
+      font-size: 26px;
+    }
+  }
+
+  h2 {
+    color: $mainColor;
+    text-align: center;
+    margin-bottom: 50px;
+    @include mobile-medium {
+      padding: 10px 20px;
+      font-size: 20px;
+    }
+
+  }
+
+}
+

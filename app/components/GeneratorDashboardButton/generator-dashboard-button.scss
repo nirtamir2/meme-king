@@ -1,0 +1,84 @@
+$mainGeneratorControllersColor: #40ADCF;
+$green : #5fcf80;
+$bordercolor: darken($mainGeneratorControllersColor, 10%);
+$exampleColor : #ED6F57;
+$button-text-width : 154px;
+
+
+.generator-uploader-wrapper{
+  width: 100%;
+
+  label{
+    margin-bottom: 0;
+  }
+    @include mobile-medium{
+      width: 100%;
+    }
+
+}
+
+.box-generator-button{
+  justify-content: center;
+  align-items:center;
+  height:40px;
+  text-align: center;
+  margin-top:8px;
+  background-color: $mainGeneratorControllersColor;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-bottom: 4px solid $bordercolor;
+  border-radius: 5px;
+  cursor:pointer;
+  display: flex;
+  text-transform: capitalize;
+
+  @include mobile-medium{
+    width: 100% !important;
+    margin-bottom: 0;
+  }
+
+  .flex > &{
+    flex-grow: 2;
+
+    &:first-child{
+      margin-right: 10px;
+    }
+  }
+
+  &.example-toggle{
+    background: $mainColor !important;
+    border-color: darken($mainColor, 5%) !important;
+  }
+
+  &.download{
+    background-color: darken($mainGeneratorControllersColor, 8%);
+    border-color: darken($bordercolor, 8%)
+  }
+
+  &:active{
+    -webkit-box-shadow: inset 17px -14px 120px -55px rgba(0,0,0,0.43);
+    -moz-box-shadow: inset 17px -14px 120px -55px rgba(0,0,0,0.43);
+    box-shadow: inset 17px -14px 120px -55px rgba(0,0,0,0.43);
+  }
+
+  &:hover{
+    color:white;
+    background-color: darken($mainGeneratorControllersColor, 5%);;
+    color:white;
+    cursor:pointer;
+  }
+
+  span:not(.glyphicon){
+    width:$button-text-width;
+    font-weight: bold;
+    &.no_icon{
+      width: auto;
+    }
+  }
+  .glyphicon{
+    margin-right: 20px;
+  }
+
+}
+
+

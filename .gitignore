@@ -1,0 +1,21 @@
+/node_modules
+npm-debug.log
+node_modules
+# IntelliJ
+*.iml
+/.idea
+
+/memes
+/meme-thumb
+/build
+
+memes/
+meme-thumb/
+build/
+
+/memes/
+/meme-thumb/
+/build/
+
+/storage.json
+/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.json
