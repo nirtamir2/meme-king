@@ -1,6 +1,6 @@
 export default {
 
-    apiBaseUrl: '/'
+    apiBaseUrl: 'https://meme-king-generator.herokuapp.com/'
 
 
 
