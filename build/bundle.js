@@ -28649,7 +28649,7 @@ var _production2 = _interopRequireDefault(_production);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var isProduction = "production" === 'development';
+var isProduction = "production" === 'production';
 
 var config = {};
 

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import development from './development';
 import production from './production';
-const isProduction = (ENV === 'development');
+const isProduction = (ENV === 'production');
 
 const config = {
 
