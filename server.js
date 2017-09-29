@@ -71,6 +71,9 @@ app.post('/api/update-meme-rating', function (req, res) {
 });
 
 
+
+
+
 console.log(process.env.GOOGLE_KEY, 'blabla')
 
 app.set( 'port', ( process.env.PORT || 8081 ));
