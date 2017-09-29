@@ -67122,6 +67122,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // actions
 
 
+function getDataUri(url, callback) {
+    var image = new Image();
+
+    image.onload = function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+
+        canvas.getContext('2d').drawImage(this, 0, 0);
+
+        callback(canvas.toDataURL('image/png'));
+    };
+    image.crossOrigin = '';
+    image.src = url + '?123';
+}
+
 var Generator = exports.Generator = function (_Component) {
     _inherits(Generator, _Component);
 
@@ -67174,30 +67190,35 @@ var Generator = exports.Generator = function (_Component) {
             canvas.backgroundColor = _colors2.default.GRAY_LIGHT;
             canvas.setWidth(canvasContainerWidth);
             canvas.clear();
-            fabric.Image.fromURL(urlPath, function (image) {
 
-                _this.setState({ isLoading: false });
+            getDataUri(urlPath, function (dataUri) {
 
-                image = isNormalFormat ? (0, _CanvasImageService.setHeightAndWidth)(image) : (0, _CanvasImageService.setImageSizeDankFormat)(image);
+                fabric.Image.fromURL(dataUri, function (image) {
 
-                canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle);
-                canvas.setWidth(isNormalFormat ? image.width : MOBILE_DANK_CANVAS_SIZE);
-                canvas.backgroundColor = _colors2.default.WHITE;
-                canvas.add(image);
+                    _this.setState({ isLoading: false });
 
-                image.set({
-                    hoverCursor: "default",
-                    lockMovementX: isNormalFormat,
-                    lockMovementY: isNormalFormat,
-                    lockScalingX: isNormalFormat,
-                    lockScalingY: isNormalFormat,
-                    lockUniScaling: isNormalFormat,
-                    hasBorders: !isNormalFormat,
-                    selectable: true
+                    image = isNormalFormat ? (0, _CanvasImageService.setHeightAndWidth)(image) : (0, _CanvasImageService.setImageSizeDankFormat)(image);
+
+                    canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle);
+                    canvas.setWidth(isNormalFormat ? image.width : MOBILE_DANK_CANVAS_SIZE);
+                    canvas.backgroundColor = _colors2.default.WHITE;
+                    canvas.add(image);
+
+                    image.set({
+                        hoverCursor: "default",
+                        lockMovementX: isNormalFormat,
+                        lockMovementY: isNormalFormat,
+                        lockScalingX: isNormalFormat,
+                        lockScalingY: isNormalFormat,
+                        lockUniScaling: isNormalFormat,
+                        hasBorders: !isNormalFormat,
+                        selectable: true
+
+                    });
+
+                    _this.setState({ isCanvasReady: true });
+                    _this.addWaterMark();
                 });
-
-                _this.setState({ isCanvasReady: true });
-                _this.addWaterMark();
             });
         }, _this.addWaterMark = function () {
             var canvas = _this.state.canvas;
