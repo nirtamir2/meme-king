@@ -46,16 +46,16 @@
     "recursive-readdir": "^2.2.1",
     "redux": "^3.7.2",
     "redux-api-middleware": "^2.0.0-beta.3",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-core": "^6.26.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.7",
     "file-loader": "^0.11.2",
     "node-sass": "^4.5.3",
