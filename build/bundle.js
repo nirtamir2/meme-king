@@ -62078,7 +62078,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
 
-    apiBaseUrl: 'https://meme-king-generator.herokuapp.com/'
+    apiBaseUrl: 'https://meme-king-generator.herokuapp.com'
 
 };
 
