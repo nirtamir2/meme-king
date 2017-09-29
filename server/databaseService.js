@@ -3,7 +3,7 @@ const DatesService =  require('./DatesService');
 const constants = require('../app/constants/global');
 
 const admin = require("firebase-admin");
-console.log(typeof JSON.parse(process.env.GOOGLE_KEY) , process.env.GOOGLE_KEY , 'ppppppp')
+console.log(typeof JSON.parse(process.env.GOOGLE_KEY) , JSON.parse(process.env.GOOGLE_KEY) , 'ppppppp')
 const serviceAccount = {
         "type": "service_account",
         "project_id": "memeking-80290",
