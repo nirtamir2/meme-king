@@ -9,9 +9,6 @@ const _ = require('lodash');
 // services
 const DatabaseService = require('./server/databaseService');
 
-
-
-
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -53,14 +50,14 @@ app.get('/', function (req, res) {
 app.get('/api/get-weekly-popular-memes', async function (req, res) {
    const data =  await DatabaseService.getWeeklyPopularMemes();
    const topPopularMemes = _.slice(_.reverse(_.sortBy(data.val(), 'rating')), 0 , 48);
-   let obj = {};
+   const obj = {};
    _.forEach(topPopularMemes, meme => obj[meme.id] = meme);
    res.send(obj);
 });
 
 app.get('/api/search', async function (req, res) {
-    //const data =  await DatabaseService.getSearchMemes(req.query.search);
-    res.send('helllooo')
+    const data =  await DatabaseService.getSearchMemes(req.query.search);
+    res.send(data)
 });
 
 
@@ -70,8 +67,6 @@ app.post('/api/update-meme-rating', function (req, res) {
     res.sendStatus(200)
 });
 
-
-console.log(process.env.GOOGLE_KEY, 'blabla')
 
 app.set( 'port', ( process.env.PORT || 8081 ));
 

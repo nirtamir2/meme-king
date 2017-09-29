@@ -3,11 +3,11 @@ const DatesService =  require('./DatesService');
 const constants = require('../app/constants/global');
 
 const admin = require("firebase-admin");
-console.log(typeof JSON.parse(process.env.GOOGLE_KEY) , JSON.parse(process.env.GOOGLE_KEY) , 'ppppppp')
+
 const serviceAccount = {
         "type": "service_account",
         "project_id": "memeking-80290",
-        "private_key_id": "fcd47e07c4c4d13b92e9aeed492ea0a58555e89c",
+        "private_key_id": JSON.parse(process.env.GOOGLE_KEY_ID),
         "private_key": JSON.parse(process.env.GOOGLE_KEY),
         "client_email": "firebase-adminsdk-tvh87@memeking-80290.iam.gserviceaccount.com",
         "client_id": "105866474084579641723",
