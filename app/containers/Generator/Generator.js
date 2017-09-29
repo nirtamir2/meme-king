@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux'
 import GeneratorDashboard from 'components/GeneratorDashboard/GeneratorDashboard'
 
 // helpers
-import { setHeightAndWidth, setImageSizeDankFormat } from 'services/CanvasImageService'
+import {setHeightAndWidth, setImageSizeDankFormat} from 'services/CanvasImageService'
 import helpers from 'helpers/helpers'
 
 // constants
@@ -15,7 +15,23 @@ import colors from 'constants/colors'
 import globalConstants from 'constants/global'
 
 // actions
-import { updateMemeRating } from 'actions/meme-actions/meme-actions'
+import {updateMemeRating} from 'actions/meme-actions/meme-actions'
+function getDataUri(url, callback) {
+    const image = new Image()
+
+    image.onload = function () {
+        const canvas = document.createElement('canvas')
+        canvas.width = this.naturalWidth // or 'width' if you want a special/scaled size
+        canvas.height = this.naturalHeight // or 'height' if you want a special/scaled size
+
+        canvas.getContext('2d').drawImage(this, 0, 0)
+
+        callback(canvas.toDataURL('image/png'))
+    }
+    image.crossOrigin = ''
+    image.src = url + '?123'
+}
+
 
 export class Generator extends Component {
 
@@ -38,7 +54,7 @@ export class Generator extends Component {
         const canvas = new fabric.Canvas('c', {allowTouchScrolling: true})
 
         this.setState({canvas}, () => {
-            this.createBoard(this.props.format);
+            this.createBoard(this.props.format)
         })
     }
 
@@ -46,7 +62,7 @@ export class Generator extends Component {
 
         if (this.props.format !== nextProps.format) {
             this.setState({isCanvasReady: false}, () => {
-                this.createBoard(nextProps.format);
+                this.createBoard(nextProps.format)
             })
         }
     }
@@ -82,40 +98,47 @@ export class Generator extends Component {
 
         const MOBILE_DANK_CANVAS_SIZE = helpers.isMobile() ? canvasContainerWidth : 400
 
-        canvas.backgroundColor = colors.GRAY_LIGHT;
-        canvas.setWidth(canvasContainerWidth);
-        canvas.clear();
-        fabric.Image.fromURL(urlPath, image => {
+        canvas.backgroundColor = colors.GRAY_LIGHT
+        canvas.setWidth(canvasContainerWidth)
+        canvas.clear()
 
-            this.setState({isLoading: false});
 
-            image = isNormalFormat ? setHeightAndWidth(image) : setImageSizeDankFormat(image);
+        getDataUri(urlPath,  (dataUri) => {
 
-            canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle);
-            canvas.setWidth(isNormalFormat ? image.width : MOBILE_DANK_CANVAS_SIZE);
-            canvas.backgroundColor = colors.WHITE;
-            canvas.add(image)
+            fabric.Image.fromURL(dataUri, image => {
 
-            image.set({
-                hoverCursor: "default",
-                lockMovementX: isNormalFormat,
-                lockMovementY: isNormalFormat,
-                lockScalingX: isNormalFormat,
-                lockScalingY: isNormalFormat,
-                lockUniScaling: isNormalFormat,
-                hasBorders: !isNormalFormat,
-                selectable: true
+                this.setState({isLoading: false})
+
+                image = isNormalFormat ? setHeightAndWidth(image) : setImageSizeDankFormat(image)
+
+                canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle)
+                canvas.setWidth(isNormalFormat ? image.width : MOBILE_DANK_CANVAS_SIZE)
+                canvas.backgroundColor = colors.WHITE
+                canvas.add(image)
+
+                image.set({
+                    hoverCursor: "default",
+                    lockMovementX: isNormalFormat,
+                    lockMovementY: isNormalFormat,
+                    lockScalingX: isNormalFormat,
+                    lockScalingY: isNormalFormat,
+                    lockUniScaling: isNormalFormat,
+                    hasBorders: !isNormalFormat,
+                    selectable: true,
+
+                })
+
+                this.setState({isCanvasReady: true})
+                this.addWaterMark()
             })
-
-            this.setState({isCanvasReady: true})
-            this.addWaterMark()
         })
+
     }
 
     addWaterMark = () => {
 
-        const { canvas } = this.state;
-        const waterMarkType = helpers.isMobile() ? 'watermark-mobile' : 'watermark-desktop';
+        const {canvas} = this.state
+        const waterMarkType = helpers.isMobile() ? 'watermark-mobile' : 'watermark-desktop'
 
         fabric.Image.fromURL(`assets/images/${waterMarkType}.jpg`, watermark => {
 
@@ -135,13 +158,13 @@ export class Generator extends Component {
                 opacity: 0.5
             }
 
-            const currentNeededPosition = (helpers.isMobile() ? mobilePosition : desktopPosition);
+            const currentNeededPosition = (helpers.isMobile() ? mobilePosition : desktopPosition)
 
             watermark.set({
-                lockMovementX : true,
-                lockMovementY : true,
+                lockMovementX: true,
+                lockMovementY: true,
                 ...currentNeededPosition
-            });
+            })
 
             canvas.bringToFront(watermark)
             canvas.renderAll()
@@ -157,8 +180,8 @@ export class Generator extends Component {
     }
 
     render = () => {
-        const { isLoading, isCanvasReady, canvas } = this.state
-        const { meme, format, history, location, type } = this.props
+        const {isLoading, isCanvasReady, canvas} = this.state
+        const {meme, format, history, location, type} = this.props
 
         return (
 
@@ -218,11 +241,11 @@ function mapStateToProps(state, ownProps) {
     const isFromUpload = _.get(location, 'state.urlPath')
     const currentMemeObj = isFromUpload ?
         {
-          urlPath: location.state.urlPath,
-          id: helpers.uniqueId()
+            urlPath: location.state.urlPath,
+            id: helpers.uniqueId()
         }
-                                        :
-        state.category.memes[params.id];
+        :
+        state.category.memes[params.id]
 
     return {
         category: params.category,
