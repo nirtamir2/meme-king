@@ -60976,7 +60976,7 @@ var App = function (_Component) {
                 storageBucket: "gs://memeking-80290.appspot.com", //"memeking-80290.appspot.com",
                 messagingSenderId: "243226751545"
             };
-
+            console.log( true ? "production" : 'sdfdsfds');
             firebase.initializeApp(config);
         }
     }, {
@@ -62078,7 +62078,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
 
-    apiBaseUrl: '/'
+    apiBaseUrl: 'https://meme-king-generator.herokuapp.com/'
 
 };
 

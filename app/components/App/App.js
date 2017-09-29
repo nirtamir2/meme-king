@@ -23,7 +23,7 @@ export default class App extends Component {
             storageBucket: "gs://memeking-80290.appspot.com", //"memeking-80290.appspot.com",
             messagingSenderId: "243226751545"
         };
-
+        console.log(ENV ? ENV : 'sdfdsfds')
         firebase.initializeApp(config);
     };
 
