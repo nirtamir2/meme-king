@@ -1,4 +1,4 @@
-export default {
+modeul.exports = {
    database: {
        memesTable : 'memesIdsTable',
        weeklyPopularTable : 'weeklyPopularTable'
