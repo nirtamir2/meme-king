@@ -76,4 +76,4 @@ class DatabaseService {
 }
 
 
-export default new DatabaseService();
+module.exports =  new DatabaseService();
