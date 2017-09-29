@@ -26,25 +26,25 @@ export default class TextInputsContainer extends Component {
     };
 
     download = (event)=> {
-        // const { canvas } = this.props;
-        //
-        // canvas.deactivateAll().renderAll();
-        // const clickedElement = event.target.tagName === 'SPAN' ? event.target.parentNode : event.target;
-        //
-        // //saveing the canvas and resizing it before downloading depends on screen resolution.
-        // const zoom = helpers.isMobile() ? 2.5 : 1.3;
-        //
-        // canvas.setZoom(zoom);
-        // // need to enlarge canvas otherwise the svg will be clipped
-        // canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
-        //
-        // clickedElement.href = canvas.toDataURL();
-        // clickedElement.download = 'MemeKing';
-        //
-        // //!* need to set back canvas dimensions *
-        // canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
-        // canvas.setZoom(1);
-        //
+        const { canvas } = this.props;
+
+        canvas.deactivateAll().renderAll();
+        const clickedElement = event.target.tagName === 'SPAN' ? event.target.parentNode : event.target;
+
+        //saveing the canvas and resizing it before downloading depends on screen resolution.
+        const zoom = helpers.isMobile() ? 2.5 : 1.3;
+
+        canvas.setZoom(zoom);
+        // need to enlarge canvas otherwise the svg will be clipped
+        canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
+
+        clickedElement.href = canvas.toDataURL();
+        clickedElement.download = 'MemeKing';
+
+        //!* need to set back canvas dimensions *
+        canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
+        canvas.setZoom(1);
+
        // this.handleGoogleAnalytics();
         this.updateMemeRating();
         this.saveMemeNameToLocalStorage();

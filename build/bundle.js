@@ -67471,25 +67471,26 @@ var TextInputsContainer = function (_Component) {
         }, _this.toggleItemsArea = function () {
             _this.setState({ isItemsAreaOpen: !_this.state.isItemsAreaOpen });
         }, _this.download = function (event) {
-            // const { canvas } = this.props;
-            //
-            // canvas.deactivateAll().renderAll();
-            // const clickedElement = event.target.tagName === 'SPAN' ? event.target.parentNode : event.target;
-            //
-            // //saveing the canvas and resizing it before downloading depends on screen resolution.
-            // const zoom = helpers.isMobile() ? 2.5 : 1.3;
-            //
-            // canvas.setZoom(zoom);
-            // // need to enlarge canvas otherwise the svg will be clipped
-            // canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
-            //
-            // clickedElement.href = canvas.toDataURL();
-            // clickedElement.download = 'MemeKing';
-            //
-            // //!* need to set back canvas dimensions *
-            // canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
-            // canvas.setZoom(1);
-            //
+            var canvas = _this.props.canvas;
+
+
+            canvas.deactivateAll().renderAll();
+            var clickedElement = event.target.tagName === 'SPAN' ? event.target.parentNode : event.target;
+
+            //saveing the canvas and resizing it before downloading depends on screen resolution.
+            var zoom = _helpers2.default.isMobile() ? 2.5 : 1.3;
+
+            canvas.setZoom(zoom);
+            // need to enlarge canvas otherwise the svg will be clipped
+            canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
+
+            clickedElement.href = canvas.toDataURL();
+            clickedElement.download = 'MemeKing';
+
+            //!* need to set back canvas dimensions *
+            canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
+            canvas.setZoom(1);
+
             // this.handleGoogleAnalytics();
             _this.updateMemeRating();
             _this.saveMemeNameToLocalStorage();
