@@ -6,10 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "refactor": "babel-node refactor.js --presets es2015,stage-2",
-    "start": "node ./lib/server.js",
+    "start": "node server.js",
     "start-dev": "webpack-dev-server ",
-    "build-server": "babel lib -d dist --presets es2015,stage-2",
-    "serve": "node dist/server.js",
     "build": "webpack"
   },
   "babel": {
