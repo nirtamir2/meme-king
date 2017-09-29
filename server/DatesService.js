@@ -11,7 +11,7 @@ const DateController = (()=> {
     const getCurrentDate = ()=> {
 
 
-        
+
         return getDateAsString();
     };
 
