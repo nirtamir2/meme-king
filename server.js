@@ -3,12 +3,14 @@ const app = express();
 const fs = require("fs");
 const path = require('path');
 const bodyParser = require('body-parser');
-
+const appArgs = require('minimist')(process.argv.slice(2));
 const _ = require('lodash');
+
+const NODE_ENVIRONMENT = appArgs.env;
 
 // services
 const DatabaseService = require('./server/databaseService');
-
+DatabaseService.init(NODE_ENVIRONMENT)
 app.use(bodyParser.urlencoded({
     extended: true
 }));
