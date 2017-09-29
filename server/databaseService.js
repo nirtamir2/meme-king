@@ -1,6 +1,6 @@
-import _ from 'lodash';
-import DatesService from './DatesService';
-import constants from '../app/constants/global';
+const _ = require('lodash');
+const DatesService =  require('./DatesService');
+const constants = require('../app/constants/global');
 
 const admin = require("firebase-admin");
 const serviceAccount = require("../memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js");
