@@ -59,8 +59,8 @@ app.get('/api/get-weekly-popular-memes', async function (req, res) {
 });
 
 app.get('/api/search', async function (req, res) {
-    const data =  await DatabaseService.getSearchMemes(req.query.search);
-    res.send(data)
+    //const data =  await DatabaseService.getSearchMemes(req.query.search);
+    res.send('helllooo')
 });
 
 

@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "refactor": "babel-node refactor.js --presets es2015,stage-2",
     "start": "node server.js",
-    "start-dev": "webpack-dev-server ",
-    "build": "webpack"
+    "start-dev": "webpack-dev-server --env.env=development",
+    "build": "webpack --env.env=production"
   },
   "babel": {
     "presets": [
