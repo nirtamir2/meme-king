@@ -5,8 +5,8 @@
   "main": "refactor.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node refactor.js --presets es2015,stage-2",
-    "server": "babel-node server.js --presets es2015,stage-2",
+    "refactor": "babel-node refactor.js --presets es2015,stage-2",
+    "start": "babel-node server.js --presets es2015,stage-2",
     "start-dev": "webpack-dev-server ",
     "build": "webpack"
   },
@@ -43,7 +43,6 @@
     "recursive-readdir": "^2.2.1",
     "redux": "^3.7.2",
     "redux-api-middleware": "^2.0.0-beta.3",
-    "redux-firebase-middleware": "^1.0.0",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
