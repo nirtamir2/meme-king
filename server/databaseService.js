@@ -8,11 +8,11 @@ const dbConstants = constants.database;
 
 class DatabaseService {
 
-    init(env) {
+    init(isProduction) {
 
         let fireBaseConfig = {};
 
-        if (env === 'development') {
+        if (!isProduction) {
             fireBaseConfig = require('../memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js');
 
         } else {

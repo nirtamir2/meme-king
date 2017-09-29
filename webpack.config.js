@@ -47,13 +47,13 @@ module.exports =  function({ env }) {
         plugins: [
             new webpack.DefinePlugin({
                 'ENV': JSON.stringify(env),
-                'API_URL': JSON.stringify('http://10.10.10.10:8080/bands')
             })
         ],
         devServer: {
             port: 3000, // most common port
             contentBase: './build',
             inline: true,
+            historyApiFallback: true
 
 
         }

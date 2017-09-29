@@ -139,12 +139,6 @@ export default class TextInputsContainer extends Component {
                         icon="glyphicon glyphicon-retweet"
                 />
 
-                <Button label={CLEAR_ALL}
-                        icon="glyphicon glyphicon-stop"
-                        onClick={this.clearCanvas}
-                />
-
-
                 <Button label={DOWNLOAD}
                         icon="glyphicon glyphicon-download-alt"
                         className={DOWNLOAD}
