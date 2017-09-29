@@ -1,4 +1,4 @@
-modeul.exports = {
+module.exports = {
    database: {
        memesTable : 'memesIdsTable',
        weeklyPopularTable : 'weeklyPopularTable'
