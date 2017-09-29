@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const _ = require('lodash');
 
 // services
-const DatabaseService = {};//require('../server/databaseService');
+const DatabaseService = require('../server/databaseService');
 
 
 
@@ -69,6 +69,9 @@ app.post('/api/update-meme-rating', function (req, res) {
     DatabaseService.updatePopularMemeRating(req.body);
     res.sendStatus(200)
 });
+
+
+console.log(process.env.GOOGLE_KEY, 'blabla')
 
 app.set( 'port', ( process.env.PORT || 8081 ));
 
