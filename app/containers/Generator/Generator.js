@@ -16,7 +16,7 @@ import globalConstants from 'constants/global'
 
 // actions
 import { updateMemeRating } from 'actions/meme-actions/meme-actions'
-import { fetchMemeObject } from 'actions/data-actions/data-actions';
+import { fetchSingleMeme } from 'actions/data-actions/data-actions';
 
 function getDataUri(url, isFromUpload, callback) {
 
@@ -53,7 +53,7 @@ class Generator extends Component {
         document.querySelector(".cover").style.display = 'block';
 
         if (this.props.shouldFetchMemeObject) {
-            this.props.fetchMemeObject(this.props.category, this.props.memeId);
+            this.props.fetchSingleMeme(this.props.category, this.props.memeId);
         }
     }
 
@@ -72,7 +72,7 @@ class Generator extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (this.props.format !== nextProps.format) {
+        if ((this.props.format !== nextProps.format) || (this.props.meme !== nextProps.meme)) {
             this.setState({ isCanvasReady: false }, () => {
                 this.createBoard(nextProps.format)
             })
@@ -259,7 +259,9 @@ function mapStateToProps(state, ownProps) {
             id: helpers.uniqueId()
         }
         :
-        state.category.memes[params.id]
+        state.category.memes[params.id];
+
+    console.log('---',state.category)
 
     return {
         category: params.category,
@@ -277,8 +279,8 @@ function mapDispatchToProps(dispatch) {
 
     return {
         updateMemeRating: (meme) => dispatch(updateMemeRating(meme)),
-        fetchMemeObject : (category, id) => dispatch(fetchMemeObject(category, id))
+        fetchSingleMeme : (category, id) => dispatch(fetchSingleMeme(category, id))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, fetchMemeObject)(Generator)
+export default connect(mapStateToProps, mapDispatchToProps)(Generator)

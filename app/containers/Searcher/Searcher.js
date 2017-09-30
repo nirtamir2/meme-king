@@ -14,6 +14,9 @@ import SearchInput from 'components/SearchInput/SearchInput';
 // constants
 import globalConstants from 'constants/global';
 
+// helpers
+import helpers from 'helpers/helpers';
+
 class Searcher extends Component {
 
     state = {
@@ -57,7 +60,7 @@ class Searcher extends Component {
                 )}
                 <div className="results-wrapper">
                     { _.map(searchResults, (meme) =>
-                        <MemeThumb width={12.5}
+                        <MemeThumb width={helpers.isMobile() ? 33 : 12.5}
                                    key={meme.id}
                                    {...meme}
                                    urlLinkDisabled

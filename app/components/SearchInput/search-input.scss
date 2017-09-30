@@ -30,13 +30,7 @@
     }
   }
 
-  @include mobile-medium{
-    max-width: 70%;
-  }
-
   input{
-
-
 
     @extend %input;
     height: 50px;

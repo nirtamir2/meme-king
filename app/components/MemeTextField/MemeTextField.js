@@ -34,12 +34,12 @@ export default class MemeTextField extends Component {
         const strokeStyle = {
             ...constants.strokeStyle,
             ...sharedStyles,
-            strokeWidth: (parseInt(constants.strokeStyle.fontSize) / 6)
+            strokeWidth: (parseInt(initialFontSize) / 6),
         };
 
         const fillStyle = {
             ...constants.fillStyle,
-            ...sharedStyles
+            ...sharedStyles,
         };
 
         this.state = {
@@ -81,11 +81,13 @@ export default class MemeTextField extends Component {
             this.bindTextBoxEvents()
             this.setStrokeLayerPos(fillTextBox, strokeTextBox)
         }
+
         strokeTextBox.setText(value)
         strokeTextBox.bringForward()
         fillTextBox.setText(value)
-        fillTextBox.bringToFront()
-        canvas.renderAll()
+        fillTextBox.bringToFront();
+        this.setStrokeLayerPos(fillTextBox, strokeTextBox)
+        canvas.renderAll();
     }
 
 
@@ -151,6 +153,7 @@ export default class MemeTextField extends Component {
     matchStateToStyle = () => {
         this.state.fillTextBox.set({...this.state.fillStyle});
         this.state.strokeTextBox.set({...this.state.strokeStyle});
+        this.setStrokeLayerPos(this.state.fillTextBox, this.state.strokeTextBox)
         this.props.canvas.renderAll();
     }
 
@@ -159,7 +162,7 @@ export default class MemeTextField extends Component {
 
         switch(action) {
             case 'remove' : {
-                this.props.remove(this);
+                this.props.remove(this.props.id);
                 break;
             }
 

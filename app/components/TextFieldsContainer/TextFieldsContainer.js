@@ -31,8 +31,8 @@ export default class TextFieldsContainer extends Component {
 
     resetTextInputs = (canvas) => {
         const initialTextInputs = [
-            <MemeTextField format={this.props.format} id={_.uniqueId()} remove={this.removeTextInput} canvas={canvas} position="top" />,
-            <MemeTextField format={this.props.format} id={_.uniqueId()} remove={this.removeTextInput} canvas={canvas} position="bottom" /> ,
+            <MemeTextField format={this.props.format} key={_.uniqueId()} id={_.uniqueId()} remove={this.removeTextInput} canvas={canvas} position="top" />,
+            <MemeTextField format={this.props.format} key={_.uniqueId()} id={_.uniqueId()} remove={this.removeTextInput} canvas={canvas} position="bottom" /> ,
         ];
 
         this.setState({
@@ -42,13 +42,13 @@ export default class TextFieldsContainer extends Component {
 
      addTextInput = () => {
         this.setState({
-            textInputs: [...this.state.textInputs, <MemeTextField format={this.props.format} id={_.uniqueId()} remove={this.removeTextInput} canvas={this.props.canvas} position="middle" />]
+            textInputs: [...this.state.textInputs, <MemeTextField key={_.uniqueId()} format={this.props.format} id={_.uniqueId()} remove={this.removeTextInput} canvas={this.props.canvas} position="middle" />]
         })
     }
 
-    removeTextInput = (textInputToRemove) => {
+    removeTextInput = (id) => {
         this.setState({
-            textInputs: _.filter([...this.state.textInputs], textInput => textInput.props.id !== textInputToRemove.props.id)
+            textInputs: _.filter([...this.state.textInputs], textInput => textInput.props.id !== id)
         })
     }
 

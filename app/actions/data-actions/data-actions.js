@@ -68,14 +68,15 @@ export function fetchNewMemes() {
     }
 }
 
-export function fetchMemeObject() {
+export function fetchSingleMeme(category, memeId) {
+
     return (dispatch) => {
 
-        dispatch({type : dataActionConstants.FETCH_CATEGORY_REQUEST, payload: {name : category}});
+        dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_REQUEST, payload: {name : category}});
 
-        firebase.database().ref(`/${constants.database.memesTable}/${category}`).once('value')
-            .then(snapshot => dispatch({type : dataActionConstants.FETCH_CATEGORY_SUCCESS, payload : { memes: snapshot.val() , name: category }}))
-            .catch(error => dispatch({type : dataActionConstants.FETCH_CATEGORY_FAILED, error : error}));
+        firebase.database().ref(`/${constants.database.memesTable}/${category}/${memeId}`).once('value')
+            .then(snapshot => dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_SUCCESS, payload : snapshot.val()}))
+            .catch(error => dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_FAILED, error : error}));
 
     };
 }

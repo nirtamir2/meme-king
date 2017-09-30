@@ -106,6 +106,31 @@ export default function(state=initialState, action){
 
 
 
+        case actionsConstants.FETCH_SINGLE_MEME_REQUEST:
+            return {
+                ...state,
+                isFetching: true,
+            }
+            break;
+
+        case actionsConstants.FETCH_SINGLE_MEME_SUCCESS:
+
+            const newCateogry = {...state.category};
+            newCateogry[payload.id] = payload;
+
+            return {
+                ...state,
+                category:newCateogry,
+                isFetching: false,
+                name: payload.category
+            }
+            break;
+
+        case actionsConstants.FETCH_SINGLE_MEME_FAILED:
+            return state;
+            break;
+
+
 
 
         default:
