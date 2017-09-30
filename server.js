@@ -30,10 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-if(isProduction) {
-    app.use(express.static(__dirname + '/build'));
-}
-
+app.use(express.static(__dirname + '/build'));
 
 
 // HEADERS
@@ -41,7 +38,7 @@ if(isProduction) {
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', ['http://localhost:3000' , 'https://meme-king-generator.herokuapp.com']);
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000' );
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -60,11 +57,15 @@ app.use(function (req, res, next) {
 
 // GET
 
-app.get('/*', function (req, res) {
-    if (!isProduction) {
-       res.redirect('http://localhost:3000')
+app.use(function (req, res, next) {
+
+    const isApiRequest = req.url.match(/\/api\/*/g)
+
+    if (!isApiRequest) {
+        res.sendFile(path.join(__dirname + '/build/index.html'  ));
+    } else {
+        next();
     }
-  res.sendFile(path.join(__dirname + '/build/index.html'  ));
 
 });
 

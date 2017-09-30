@@ -8,8 +8,9 @@
     "refactor": "babel-node refactor.js --presets es2015,stage-2",
     "start": "node server.js",
     "start-dev-node": "nodemon server.js --env development",
-    "start-dev": "webpack-dev-server --env.env=development",
-    "build": "webpack --env.env=production"
+    "start-dev-client": "webpack-dev-server --env.env=development",
+    "build-dev": "webpack --env.env=development",
+    "build-prod": "webpack --env.env=production"
   },
   "babel": {
     "presets": [

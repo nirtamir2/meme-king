@@ -21919,10 +21919,7 @@ module.exports = function (exec) {
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
+module.exports = {
     database: {
         memesTable: 'memesIdsTable',
         weeklyPopularTable: 'weeklyPopularTable'
@@ -67624,10 +67621,6 @@ var TextInputsContainer = function (_Component) {
                 _react2.default.createElement(_GeneratorDashboardButton2.default, { label: FORMAT_BUTTON_TEXT,
                     onClick: this.changeFormat,
                     icon: 'glyphicon glyphicon-retweet'
-                }),
-                _react2.default.createElement(_GeneratorDashboardButton2.default, { label: CLEAR_ALL,
-                    icon: 'glyphicon glyphicon-stop',
-                    onClick: this.clearCanvas
                 }),
                 _react2.default.createElement(_GeneratorDashboardButton2.default, { label: DOWNLOAD,
                     icon: 'glyphicon glyphicon-download-alt',
