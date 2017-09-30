@@ -33,6 +33,8 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname + '/build'));
 
 
+
+
 // HEADERS
 
 app.use(function (req, res, next) {
@@ -53,6 +55,8 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+
+
 
 
 // GET
@@ -81,6 +85,8 @@ app.get('/api/search', async function (req, res) {
     const data =  await DatabaseService.getSearchMemes(req.query.search);
     res.send(data)
 });
+
+
 
 
 // POST

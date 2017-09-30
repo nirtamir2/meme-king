@@ -17,18 +17,19 @@ const gcs = storage({
     keyFilename: './storage.json'
 });
 
-const myBucket = gcs.bucket('memeking')
+const myBucket = gcs.bucket('meme-king-storage')
 let toggle = true;
 
 const type = appArgs.type;
 const isThumb = type ==='meme-thumbs';
+
 let size = 0;
  function saveFileToStorage (filePath, destinationFolder, memeObj) {
     if(true) {
 //        console.log(filePath, destinationFolder)
 
         //console.log(destinationFolder)
-        myBucket.upload(filePath, { public: true, destination: `${type}/${destinationFolder}/${filePath.replace(`./${type}/${destinationFolder}/`, '')}` })
+        myBucket.upload(filePath, { public: true, destination: `${type}/${destinationFolder}/${filePath.replace(`./${type}/${destinationFolder}/`, '')}`, validation: true })
             .then( data => {
                 // file saved
                 fs.exists(filePath, function( exists ) {
@@ -39,7 +40,8 @@ let size = 0;
                 let file = data[0]
                 file.getSignedUrl({
                     action: 'read',
-                    expires: '03-17-2025'
+                    expires: '03-17-2025',
+
                 }, function(err, url) {
                     if (err) {
                         console.error(err);
@@ -140,7 +142,7 @@ function makeId() {
         if(isThumb) {
             delete memeObj.name;
         }
-        database.ref( `memesIdsTable/${category}/${id}`).set(memeObj)
+        database.ref( `try/${category}/${id}`).set(memeObj)
     }
 
 

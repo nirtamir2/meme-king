@@ -15,9 +15,16 @@ import colors from 'constants/colors'
 import globalConstants from 'constants/global'
 
 // actions
-import {updateMemeRating} from 'actions/meme-actions/meme-actions'
-function getDataUri(url, callback) {
-    const image = new Image()
+import { updateMemeRating } from 'actions/meme-actions/meme-actions'
+
+
+function getDataUri(url, isFromUpload, callback) {
+
+    if (isFromUpload) {
+        callback(url)
+    }
+
+    const image = new Image();
 
     image.onload = function () {
         const canvas = document.createElement('canvas')
@@ -28,12 +35,13 @@ function getDataUri(url, callback) {
 
         callback(canvas.toDataURL('image/png'))
     }
+
     image.crossOrigin = ''
     image.src = url + '?123'
 }
 
 
-export class Generator extends Component {
+class Generator extends Component {
 
     state = {
         isLoading: true,
@@ -51,9 +59,9 @@ export class Generator extends Component {
     }
 
     componentDidMount() {
-        const canvas = new fabric.Canvas('c', {allowTouchScrolling: true})
+        const canvas = new fabric.Canvas('c', { allowTouchScrolling: true })
 
-        this.setState({canvas}, () => {
+        this.setState({ canvas }, () => {
             this.createBoard(this.props.format)
         })
     }
@@ -61,7 +69,7 @@ export class Generator extends Component {
     componentWillReceiveProps(nextProps) {
 
         if (this.props.format !== nextProps.format) {
-            this.setState({isCanvasReady: false}, () => {
+            this.setState({ isCanvasReady: false }, () => {
                 this.createBoard(nextProps.format)
             })
         }
@@ -78,8 +86,8 @@ export class Generator extends Component {
     }
 
     createCleanSlate = () => {
-        this.setState({isLoading: false, isCanvasReady: true})
-        const {canvas} = this.state
+        this.setState({ isLoading: false, isCanvasReady: true })
+        const { canvas } = this.state
         const DISTANCE = helpers.isMobile() ? 30 : 140
         const width = document.querySelector('.generator__canvas-wrapper').offsetWidth - DISTANCE
         const height = helpers.isMobile() ? 260 : 430
@@ -89,10 +97,10 @@ export class Generator extends Component {
     }
 
     addImage = (format) => {
-        const {urlPath} = this.props.meme || {}
-        const {canvas} = this.state
+        const { urlPath } = this.props.meme || {}
+        const { canvas } = this.state
         const isNormalFormat = (format === globalConstants.format.normal)
-
+        const isFromUpload = (this.props.type === 'upload')
         const spaceToADDForDankFormatStyle = helpers.isMobile() ? 100 : 150
         const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 30
 
@@ -103,17 +111,17 @@ export class Generator extends Component {
         canvas.clear()
 
 
-        getDataUri(urlPath,  (dataUri) => {
+        getDataUri(urlPath, isFromUpload, (dataUri) => {
 
             fabric.Image.fromURL(dataUri, image => {
 
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false });
 
-                image = isNormalFormat ? setHeightAndWidth(image) : setImageSizeDankFormat(image)
+                image = isNormalFormat ? setHeightAndWidth(image) : setImageSizeDankFormat(image);
 
-                canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle)
-                canvas.setWidth(isNormalFormat ? image.width : MOBILE_DANK_CANVAS_SIZE)
-                canvas.backgroundColor = colors.WHITE
+                canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle);
+                canvas.setWidth(isNormalFormat ? image.width : MOBILE_DANK_CANVAS_SIZE);
+                canvas.backgroundColor = colors.WHITE;
                 canvas.add(image)
 
                 image.set({
@@ -128,8 +136,8 @@ export class Generator extends Component {
 
                 })
 
-                this.setState({isCanvasReady: true})
-                this.addWaterMark()
+                this.setState({ isCanvasReady: true });
+                this.addWaterMark();
             })
         })
 
@@ -137,7 +145,7 @@ export class Generator extends Component {
 
     addWaterMark = () => {
 
-        const {canvas} = this.state
+        const { canvas } = this.state
         const waterMarkType = helpers.isMobile() ? 'watermark-mobile' : 'watermark-desktop'
 
         fabric.Image.fromURL(`assets/images/${waterMarkType}.jpg`, watermark => {
@@ -180,8 +188,8 @@ export class Generator extends Component {
     }
 
     render = () => {
-        const {isLoading, isCanvasReady, canvas} = this.state
-        const {meme, format, history, location, type} = this.props
+        const { isLoading, isCanvasReady, canvas } = this.state
+        const { meme, format, history, location, type } = this.props
 
         return (
 
@@ -236,7 +244,7 @@ export class Generator extends Component {
 
 function mapStateToProps(state, ownProps) {
 
-    const {match: {params}, location, history} = ownProps
+    const { match: { params }, location, history } = ownProps
 
     const isFromUpload = _.get(location, 'state.urlPath')
     const currentMemeObj = isFromUpload ?
