@@ -64,6 +64,7 @@ export default class GeneratorUploader extends Component {
                 <input ref={node => this.input = node} type="file" name="files[]" id="generator-uploader" className="inputfile" multiple/>
                 <GeneratorDashboardButton
                     label={UPLOAD_TEXT}
+                    wrapWithLabel
                     icon="glyphicon glyphicon-picture"
                     htmlFor="generator-uploader"
                 />

@@ -1,3 +1,7 @@
+
+import helpers from 'helpers/helpers';
+const shadow = helpers.isMobile() ? 'black 2px 2px 5px' : 'black 2px 2px 10px';
+
 export default {
 
      fillStyle : {
@@ -12,8 +16,7 @@ export default {
         fontSize : '20',
         strokeWidth : '0',
         textAlign : 'center',
-         shadow:  'black 2px 2px 10px'
-
+         shadow:  shadow,
      },
 
 
@@ -30,19 +33,6 @@ export default {
         fontSize : '20',
         fill: "#000",
         textAlign : 'center',
-        shadow:  'black 2px 2px 10px'
-    },
-
-     dankStyle : {
-        "fill": "#000",
-        "borderColor": "blue",
-        "cornerColor": "blue",
-        "transparentCorners": false,
-        "cornerSize": 8,
-        editable: false,
-        fontSize: 10,
-        fontWeight: 100,
-        fontFamily: "helvetica, Open Sans Hebrew",
-        lineHeight: 1.3,
-    },
+        shadow:  shadow
+    }
 }

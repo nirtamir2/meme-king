@@ -16,7 +16,6 @@ import globalConstants from 'constants/global'
 
 // actions
 import { updateMemeRating } from 'actions/meme-actions/meme-actions'
-import { fetchSingleMeme } from 'actions/data-actions/data-actions';
 
 function getDataUri(url, isFromUpload, callback) {
 
@@ -51,10 +50,6 @@ class Generator extends Component {
 
     componentWillMount() {
         document.querySelector(".cover").style.display = 'block';
-
-        if (this.props.shouldFetchMemeObject) {
-            this.props.fetchSingleMeme(this.props.category, this.props.memeId);
-        }
     }
 
     componentWillUnmount() {
@@ -252,7 +247,6 @@ function mapStateToProps(state, ownProps) {
 
     const memeId = params.id;
     const isFromUpload = !!_.get(location, 'state.urlPath');
-    const shouldFetchMemeObject = (!isFromUpload && _.isEmpty(state.category.memes) && !state.category.isFetching);
     const currentMemeObj = isFromUpload ?
         {
             urlPath: location.state.urlPath,
@@ -261,7 +255,6 @@ function mapStateToProps(state, ownProps) {
         :
         state.category.memes[params.id];
 
-    console.log('---',state.category)
 
     return {
         category: params.category,
@@ -271,7 +264,6 @@ function mapStateToProps(state, ownProps) {
         memeId: memeId,
         history,
         location,
-        shouldFetchMemeObject
     }
 }
 
@@ -279,7 +271,6 @@ function mapDispatchToProps(dispatch) {
 
     return {
         updateMemeRating: (meme) => dispatch(updateMemeRating(meme)),
-        fetchSingleMeme : (category, id) => dispatch(fetchSingleMeme(category, id))
     }
 }
 

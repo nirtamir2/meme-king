@@ -1,7 +1,7 @@
 
 // menu icons
 
-import mainIcon from 'assets/images/king.png';
+import mainIcon from 'assets/images/logo-green.png';
 import myMemesIcon from 'assets/images/mymemes-icon.png';
 import newMemesIcon from 'assets/images/new-icon.png';
 import popularIcon from 'assets/images/popular-icon.png';
