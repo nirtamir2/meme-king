@@ -8,7 +8,7 @@ header {
   align-items: center;
   background: $main-bg;
   justify-content: space-between;
-  z-index: 9999;
+  z-index: 8000;
 
   @include mobile-and-tablet {
     height: 60px;
@@ -19,13 +19,12 @@ header {
   }
   h1 {
     flex: 1 1 0px;
+    display: none;
     text-align: center;
     color: $mainColor;
     font-size: 4rem;
-    margin-left: 80px;
     @include mobile-and-tablet {
       font-size: 25px;
-      margin-left: 58px;
     }
   }
 }
@@ -49,6 +48,7 @@ header {
     margin: auto 16px auto auto;
     width: 40px;
     height: 30px;
+    top: 15px;
   }
 
   span {
@@ -95,7 +95,7 @@ header {
 
   &.open {
     position: absolute;
-    top: -4px;
+    top:11px;
     span {
       &:nth-child(1) {
         top: 18px;

@@ -14,10 +14,10 @@ export function fetchCategory(category) {
 
     return (dispatch) => {
 
-        dispatch({type : dataActionConstants.FETCH_CATEGORY_REQUEST});
+        dispatch({type : dataActionConstants.FETCH_CATEGORY_REQUEST, payload: {name : category}});
 
         firebase.database().ref(`/${constants.database.memesTable}/${category}`).once('value')
-            .then(snapshot => dispatch({type : dataActionConstants.FETCH_CATEGORY_SUCCESS, payload : snapshot.val()}))
+            .then(snapshot => dispatch({type : dataActionConstants.FETCH_CATEGORY_SUCCESS, payload : { memes: snapshot.val() , name: category }}))
             .catch(error => dispatch({type : dataActionConstants.FETCH_CATEGORY_FAILED, error : error}));
 
     };
@@ -66,4 +66,16 @@ export function fetchNewMemes() {
             ],
         }
     }
+}
+
+export function fetchMemeObject() {
+    return (dispatch) => {
+
+        dispatch({type : dataActionConstants.FETCH_CATEGORY_REQUEST, payload: {name : category}});
+
+        firebase.database().ref(`/${constants.database.memesTable}/${category}`).once('value')
+            .then(snapshot => dispatch({type : dataActionConstants.FETCH_CATEGORY_SUCCESS, payload : { memes: snapshot.val() , name: category }}))
+            .catch(error => dispatch({type : dataActionConstants.FETCH_CATEGORY_FAILED, error : error}));
+
+    };
 }

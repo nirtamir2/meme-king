@@ -24,7 +24,7 @@ body{
   height: 100%;
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 901;
 }
 .loader{
   display:none;
@@ -56,6 +56,12 @@ a:hover, a:active{
 }
 ::-moz-selection {
   background: $mainColor;
+}
+
+.hide-desktop {
+  @include desktop {
+    display:none !important;
+  }
 }
 
 

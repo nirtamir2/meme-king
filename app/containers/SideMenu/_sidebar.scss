@@ -2,8 +2,14 @@
   width: 350px;
   height: 100vh;
   overflow: scroll;
-  z-index: 9999;
+  z-index: 900;
   background: white;
+
+  @include mobile-medium {
+    position: fixed;
+    margin-top: $header-height;
+    z-index:1000;
+  }
 
   ul {
     list-style: none;

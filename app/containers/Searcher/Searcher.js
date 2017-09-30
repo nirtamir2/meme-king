@@ -49,7 +49,6 @@ class Searcher extends Component {
                 <SearchInput onChange={this.onSearch}
                              clearResults={this.clearResults}
                              isFetching={isFetching}
-                             hasResults={searchResults.length}
                 />
                 {!_.isEmpty(searchResults) && (
                     <p className="number_of_memes_found">

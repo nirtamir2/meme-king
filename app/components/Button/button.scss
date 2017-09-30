@@ -11,10 +11,12 @@
   height: 50px;
   transition: 0.2s;
   cursor: pointer;
+  padding: 20px;
+  margin: 8px auto;
 
-  margin: 5px auto;
-
-
+  &:first-of-type {
+    margin-bottom: 0;
+  }
   &:hover{
     background: lighten($mainColor, 3%);
   }
@@ -31,6 +33,10 @@
       width: auto;
       align-self: center;
     }
+  }
+
+  span.glyphicon {
+    margin-right: auto;
   }
 
 }

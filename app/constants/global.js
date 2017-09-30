@@ -1,6 +1,6 @@
 module.exports = {
    database: {
-       memesTable : 'memesIdsTable',
+       memesTable : 'memesdb',
        weeklyPopularTable : 'weeklyPopularTable'
    },
 

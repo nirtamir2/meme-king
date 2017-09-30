@@ -11,11 +11,16 @@ import BtnScrollToTop from '../../components/BtnScrollToTop/BtnScrollToTop';
 import Loader from 'components/Loader/Loader';
 import MemeSectionBar from 'components/MemeSectionBar/MemeSectionBar';
 import EmptyState from 'components/EmptyState/EmptyState';
+import SearchInput from 'components/SearchInput/SearchInput';
+
+// helpers
+import helpers from 'helpers/helpers';
 
  class MemeSection extends Component {
 
      state = {
-         memesPerRow : 8
+         memesPerRow : helpers.isMobile() ? 3 : 8,
+         filterQuery : ''
      }
 
     componentWillMount(){
@@ -27,8 +32,8 @@ import EmptyState from 'components/EmptyState/EmptyState';
         if(this.props.category !== nextProps.category) {
             this.loadData(nextProps.category);
         }
-
     };
+
 
     loadData = (category) => {
 
@@ -84,11 +89,23 @@ import EmptyState from 'components/EmptyState/EmptyState';
             )
         }
 
+        const filteredMemes = _.filter(memes, meme => _.includes( meme.description, this.state.filterQuery));
+        const memesToShow = (_.size(filteredMemes) > 0 ? filteredMemes : memes);
+        const isMemesBeenSearchedAndNoResultsFound =((_.size(this.state.filterQuery) > 2) && (_.isEmpty(filteredMemes)))
+
         return (
-            <div>
-                <MemeSectionBar setMemesPerRow={this.setMemesPerRow} />
+            <div className="memes-section">
+                <MemeSectionBar setMemesPerRow={this.setMemesPerRow}>
+                    <SearchInput onChange={query => this.setState({ filterQuery : query })}
+                                 clearResults={() => this.setState({ filterQuery : '' })}
+                                 isFetching={false}
+                                 emptyState={isMemesBeenSearchedAndNoResultsFound}
+                                 className="hidden-xs"
+
+                    />
+                </MemeSectionBar>
                 <div className="memes-container">
-                    {_.map(memes, meme =>
+                    {_.map(memesToShow, meme =>
                         <MemeThumb
                             width={100 / this.state.memesPerRow}
                             key={meme.id}
@@ -103,6 +120,7 @@ import EmptyState from 'components/EmptyState/EmptyState';
 }
 
 function mapStateToProps(state, ownProps) {
+
     return {
        category: ownProps.category,
        memes : state.category.memes,

@@ -13,5 +13,6 @@ export default function (state = initialState, action) {
         case TOGGLE_SIDEBAR:
             return payload
     }
+
     return state
 }

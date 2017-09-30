@@ -13,22 +13,25 @@ import MenuItem from "components/SideBarItem/SideBarItem";
 import menu from 'constants/menu';
 
 // helpers
-import helpers from 'helpers/helpers'
+import helpers from 'helpers/helpers';
 
 export class SideMenu extends Component {
 
-    componentWillUnmount() {
-        if (helpers.isMobile()) {
-            const cover = document.querySelector(".cover");
-            cover.style.display = 'none';
-        }
-    }
+    onClose = () => {
+       if (helpers.isMobile()) {
+           this.props.toggleSideBar(false)
+       }
+    };
 
-    componentWillMount() {
+    componentWillReceiveProps(nextProps) {
         if (helpers.isMobile()) {
             const cover = document.querySelector(".cover");
-            cover.style.display = 'block';
-            cover.onclick = () => this.props.toggleSideBar(false);
+            cover.style.display = nextProps.isSideBarOpen ? 'block' : 'none';
+            if (nextProps.isSideBarOpen) {
+                cover.onclick = () => nextProps.toggleSideBar(false);
+            } else {
+                cover.removeEventListener("onClick", () => nextProps.toggleSideBar(false))
+            }
         }
     }
 
@@ -40,6 +43,10 @@ export class SideMenu extends Component {
         const { onClose } = this;
 
         const visibleMenu = _.filter({...menu}, item => item.visible);
+
+        if (!isSideBarOpen) {
+            return null;
+        }
 
         return (
             <div className="sidebar">
@@ -59,9 +66,6 @@ export class SideMenu extends Component {
                         })
                     }
                 </ul>
-
-
-
             </div>
         )
     }
@@ -70,7 +74,7 @@ export class SideMenu extends Component {
 
 function mapStateToProps(state) {
    return {
-
+        isSideBarOpen: state.isSideBarOpen
    }
 }
 

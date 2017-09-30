@@ -1,22 +1,85 @@
 
 
 .box-meme-section-bar {
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 280px);
   background: white;
-  position: fixed;
-  top: 15px;
-  left: 15px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
-  height: 40px;
+  height: 60px;
   z-index: 9999;
-  min-width: 200px;
+  box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.6);
 
-  & > div {
-    border :1px solid $mainColor;
-    display:flex;
-    border-radius: 5px;
-    align-items: center;
-    justify-content: center;
-    height: 100%
+
+  @include mobile-medium {
+    width: auto;
+    background: transparent;
+  }
+
+  .actions {
+    display: flex;
+    position:relative;
+    left: 60px;
+    margin-right: auto;
+
+    @include mobile-medium {
+      left: 10px;
+    }
+
+    & > .action {
+      border :1px solid $mainColor;
+      color: $mainColor;
+      height:30px;
+      width: 30px;
+      border-radius: 200px;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 5px;
+
+      &.glyphicon-zoom-in {
+        font-size: 18px;
+      }
+
+      &.glyphicon-zoom-out {
+        font-size: 12px;
+      }
+
+      &:hover {
+        background: $mainColor;
+        color: white;
+        cursor: pointer;
+      }
+
+      &:active {
+
+        background: darken($mainColor, 15%);
+
+
+      }
+    }
+
+  }
+
+  .search-input-wrapper {
+    margin: 0;
+    height: 40px;
+    align-self: center;
+    margin-right: auto;
+    input {
+      height: 40px;
+    }
+
+    > label {
+      top: 16px;
+    }
+
+    .glyphicon-remove {
+      top: 10px;
+    }
   }
 }

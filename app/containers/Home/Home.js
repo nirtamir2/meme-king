@@ -41,7 +41,7 @@ import logo from 'assets/images/logo-green.png';
                 <Button label="קטגוריות ממים"
                         onClick={()=> toggleSideBar(true)}
                         icon="glyphicon glyphicon-th-list"
-                        className="visible-xs"
+                        className="flex hide-desktop"
                 />
 
                 <Uploader history={history} />

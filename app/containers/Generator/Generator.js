@@ -16,7 +16,7 @@ import globalConstants from 'constants/global'
 
 // actions
 import { updateMemeRating } from 'actions/meme-actions/meme-actions'
-
+import { fetchMemeObject } from 'actions/data-actions/data-actions';
 
 function getDataUri(url, isFromUpload, callback) {
 
@@ -50,7 +50,11 @@ class Generator extends Component {
     }
 
     componentWillMount() {
-        document.querySelector(".cover").style.display = 'block'
+        document.querySelector(".cover").style.display = 'block';
+
+        if (this.props.shouldFetchMemeObject) {
+            this.props.fetchMemeObject(this.props.category, this.props.memeId);
+        }
     }
 
     componentWillUnmount() {
@@ -196,7 +200,7 @@ class Generator extends Component {
             <div className="generator" key="1">
 
                 <h1 className="text-center generator__title">
-                    'מחולל הממים'
+                   מחולל הממים
                 </h1>
 
                 <div className="generator__wrapper">
@@ -244,9 +248,11 @@ class Generator extends Component {
 
 function mapStateToProps(state, ownProps) {
 
-    const { match: { params }, location, history } = ownProps
+    const { match: { params }, location, history } = ownProps;
 
-    const isFromUpload = _.get(location, 'state.urlPath')
+    const memeId = params.id;
+    const isFromUpload = !!_.get(location, 'state.urlPath');
+    const shouldFetchMemeObject = (!isFromUpload && _.isEmpty(state.category.memes) && !state.category.isFetching);
     const currentMemeObj = isFromUpload ?
         {
             urlPath: location.state.urlPath,
@@ -260,8 +266,10 @@ function mapStateToProps(state, ownProps) {
         meme: currentMemeObj,
         format: params.format,
         type: params.type,
+        memeId: memeId,
         history,
-        location
+        location,
+        shouldFetchMemeObject
     }
 }
 
@@ -269,7 +277,8 @@ function mapDispatchToProps(dispatch) {
 
     return {
         updateMemeRating: (meme) => dispatch(updateMemeRating(meme)),
+        fetchMemeObject : (category, id) => dispatch(fetchMemeObject(category, id))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Generator)
+export default connect(mapStateToProps, mapDispatchToProps, fetchMemeObject)(Generator)

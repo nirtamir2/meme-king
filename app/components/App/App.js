@@ -10,11 +10,6 @@ import MainView from 'components/MainView/MainView';
 
 export default class App extends Component {
 
-    constructor(props) {
-        super(props);
-
-    }
-
     componentWillMount() {
         // Initialize Firebase
         window.config = {
@@ -25,20 +20,17 @@ export default class App extends Component {
             messagingSenderId: "243226751545"
         };
 
-
         console.log(ENV ? ENV : 'no env');
-
 
         firebase.initializeApp(config);
     };
 
     render(){
-
         return (
             <div>
                 <Header/>
                 <div className="flex">
-                    {true && <SideMenu />}
+                    <SideMenu />
                     <MainView />
                 </div>
             </div>

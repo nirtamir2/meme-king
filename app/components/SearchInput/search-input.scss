@@ -4,6 +4,8 @@
   margin: 30px auto;
   position:relative;
 
+
+
   & > label {
     position: absolute;
     left: 15px;
@@ -34,6 +36,8 @@
 
   input{
 
+
+
     @extend %input;
     height: 50px;
     font-weight: 200;
@@ -45,5 +49,15 @@
       font-family: "Open Sans Hebrew";
     }
 
+    &.empty {
+      border: 1px solid red;
+      + label.glyphicon-remove {
+        color: red;
+      }
+
+      @include placeholder{
+        color: red;
+      }
+    }
   }
 }
