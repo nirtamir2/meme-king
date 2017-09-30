@@ -12,12 +12,25 @@ import MenuItem from "components/SideBarItem/SideBarItem";
 // constants
 import menu from 'constants/menu';
 
+// helpers
+import helpers from 'helpers/helpers'
 
 export class SideMenu extends Component {
 
-    onClose = () => {
-        this.props.toggleSideBar(false)
-    };
+    componentWillUnmount() {
+        if (helpers.isMobile()) {
+            const cover = document.querySelector(".cover");
+            cover.style.display = 'none';
+        }
+    }
+
+    componentWillMount() {
+        if (helpers.isMobile()) {
+            const cover = document.querySelector(".cover");
+            cover.style.display = 'block';
+            cover.onclick = () => this.props.toggleSideBar(false);
+        }
+    }
 
 
     render = () => {
@@ -47,6 +60,8 @@ export class SideMenu extends Component {
                     }
                 </ul>
 
+
+
             </div>
         )
     }
@@ -54,9 +69,9 @@ export class SideMenu extends Component {
 
 
 function mapStateToProps(state) {
-    return {
-        isSideBarOpen: state.isSideBarOpen,
-    }
+   return {
+
+   }
 }
 
 function mapDispatchToProps(dispatch) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // containers
 import Header from 'containers/Header/Header';
@@ -23,21 +24,29 @@ export default class App extends Component {
             storageBucket: "gs://memeking-80290.appspot.com", //"memeking-80290.appspot.com",
             messagingSenderId: "243226751545"
         };
-        console.log(ENV ? ENV : 'sdfdsfds')
+
+
+        console.log(ENV ? ENV : 'no env');
+
+
         firebase.initializeApp(config);
     };
 
     render(){
+
         return (
             <div>
                 <Header/>
                 <div className="flex">
-                    <SideMenu />
+                    {true && <SideMenu />}
                     <MainView />
                 </div>
             </div>
         );
     }
 }
+
+
+
 
 

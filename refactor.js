@@ -21,38 +21,42 @@ const myBucket = gcs.bucket('meme-king-storage')
 let toggle = true;
 
 const type = appArgs.type;
+const category = appArgs.category;
 const isThumb = type ==='meme-thumbs';
 
 let size = 0;
- function saveFileToStorage (filePath, destinationFolder, memeObj) {
+ async function saveFileToStorage (filePath, destinationFolder, memeObj) {
     if(true) {
 //        console.log(filePath, destinationFolder)
 
         //console.log(destinationFolder)
+   return new Promise((resolve) => {
         myBucket.upload(filePath, { public: true, destination: `${type}/${destinationFolder}/${filePath.replace(`./${type}/${destinationFolder}/`, '')}`, validation: true })
-            .then( data => {
-                // file saved
-                fs.exists(filePath, function( exists ) {
-                    if(!exists) {
-                        return;
-                    }
-                });
-                let file = data[0]
-                file.getSignedUrl({
-                    action: 'read',
-                    expires: '03-17-2025',
+           .then( data => {
+               // file saved
+               fs.exists(filePath, function( exists ) {
+                   if(!exists) {
+                       return;
+                   }
+               });
+               let file = data[0]
+               file.getSignedUrl({
+                   action: 'read',
+                   expires: '03-17-2025',
 
-                }, function(err, url) {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    //console.log(url)
-                    console.log(size, 'saved file' , wantedSize);
-                    size++;
-                    writeToDataBase(memeObj,destinationFolder, url)
-                })
-            })
+               }, function(err, url) {
+                   if (err) {
+                       console.error(err);
+                       return;
+                   }
+                   //console.log(url)
+                   console.log(size, 'saved file' , wantedSize);
+                   size++;
+                   writeToDataBase(memeObj,destinationFolder, url)
+                   resolve();
+               })
+           })
+   })
         toggle = false;
     }
 }
@@ -81,24 +85,23 @@ let size = 0;
     });
 
     const database = admin.database();
+    console.log(type === 'memes' ? "memesData" + '/' + category : "memesdb" + '/' + category )
+    const ref = database.ref(type === 'memes' ? "memesData" + '/' + category : "memesdb" + '/' + category );
+     async function handleMemes(snapshot){
+        const data = snapshot.val();
+        console.log('---', _.size( isThumb? data : data.memes));
+        const obj = isThumb ? data : data.memes;
 
-    var ref = database.ref(type === 'memes' ? "memesDataTable" : "memesIdsTable");
-    const handleMemes = (snapshot) => {
-        const data =snapshot.val();
-        _.forEach(_.keys(data), category => {
-            _.forEach(isThumb ? data[category] : data[category].memes , (memeObj) => {
-               if( category === appArgs.category){
+        for(let prop in obj) {
+            const memeObj = obj[prop]
+            wantedSize = isThumb ? _.size(data) : _.size(data.memes);
+            if(memeObj.name && !memeObj.name.includes('DS_Store') && (memeObj.name.includes('.png') || memeObj.name.includes('.jpg'))) {
+                const fullPath = `./${type}/${memeObj.name}`;
+                await saveFileToStorage(fullPath, category, memeObj);
+            }
+        }
 
-                   wantedSize = isThumb ? _.size(data[category]) : _.size(data[category].memes);
-
-                   if(memeObj.name && !memeObj.name.includes('DS_Store')) {
-                       const fullPath = `./${type}/${memeObj.name}`;
-                        saveFileToStorage(fullPath, category, memeObj)
-                   }
-               }
-            })
-        })
-       // _.keys(data, category => console.log(category));
+         console.log('done')
 
     }
 
@@ -115,7 +118,7 @@ function makeId() {
 }
 
 // Attach an asynchronous callback to read the data at our posts reference
-    ref.on("value", handleMemes, function (errorObject) {
+    ref.on("value", _.once(handleMemes), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
 
@@ -142,7 +145,7 @@ function makeId() {
         if(isThumb) {
             delete memeObj.name;
         }
-        database.ref( `try/${category}/${id}`).set(memeObj)
+        database.ref( `memesdb/${category}/${id}`).set(memeObj)
     }
 
 

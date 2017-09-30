@@ -2,12 +2,16 @@ import React from 'react';
 
 import { TOGGLE_SIDEBAR } from '../actions/index';
 
-export default function(state=false, action){
+import helpers from 'helpers/helpers'
+const initialState = !helpers.isMobile();
 
-    const {payload, type} = action;
-    switch(type){
+export default function (state = initialState, action) {
+
+    const { payload, type } = action;
+
+    switch (type) {
         case TOGGLE_SIDEBAR:
             return payload
     }
-    return state;
+    return state
 }
