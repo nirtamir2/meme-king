@@ -1,7 +1,13 @@
+const _ = require('lodash');
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports =  function({ env }) {
+
+    const isProduction = (env === 'production');
+
     return  {
         entry: ['babel-polyfill', './app/index.js'],
         resolve: {
@@ -29,16 +35,11 @@ module.exports =  function({ env }) {
                     loader: 'url-loader'
                 },
                 {
-                    test: /\.scss$/,
-                    loader: 'style-loader'
-                },
-                {
-                    test: /\.scss$/,
-                    loader: 'css-loader'
-                },
-                {
-                    test: /\.scss$/,
-                    loader: 'sass-loader'
+                    test: /\.scss/,
+                    loader: ExtractTextPlugin.extract({
+                        fallbackLoader: "style-loader",
+                        loader: "css-loader!sass-loader",
+                    }),
                 }
 
             ]
@@ -47,7 +48,10 @@ module.exports =  function({ env }) {
         plugins: [
             new webpack.DefinePlugin({
                 'ENV': JSON.stringify(env),
-            })
+            }),
+            isProduction ? new UglifyJSPlugin() : _.noop,
+            new ExtractTextPlugin('style.css')
+
         ],
         devServer: {
             port: 3000, // most common port

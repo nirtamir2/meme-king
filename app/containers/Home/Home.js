@@ -46,10 +46,10 @@ import logo from 'assets/images/logo-green.png';
 
                 <Uploader history={history} />
 
-                <Button label=" לוח חלק"
-                        onClick={this.createCleanSlate}
-                        icon="glyphicon glyphicon-stop"
-                />
+                {/*<Button label=" לוח חלק"*/}
+                        {/*onClick={this.createCleanSlate}*/}
+                        {/*icon="glyphicon glyphicon-stop"*/}
+                {/*/>*/}
 
                 <Searcher history={history} />
 

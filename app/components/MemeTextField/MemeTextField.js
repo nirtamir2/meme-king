@@ -144,13 +144,13 @@ export default class MemeTextField extends Component {
                 ...wantedStyle
             }
         }, () => {
-            this.matchStateToStyle();
+            this.matchStyleToState();
         });
 
 
     }
 
-    matchStateToStyle = () => {
+    matchStyleToState = () => {
         this.state.fillTextBox.set({...this.state.fillStyle});
         this.state.strokeTextBox.set({...this.state.strokeStyle});
         this.setStrokeLayerPos(this.state.fillTextBox, this.state.strokeTextBox)
@@ -214,7 +214,7 @@ export default class MemeTextField extends Component {
                 this.setState({ strokeStyle: {
                     ...this.state.strokeStyle,
                     opacity: 0
-                }}, () => this.matchStateToStyle())
+                }}, () => this.matchStyleToState())
 
                 break;
             }
@@ -227,7 +227,7 @@ export default class MemeTextField extends Component {
 
         return (
 
-            <div className="controllers_wrapper clearfix">
+            <div className="box-meme-text-field clearfix">
 
                 <textarea placeholder={'טקסט'}
                           value={this.state.textValue}

@@ -1,8 +1,11 @@
-.generator{
-  direction : ltr;
-  padding:25px;
-  background:$main-bg;
-  width : 100%;
+.generator-footer{
+
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+
+
   p{
     text-align:center;
   }
