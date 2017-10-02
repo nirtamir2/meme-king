@@ -802,7 +802,7 @@ header {
       padding-top: 90px;
       display: block;
       position: relative;
-      top: 60px; } }
+      top: 30px; } }
   .home img {
     max-width: 120px;
     height: auto;
@@ -1423,7 +1423,7 @@ header {
   @media only screen and (max-width: 767px) {
     .box-cta-button {
       margin: 12px auto;
-      width: 250px; } }
+      width: 300px; } }
   .box-cta-button:first-of-type {
     margin-bottom: 0; }
   .box-cta-button:hover {
