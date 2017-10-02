@@ -6,7 +6,6 @@ export default () => (
             <div className="round-loader"/>
         </div>
         <div className="load-text">
-            Loading...
         </div>
     </div>
 )
