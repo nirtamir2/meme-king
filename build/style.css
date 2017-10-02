@@ -656,7 +656,8 @@ a:hover, a:active {
   @media only screen and (max-width: 767px) {
     .bottom_details {
       margin: 0 auto;
-      max-width: 80%; } }
+      max-width: 80%;
+      position: relative; } }
   @media only screen and (max-width: 767px) {
     .bottom_details h4 {
       font-size: 16px;
@@ -799,7 +800,9 @@ header {
       height: auto;
       padding-bottom: 50px;
       padding-top: 90px;
-      display: block; } }
+      display: block;
+      position: relative;
+      top: 60px; } }
   .home img {
     max-width: 120px;
     height: auto;
@@ -1007,7 +1010,7 @@ header {
     height: 100%;
     transition: 0.4s;
     background: rgba(0, 0, 0, 0.7); }
-    .meme-thumb .meme-thumb__overlay .meme-thumb__description {
+    .meme-thumb .meme-thumb__overlay .meme-thumb__details {
       color: white;
       position: absolute;
       top: 0;
@@ -1016,11 +1019,19 @@ header {
       padding: 8px;
       text-transform: capitalize;
       display: block; }
+      .meme-thumb .meme-thumb__overlay .meme-thumb__details .meme-thumb__description {
+        font-size: 14px;
+        display: block;
+        margin-top: 20px; }
+        @media only screen and (max-width: 767px) {
+          .meme-thumb .meme-thumb__overlay .meme-thumb__details .meme-thumb__description {
+            font-size: 12px;
+            margin-top: 5px; } }
       @media only screen and (max-width: 767px) {
-        .meme-thumb .meme-thumb__overlay .meme-thumb__description {
+        .meme-thumb .meme-thumb__overlay .meme-thumb__details {
           display: block;
           font-size: 10px; } }
-      .meme-thumb .meme-thumb__overlay .meme-thumb__description .meme-thumb__download-counter {
+      .meme-thumb .meme-thumb__overlay .meme-thumb__details .meme-thumb__download-counter {
         color: #14BD9D; }
 
 .back-to-top {
@@ -1054,9 +1065,12 @@ header {
       color: #14BD9D; }
 
 .search-input-wrapper {
-  width: 300px;
+  width: 450px;
   margin: 30px auto;
   position: relative; }
+  @media only screen and (max-width: 767px) {
+    .search-input-wrapper {
+      width: 250px; } }
   .search-input-wrapper > label {
     position: absolute;
     left: 15px;
@@ -1394,7 +1408,7 @@ header {
   cursor: not-allowed; }
 
 .box-cta-button {
-  width: 300px;
+  width: 450px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -1408,7 +1422,8 @@ header {
   margin: 8px auto; }
   @media only screen and (max-width: 767px) {
     .box-cta-button {
-      margin: 12px auto; } }
+      margin: 12px auto;
+      width: 250px; } }
   .box-cta-button:first-of-type {
     margin-bottom: 0; }
   .box-cta-button:hover {
@@ -1449,7 +1464,9 @@ input[type=file] {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  position: relative;
+  left: -33px; }
   .box-round-loader .round-loader {
     width: 50pt;
     height: 50pt;
@@ -1537,6 +1554,16 @@ input[type=file] {
     color: #14BD9D;
     font-size: 50px; }
 
+.box-popup-cover {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9999; }
+
 .search-loader,
 .search-loader:after {
   border-radius: 50%; }
@@ -1582,14 +1609,15 @@ input[type=file] {
   z-index: 999;
   height: 1em;
   width: 1em;
-  overflow: show;
   margin: auto;
-  top: 0px;
+  top: -60px;
   left: 0;
-  right: 0; }
+  right: 0;
+  min-height: 200px; }
   @media only screen and (max-width: 767px) {
     .spinner {
-      top: -100px; } }
+      top: -100px;
+      min-height: 100px; } }
 
 /* Transparent Overlay */
 .spinner:before {
@@ -1598,7 +1626,6 @@ input[type=file] {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
   height: 100%; }
 
 /* :not(:required) hides these rules from IE9 and below */
