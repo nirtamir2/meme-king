@@ -1,6 +1,6 @@
 [
   {
-    "origin": ["http://localhost:3000", "http://localhost:8081", "https://meme-king-generator.herokuapp.com/", "www.memeking.co.il"],
+    "origin": ["http://localhost:3000", "http://localhost:8081", "https://meme-king-generator.herokuapp.com/", "http://www.memeking.co.il"],
     "Access-Control-Allow-Origin'": "http://localhost:3000",
     "responseHeader": ["Content-Type"],
     "method": ["GET", "HEAD", "DELETE"],
