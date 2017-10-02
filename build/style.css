@@ -1465,8 +1465,7 @@ input[type=file] {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  left: -33px; }
+  position: relative; }
   .box-round-loader .round-loader {
     width: 50pt;
     height: 50pt;
