@@ -22,11 +22,12 @@ export default ({ thumbPath, description, rating, category, id, urlPath, width, 
             <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img" />
             {/*</LazyLoad>*/}
             <div className="meme-thumb__overlay">
-                <p className="meme-thumb__description">
-                    - מחולל הממים -
+                <p className="meme-thumb__details">
                     {rating && <span className="meme-thumb__download-counter"><br/> {rating * 4} הורדות  </span>}
+                    <span className="meme-thumb__description">
+                        {description}
+                    </span>
                     <br/>
-                    {description}
                 </p>
             </div>
         </Link>

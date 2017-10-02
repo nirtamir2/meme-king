@@ -77,7 +77,6 @@ app.get('/api/get-weekly-popular-memes', async function (req, res) {
    const topPopularMemes = _.slice(_.reverse(_.sortBy(data.val(), 'rating')), 0 , 48);
    const obj = {};
    _.forEach(topPopularMemes, meme => obj[meme.id] = meme);
-   console.log('sdlkfjdslf')
    res.send(obj);
 });
 

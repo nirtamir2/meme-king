@@ -36,7 +36,7 @@
     height: 100%;
     transition :0.4s;
     background: rgba(0,0,0,0.7);
-    .meme-thumb__description{
+    .meme-thumb__details{
       color: white;
       position: absolute;
       top: 0;
@@ -45,6 +45,19 @@
       padding: 8px;
       text-transform: capitalize;
       display:block;
+
+      .meme-thumb__description{
+        font-size: 14px;
+        display: block;
+        margin-top: 20px;
+
+        @include mobile-medium {
+          font-size:12px;
+          margin-top:5px;
+        }
+
+      }
+
       @include mobile-medium{
         display: block;
         font-size: 10px;

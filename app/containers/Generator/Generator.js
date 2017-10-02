@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 // components
-import GeneratorDashboard from 'components/GeneratorDashboard/GeneratorDashboard'
+import GeneratorDashboard from 'components/GeneratorDashboard/GeneratorDashboard';
+import PopupCover from 'components/PopupCover/PopupCover';
 
 // helpers
 import {setHeightAndWidth, setImageSizeDankFormat} from 'services/CanvasImageService'
@@ -49,11 +50,11 @@ class Generator extends Component {
     }
 
     componentWillMount() {
-        document.querySelector(".cover").style.display = 'block';
+      //  document.querySelector(".cover").style.display = 'block';
     }
 
     componentWillUnmount() {
-        document.querySelector(".cover").style.display = 'none'
+      //  document.querySelector(".cover").style.display = 'none'
 
     }
 
@@ -106,12 +107,11 @@ class Generator extends Component {
         const MOBILE_DANK_CANVAS_SIZE = helpers.isMobile() ? canvasContainerWidth : 400
 
         canvas.backgroundColor = colors.GRAY_LIGHT
-        canvas.setWidth(canvasContainerWidth)
+        canvas.setWidth(canvasContainerWidth);
         canvas.clear()
 
 
         getDataUri(urlPath, isFromUpload, (dataUri) => {
-
             fabric.Image.fromURL(dataUri, image => {
 
                 this.setState({ isLoading: false });
@@ -190,51 +190,60 @@ class Generator extends Component {
         const { isLoading, isCanvasReady, canvas } = this.state
         const { meme, format, history, location, type } = this.props
 
+        const style= {
+            width: '100%',
+            height: '100%',
+            background: 'red'
+        }
+
+
         return (
+            <PopupCover>
+                <div className="generator" key="1">
 
-            <div className="generator" key="1">
+                    <h1 className="text-center generator__title">
+                        מחולל הממים
+                    </h1>
 
-                <h1 className="text-center generator__title">
-                   מחולל הממים
-                </h1>
+                    <div className="generator__wrapper">
 
-                <div className="generator__wrapper">
+                        <div className="generator__canvas-wrapper col-sm-7">
+                            <canvas id='c' dir="rtl"/>
+                            {isLoading && <div className="spinner">Loading&</div>}
+                        </div>
 
-                    <div className="generator__canvas-wrapper col-sm-7">
-                        <canvas id='c' dir="rtl"/>
-                        {isLoading && <div className="spinner">Loading&</div>}
+                        <div className="generator__dashboard col-sm-5">
+                            <GeneratorDashboard
+                                history={history}
+                                type={type}
+                                location={location}
+                                meme={meme}
+                                format={format}
+                                isCanvasReady={isCanvasReady}
+                                canvas={canvas}
+                                updateMemeRating={this.props.updateMemeRating}
+                            />
+                        </div>
+
                     </div>
 
-                    <div className="generator__dashboard col-sm-5">
-                        <GeneratorDashboard
-                            history={history}
-                            type={type}
-                            location={location}
-                            meme={meme}
-                            format={format}
-                            isCanvasReady={isCanvasReady}
-                            canvas={canvas}
-                            updateMemeRating={this.props.updateMemeRating}
-                        />
+                    <div className="generator__close glyphicon glyphicon-remove"
+                         onClick={this.closeGenerator}
+                    />
+
+                    <div className="bottom_details text-center">
+                        <h4>
+                            The generator was built by <a href="mailto:nirbenya@gmail.com"> Nir Ben-Yair </a>
+                        </h4>
+                        <p className="text-center">
+                            הפונט אשר בשימוש הינו הפונט ׳אימפקטה׳, שנתרם ע״י הטיפוגרף עודד עזר.
+                            <a href="http://www.hebrewtypography.com/"> לאתר הפונטים הישראלי</a>
+                        </p>
                     </div>
 
                 </div>
 
-                <div className="generator__close glyphicon glyphicon-remove"
-                     onClick={this.closeGenerator}
-                />
-
-                <div className="bottom_details text-center">
-                    <h4>
-                        The generator was built by <a href="mailto:nirbenya@gmail.com"> Nir Ben-Yair </a>
-                    </h4>
-                    <p className="text-center">
-                        הפונט אשר בשימוש הינו הפונט ׳אימפקטה׳, שנתרם ע״י הטיפוגרף עודד עזר.
-                        <a href="http://www.hebrewtypography.com/"> לאתר הפונטים הישראלי</a>
-                    </p>
-                </div>
-
-            </div>
+            </PopupCover>
         )
 
     }

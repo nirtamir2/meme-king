@@ -94,6 +94,7 @@ $closeColor : darkgray;
   @include mobile-medium{
     margin: 0 auto;
     max-width: 80%;
+    position:relative;
   }
   h4{
     @include mobile-medium{

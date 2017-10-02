@@ -1,9 +1,13 @@
 .search-input-wrapper {
 
-  width: 300px;
+  width: 450px;
   margin: 30px auto;
   position:relative;
 
+
+  @include mobile-medium {
+    width: 250px;
+  }
 
 
   & > label {
