@@ -8,6 +8,9 @@ import SideMenu from 'containers/SideMenu/SideMenu';
 // components
 import MainView from 'components/MainView/MainView';
 
+// services
+import LocalStorageService from 'services/LocalStorage';
+
 export default class App extends Component {
 
     componentWillMount() {
@@ -23,6 +26,8 @@ export default class App extends Component {
         console.log(ENV ? ENV : 'no env');
 
         firebase.initializeApp(config);
+
+        LocalStorageService.init();
     };
 
     render(){

@@ -1,6 +1,15 @@
 class LocalStorage {
 
-    constructor(){
+    init = () => {
+
+        if (this.getItem('myMemes') && !this.getItem('isAlreadyCleared')) {
+            localStorage.clear();
+            localStorage.setItem('isAlreadyCleared' , true );
+        } else {
+            localStorage.setItem('isAlreadyCleared' , true );
+        }
+
+        console.log('init local storage service', localStorage)
 
     }
 
@@ -11,7 +20,7 @@ class LocalStorage {
         }
 
         let myMemesList = {};
-        if(localStorage.getItem('myMemes')){
+        if(this.getItem('myMemes')){
             myMemesList =  JSON.parse(localStorage.getItem('myMemes'));
             myMemesList[meme.id] = meme;
         }
@@ -20,6 +29,10 @@ class LocalStorage {
         }
 
         localStorage.setItem('myMemes', JSON.stringify(myMemesList));
+    }
+
+    setItem = (item) => {
+        localStorage.setItem(JSON.stringify(item));
     }
 
 
