@@ -8,6 +8,7 @@ import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContai
 
 // services
 import LocalStorageService from 'services/LocalStorage';
+import AnalyticsService from 'services/Analytics';
 
 // helpers
 import helpers from 'helpers/helpers';
@@ -45,7 +46,7 @@ export default class TextInputsContainer extends Component {
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
         canvas.setZoom(1);
 
-       // this.handleGoogleAnalytics();
+        this.handleGoogleAnalytics();
         this.updateMemeRating();
         this.saveMemeNameToLocalStorage();
     };
@@ -54,6 +55,16 @@ export default class TextInputsContainer extends Component {
     saveMemeNameToLocalStorage = () => {
         LocalStorageService.addDownloadedMemeToMyMemesList(this.props.meme || null)
     };
+
+    handleGoogleAnalytics() {
+        const textAreas = document.getElementsByTagName('TEXTAREA');
+        const description = this.props.meme.description;
+        let text = `${description} : ${textAreas[0].value} ${textAreas[1].value}`;
+        AnalyticsService.sendEvent('Meme Downloaded',`${this.props.format}, ${text}`);
+        if(this.props.format === 'dank'){
+            AnalyticsService.sendEvent('Dank' , text);
+        }
+    }
 
 
     updateMemeRating = () => {

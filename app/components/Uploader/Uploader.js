@@ -2,6 +2,9 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 
+//  services
+import AnalyticsService from 'services/Analytics';
+
 // components
 import Button from 'components/Button/Button';
 
@@ -33,6 +36,7 @@ export default class Uploader extends Component {
         this.input.value = '';
 
         document.querySelector(".cover").style.display = 'block';
+        AnalyticsService.sendEvent('upload');
 
     };
 

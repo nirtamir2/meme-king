@@ -15,5 +15,4 @@
 
 
 
-let analytics = new Analytics();
-export default analytics;
+export default new Analytics();

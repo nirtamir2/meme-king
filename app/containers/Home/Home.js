@@ -17,12 +17,16 @@ import analytics from '../../services/Analytics';
 // assets
 import logo from 'assets/images/logo-green.png';
 
+//  services
+import AnalyticsService from 'services/Analytics';
+
  class Home extends Component {
 
     createCleanSlate = () => {
         document.querySelector(".cover").style.display = 'block';
         analytics.sendEvent('CleanSlate', 'Clean slate');
         this.props.history.push('/generator/clean-slate/normalFormat');
+        AnalyticsService.sendEvent('clean slate');
     };
 
     render(){

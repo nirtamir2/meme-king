@@ -17,6 +17,9 @@ import globalConstants from 'constants/global';
 // helpers
 import helpers from 'helpers/helpers';
 
+// services
+import AnalyticsService from 'services/Analytics';
+
 class Searcher extends Component {
 
     state = {
@@ -30,7 +33,8 @@ class Searcher extends Component {
 
     onSearch = _.debounce((value) => {
         if (value.length >= 3) {
-            this.props.fetchSearchResults(value)
+            this.props.fetchSearchResults(value);
+             AnalyticsService.sendEvent('Search',  value)
             this.setState({ active: true })
         } else if (!value) {
             this.setState({ active: false })
@@ -38,6 +42,8 @@ class Searcher extends Component {
         } else {
             this.setState({ active: false })
         }
+
+
     }, 300, false)
 
 

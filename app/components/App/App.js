@@ -10,6 +10,11 @@ import MainView from 'components/MainView/MainView';
 
 // services
 import LocalStorageService from 'services/LocalStorage';
+import AnalyticsService from 'services/Analytics';
+
+// helpers
+import helpers from 'helpers/helpers';
+
 
 export default class App extends Component {
 
@@ -23,11 +28,11 @@ export default class App extends Component {
             messagingSenderId: "243226751545"
         };
 
-        console.log(ENV ? ENV : 'no env');
-
         firebase.initializeApp(config);
 
         LocalStorageService.init();
+
+        AnalyticsService.sendEvent(helpers.isMobile() ? 'Mobile Entrance' : 'Desktop entrance');
 
         Raven.config('https://cdc49c9d2b0c44f38b5b7911c8e58ddc@sentry.io/225081').install();
 
