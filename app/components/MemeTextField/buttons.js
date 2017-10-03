@@ -44,7 +44,8 @@ export default {
 
     makeFontBold: {
         action: 'makeFontBold',
-        text: 'a'
+        text: 'a',
+        className: 'bold'
     },
 
     toggleTextColor: {

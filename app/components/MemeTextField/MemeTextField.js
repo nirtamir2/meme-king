@@ -18,7 +18,7 @@ const getSharedStyles =  (canvas, position, initialFontSize) => {
         left: (canvas.width) / 100,
         fontSize: initialFontSize,
         top: helpers.getTextPosition(position, canvas, initialFontSize),
-        lineHeight: 1.3
+        lineHeight: 1.1
     };
 }
 
@@ -72,10 +72,19 @@ export default class MemeTextField extends Component {
         this.setState({ textValue : ''});
     }
 
+    setCanvasDirection = (value) => {
+        const isRtl = helpers.isRTL(value);
+        const wantedDir = isRtl ? 'rtl' : 'ltr';
+        document.querySelector('.upper-canvas').dir = wantedDir;
+        document.getElementById('c').dir = wantedDir;
+    }
+
     onInputChange = ({ target: { value } }) => {
-        this.setState({textValue: value})
+        this.setState({textValue: value});
+
         const { fillTextBox, strokeTextBox, alreadyOnCanvas } = this.state;
         const  { canvas } = this.props
+        this.setCanvasDirection(value)
         if (!alreadyOnCanvas) {
             this.addTextToCanvas(value)
             this.bindTextBoxEvents()

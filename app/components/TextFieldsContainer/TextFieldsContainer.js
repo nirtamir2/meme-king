@@ -31,8 +31,20 @@ export default class TextFieldsContainer extends Component {
 
     resetTextInputs = (canvas) => {
         const initialTextInputs = [
-            <MemeTextField format={this.props.format} key={_.uniqueId()} id={_.uniqueId()} remove={this.removeTextInput} canvas={canvas} position="top" />,
-            <MemeTextField format={this.props.format} key={_.uniqueId()} id={_.uniqueId()} remove={this.removeTextInput} canvas={canvas} position="bottom" /> ,
+            <MemeTextField
+                format={this.props.format}
+                key={_.uniqueId()}
+                id={_.uniqueId()}
+                remove={this.removeTextInput}
+                canvas={canvas}
+                position="top" />,
+            <MemeTextField
+                format={this.props.format}
+                key={_.uniqueId()}
+                id={_.uniqueId()} r
+                emove={this.removeTextInput}
+                canvas={canvas}
+                position="bottom" /> ,
         ];
 
         this.setState({
