@@ -31,8 +31,17 @@ module.exports =  function({ env }) {
                 },
 
                 {
-                    test: /\.(png|woff|woff2|eot|ttf|svg|jpg)$/,
-                    loader: 'url-loader'
+                    test: /\.(png|jpg|gif)$/,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name: '[name].[ext]',
+                                outputPath: '/assets/images/'
+
+                            }
+                        }
+                    ]
                 },
                 {
                     test: /\.scss/,

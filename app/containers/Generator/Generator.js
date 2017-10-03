@@ -16,7 +16,11 @@ import colors from 'constants/colors'
 import globalConstants from 'constants/global'
 
 // actions
-import { updateMemeRating } from 'actions/meme-actions/meme-actions'
+import { updateMemeRating } from 'actions/meme-actions/meme-actions';
+
+// assets
+import watemarkDesktop from 'assets/images/watermark-desktop.jpg';
+import watermarkMobile from 'assets/images/watermark-mobile.jpg';
 
 function getDataUri(url, isFromUpload, callback) {
 
@@ -145,9 +149,8 @@ class Generator extends Component {
     addWaterMark = () => {
 
         const { canvas } = this.state
-        const waterMarkType = helpers.isMobile() ? 'watermark-mobile' : 'watermark-desktop'
-
-        fabric.Image.fromURL(`assets/images/${waterMarkType}.jpg`, watermark => {
+        const watermark = helpers.isMobile() ? watermarkMobile : watemarkDesktop
+        fabric.Image.fromURL(watermark, watermark => {
 
             canvas.add(watermark)
 
