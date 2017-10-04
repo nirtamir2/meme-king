@@ -554,19 +554,24 @@ a:hover, a:active {
       width: 100%; } }
   .generator .generator__canvas-wrapper {
     background: #f6f6f6;
-    z-index: 9999; }
+    z-index: 8000; }
     @media only screen and (max-width: 767px) {
       .generator .generator__canvas-wrapper.with-shadow {
         border-bottom: none;
-        box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.3); } }
+        box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center; } }
     @media only screen and (max-width: 767px) {
       .generator .generator__canvas-wrapper {
         position: fixed;
-        top: 40px;
         z-index: 9999;
         left: 0;
+        top: 0;
         right: 0;
         width: 100%;
+        margin: 0 auto;
+        padding-left: 0;
+        padding-right: 0;
         border-bottom: 1px solid #8d8d8d; } }
     .generator .generator__canvas-wrapper canvas {
       width: 100%; }
@@ -576,7 +581,8 @@ a:hover, a:active {
     right: 10px;
     font-size: 4rem;
     color: darkgray;
-    cursor: pointer; }
+    cursor: pointer;
+    z-index: 9999; }
     @media only screen and (max-width: 767px) {
       .generator__close {
         position: fixed;
@@ -598,9 +604,9 @@ a:hover, a:active {
     @media only screen and (max-width: 767px) {
       .generator__wrapper {
         flex-direction: column;
-        width: 95%;
+        width: 100%;
         border: none;
-        padding: 5px; } }
+        padding: 0px; } }
   @media only screen and (max-width: 767px) {
     .generator__title {
       display: none; } }
@@ -797,6 +803,9 @@ header {
 
 .box-meme-text-field {
   margin-bottom: 10px; }
+  @media only screen and (max-width: 767px) {
+    .box-meme-text-field textarea {
+      height: 50px; } }
 
 .text-control__btn {
   flex-grow: 1;
@@ -849,7 +858,8 @@ header {
   @media only screen and (max-width: 767px) {
     .box-generator-button {
       width: 100% !important;
-      margin-bottom: 0; } }
+      margin-bottom: 0;
+      height: 50px; } }
   .flex > .box-generator-button {
     flex-grow: 2; }
     .flex > .box-generator-button:first-child {
@@ -1528,19 +1538,25 @@ input[type=file] {
       flex-direction: column; } }
   @media only screen and (max-width: 767px) {
     .box-generator-dashboard {
-      top: 200px; } }
+      top: 200px;
+      padding-left: 0;
+      padding-right: 0; } }
 
 @media only screen and (max-width: 767px) {
   .box-generator-skeleton {
     top: 300px;
-    width: calc(100% - 30px);
     margin: 0 auto;
-    position: relative; } }
+    position: relative;
+    padding-left: 0;
+    padding-right: 0; } }
 
 .box-generator-skeleton .item {
   width: 100%;
   height: 35px;
   margin-bottom: 15px; }
+  @media only screen and (max-width: 767px) {
+    .box-generator-skeleton .item {
+      height: 50px; } }
   .box-generator-skeleton .item.input-field {
     background-color: white;
     margin-bottom: 0; }

@@ -7,6 +7,10 @@
 
   textarea {
     @extend %input;
+
+    @include mobile-medium {
+      height: 50px;
+    }
   }
 
 

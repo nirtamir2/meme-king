@@ -28,22 +28,26 @@ $closeColor: darkgray;
   .generator__canvas-wrapper {
 
     background: $main-bg;
-    z-index:9999;
-
+    z-index:8000;
     &.with-shadow {
       @include mobile-medium {
         border-bottom: none;
-        box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.3);
+        box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
       }
     }
 
     @include mobile-medium {
       position: fixed;
-      top: 40px;
       z-index: 9999;
       left: 0;
+      top: 0;
       right: 0;
       width: 100%;
+      margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
       border-bottom: 1px solid #8d8d8d;
     }
 
@@ -60,6 +64,7 @@ $closeColor: darkgray;
     font-size: 4rem;
     color: $closeColor;
     cursor: pointer;
+    z-index: 9999;
     @include mobile-medium {
       position: fixed;
       top: 0;
@@ -86,9 +91,9 @@ $closeColor: darkgray;
     direction: ltr;
     @include mobile-medium {
       flex-direction: column;
-      width: 95%;
+      width: 100%;
       border: none;
-      padding: 5px;
+      padding: 0px;
     }
   }
 

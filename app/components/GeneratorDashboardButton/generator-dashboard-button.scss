@@ -35,6 +35,7 @@ $button-text-width : 154px;
   @include mobile-medium{
     width: 100% !important;
     margin-bottom: 0;
+    height: 50px;
   }
 
   .flex > &{

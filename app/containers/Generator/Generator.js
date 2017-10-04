@@ -67,7 +67,8 @@ class Generator extends Component {
     componentDidMount() {
         const canvas = new fabric.Canvas('c', { allowTouchScrolling: true })
         this.setState({ canvas }, () => {
-            this.createBoard(this.props.format)
+            this.createBoard(this.props.format);
+            this.disableWindowScrollOnDrag(canvas);
         })
     }
 
@@ -78,6 +79,20 @@ class Generator extends Component {
                 this.createBoard(nextProps.format)
             })
         }
+    }
+
+    disableWindowScrollOnDrag = (canvas) => {
+
+        canvas.on('mouse:down', function() {
+            document.querySelector(".generator").style.overflow = 'visible';
+            document.querySelector("body").style.overflow = 'visible';
+
+        });
+        canvas.on('mouse:up', function() {
+            document.querySelector(".generator").style.overflow = 'scroll';
+            document.querySelector("body").style.overflow = 'scroll';
+
+        });
     }
 
     createBoard = (wantedFormat) => {
@@ -107,24 +122,26 @@ class Generator extends Component {
         const isNormalFormat = (format === globalConstants.format.normal)
         const isFromUpload = (this.props.type === 'upload')
         const spaceToADDForDankFormatStyle = helpers.isMobile() ? 100 : 150
-        const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 30
-
-        const MOBILE_DANK_CANVAS_SIZE = helpers.isMobile() ? canvasContainerWidth : 400
+        const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200
+        console.log(canvasContainerWidth)
 
         canvas.backgroundColor = colors.GRAY_LIGHT
-        canvas.setWidth(canvasContainerWidth);
+        canvas.setWidth(canvasContainerWidth );
         canvas.clear()
 
 
         getDataUri(urlPath, isFromUpload, (dataUri) => {
+
             fabric.Image.fromURL(dataUri, image => {
 
                 this.setState({ isLoading: false });
 
-                image = isNormalFormat ? setHeightAndWidth(image) : setImageSizeDankFormat(image);
+                image = setHeightAndWidth(image, null, null, isNormalFormat);
 
                 canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle);
-                canvas.setWidth(isNormalFormat ? image.width : MOBILE_DANK_CANVAS_SIZE);
+                canvas.setWidth( isNormalFormat ? image.width : image.width + 25);
+                image.top = isNormalFormat ? 0 : (spaceToADDForDankFormatStyle - 15);
+                image.left = isNormalFormat ? 0 : (10);
                 canvas.backgroundColor = colors.WHITE;
                 canvas.add(image)
 
@@ -194,7 +211,7 @@ class Generator extends Component {
         const { isLoading, isCanvasReady, canvas } = this.state;
         const { meme, format, history, location, type } = this.props;
 
-        const generatorDashboardPosition = ( (isCanvasReady && helpers.isMobile()) ? `${_.get(this.canvasWrapper, 'offsetHeight') + 30}px` : null)
+        const generatorDashboardPosition = ( (isCanvasReady && helpers.isMobile()) ? `${_.get(this.canvasWrapper, 'offsetHeight')}px` : null)
         const dashboardStyle = generatorDashboardPosition ? {top: generatorDashboardPosition} : {};
 
         return (
@@ -207,7 +224,7 @@ class Generator extends Component {
 
                     <div className="generator__wrapper">
 
-                        <div  className={classNames({ 'with-shadow' : isCanvasReady }, "generator__canvas-wrapper col-sm-7")} ref={node => this.canvasWrapper = node}>
+                        <div  className={classNames({ 'with-shadow' : isCanvasReady }, "generator__canvas-wrapper col-xs-12 col-sm-7")} ref={node => this.canvasWrapper = node}>
                             <canvas id='c' dir="rtl"/>
                             {isLoading && <div className="spinner">Loading&</div>}
                         </div>

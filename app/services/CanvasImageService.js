@@ -1,7 +1,8 @@
-export const setHeightAndWidth = (picture, wantedMaxHeight, wantedMaxWidth)=> {
+export const setHeightAndWidth = (picture, wantedMaxHeight, wantedMaxWidth, isNormalFormat)=> {
     const SPACE_TO_RECUDE_FROM_CANVAS = window.innerWidth < 767 ? 30 : 50;
     const container = document.querySelector('.generator__canvas-wrapper');
-    let maxWidth = wantedMaxWidth || container.offsetWidth - SPACE_TO_RECUDE_FROM_CANVAS; // Max width for the image
+    const localWantedMaxWidth = (container.offsetWidth - SPACE_TO_RECUDE_FROM_CANVAS ) * (isNormalFormat ? 1 : 0.7);
+    let maxWidth = wantedMaxWidth || window.innerWidth > 767 ? localWantedMaxWidth : container.offsetWidth * 0.75; // Max width for the image
     let maxHeight = wantedMaxHeight || 500;    // Max height for the image
     let ratio = 0;  // Used for aspect ratio
 
@@ -35,7 +36,7 @@ export const setImageSizeDankFormat = (picture)=> {
     let maxWidth;
     let maxHeight;
     if (window.innerWidth < 700) {
-        maxWidth = canvas_wrapper.offsetWidth * 0.94 - 30; // Max width for the image
+        maxWidth = canvas_wrapper.offsetWidth * 0.94 - 60; // Max width for the image
         maxHeight = 400;    // Max height for the image
         picture.top = 90;
         picture.left = 15;
