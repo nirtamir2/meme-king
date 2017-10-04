@@ -34,7 +34,7 @@ class Searcher extends Component {
     onSearch = _.debounce((value) => {
         if (value.length >= 3) {
             this.props.fetchSearchResults(value);
-             AnalyticsService.sendEvent('Search',  value)
+            this.handleGoogleAnalytics(value);
             this.setState({ active: true })
         } else if (!value) {
             this.setState({ active: false })
@@ -44,7 +44,11 @@ class Searcher extends Component {
         }
 
 
-    }, 300, false)
+    }, 300, false);
+
+    handleGoogleAnalytics = _.once((value) => {
+        AnalyticsService.sendEvent('Search',  value);
+    })
 
 
     render() {

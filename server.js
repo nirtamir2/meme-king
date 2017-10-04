@@ -87,6 +87,16 @@ app.get('/api/search', async function (req, res) {
     res.send(data)
 });
 
+app.get('/api/all-time-popular-memes', async function (req, res) {
+    const data =  await DatabaseService.getAllMemes();
+    let flattenData = [];
+    _.forEach(data.val(), category => flattenData = [...flattenData,..._.values(category)]);
+     const sortedData = _.slice(flattenData.sort((a, b) => b.rating - a.rating), 0 , 48);
+     const obj = {};
+     _.forEach(sortedData, meme => obj[meme.id] = meme);
+    res.send(obj)
+});
+
 
 
 

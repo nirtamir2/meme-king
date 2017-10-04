@@ -60,6 +60,7 @@ export default function(state=initialState, action){
             break;
 
         case actionsConstants.FETCH_WEEKLY_POPULAR_SUCCESS:
+            console.log('popular', payload)
             return {
                 isFetching: false,
                 memes: payload,
@@ -102,6 +103,30 @@ export default function(state=initialState, action){
                 name: payload.name
             }
             break;
+
+
+        case actionsConstants.FETCH_ALL_TIME_POPULAR_MEMES_REQUEST:
+            return {
+                isFetching: true,
+                memes: [],
+            }
+            break;
+
+        case actionsConstants.FETCH_ALL_TIME_POPULAR_MEMES_SUCCESS:
+            console.log(payload)
+            return {
+                isFetching: false,
+                memes: payload,
+            }
+            break;
+
+        case actionsConstants.FETCH_ALL_TIME_POPULAR_MEMES_FAILED:
+            return {
+                isFetching: false,
+                memes: [],
+            }
+            break;
+
 
 
 

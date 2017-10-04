@@ -15,7 +15,7 @@ import Button from 'components/Button/Button';
 import analytics from '../../services/Analytics';
 
 // assets
-import logo from 'assets/images/logo-green.png';
+import logo from 'assets/images/logo.png';
 
 //  services
 import AnalyticsService from 'services/Analytics';

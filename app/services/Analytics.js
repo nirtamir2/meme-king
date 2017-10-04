@@ -9,6 +9,8 @@
             eventAction: `${eventData ? eventData + ',' : '' } ${date.getHours()}:${date.getMinutes()}` ,
             eventLabel: eventName
         });
+
+        console.log('<< GA >>', eventName , eventData || '')
     }
 
  };

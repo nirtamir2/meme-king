@@ -1,7 +1,7 @@
 
 // menu icons
 
-import mainIcon from 'assets/images/logo-green.png';
+import mainIcon from 'assets/images/logo.png';
 import myMemesIcon from 'assets/images/mymemes-icon.png';
 import newMemesIcon from 'assets/images/new-icon.png';
 import popularIcon from 'assets/images/popular-icon.png';
@@ -23,6 +23,7 @@ import generalIcon from 'assets/images/general-icon.jpg';
 import goalstarIcon from 'assets/images/goalstar-icon.jpg';
 import israeliTvIcon from 'assets/images/israeli_tv-icon.jpg';
 import mediaIcon from 'assets/images/media-icon.jpg';
+import crownIcon from 'assets/images/crown-icon.jpg';
 
 const menu = {
 
@@ -45,6 +46,13 @@ const menu = {
         title: 'ממים חדשים',
         icon: newMemesIcon,
         path: '/memes/new-memes',
+        visible: true
+    },
+
+    "all-time-popular": {
+        title: 'הפופולאריים בכל הזמנים',
+        icon: crownIcon,
+        path: '/memes/all-time-popular',
         visible: true
     },
 

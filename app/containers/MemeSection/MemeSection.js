@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // actions
-import { fetchMyMemes, fetchCategory, fetchWeeklyPopularMemes, fetchNewMemes } from 'actions/data-actions/data-actions';
+import { fetchMyMemes, fetchCategory, fetchWeeklyPopularMemes, fetchNewMemes, fetchAllTimePopularMemes } from 'actions/data-actions/data-actions';
 
 // components
 import MemeThumb from 'components/MemeThumb/MemeThumb'
@@ -51,6 +51,11 @@ import helpers from 'helpers/helpers';
 
             case 'new-memes': {
                 this.props.fetchNewMemes();
+                break;
+            }
+
+            case 'all-time-popular': {
+                this.props.fetchAllTimePopularMemes();
                 break;
             }
 
@@ -135,7 +140,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         fetchCategory: (category) => dispatch(fetchCategory(category)),
         fetchMyMemes: () => dispatch(fetchMyMemes()),
         fetchWeeklyPopularMemes : () => dispatch(fetchWeeklyPopularMemes()),
-        fetchNewMemes : () => dispatch(fetchNewMemes())
+        fetchNewMemes : () => dispatch(fetchNewMemes()),
+        fetchAllTimePopularMemes: () => dispatch(fetchAllTimePopularMemes())
     }
 }
 

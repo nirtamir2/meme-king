@@ -67,3 +67,22 @@ export function fetchNewMemes() {
         }
     }
 };
+
+
+export function fetchAllTimePopularMemes() {
+    return  {
+        [CALL_API]: {
+            endpoint: `${config.apiBaseUrl}/all-time-popular-memes`,
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            types: [
+                dataActionConstants.FETCH_ALL_TIME_POPULAR_MEMES_REQUEST,
+                dataActionConstants.FETCH_ALL_TIME_POPULAR_MEMES_SUCCESS,
+                dataActionConstants.FETCH_ALL_TIME_POPULAR_MEMES_FAILED
+            ],
+        }
+    }
+}
