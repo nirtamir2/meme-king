@@ -10,7 +10,7 @@ export default ({  urlPath, onSave, id, onCategoryChange }) => {
                 <input placeholder="description" />
                 <select onChange={(event) => onCategoryChange(id, event.target.value)}>
                     {_.map(menu, (value, prop) => {
-                        return <option>{prop}</option>
+                        return <option key={_.uniqueId()}>{prop}</option>
                     })}
                 </select>
                 <button onClick={() => onSave(id)}> save meme </button>

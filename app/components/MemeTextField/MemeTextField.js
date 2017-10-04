@@ -172,7 +172,6 @@ export default class MemeTextField extends Component {
         switch(action) {
             case 'remove' : {
                 if(_.isFunction(this.props.remove)) {
-                    console.log(this.props)
                     this.props.remove(this.props.id);
                 }
                 break;
@@ -249,7 +248,7 @@ export default class MemeTextField extends Component {
                 />
 
                 <div className="flex">
-                    {_.map(buttons, button => <MemeTextFieldButton {...button} onClick={() => this.handleAction(button.action)}/>)}
+                    {_.map(buttons, button => <MemeTextFieldButton key={_.uniqueId()} {...button} onClick={() => this.handleAction(button.action)}/>)}
                 </div>
 
             </div>

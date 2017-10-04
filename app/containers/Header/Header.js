@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 
 // actions
-import { toggleSideBar } from '../../actions/index';
+import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 
 // constants
 import categories from 'constants/menu';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route } from 'react-router-dom';
 // actions
-import { toggleSideBar } from '../../actions/index';
+import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 
 // components
 import Uploader from '../../components/Uploader/Uploader';

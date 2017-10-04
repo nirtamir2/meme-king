@@ -47,7 +47,7 @@ export function fetchWeeklyPopularMemes() {
             ],
         }
     }
-}
+};
 
 export function fetchNewMemes() {
 
@@ -66,4 +66,4 @@ export function fetchNewMemes() {
             ],
         }
     }
-}
+};

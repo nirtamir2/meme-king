@@ -19,6 +19,8 @@ import helpers from 'helpers/helpers';
 export default class App extends Component {
 
     componentWillMount() {
+
+
         // Initialize Firebase
         window.config = {
             apiKey: "AIzaSyA-f4RHZw205unjWdY4jvh_tJ7E1ZVPYKQ",
@@ -30,10 +32,13 @@ export default class App extends Component {
 
         firebase.initializeApp(config);
 
+        // localStorage
         LocalStorageService.init();
 
+        // google analytics
         AnalyticsService.sendEvent(helpers.isMobile() ? 'Mobile Entrance' : 'Desktop entrance');
 
+        //sentry
         Raven.config('https://cdc49c9d2b0c44f38b5b7911c8e58ddc@sentry.io/225081').install();
 
     };

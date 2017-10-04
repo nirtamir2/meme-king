@@ -60,7 +60,6 @@ export default function(state=initialState, action){
             break;
 
         case actionsConstants.FETCH_WEEKLY_POPULAR_SUCCESS:
-            console.log('--', payload)
             return {
                 isFetching: false,
                 memes: payload,

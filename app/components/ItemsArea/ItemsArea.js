@@ -56,7 +56,7 @@ export default class ItemsArea extends Component {
             <div className="items_area">
                 <div className="items_wrapper">
                     <ItemRemover canvas={this.props.canvas}/>
-                    { _.map(this.state.items, (item) => <div><img onClick={this.addItem} src={item.file} /></div>)}
+                    { _.map(this.state.items, (item) => <div key={_.uniqueId()}><img onClick={this.addItem} src={item.file} /></div>)}
                 </div>
             </div>
         );

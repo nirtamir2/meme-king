@@ -66,9 +66,6 @@ export default class Admin extends Component {
     }
 
     onSave = (id) => {
-        console.log('--',`${config.apiBaseUrl}/save-new-meme`)
-        console.log(this.state.memes[id])
-       // axios.post(`${config.apiBaseUrl}/save-new-meme` , this.state.memes[id]).then(response => console.log(response));
         axios({
             method: 'post',
             url: `${config.apiBaseUrl}/save-new-meme`,
@@ -99,7 +96,7 @@ export default class Admin extends Component {
                         icon="glyphicon glyphicon-cloud-upload"
                         htmlFor="images"
                 />
-                {_.map(this.state.memes, meme => <EditMemeArea onCategoryChange={this.onCategoryChange} onSave={this.onSave} {...meme} />)}
+                {_.map(this.state.memes, meme => <EditMemeArea key={_.uniqueId()} onCategoryChange={this.onCategoryChange} onSave={this.onSave} {...meme} />)}
             </div>
         )
     }

@@ -1,4 +1,5 @@
 
+
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
 
 export function toggleSideBar(isSideBarVisible){

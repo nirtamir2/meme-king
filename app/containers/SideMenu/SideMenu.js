@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // actions
-import { toggleSideBar } from 'actions/index';
+import { toggleSideBar } from 'actions/sidebar-actions/sidebar-actions';
 
 // components
 import MenuItem from "components/SideBarItem/SideBarItem";
@@ -61,6 +61,7 @@ export class SideMenu extends Component {
                                       path={path}
                                       linkText={linkText || title}
                                       icon={icon}
+                                      key={_.uniqueId()}
                             />
                         )
                         })

@@ -10,7 +10,7 @@ import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature
 import GeneratorDashboardSkeleton from 'components/GeneratorDashboardSkeleton/GeneratorDashboardSkeleton';
 
 // helpers
-import {setHeightAndWidth, setImageSizeDankFormat} from 'services/CanvasImageService'
+import {setHeightAndWidth} from 'services/CanvasImageService'
 import helpers from 'helpers/helpers'
 
 // constants
@@ -123,7 +123,6 @@ class Generator extends Component {
         const isFromUpload = (this.props.type === 'upload')
         const spaceToADDForDankFormatStyle = helpers.isMobile() ? 100 : 150
         const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200
-        console.log(canvasContainerWidth)
 
         canvas.backgroundColor = colors.GRAY_LIGHT
         canvas.setWidth(canvasContainerWidth );
