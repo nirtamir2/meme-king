@@ -1,110 +1,102 @@
-$closeColor : darkgray;
+$closeColor: darkgray;
 
-.generator{
-  position:fixed;
-  height:96%;
+.generator {
+  position: fixed;
+  height: 96%;
   width: 95%;
   max-width: 1300px;
-  margin-right:auto;
-  margin-left:auto;
-  top:10px;
-  left:0;
-  right:0;
+  margin-right: auto;
+  margin-left: auto;
+  top: 10px;
+  left: 0;
+  right: 0;
   border-radius: 5px;
-  box-shadow: 0px 0px 16px -2px rgba(0,0,0,0.4);
+  box-shadow: 0px 0px 16px -2px rgba(0, 0, 0, 0.4);
   z-index: 80001;
-  overflow:scroll;
-  direction : ltr;
-  padding:25px;
-  background:$main-bg;
+  overflow: scroll;
+  direction: ltr;
+  padding: 25px;
+  background: $main-bg;
 
-
-  canvas{
-    width: 100%;
-  }
-
-  @include mobile-medium{
+  @include mobile-medium {
     border-radius: 0;
     top: 0px;
     height: 100%;
-    width:100%;
+    width: 100%;
   }
 
-  &__close{
+  .generator__canvas-wrapper {
+
+    background: $main-bg;
+    z-index:9999;
+
+    &.with-shadow {
+      @include mobile-medium {
+        border-bottom: none;
+        box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    @include mobile-medium {
+      position: fixed;
+      top: 40px;
+      z-index: 9999;
+      left: 0;
+      right: 0;
+      width: 100%;
+      border-bottom: 1px solid #8d8d8d;
+    }
+
+    canvas {
+      width: 100%;
+    }
+
+  }
+
+  &__close {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size:4rem;
-    color:$closeColor ;
-    cursor:pointer;
-    @include mobile-medium{
+    font-size: 4rem;
+    color: $closeColor;
+    cursor: pointer;
+    @include mobile-medium {
       position: fixed;
-      top : 0;
-      right : -2px;
-      color:darken($closeColor, 8%);
+      top: 0;
+      right: -2px;
+      color: darken($closeColor, 8%);
 
     }
 
-    &:hover{
+    &:hover {
       color: darken($closeColor, 10%)
     }
-    &:active{
+    &:active {
       color: darken($closeColor, 20%)
     }
   }
 
-  &__wrapper{
-    margin : 0 auto;
-    width:80%;
+  &__wrapper {
+    margin: 0 auto;
+    width: 80%;
     padding: 15px;
     border: 1px solid #8d8d8d;
     border-radius: 5px;
-    display:flex;
+    display: flex;
     direction: ltr;
-    @include mobile-medium{
+    @include mobile-medium {
       flex-direction: column;
       width: 95%;
-      border:none;
+      border: none;
       padding: 5px;
     }
   }
 
-  &__title{
-    @include  mobile-medium{
-      display:none;
-    }
-  }
-  &__dashboard{
-    .space-between{
-      @include mobile-medium{
-        flex-direction: column;
-      }
+  &__title {
+    @include mobile-medium {
+      display: none;
     }
   }
 
 }
 
-.bottom_details{
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 4px;
-
-  @include mobile-medium{
-    margin: 0 auto;
-    max-width: 80%;
-    position:relative;
-  }
-  h4{
-    @include mobile-medium{
-      font-size:16px;
-      line-height:1.3;
-    }
-  }
-  p{
-    @include mobile-medium{
-      font-size:11px;
-    }
-  }
-}

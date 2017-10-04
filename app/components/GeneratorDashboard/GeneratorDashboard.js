@@ -5,6 +5,7 @@ import Button from '../GeneratorDashboardButton/GeneratorDashboardButton';
 import ItemsArea from '../ItemsArea/ItemsArea';
 import GeneratorUploader from '../GeneratorUploader/GeneratorUploader';
 import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContainer';
+import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature';
 
 // services
 import LocalStorageService from 'services/LocalStorage';
@@ -112,7 +113,7 @@ export default class TextInputsContainer extends Component {
 
     render(){
 
-        const { format, canvas, isCanvasReady } = this.props;
+        const { format, canvas, isCanvasReady, style } = this.props;
         const FORMAT_BUTTON_TEXT = format === globalConstants.format.normal ? 'פורמט דאנק מימ' : "פורמט רגיל";
         const ADD_TEXT_LINE =   "הוספת שורת טקסט" ;
         const ADD_AN_ITEM =  "הוספת פריט" ;
@@ -120,7 +121,7 @@ export default class TextInputsContainer extends Component {
         const DOWNLOAD = "הורדה" ;
 
         return (
-            <div>
+            <div style={style} className="box-generator-dashboard col-sm-5">
 
                 {isCanvasReady && (
                 <TextFieldsContainer ref={ elem => this.TextFieldsContainer = elem}
@@ -135,9 +136,7 @@ export default class TextInputsContainer extends Component {
                     onClick={this.addTextLine}
                 />
 
-                <div className="flex space-between">
-                    <GeneratorUploader canvas={canvas} />
-                </div>
+                <GeneratorUploader canvas={canvas} />
 
                 <Button label={ADD_AN_ITEM} icon="glyphicon glyphicon-sunglasses"
                         onClick={this.toggleItemsArea}
@@ -155,6 +154,8 @@ export default class TextInputsContainer extends Component {
                         className={DOWNLOAD}
                         onClick={this.download}
                 />
+
+                <GeneratorSignature className="visible-xs" />
             </div>
         );
     }

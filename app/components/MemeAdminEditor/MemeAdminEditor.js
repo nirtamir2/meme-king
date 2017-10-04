@@ -1,26 +1,23 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
-
-// components
-import Button from 'components/Button/Button';
-
-// helpers
-import helpers from 'helpers/helpers';
+import React from 'react';
 
 import menu from 'constants/menu';
 
-export default ({ updateDescription, image, updateCategory, id }) => {
-
-
-    return(
-        <div>
-            <img src={image} style={{width: 200}} />
-            <input placeholder="description" onChange={() => updateCategory(id)} />
-            <select placeholder="category" onChange={() => updateCategory(id)}>
-                {_.map(menu, (value, prop) => {
-                   return <option value={prop}>{prop}</option>
-                })}
-            </select>
+export default ({  urlPath, onSave, id, onCategoryChange }) => {
+    return (
+        <div className="container">
+            <div className="col-xs-6">
+                <input placeholder="description" />
+                <select onChange={(event) => onCategoryChange(id, event.target.value)}>
+                    {_.map(menu, (value, prop) => {
+                        return <option>{prop}</option>
+                    })}
+                </select>
+                <button onClick={() => onSave(id)}> save meme </button>
+            </div>
+            <div className="col-xs-6">
+                <img src={urlPath} style={{width: '200px'}} />
+            </div>
         </div>
     )
 }

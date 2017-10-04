@@ -1,11 +1,13 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
+import classNames from 'classnames';
 
 // components
 import GeneratorDashboard from 'components/GeneratorDashboard/GeneratorDashboard';
 import PopupCover from 'components/PopupCover/PopupCover';
+import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature';
+import GeneratorDashboardSkeleton from 'components/GeneratorDashboardSkeleton/GeneratorDashboardSkeleton';
 
 // helpers
 import {setHeightAndWidth, setImageSizeDankFormat} from 'services/CanvasImageService'
@@ -64,7 +66,6 @@ class Generator extends Component {
 
     componentDidMount() {
         const canvas = new fabric.Canvas('c', { allowTouchScrolling: true })
-
         this.setState({ canvas }, () => {
             this.createBoard(this.props.format)
         })
@@ -189,16 +190,12 @@ class Generator extends Component {
         document.querySelector(".cover").style.display = 'none'
     }
 
-    render = () => {
-        const { isLoading, isCanvasReady, canvas } = this.state
-        const { meme, format, history, location, type } = this.props
+    render(){
+        const { isLoading, isCanvasReady, canvas } = this.state;
+        const { meme, format, history, location, type } = this.props;
 
-        const style= {
-            width: '100%',
-            height: '100%',
-            background: 'red'
-        }
-
+        const generatorDashboardPosition = ( (isCanvasReady && helpers.isMobile()) ? `${_.get(this.canvasWrapper, 'offsetHeight') + 30}px` : null)
+        const dashboardStyle = generatorDashboardPosition ? {top: generatorDashboardPosition} : {};
 
         return (
             <PopupCover>
@@ -210,14 +207,16 @@ class Generator extends Component {
 
                     <div className="generator__wrapper">
 
-                        <div className="generator__canvas-wrapper col-sm-7">
+                        <div  className={classNames({ 'with-shadow' : isCanvasReady }, "generator__canvas-wrapper col-sm-7")} ref={node => this.canvasWrapper = node}>
                             <canvas id='c' dir="rtl"/>
                             {isLoading && <div className="spinner">Loading&</div>}
                         </div>
+                        {isCanvasReady
+                            ?
 
-                        <div className="generator__dashboard col-sm-5">
                             <GeneratorDashboard
                                 history={history}
+                                style={dashboardStyle}
                                 type={type}
                                 location={location}
                                 meme={meme}
@@ -226,7 +225,11 @@ class Generator extends Component {
                                 canvas={canvas}
                                 updateMemeRating={this.props.updateMemeRating}
                             />
-                        </div>
+                            :
+
+                            <GeneratorDashboardSkeleton />
+                        }
+
 
                     </div>
 
@@ -234,15 +237,8 @@ class Generator extends Component {
                          onClick={this.closeGenerator}
                     />
 
-                    <div className="bottom_details text-center">
-                        <h4>
-                            The generator was built by <a href="mailto:nirbenya@gmail.com"> Nir Ben-Yair </a>
-                        </h4>
-                        <p className="text-center">
-                            הפונט אשר בשימוש הינו הפונט ׳אימפקטה׳, שנתרם ע״י הטיפוגרף עודד עזר.
-                            <a href="http://www.hebrewtypography.com/"> לאתר הפונטים הישראלי</a>
-                        </p>
-                    </div>
+                    <GeneratorSignature className="hidden-xs" />
+
 
                 </div>
 

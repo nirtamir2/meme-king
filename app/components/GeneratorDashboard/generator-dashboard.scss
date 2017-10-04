@@ -1,0 +1,14 @@
+.box-generator-dashboard {
+  position: relative;
+  z-index: 1;
+
+  .space-between {
+    @include mobile-medium {
+      flex-direction: column;
+    }
+  }
+
+  @include mobile-medium {
+    top: 200px;
+  }
+}

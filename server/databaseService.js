@@ -92,6 +92,11 @@ class DatabaseService {
         return _.filter(flattenAllMemesByCategories, meme => _.includes(meme.description, query))
     }
 
+    saveSingleMemeToDataBase(meme) {
+        const table = this.database.ref(dbConstants.memesTable);
+        table.ref( `${meme.category}/${meme.id}`).set(meme)
+    }
+
     getAllMemes() {
         return this.database.ref(`/${dbConstants.memesTable}/`).once('value');
     }

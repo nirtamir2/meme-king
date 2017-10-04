@@ -65,6 +65,7 @@ export default class GeneratorUploader extends Component {
                 <GeneratorDashboardButton
                     label={UPLOAD_TEXT}
                     wrapWithLabel
+                    isWaiting={this.props.isWaiting}
                     icon="glyphicon glyphicon-picture"
                     htmlFor="generator-uploader"
                 />

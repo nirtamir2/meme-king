@@ -1,0 +1,39 @@
+.box-generator-skeleton {
+
+  @include mobile-medium {
+    top: 300px;
+    width: calc(100% - 30px);
+    margin : 0 auto;
+    position: relative;
+  }
+
+  .item {
+    width: 100%;
+    height: 35px;
+    margin-bottom: 15px;
+
+    &.input-field {
+      background-color: white;
+      margin-bottom: 0;
+    }
+
+    &.buttons-field {
+      background-color: $text-control-btn;
+    }
+
+    &.generator-btn-field {
+      background-color : $mainGeneratorControllersColor;
+    }
+  }
+
+  &:first-of-type {
+    margin-bottom: 0;
+  }
+
+  .meme-text-fields-container {
+    .meme-text-field {
+      .input-fields, .buttons-field {
+      }
+    }
+  }
+}

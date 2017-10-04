@@ -11,14 +11,16 @@ const isProduction = (!(NODE_ENVIRONMENT === 'development'));
 
 // services
 const DatabaseService = require('./server/databaseService');
+const StorageService = require('./server/StorageService');
 
 // init
 DatabaseService.init(isProduction);
 
 
 
-
 // USE
+
+app.use(bodyParser({limit: '50mb'}))
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -94,6 +96,17 @@ app.post('/api/update-meme-rating', function (req, res) {
     DatabaseService.updatePopularMemeRating(req.body);
     res.sendStatus(200)
 });
+
+app.post('/api/save-new-meme', function (req, res) {
+    console.log('before');
+    console.log(typeof req.body,  req.body.category)
+    StorageService.uploadMemeAndSaveToDataBase(req.body).then(() => {
+        console.log('done')
+        res.sendStatus(200)
+
+    })
+});
+
 
 
 
