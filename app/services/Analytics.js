@@ -6,7 +6,7 @@
         ga('send', {
             hitType: 'event',
             eventCategory: eventName,
-            eventAction: `${eventData} , ${date.getHours()}:${date.getMinutes()}` ,
+            eventAction: `${eventData ? eventData + ',' : '' } ${date.getHours()}:${date.getMinutes()}` ,
             eventLabel: eventName
         });
     }
