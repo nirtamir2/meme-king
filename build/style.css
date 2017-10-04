@@ -1077,7 +1077,7 @@ header {
   align-items: center;
   padding: 7px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  font-weight: bold; }
+  font-weight: 500; }
   .menu-item:hover {
     border-bottom: 1px solid #0097EB; }
   .menu-item.active {
