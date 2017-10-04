@@ -171,7 +171,10 @@ export default class MemeTextField extends Component {
 
         switch(action) {
             case 'remove' : {
-                this.props.remove(this.props.id);
+                if(_.isFunction(this.props.remove)) {
+                    console.log(this.props)
+                    this.props.remove(this.props.id);
+                }
                 break;
             }
 

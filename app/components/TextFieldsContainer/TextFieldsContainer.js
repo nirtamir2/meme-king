@@ -42,7 +42,7 @@ export default class TextFieldsContainer extends Component {
                 format={this.props.format}
                 key={_.uniqueId()}
                 id={_.uniqueId()} r
-                emove={this.removeTextInput}
+                remove={this.removeTextInput}
                 canvas={canvas}
                 position="bottom" /> ,
         ];
