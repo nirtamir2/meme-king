@@ -116,7 +116,8 @@ class Generator extends Component {
 
         canvas.backgroundColor = colors.GRAY_LIGHT
         canvas.setWidth(canvasContainerWidth );
-        canvas.clear()
+        canvas.clear();
+        console.log(this.props.meme,' meme ')
 
 
         getDataUri(urlPath, this.props.isFromUpload, (dataUri) => {
@@ -258,6 +259,7 @@ class Generator extends Component {
 function mapStateToProps(state, ownProps) {
 
     const { match: { params }, location, history } = ownProps;
+
 
     const memeId = params.id;
     const isFromUpload = (_.get(location, 'state.from') === 'upload');

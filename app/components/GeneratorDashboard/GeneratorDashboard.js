@@ -101,7 +101,8 @@ export default class TextInputsContainer extends Component {
             const location = {
                 pathname : wantedPath,
                 state: {
-                    urlPath: meme.urlPath
+                    urlPath: meme.urlPath,
+                    from : 'upload'
                 }
             }
             history.push(location)
