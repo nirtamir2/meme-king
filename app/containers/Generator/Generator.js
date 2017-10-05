@@ -119,8 +119,7 @@ class Generator extends Component {
     addImage = (format) => {
         const { urlPath } = this.props.meme || {}
         const { canvas } = this.state
-        const isNormalFormat = (format === globalConstants.format.normal)
-        const isFromUpload = (this.props.type === 'upload')
+        const isNormalFormat = (format === globalConstants.format.normal);
         const spaceToADDForDankFormatStyle = helpers.isMobile() ? 100 : 150
         const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200
 
@@ -129,7 +128,7 @@ class Generator extends Component {
         canvas.clear()
 
 
-        getDataUri(urlPath, isFromUpload, (dataUri) => {
+        getDataUri(urlPath, this.props.isFromUpload, (dataUri) => {
 
             fabric.Image.fromURL(dataUri, image => {
 
@@ -270,8 +269,9 @@ function mapStateToProps(state, ownProps) {
     const { match: { params }, location, history } = ownProps;
 
     const memeId = params.id;
-    const isFromUpload = !!_.get(location, 'state.urlPath');
-    const currentMemeObj = isFromUpload ?
+    const isFromUpload = (_.get(location, 'state.from') === 'upload');
+    const isFromSearch = (_.get(location, 'state.from') === 'search')
+    const currentMemeObj = (isFromUpload || isFromSearch) ?
         {
             urlPath: location.state.urlPath,
             id: helpers.uniqueId()
@@ -288,6 +288,8 @@ function mapStateToProps(state, ownProps) {
         memeId: memeId,
         history,
         location,
+        isFromUpload,
+        isFromSearch
     }
 }
 

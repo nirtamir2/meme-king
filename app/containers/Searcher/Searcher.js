@@ -78,7 +78,7 @@ class Searcher extends Component {
                                        e.preventDefault();
                                        const location = {
                                            pathname: `/generator/upload/${globalConstants.format.normal}`,
-                                           state: {urlPath: meme.urlPath}
+                                           state: { urlPath: meme.urlPath, from :'search' }
                                        }
                                        this.props.history.push(location)
                                    }}

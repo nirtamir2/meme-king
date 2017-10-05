@@ -44,7 +44,7 @@ export default class Uploader extends Component {
         const location = {
             pathname: '/cropper',
             state : {
-                image
+                image,
             }
         }
         this.props.history.push(location)

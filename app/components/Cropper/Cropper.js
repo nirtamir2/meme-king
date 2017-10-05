@@ -13,7 +13,10 @@ export default class Cropper extends Component {
        const image = this.cropper.getCroppedCanvas().toDataURL();
        const location = {
            pathname: `/generator/upload/${globalConstants.format.normal}`,
-           state: { urlPath: image }
+           state: {
+               urlPath: image,
+               from : 'upload'
+           }
        }
         this.props.history.push(location)
     }
