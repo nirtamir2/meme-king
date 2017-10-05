@@ -62,7 +62,10 @@ export default class MemeTextField extends Component {
         if (shouldStyleTextToDankFormat) {
             this.handleAction('toggleTextColor');
             setTimeout(() => this.handleAction('makeFontLight'), 200);
-            setTimeout(() =>  this.styleBothLayers({textAlign: 'right'}), 500)
+            setTimeout(() =>  this.styleBothLayers({textAlign: 'right'}), 500);
+            setTimeout(() =>  this.styleBothLayers({fontSize: helpers.isMobile() ?  24 : 28}), 700);
+            setTimeout(() =>  this.styleBothLayers({lineHeight: 1.3}), 90000)
+
         }
     }
 

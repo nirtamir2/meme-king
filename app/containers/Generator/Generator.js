@@ -24,9 +24,9 @@ import { updateMemeRating } from 'actions/meme-actions/meme-actions';
 import watemarkDesktop from 'assets/images/watermark-desktop.jpg';
 import watermarkMobile from 'assets/images/watermark-mobile.jpg';
 
-function getDataUri(url, isFromUpload, callback) {
+function getDataUri(url, dontPerformConversion, callback) {
 
-    if (isFromUpload) {
+    if (dontPerformConversion) {
         callback(url)
     }
 
@@ -53,15 +53,6 @@ class Generator extends Component {
         isLoading: true,
         canvas: null,
         isCanvasReady: false,
-    }
-
-    componentWillMount() {
-      //  document.querySelector(".cover").style.display = 'block';
-    }
-
-    componentWillUnmount() {
-      //  document.querySelector(".cover").style.display = 'none'
-
     }
 
     componentDidMount() {
@@ -120,7 +111,7 @@ class Generator extends Component {
         const { urlPath } = this.props.meme || {}
         const { canvas } = this.state
         const isNormalFormat = (format === globalConstants.format.normal);
-        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 100 : 150
+        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150
         const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200
 
         canvas.backgroundColor = colors.GRAY_LIGHT

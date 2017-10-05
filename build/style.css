@@ -937,10 +937,39 @@ header {
   height: 100%; }
 
 .meme-thumb {
-  overflow: hidden;
   position: relative;
   cursor: pointer;
   float: left; }
+  .meme-thumb .meme-thumb__download-counter {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 200px;
+    font-size: 12px; }
+    @media only screen and (max-width: 767px) {
+      .meme-thumb .meme-thumb__download-counter {
+        left: 3px;
+        width: 18px;
+        height: 18px;
+        font-size: 10px; } }
+    .meme-thumb .meme-thumb__download-counter .crown {
+      position: absolute;
+      top: -10px;
+      width: 20px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto; }
+      @media only screen and (max-width: 767px) {
+        .meme-thumb .meme-thumb__download-counter .crown {
+          width: 15px; } }
   @media only screen and (max-width: 767px) {
     .meme-thumb {
       width: 33.333333333333%; } }
@@ -980,8 +1009,6 @@ header {
         .meme-thumb .meme-thumb__overlay .meme-thumb__details {
           display: block;
           font-size: 10px; } }
-      .meme-thumb .meme-thumb__overlay .meme-thumb__details .meme-thumb__download-counter {
-        color: #0097EB; }
 
 .back-to-top {
   position: fixed;

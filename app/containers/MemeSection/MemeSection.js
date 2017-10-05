@@ -112,6 +112,7 @@ import helpers from 'helpers/helpers';
                 <div className="memes-container">
                     {_.map(memesToShow, meme =>
                         <MemeThumb
+                            shouldShowRatingBadge={category === 'popular' || category ==='all-time-popular'}
                             width={100 / this.state.memesPerRow}
                             key={meme.id}
                             {...meme}

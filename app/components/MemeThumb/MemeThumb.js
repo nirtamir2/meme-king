@@ -11,7 +11,10 @@ import globalConstants from 'constants/global';
 // helpers
 import helpers from 'helpers/helpers';
 
-export default ({ thumbPath, description, rating, category, id, urlPath, width, onClick=_.noop, urlLinkDisabled }) => {
+// assets
+import smallCrown from 'assets/images/small-crown.png';
+
+export default ({ thumbPath, description, rating, category, id, urlPath, width, onClick=_.noop, shouldShowRatingBadge }) => {
 
     const imageHeight = helpers.isMobile() ? (width * 3) : (width * 10);
 
@@ -21,9 +24,14 @@ export default ({ thumbPath, description, rating, category, id, urlPath, width, 
             {/*<LazyLoad  offset={window.innerWidth > 767 ? 100 : 300} height={window.innerWidth < 767 ? 100 : 160}>*/}
             <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img" />
             {/*</LazyLoad>*/}
+            {(shouldShowRatingBadge && rating) && (
+                <span className="meme-thumb__download-counter">
+                    <img src={smallCrown} className="crown"/>
+                    <span>{rating * 4}</span>
+                </span>
+            )}
             <div className="meme-thumb__overlay">
                 <p className="meme-thumb__details">
-                    {rating && <span className="meme-thumb__download-counter"><br/> {rating * 4} הורדות  </span>}
                     <span className="meme-thumb__description">
                         {description}
                     </span>
