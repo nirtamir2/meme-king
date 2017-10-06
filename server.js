@@ -14,8 +14,8 @@ const DatabaseService = require('./server/DatabaseService')
 const StorageService = require('./server/StorageService')
 
 // init
-DatabaseService.init(isProduction)
-StorageService.init(isProduction)
+DatabaseService.init(isProduction);
+StorageService.init(isProduction);
 
 
 // USE

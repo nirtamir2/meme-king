@@ -13,7 +13,7 @@ class DatabaseService {
         let fireBaseConfig = {};
 
         if (!isProduction) {
-            fireBaseConfig = require('../memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js');
+            fireBaseConfig = require('../anigma/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js');
 
         } else {
             fireBaseConfig = {

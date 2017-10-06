@@ -30,7 +30,7 @@ class StorageService {
         } else {
             this.gcs = storage({
                 projectId: 'memeking-80290',
-                keyFilename: 'storage.json'
+                keyFilename: '../anigma/storage.json'
             })
         }
 

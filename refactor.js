@@ -14,7 +14,7 @@ const storage = require('@google-cloud/storage');
 
 const gcs = storage({
     projectId: 'memeking-80290',
-    keyFilename: './storage.json'
+    keyFilename: './anigma/storage.json'
 });
 
 const myBucket = gcs.bucket('meme-king-storage')
@@ -76,7 +76,7 @@ let size = 0;
 
 
     const admin = require("firebase-admin");
-    const serviceAccount = require("./memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js");
+    const serviceAccount = require("./anigma/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js");
 
 
     admin.initializeApp({
