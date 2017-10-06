@@ -1,89 +1,91 @@
-const fs = require('fs');
-const recursive = require('recursive-readdir');
-const path = require('path');
-const _ = require('lodash');
-const storage = require('@google-cloud/storage');
+const fs = require('fs')
+const recursive = require('recursive-readdir')
+const path = require('path')
+const _ = require('lodash')
+const storage = require('@google-cloud/storage')
 var stream = require('stream');
-const axios = require('axios')
+
 // services
 const DatabaseService = require('./databaseService');
 
-const gcs = storage({
-    projectId: 'memeking-80290',
-    keyFilename: './storage.json'
-});
-function b64toBlob(b64Data, contentType, sliceSize) {
-    contentType = contentType || '';
-    sliceSize = sliceSize || 512;
-
-    var byteCharacters = atob(b64Data);
-    var byteArrays = [];
-
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-        var byteNumbers = new Array(slice.length);
-        for (var i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-
-        var byteArray = new Uint8Array(byteNumbers);
-
-        byteArrays.push(byteArray);
-    }
-
-    var blob = new Blob(byteArrays, {type: contentType});
-    return blob;
-}
-const myBucket = gcs.bucket('meme-king-storage')
 class StorageService {
 
-    uploadMemeAndSaveToDataBase(meme) {
+    init(isProduction) {
+        if(isProduction) {
+            this.gcs = storage({
+                credentials: {
+                    "type": "service_account",
+                    "project_id": "memeking-80290",
+                    "private_key_id": "a2d02c0f317a9cceff4dd2abbaf2110db0ecbdbc",
+                    "private_key": JSON.parse(process.env.GOOGLE_STORAGE_KEY),
+                    "client_email": "storager@memeking-80290.iam.gserviceaccount.com",
+                    "client_id": "111504596396275984699",
+                    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                    "token_uri": "https://accounts.google.com/o/oauth2/token",
+                    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+                    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storager%40memeking-80290.iam.gserviceaccount.com"
+                }
 
-       return new Promise(resolve => {
-            axios.get(meme.urlPath, {"proxy": {
-               "host": "localhost",
-               "port": '8081'
-           }})
-               .then(res => {
-                   if(res.error){
-                       console.log(error)
-                   }
-                   console.log('blob')
-                   return res.blob()
-               })
-               .then(blob =>{
-                   console.log(blob)
-                   resolve()
-               })
-       })
-//         return new Promise((resolve) => {
-//             var bufferStream = new stream.PassThrough();
-//             bufferStream.end(new Buffer(blob, 'base64'));
-//             var file = myBucket.file(`${meme.id}.jpg`);
-// //Pipe the 'bufferStream' into a 'file.createWriteStream' method.
-//             bufferStream.pipe(file.createWriteStream({
-//                 metadata: {
-//                     contentType: 'image/jpeg',
-//                     metadata: {
-//                         custom: 'metadata'
-//                     }
-//                 },
-//                 public: true,
-//                 validation: "md5",
-//                 destination :'/saved'
-//             }))
-//                 .on('error', function(err) {
-//                     console.log(err)
-//                 })
-//                 .on('finish', function() {
-//                     // The file upload is complete.
-//                     resolve();
-//                 });
-//         })
+            })
+        } else {
+            this.gcs = storage({
+                projectId: 'memeking-80290',
+                keyFilename: 'storage.json'
+            })
+        }
+
+        this.myBucket = this.gcs.bucket('meme-king-storage')
+
+    }
+
+    async uploadMemeAndSaveToDataBase(meme) {
+
+        const fileName = meme.id;
+        const url = `https://storage.googleapis.com/meme-king-storage/memes/${meme.category}/${fileName}.jpg`
+        const thumbUrl = `https://storage.googleapis.com/meme-king-storage/meme-thumbs/${meme.category}/${fileName}.jpg`
+
+        await this.uploadToStorage(meme.urlPath,  meme.id, meme.category, 'memes')
+        await this.uploadToStorage(meme.thumbPath,  meme.id, meme.category, 'meme-thumbs')
+
+        const finalMeme = {
+            ...meme,
+            urlPath: url,
+            thumbPath: thumbUrl
+        };
+
+        DatabaseService.saveSingleMemeToDataBase(finalMeme);
+        console.log(finalMeme, 'final meme');
+    }
+
+    uploadToStorage(image, fileName, category, type) {
+        return new Promise(resolve => {
+            const base64Image = image.split(';base64,').pop()
+            const bufferStream = new stream.PassThrough()
+            bufferStream.end(new Buffer(base64Image, 'base64'))
+
+            const file = this.myBucket.file(`/${type}/${category}/${fileName}.jpg`)
+
+            bufferStream.pipe(file.createWriteStream({
+                metadata: {
+                    contentType: 'image/jpeg',
+                    metadata: {
+                        custom: 'metadata'
+                    }
+                },
+                public: true,
+                validation: "md5"
+            }))
+                .on('error', function (err) {
+                })
+                .on('finish', function () {
+                    // The file upload is complete.
+                    resolve()
+                    console.log('new meme upload complete')
+                })
+        })
     }
 }
 
-module.exports = new StorageService();
+module.exports = new StorageService()
 
 

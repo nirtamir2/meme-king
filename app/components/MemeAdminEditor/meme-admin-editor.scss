@@ -1,0 +1,37 @@
+.box-meme-admin-editor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid black;
+  padding: 15px;
+  margin: 10px 0;
+
+  &.saved {
+    background: darken($main-bg, 15%);
+  }
+
+  select {
+    width: 100%;
+  }
+
+  .danger {
+    background: $danger;
+  }
+
+  .description-container {
+    display:flex;
+    flex-direction: column;
+    textarea {
+      height: 100%;
+      @extend %input;
+    }
+
+
+    h4 {
+      width: 200px;
+    }
+
+
+  }
+}

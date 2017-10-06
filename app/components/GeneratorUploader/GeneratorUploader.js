@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // helpers
-import { setHeightAndWidth } from '../../services/CanvasImageService';
+import { setHeightAndWidth } from '../../helpers/modifyImageDimensions';
 
 // components
 import GeneratorDashboardButton from 'components/GeneratorDashboardButton/GeneratorDashboardButton';

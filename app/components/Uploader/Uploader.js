@@ -35,7 +35,6 @@ export default class Uploader extends Component {
 
         this.input.value = '';
 
-        document.querySelector(".cover").style.display = 'block';
         AnalyticsService.sendEvent('upload');
 
     };

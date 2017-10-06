@@ -22,18 +22,24 @@ import AnalyticsService from 'services/Analytics';
 
 class Searcher extends Component {
 
-    state = {
-        active: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            active: false,
+            value: _.get(props, 'query.search') || ''
+        }
     }
 
     clearResults = () => {
-        this.setState({ active: false });
+
+        this.setState({ active: false, value : '' });
         this.props.cleanSearchResults();
     }
 
     onSearch = _.debounce((value) => {
         if (value.length >= 3) {
             this.props.fetchSearchResults(value);
+
             this.handleGoogleAnalytics(value);
             this.setState({ active: true })
         } else if (!value) {
@@ -43,8 +49,12 @@ class Searcher extends Component {
             this.setState({ active: false })
         }
 
-
     }, 300, false);
+
+    onChange = (value) => {
+        this.setState({ value });
+        this.onSearch(value);
+    }
 
     handleGoogleAnalytics = _.once((value) => {
         AnalyticsService.sendEvent('Search',  value);
@@ -59,9 +69,10 @@ class Searcher extends Component {
 
         return (
             <div className={classNames('searcher', active && 'active')}>
-                <SearchInput onChange={this.onSearch}
+                <SearchInput onChange={this.onChange}
                              clearResults={this.clearResults}
                              isFetching={isFetching}
+                             value={this.state.value}
                 />
                 {!_.isEmpty(searchResults) && (
                     <p className="number_of_memes_found">
@@ -78,7 +89,8 @@ class Searcher extends Component {
                                        e.preventDefault();
                                        const location = {
                                            pathname: `/generator/upload/${globalConstants.format.normal}`,
-                                           state: { urlPath: meme.urlPath, from :'search' }
+                                           state: { urlPath: meme.urlPath, from :'search' },
+                                           query: { search: this.state.value}
                                        }
                                        this.props.history.push(location)
                                    }}
@@ -97,10 +109,12 @@ class Searcher extends Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+    console.log('own', ownProps)
     return {
         searchResults: state.search.searchResults,
-        isFetching: state.search.isFetching
+        isFetching: state.search.isFetching,
+        query: _.get(ownProps, 'history.location.query') || {},
     }
 }
 

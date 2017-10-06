@@ -48,13 +48,13 @@
     }
 
     &.empty {
-      border: 1px solid red;
+      border: 1px solid $danger;
       + label.glyphicon-remove {
-        color: red;
+        color: $danger;
       }
 
       @include placeholder{
-        color: red;
+        color: $danger;
       }
     }
   }

@@ -16,7 +16,7 @@ export function fetchCategory(category) {
 
         dispatch({type : dataActionConstants.FETCH_CATEGORY_REQUEST, payload: {name : category}});
 
-        firebase.database().ref(`/${constants.database.memesTable}/${category}`).once('value')
+        window.firebase.database().ref(`/${constants.database.memesTable}/${category}`).once('value')
             .then(snapshot => dispatch({type : dataActionConstants.FETCH_CATEGORY_SUCCESS, payload : { memes: snapshot.val() , name: category }}))
             .catch(error => dispatch({type : dataActionConstants.FETCH_CATEGORY_FAILED, error : error}));
 

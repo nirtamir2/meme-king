@@ -1,4 +1,5 @@
-export const setHeightAndWidth = (picture, wantedMaxHeight, wantedMaxWidth, isNormalFormat) => {
+export default (picture, wantedMaxHeight, wantedMaxWidth, isNormalFormat) => {
+
     const SPACE_TO_RECUDE_FROM_CANVAS = window.innerWidth < 767 ? 30 : 50;
     const container = document.querySelector('.generator__canvas-wrapper');
     const localWantedMaxWidth = (container.offsetWidth - SPACE_TO_RECUDE_FROM_CANVAS ) * (isNormalFormat ? 1 : 0.7);

@@ -94,7 +94,13 @@ class DatabaseService {
 
     saveSingleMemeToDataBase(meme) {
         const table = this.database.ref(dbConstants.memesTable);
-        table.ref( `${meme.category}/${meme.id}`).set(meme)
+        table.ref.child(meme.category).child(meme.id).set(meme)
+    }
+
+    deleteMeme(meme) {
+        const table = this.database.ref(dbConstants.memesTable);
+        table.ref.child(meme.category).child(meme.id).remove()
+
     }
 
     getAllMemes() {

@@ -2,6 +2,8 @@ import isMobile from './isMobile';
 import getTextPosition from './getTextPosition';
 import uniqueId from './uniqueId';
 import isRTL from './isRtl';
+import modifyImageDimensions from './modifyImageDimensions';
+import getDataUri from './getDataUri';
 
 class Helpers {
 
@@ -10,6 +12,8 @@ class Helpers {
         this.getTextPosition = getTextPosition;
         this.uniqueId = uniqueId;
         this.isRTL = isRTL;
+        this.modifyImageDimensions = modifyImageDimensions;
+        this.getDataUri = getDataUri;
     }
 
 }

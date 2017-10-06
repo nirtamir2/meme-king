@@ -20,7 +20,7 @@ import helpers from 'helpers/helpers';
 
      state = {
          memesPerRow : helpers.isMobile() ? 3 : 8,
-         filterQuery : ''
+         searchValue : ''
      }
 
     componentWillMount(){
@@ -31,6 +31,7 @@ import helpers from 'helpers/helpers';
         BtnScrollToTop.scrollToTop();
         if(this.props.category !== nextProps.category) {
             this.loadData(nextProps.category);
+            this.setState({ searchValue: '' })
         }
     };
 
@@ -94,19 +95,19 @@ import helpers from 'helpers/helpers';
             )
         }
 
-        const filteredMemes = _.filter(memes, meme => _.includes( meme.description, this.state.filterQuery));
+        const filteredMemes = _.filter(memes, meme => _.includes( meme.description || '', this.state.searchValue));
         const memesToShow = (_.size(filteredMemes) > 0 ? filteredMemes : memes);
-        const isMemesBeenSearchedAndNoResultsFound =((_.size(this.state.filterQuery) > 2) && (_.isEmpty(filteredMemes)))
+        const isMemesBeenSearchedAndNoResultsFound =((_.size(this.state.searchValue) > 2) && (_.isEmpty(filteredMemes)))
 
         return (
             <div className="memes-section">
                 <MemeSectionBar setMemesPerRow={this.setMemesPerRow}>
-                    <SearchInput onChange={query => this.setState({ filterQuery : query })}
-                                 clearResults={() => this.setState({ filterQuery : '' })}
+                    <SearchInput onChange={query => this.setState({ searchValue : query })}
+                                 clearResults={() => this.setState({ searchValue : '' })}
                                  isFetching={false}
                                  emptyState={isMemesBeenSearchedAndNoResultsFound}
                                  className="hidden-xs"
-
+                                 value={this.state.searchValue}
                     />
                 </MemeSectionBar>
                 <div className="memes-container">

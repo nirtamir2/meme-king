@@ -11,10 +11,10 @@ import MainView from 'components/MainView/MainView';
 // services
 import LocalStorageService from 'services/LocalStorage';
 import AnalyticsService from 'services/Analytics';
+import SentryService from 'services/SentryService';
 
 // helpers
 import helpers from 'helpers/helpers';
-
 
 export default class App extends Component {
 
@@ -36,10 +36,10 @@ export default class App extends Component {
         LocalStorageService.init();
 
         // google analytics
+        AnalyticsService.init();
         AnalyticsService.sendEvent(helpers.isMobile() ? 'Mobile Entrance' : 'Desktop entrance');
 
-        //sentry
-        Raven.config('https://cdc49c9d2b0c44f38b5b7911c8e58ddc@sentry.io/225081').install();
+        SentryService.init();
 
     };
 

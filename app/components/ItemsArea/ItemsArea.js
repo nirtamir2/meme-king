@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import items from './items';
 
 // helpers
-import { setHeightAndWidth } from '../../services/CanvasImageService';
+import { setHeightAndWidth } from '../../helpers/modifyImageDimensions';
 
 // components
 import ItemRemover from '../ItemsRemover/ItemRemover';

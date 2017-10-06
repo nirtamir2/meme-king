@@ -1,24 +1,3 @@
-.ripple-effect {
-  background-color: #0097EB;
-  width: 100%;
-  height: 100%;
-  border-radius: 100%;
-  position: absolute;
-  animation-name: ripple;
-  animation-iteration-count: 1;
-  animation-duration: 1.2s;
-  transform: translateX(-50%) translateY(-50%); }
-
-@keyframes ripple {
-  from {
-    width: 0;
-    height: 0;
-    opacity: 1; }
-  to {
-    width: 500px;
-    height: 500px;
-    opacity: 0; } }
-
 .container {
   width: 100%;
   padding: 0  15px 0 15px;
@@ -504,7 +483,7 @@ a:hover, a:active {
   input {
     font-size: 16px; } }
 
-.box-meme-text-field textarea, .search-input-wrapper input {
+.box-meme-text-field textarea, .search-input-wrapper input, .box-meme-admin-editor .description-container textarea, .login-area input {
   display: block;
   width: 100%;
   height: 40px;
@@ -515,7 +494,7 @@ a:hover, a:active {
   resize: none;
   text-align: right;
   direction: rtl; }
-  .box-meme-text-field textarea.focus, .search-input-wrapper input.focus, .box-meme-text-field textarea:focus, .search-input-wrapper input:focus, .box-meme-text-field textarea:active, .search-input-wrapper input:active {
+  .box-meme-text-field textarea.focus, .search-input-wrapper input.focus, .box-meme-admin-editor .description-container textarea.focus, .login-area input.focus, .box-meme-text-field textarea:focus, .search-input-wrapper input:focus, .box-meme-admin-editor .description-container textarea:focus, .login-area input:focus, .box-meme-text-field textarea:active, .search-input-wrapper input:active, .box-meme-admin-editor .description-container textarea:active, .login-area input:active {
     box-shadow: inset 1px 1px 2px 0 #c9c9c9;
     outline: 0 !important; }
 
@@ -747,7 +726,7 @@ header {
       padding-top: 58px;
       display: block;
       position: relative;
-      top: 30px; } }
+      top: 60px; } }
   .home img {
     max-width: 120px;
     height: auto;
@@ -1082,19 +1061,19 @@ header {
       color: #0097EB;
       font-family: "Open Sans Hebrew"; }
     .search-input-wrapper input.empty {
-      border: 1px solid red; }
+      border: 1px solid #ED5E68; }
       .search-input-wrapper input.empty + label.glyphicon-remove {
-        color: red; }
+        color: #ED5E68; }
       .search-input-wrapper input.empty::-webkit-input-placeholder {
-        color: red; }
+        color: #ED5E68; }
       .search-input-wrapper input.empty:-moz-placeholder {
         /* Firefox 18- */
-        color: red; }
+        color: #ED5E68; }
       .search-input-wrapper input.empty::-moz-placeholder {
         /* Firefox 19+ */
-        color: red; }
+        color: #ED5E68; }
       .search-input-wrapper input.empty:-ms-input-placeholder {
-        color: red; }
+        color: #ED5E68; }
 
 .menu-item {
   list-style: none;
@@ -1596,6 +1575,57 @@ input[type=file] {
 
 .box-generator-skeleton:first-of-type {
   margin-bottom: 0; }
+
+.box-meme-admin-editor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  padding: 15px;
+  margin: 10px 0; }
+  .box-meme-admin-editor.saved {
+    background: #cfcfcf; }
+  .box-meme-admin-editor select {
+    width: 100%; }
+  .box-meme-admin-editor .danger {
+    background: #ED5E68; }
+  .box-meme-admin-editor .description-container {
+    display: flex;
+    flex-direction: column; }
+    .box-meme-admin-editor .description-container textarea {
+      height: 100%; }
+    .box-meme-admin-editor .description-container h4 {
+      width: 200px; }
+
+.box-admin h1 {
+  color: black;
+  text-align: center;
+  margin: 30px 40px; }
+
+.box-admin h4 {
+  margin: 30px 0;
+  text-align: center;
+  direction: ltr;
+  color: #0097EB; }
+
+.box-admin select {
+  height: 50px;
+  width: 450px;
+  display: block;
+  margin: 20px auto; }
+
+.login-area {
+  align-self: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .login-area input {
+    height: 50px;
+    width: 450px; }
+  .login-area .login-btn {
+    margin: 30px 0; }
 
 .search-loader,
 .search-loader:after {

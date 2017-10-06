@@ -10,7 +10,6 @@ import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature
 import GeneratorDashboardSkeleton from 'components/GeneratorDashboardSkeleton/GeneratorDashboardSkeleton';
 
 // helpers
-import {setHeightAndWidth} from 'services/CanvasImageService'
 import helpers from 'helpers/helpers'
 
 // constants
@@ -21,31 +20,8 @@ import globalConstants from 'constants/global'
 import { updateMemeRating } from 'actions/meme-actions/meme-actions';
 
 // assets
-import watemarkDesktop from 'assets/images/watermark-desktop.jpg';
+import waterMarkDesktop from 'assets/images/watermark-desktop.jpg';
 import watermarkMobile from 'assets/images/watermark-mobile.jpg';
-
-function getDataUri(url, dontPerformConversion, callback) {
-
-    if (dontPerformConversion) {
-        callback(url)
-    }
-
-    const image = new Image();
-
-    image.onload = function () {
-        const canvas = document.createElement('canvas')
-        canvas.width = this.naturalWidth // or 'width' if you want a special/scaled size
-        canvas.height = this.naturalHeight // or 'height' if you want a special/scaled size
-
-        canvas.getContext('2d').drawImage(this, 0, 0)
-
-        callback(canvas.toDataURL('image/png'))
-    }
-
-    image.crossOrigin = ''
-    image.src = url + '?123'
-}
-
 
 class Generator extends Component {
 
@@ -101,41 +77,43 @@ class Generator extends Component {
         const { canvas } = this.state
         const DISTANCE = helpers.isMobile() ? 30 : 140
         const width = document.querySelector('.generator__canvas-wrapper').offsetWidth - DISTANCE
-        const height = helpers.isMobile() ? 260 : 430
+        const height = helpers.isMobile() ? 300 : 460
         canvas.backgroundColor = colors.WHITE
-        canvas.setWidth(width)
-        canvas.setHeight(height)
+        canvas.setWidth(width);
+        canvas.setHeight(height);
+        this.addWaterMark();
     }
 
     addImage = (format) => {
-        const { urlPath } = this.props.meme || {}
-        const { canvas } = this.state
+
+        const { urlPath } = this.props.meme || {};
+        const { canvas } = this.state;
         const isNormalFormat = (format === globalConstants.format.normal);
-        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150
-        const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200
+        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150;
+        const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200;
 
         canvas.backgroundColor = colors.GRAY_LIGHT
         canvas.setWidth(canvasContainerWidth );
         canvas.clear();
-        console.log(this.props.meme,' meme ')
 
+        console.log('is from upload ?', this.props.isFromUpload)
 
-        getDataUri(urlPath, this.props.isFromUpload, (dataUri) => {
+        helpers.getDataUri(urlPath, this.props.isFromUpload, (dataUri) => {
 
             fabric.Image.fromURL(dataUri, image => {
 
                 this.setState({ isLoading: false });
 
-                image = setHeightAndWidth(image, null, null, isNormalFormat);
+                image = helpers.modifyImageDimensions(image, null, null, isNormalFormat);
 
                 canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle);
                 canvas.setWidth( isNormalFormat ? image.width : image.width + 25);
-                image.top = isNormalFormat ? 0 : (spaceToADDForDankFormatStyle - 15);
-                image.left = isNormalFormat ? 0 : (10);
                 canvas.backgroundColor = colors.WHITE;
                 canvas.add(image)
 
                 image.set({
+                    top: isNormalFormat ? 0 : (spaceToADDForDankFormatStyle - 15),
+                    left: isNormalFormat ? 0 : (10),
                     hoverCursor: "default",
                     lockMovementX: isNormalFormat,
                     lockMovementY: isNormalFormat,
@@ -144,7 +122,6 @@ class Generator extends Component {
                     lockUniScaling: isNormalFormat,
                     hasBorders: !isNormalFormat,
                     selectable: true,
-
                 })
 
                 this.setState({ isCanvasReady: true });
@@ -157,7 +134,7 @@ class Generator extends Component {
     addWaterMark = () => {
 
         const { canvas } = this.state
-        const watermark = helpers.isMobile() ? watermarkMobile : watemarkDesktop
+        const watermark = helpers.isMobile() ? watermarkMobile : waterMarkDesktop
         fabric.Image.fromURL(watermark, watermark => {
 
             canvas.add(watermark)
@@ -192,14 +169,18 @@ class Generator extends Component {
 
     closeGenerator = () => {
         const memeCategory = _.get(this.props, 'category')
-        const wantedPath = memeCategory ? `/memes/${memeCategory}` : `/`
-        this.props.history.push(wantedPath)
-        document.querySelector(".cover").style.display = 'none'
+        const wantedPath = memeCategory ? `/memes/${memeCategory}` : `/`;
+        const location = {
+            pathname : wantedPath,
+            query: this.props.query || {}
+        }
+        this.props.history.push(location)
     }
 
     render(){
+        
         const { isLoading, isCanvasReady, canvas } = this.state;
-        const { meme, format, history, location, type } = this.props;
+        const { meme, format, history, location, type, query } = this.props;
 
         const generatorDashboardPosition = ( (isCanvasReady && helpers.isMobile()) ? `${_.get(this.canvasWrapper, 'offsetHeight')}px` : null)
         const dashboardStyle = generatorDashboardPosition ? {top: generatorDashboardPosition} : {};
@@ -218,10 +199,12 @@ class Generator extends Component {
                             <canvas id='c' dir="rtl"/>
                             {isLoading && <div className="spinner">Loading&</div>}
                         </div>
+                        
                         {isCanvasReady
                             ?
 
                             <GeneratorDashboard
+                                query={query}
                                 history={history}
                                 style={dashboardStyle}
                                 type={type}
@@ -263,7 +246,8 @@ function mapStateToProps(state, ownProps) {
 
     const memeId = params.id;
     const isFromUpload = (_.get(location, 'state.from') === 'upload');
-    const isFromSearch = (_.get(location, 'state.from') === 'search')
+    const isFromSearch = (_.get(location, 'state.from') === 'search');
+    console.log(location, 'location')
     const currentMemeObj = (isFromUpload || isFromSearch) ?
         {
             urlPath: location.state.urlPath,
@@ -282,7 +266,8 @@ function mapStateToProps(state, ownProps) {
         history,
         location,
         isFromUpload,
-        isFromSearch
+        isFromSearch,
+        query: location.query
     }
 }
 

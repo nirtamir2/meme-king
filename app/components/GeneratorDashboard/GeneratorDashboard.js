@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 
 // components
@@ -23,7 +24,7 @@ export default class TextInputsContainer extends Component {
         isItemsAreaOpen: false,
     }
 
-    toggleItemsArea = ()=> {
+    toggleItemsArea = () => {
         this.setState({ isItemsAreaOpen: !this.state.isItemsAreaOpen })
     };
 
@@ -93,17 +94,29 @@ export default class TextInputsContainer extends Component {
     }
 
     changeFormat = () => {
-        const { history, format, location, type, meme } = this.props;
+        const { history, format, location, type, meme, query } = this.props;
         const wantedFormat = (format === globalConstants.format.normal) ? globalConstants.format.dank : globalConstants.format.normal;
         const wantedPath = location.pathname.replace(format, wantedFormat);
+        const from = _.get(location, 'state.from');
 
-        if( type === 'upload') {
+        if (from === 'search') {
+            const location = {
+                pathname : wantedPath,
+                state: {
+                    urlPath: meme.urlPath,
+                    from : 'search'
+                },
+                query
+            }
+            history.push(location)
+        } else if( type === 'upload' || from === 'upload') {
             const location = {
                 pathname : wantedPath,
                 state: {
                     urlPath: meme.urlPath,
                     from : 'upload'
-                }
+                },
+                query
             }
             history.push(location)
         } else {

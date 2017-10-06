@@ -11,9 +11,6 @@ import Searcher from '../Searcher/Searcher';
 import Cropper from 'components/Cropper/Cropper';
 import Button from 'components/Button/Button';
 
-// containers
-import analytics from '../../services/Analytics';
-
 // assets
 import logo from 'assets/images/logo.png';
 
@@ -23,10 +20,8 @@ import AnalyticsService from 'services/Analytics';
  class Home extends Component {
 
     createCleanSlate = () => {
-        document.querySelector(".cover").style.display = 'block';
-        analytics.sendEvent('CleanSlate', 'Clean slate');
         this.props.history.push('/generator/clean-slate/normalFormat');
-        AnalyticsService.sendEvent('clean slate');
+        AnalyticsService.sendEvent('Clean slate');
     };
 
     render(){

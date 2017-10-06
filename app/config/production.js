@@ -1,7 +1,14 @@
 export default {
 
-    apiBaseUrl: '/api'
+    apiBaseUrl: '/api',
 
-
+    services : {
+        analytics: {
+            isOn : true
+        },
+        sentry: {
+            isOn: true
+        }
+    }
 
 }

@@ -1,6 +1,6 @@
 .memes-section {
   margin-top : $meme-section-bar-height;
   @include mobile-medium {
-    margin-top: $header-height;
+    margin-top: $header-height ;
   }
 }

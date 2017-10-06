@@ -1,16 +1,27 @@
 
- class Analytics{
+// config
+import config from 'config/config';
 
-    sendEvent = (eventName, eventData)=>{
-        const date = new Date();
-        ga('send', {
-            hitType: 'event',
-            eventCategory: eventName,
-            eventAction: `${eventData ? eventData + ',' : '' } ${date.getHours()}:${date.getMinutes()}` ,
-            eventLabel: eventName
-        });
+class Analytics{
 
-        console.log('<< GA >>', eventName , eventData || '')
+    init() {
+        this.isOn = config.services.analytics.isOn;
+    }
+
+    sendEvent(eventName, eventData){
+
+        if(this.isOn) {
+            const date = new Date();
+            ga('send', {
+                hitType: 'event',
+                eventCategory: eventName,
+                eventAction: `${eventData ? eventData + ',' : '' } ${date.getHours()}:${date.getMinutes()}` ,
+                eventLabel: eventName
+            });
+
+        }
+
+        console.log('<< GA >>', eventName , eventData || '', `Service is ${this.isOn ? 'ON' : 'OFF'}`)
     }
 
  };
