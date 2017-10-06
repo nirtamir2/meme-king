@@ -1,5 +1,5 @@
 
-<h1> Meme King = Meme generator </h1>
+<h1> Meme King - Meme generator </h1>
 
 
 <h2> Stack </h2>

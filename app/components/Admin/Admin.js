@@ -14,6 +14,9 @@ import menu from 'constants/menu'
 
 import EditMemeArea from 'components/MemeAdminEditor/MemeAdminEditor';
 
+// constants
+import constants from 'constants/global';
+
 const LoginArea = ({ onChange, value, onSubmit }) => {
     return(
         <form onSubmit={onSubmit} className="login-area">
@@ -29,7 +32,8 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
         memes: {},
         editMode: false,
         category: {},
-        anigma : ''
+        anigma : '',
+        userMemes: {},
     }
 
     componentDidMount = () => {
@@ -92,7 +96,7 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
             reader.onload = (function (theFile) {
                 return async function (e) {
                     const meme = await self.createMemeObj(e.target.result)
-                    self.setState({ memes: { ...self.state.memes, [meme.id]: meme } , editMode: false })
+                    self.setState({ memes: { ...self.state.memes, [meme.id]: meme } , editMode: false, userMemes: false })
                 }
             })(f)
             reader.readAsDataURL(f)
@@ -119,7 +123,7 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
 
 
     onCategoryChange = event => {
-        this.setState({ editMode: true, category: event.target.value })
+        this.setState({ editMode: true, category: event.target.value, userMemes : {} })
         this.props.fetchCategory(event.target.value)
     }
 
@@ -131,6 +135,15 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
         }
      }
 
+     getUserMemes = () => {
+
+         window.firebase.database().ref(`/${constants.database.userSavedMemesTable}`).once('value')
+             .then( snapshot => {
+                 console.log(snapshot.val(), 'saved memes')
+                 this.setState({ userMemes: snapshot.val() })
+             })
+     }
+
 
     render() {
 
@@ -138,6 +151,8 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
         if(!this.state.isAuthenticated) {
             return <LoginArea value={this.state.anigma} onSubmit={this.onSubmit} onChange={event => this.setState({ anigma: event.target.value })} />
         }
+
+        const shouldShowCategorySection = (this.state.editMode);
 
         return (
             <div className="box-admin container">
@@ -151,6 +166,12 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
                         icon="glyphicon glyphicon-cloud-upload"
                         htmlFor="images"
                 />
+
+                <Button label={'user memes'}
+                        onClick={this.getUserMemes}
+                        icon="glyphicon glyphicon-user"
+                />
+
                 <h4> or edit an existing meme:</h4>
                 <select value={this.state.category} onChange={this.onCategoryChange}>
                     {_.map(menu, (value, prop) => {
@@ -158,15 +179,25 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
                     })}
                 </select>
 
+                {this.state.userMemes && _.map(this.state.userMemes, meme => {
+                    return(
+                        <div className="box-user-meme">
+                            <img src={meme.urlPath} />
+                            <p>Date : {new Date(meme.date) && new Date(meme.date).toDateString()}</p>
+                        </div>
+                    )
+                })}
+
                 {!this.state.editMode && _.map(this.state.memes, meme => <EditMemeArea
                                                     editMode={this.state.editMode}
                                                     key={_.uniqueId()}
                                                     onDelete={this.onDelete}
                                                     meme={meme} />)}
 
-                {this.state.editMode && _.map(this.state.category, meme => <EditMemeArea
+                {(shouldShowCategorySection) && _.map(this.state.category, meme => <EditMemeArea
                                                         editMode={this.state.editMode}
                                                         key={_.uniqueId()}
+                                                        isUserMemesState={this.state.isUserMemesState}
                                                         onDelete={this.onDelete}
                                                         meme={meme} />)}
 

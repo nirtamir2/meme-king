@@ -18,7 +18,7 @@ import helpers from 'helpers/helpers';
 // constants
 import globalConstants from 'constants/global';
 
-export default class TextInputsContainer extends Component {
+export default class GeneratorDashboard extends Component {
 
     state = {
         isItemsAreaOpen: false,
@@ -43,6 +43,9 @@ export default class TextInputsContainer extends Component {
 
         clickedElement.href = canvas.toDataURL();
         clickedElement.download = 'MemeKing';
+
+
+        this.props.saveUserMemeToStorage({urlPath : canvas.toDataURL(), date : new Date()});
 
         //!* need to set back canvas dimensions *
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);

@@ -66,7 +66,7 @@ export default class Editor extends Component {
         const {  urlPath, description } = this.props.meme;
         return (
             <div className={classNames("container box-meme-admin-editor" , { 'saved' : this.state.isSaved })}>
-                <img src={urlPath} style={{width: '200px'}} />
+                <img src={urlPath} style={{width: '350px'}} />
 
                 <div className="description-container">
                         <textarea value={this.state.meme.description} rows="5" onChange={this.onDescriptionChange} />

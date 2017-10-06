@@ -108,6 +108,11 @@ class DatabaseService {
         return this.database.ref(`/${dbConstants.memesTable}/`).once('value');
     }
 
+    saveUserMeme(meme) {
+        const table = this.database.ref(dbConstants.userSavedMemesTable);
+        table.ref.child(meme.id).set(meme);
+    }
+
 }
 
 

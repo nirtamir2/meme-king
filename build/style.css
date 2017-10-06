@@ -1372,7 +1372,7 @@ header {
   transition: 0.2s;
   cursor: pointer;
   padding: 20px;
-  margin: 8px auto; }
+  margin: 20px auto; }
   @media only screen and (max-width: 767px) {
     .box-cta-button {
       margin: 12px auto;
@@ -1581,6 +1581,9 @@ input[type=file] {
   border: 1px solid black;
   padding: 15px;
   margin: 10px 0; }
+  @media only screen and (max-width: 767px) {
+    .box-meme-admin-editor {
+      flex-direction: column; } }
   .box-meme-admin-editor.saved {
     background: #cfcfcf; }
   .box-meme-admin-editor select {
@@ -1590,10 +1593,23 @@ input[type=file] {
   .box-meme-admin-editor .description-container {
     display: flex;
     flex-direction: column; }
+    @media only screen and (max-width: 767px) {
+      .box-meme-admin-editor .description-container {
+        width: 100%; } }
     .box-meme-admin-editor .description-container textarea {
       height: 100%; }
+      @media only screen and (max-width: 767px) {
+        .box-meme-admin-editor .description-container textarea {
+          width: 100%;
+          margin: 20px 0; } }
     .box-meme-admin-editor .description-container h4 {
       width: 200px; }
+  @media only screen and (max-width: 767px) {
+    .box-meme-admin-editor .utils {
+      width: 100%; } }
+  @media only screen and (max-width: 767px) {
+    .box-meme-admin-editor .utils .box-cta-button {
+      width: 100%; } }
 
 .box-admin h1 {
   color: black;
@@ -1611,6 +1627,23 @@ input[type=file] {
   width: 450px;
   display: block;
   margin: 20px auto; }
+  @media only screen and (max-width: 767px) {
+    .box-admin select {
+      border: 1px solid black;
+      width: 300px; } }
+
+.box-admin .box-user-meme {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; }
+  .box-admin .box-user-meme p.date {
+    margin: 20px 0; }
+  .box-admin .box-user-meme img {
+    width: 350px; }
 
 .login-area {
   align-self: center;
@@ -1622,6 +1655,9 @@ input[type=file] {
   .login-area input {
     height: 50px;
     width: 450px; }
+    @media only screen and (max-width: 767px) {
+      .login-area input {
+        width: 300px; } }
   .login-area .login-btn {
     margin: 30px 0; }
 

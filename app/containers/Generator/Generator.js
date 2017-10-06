@@ -17,7 +17,7 @@ import colors from 'constants/colors'
 import globalConstants from 'constants/global'
 
 // actions
-import { updateMemeRating } from 'actions/meme-actions/meme-actions';
+import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions';
 
 // assets
 import waterMarkDesktop from 'assets/images/watermark-desktop.jpg';
@@ -180,7 +180,7 @@ class Generator extends Component {
     render(){
         
         const { isLoading, isCanvasReady, canvas } = this.state;
-        const { meme, format, history, location, type, query } = this.props;
+        const { meme, format, history, location, type, query, saveUserMemeToStorage } = this.props;
 
         const generatorDashboardPosition = ( (isCanvasReady && helpers.isMobile()) ? `${_.get(this.canvasWrapper, 'offsetHeight')}px` : null)
         const dashboardStyle = generatorDashboardPosition ? {top: generatorDashboardPosition} : {};
@@ -208,6 +208,7 @@ class Generator extends Component {
                                 history={history}
                                 style={dashboardStyle}
                                 type={type}
+                                saveUserMemeToStorage={saveUserMemeToStorage}
                                 location={location}
                                 meme={meme}
                                 format={format}
@@ -275,6 +276,7 @@ function mapDispatchToProps(dispatch) {
 
     return {
         updateMemeRating: (meme) => dispatch(updateMemeRating(meme)),
+        saveUserMemeToStorage: (dataUri) => dispatch(saveUserMemeToStorage(dataUri))
     }
 }
 

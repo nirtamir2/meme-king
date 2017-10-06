@@ -1,4 +1,4 @@
-export default () => {
+module.exports = () => {
     let text = "";
     const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 

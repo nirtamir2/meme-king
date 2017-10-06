@@ -2,7 +2,8 @@ const fs = require('fs')
 const recursive = require('recursive-readdir')
 const path = require('path')
 const _ = require('lodash')
-const storage = require('@google-cloud/storage')
+const storage = require('@google-cloud/storage');
+const uniqueId = require('../app/helpers/uniqueId');
 var stream = require('stream');
 
 // services
@@ -30,7 +31,7 @@ class StorageService {
         } else {
             this.gcs = storage({
                 projectId: 'memeking-80290',
-                keyFilename: '../anigma/storage.json'
+                keyFilename: './anigma/storage.json'
             })
         }
 
@@ -63,7 +64,19 @@ class StorageService {
             const bufferStream = new stream.PassThrough()
             bufferStream.end(new Buffer(base64Image, 'base64'))
 
-            const file = this.myBucket.file(`/${type}/${category}/${fileName}.jpg`)
+            const isUserSavedMemeCase = !category;
+
+
+            let file ;
+            if (isUserSavedMemeCase) {
+                file = this.myBucket.file(`/${type}/${fileName}.jpg`)
+            } else {
+                file = this.myBucket.file(`/${type}/${category}/${fileName}.jpg`);
+            }
+
+            console.log(isUserSavedMemeCase)
+
+
 
             bufferStream.pipe(file.createWriteStream({
                 metadata: {
@@ -83,6 +96,24 @@ class StorageService {
                     console.log('new meme upload complete')
                 })
         })
+    }
+
+    async saveUserMeme(meme) {
+        const fileName = uniqueId();
+        const url = `https://storage.googleapis.com/meme-king-storage/user-memes/${fileName}.jpg`;
+        const memeObj = {
+            urlPath : url,
+            date: new Date().toString(),
+            id: fileName,
+        }
+
+        console.log(memeObj)
+        const fileData = _.get(meme , 'urlPath');
+
+        await this.uploadToStorage(fileData, fileName, null, 'user-memes');
+
+        DatabaseService.saveUserMeme(memeObj);
+        console.log('saved user meme')
     }
 }
 

@@ -133,6 +133,12 @@ app.post('/api/delete-meme', function (req, res) {
     res.sendStatus(200)
 })
 
+app.post('/api/save-user-meme', function (req, res) {
+   // console.log('save user meme ', req.body)
+    StorageService.saveUserMeme(req.body)
+    res.sendStatus(200)
+})
+
 
 // START
 
