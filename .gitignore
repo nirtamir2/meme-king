@@ -5,7 +5,7 @@ node_modules
 *.iml
 /.idea
 
-/anigma/
+/anigma/*
 
 /memes
 /meme-thumb
