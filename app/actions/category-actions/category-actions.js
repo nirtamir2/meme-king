@@ -4,7 +4,7 @@ import { CALL_API } from 'redux-api-middleware';
 import config from 'config/config';
 
 // constants
-import dataActionConstants from './data-actions-constants';
+import dataActionConstants from './category-actions-constants';
 import constants from 'constants/global';
 
 // services
@@ -53,7 +53,7 @@ export function fetchNewMemes() {
 
     return  {
         [CALL_API]: {
-            endpoint: `${config.apiBaseUrl}/get-new-memes`,
+            endpoint: `${config.apiBaseUrl}/new-memes`,
             method: 'GET',
             headers: {
                 'Accept': 'application/json, text/plain, */*',

@@ -34,7 +34,7 @@ import AnalyticsService from 'services/Analytics';
                 <img src={logo}/>
 
                 <h1 className="home__main-title">
-                   מחולל הממים הטוב ביקום
+                  מימ קינג
                 </h1>
 
                 <Button label="קטגוריות ממים"

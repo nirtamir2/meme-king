@@ -1,4 +1,4 @@
-import actionsConstants from 'actions/data-actions/data-actions-constants';
+import actionsConstants from 'actions/category-actions/category-actions-constants';
 
 const initialState = {
     memes: []
@@ -82,7 +82,7 @@ export default function(state=initialState, action){
 
         case actionsConstants.FETCH_NEW_MEMES_REQUEST:
             return {
-                isFetching: false,
+                isFetching: true,
                 memes: [],
                 name: "ממים חדשים"
             }
@@ -91,8 +91,7 @@ export default function(state=initialState, action){
         case actionsConstants.FETCH_NEW_MEMES_SUCCESS:
             return {
                 isFetching: false,
-                memes: [],
-                name: payload.name
+                memes: payload,
             }
             break;
 
@@ -100,7 +99,6 @@ export default function(state=initialState, action){
             return {
                 isFetching: false,
                 memes: [],
-                name: payload.name
             }
             break;
 

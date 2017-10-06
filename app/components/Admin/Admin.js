@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 
-import { fetchCategory } from 'actions/data-actions/data-actions';
+import { fetchCategory } from 'actions/category-actions/category-actions';
 
 // components
 import Button from 'components/Button/Button'
@@ -114,7 +114,7 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
      onDelete = (id) => {
         const memes = {...this.state.category};
         delete memes[id];
-        this.setState({ memes : memes  })
+        this.setState({ category : memes  })
      }
 
 

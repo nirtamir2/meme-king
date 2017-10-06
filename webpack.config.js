@@ -47,7 +47,7 @@ module.exports =  function({ env }) {
                     test: /\.scss/,
                     loader: ExtractTextPlugin.extract({
                         fallbackLoader: "style-loader",
-                        loader: "css-loader!sass-loader",
+                        loader: "css-loader!sass-loader"
                     }),
                 }
 
@@ -59,8 +59,7 @@ module.exports =  function({ env }) {
                 'ENV': JSON.stringify(env),
             }),
             isProduction ? new UglifyJSPlugin() : _.noop,
-            new ExtractTextPlugin('style.css')
-
+            new ExtractTextPlugin('style.css'),
         ],
         devServer: {
             port: 3000, // most common port

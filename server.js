@@ -10,7 +10,7 @@ const NODE_ENVIRONMENT = appArgs.env
 const isProduction = (!(NODE_ENVIRONMENT === 'development'))
 
 // services
-const DatabaseService = require('./server/databaseService')
+const DatabaseService = require('./server/DatabaseService')
 const StorageService = require('./server/StorageService')
 
 // init
@@ -63,9 +63,9 @@ app.use(function (req, res, next) {
 
     const isApiRequest = req.url.match(/\/api\/*/g)
     if (!isApiRequest) {
-        res.sendFile(path.join(__dirname + '/build/index.html'))
+        res.sendFile(path.join(__dirname + '/build/index.html'));
     } else {
-        next()
+        next();
     }
 
 })
@@ -90,6 +90,19 @@ app.get('/api/all-time-popular-memes', async function (req, res) {
     const sortedData = _.slice(flattenData.sort((a, b) => b.rating - a.rating), 0, 72)
     const obj = {}
     _.forEach(sortedData, meme => obj[meme.id] = meme)
+    res.send(obj)
+})
+
+app.get('/api/new-memes', async function (req, res) {
+    const data = await DatabaseService.getAllMemes();
+    let flattenData = []
+    _.forEach(data.val(), category => flattenData = [...flattenData, ..._.values(category)]);
+    const filteredData = flattenData.filter(meme => meme.date);
+    const sortedData = _.slice(filteredData.sort((a, b) => new Date(b.date) - new Date( a.date)), 0, 72)
+    const obj = {}
+    _.forEach(sortedData, meme => obj[meme.id] = meme);
+    console.log(obj)
+
     res.send(obj)
 })
 

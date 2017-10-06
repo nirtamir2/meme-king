@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import classNames from 'classnames'
 
@@ -9,21 +9,21 @@ import {fetchSearchResults, cleanSearchResults} from 'actions/search-actions/sea
 
 // components
 import MemeThumb from 'components/MemeThumb/MemeThumb'
-import SearchInput from 'components/SearchInput/SearchInput';
+import SearchInput from 'components/SearchInput/SearchInput'
 
 // constants
-import globalConstants from 'constants/global';
+import globalConstants from 'constants/global'
 
 // helpers
-import helpers from 'helpers/helpers';
+import helpers from 'helpers/helpers'
 
 // services
-import AnalyticsService from 'services/Analytics';
+import AnalyticsService from 'services/Analytics'
 
 class Searcher extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             active: false,
             value: _.get(props, 'query.search') || ''
@@ -32,15 +32,15 @@ class Searcher extends Component {
 
     clearResults = () => {
 
-        this.setState({ active: false, value : '' });
-        this.props.cleanSearchResults();
+        this.setState({ active: false, value: '' })
+        this.props.cleanSearchResults()
     }
 
     onSearch = _.debounce((value) => {
         if (value.length >= 3) {
-            this.props.fetchSearchResults(value);
+            this.props.fetchSearchResults(value)
 
-            this.handleGoogleAnalytics(value);
+            this.handleGoogleAnalytics(value)
             this.setState({ active: true })
         } else if (!value) {
             this.setState({ active: false })
@@ -49,15 +49,15 @@ class Searcher extends Component {
             this.setState({ active: false })
         }
 
-    }, 300, false);
+    }, 300, false)
 
     onChange = (value) => {
-        this.setState({ value });
-        this.onSearch(value);
+        this.setState({ value })
+        this.onSearch(value)
     }
 
     handleGoogleAnalytics = _.once((value) => {
-        AnalyticsService.sendEvent('Search',  value);
+        AnalyticsService.sendEvent('Search', value)
     })
 
 
@@ -79,18 +79,18 @@ class Searcher extends Component {
                         {`(${searchResults.length})`}
                     </p>
                 )}
-                <div className="results-wrapper">
+                <div className="results-wrapper" ref={node => this.resultsWrapper = node}>
                     { _.map(searchResults, (meme) =>
                         <MemeThumb width={helpers.isMobile() ? 33 : 12.5}
                                    key={meme.id}
                                    {...meme}
                                    urlLinkDisabled
                                    onClick={(e) => {
-                                       e.preventDefault();
+                                       e.preventDefault()
                                        const location = {
                                            pathname: `/generator/upload/${globalConstants.format.normal}`,
-                                           state: { urlPath: meme.urlPath, from :'search' },
-                                           query: { search: this.state.value}
+                                           state: { urlPath: meme.urlPath, from: 'search' },
+                                           query: { search: this.state.value }
                                        }
                                        this.props.history.push(location)
                                    }}
@@ -110,7 +110,6 @@ class Searcher extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log('own', ownProps)
     return {
         searchResults: state.search.searchResults,
         isFetching: state.search.isFetching,
@@ -119,7 +118,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchSearchResults, cleanSearchResults}, dispatch)
+    return bindActionCreators({ fetchSearchResults, cleanSearchResults }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Searcher)

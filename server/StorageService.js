@@ -6,7 +6,7 @@ const storage = require('@google-cloud/storage')
 var stream = require('stream');
 
 // services
-const DatabaseService = require('./databaseService');
+const DatabaseService = require('./DatabaseService');
 
 class StorageService {
 

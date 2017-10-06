@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // actions
-import { fetchMyMemes, fetchCategory, fetchWeeklyPopularMemes, fetchNewMemes, fetchAllTimePopularMemes } from 'actions/data-actions/data-actions';
+import { fetchMyMemes, fetchCategory, fetchWeeklyPopularMemes, fetchNewMemes, fetchAllTimePopularMemes } from 'actions/category-actions/category-actions';
 
 // components
 import MemeThumb from 'components/MemeThumb/MemeThumb'
@@ -96,7 +96,9 @@ import helpers from 'helpers/helpers';
         }
 
         const filteredMemes = _.filter(memes, meme => _.includes( meme.description || '', this.state.searchValue));
-        const memesToShow = (_.size(filteredMemes) > 0 ? filteredMemes : memes);
+        const arrayMemes = _.values(filteredMemes) || [];
+        const sortedMemes = arrayMemes.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const memesToShow = (_.size(sortedMemes) > 0 ? sortedMemes : memes);
         const isMemesBeenSearchedAndNoResultsFound =((_.size(this.state.searchValue) > 2) && (_.isEmpty(filteredMemes)))
 
         return (

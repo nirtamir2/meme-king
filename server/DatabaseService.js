@@ -84,12 +84,13 @@ class DatabaseService {
     }
 
     async getSearchMemes(query) {
+        const lowerCaseQuery = _.toLower(query);
         const data = await this.getAllMemes();
         const allMemesByCategories =  data.val();
         let flattenAllMemesByCategories = {};
        _.forEach(allMemesByCategories , category => flattenAllMemesByCategories = {...flattenAllMemesByCategories, ...category });
 
-        return _.filter(flattenAllMemesByCategories, meme => _.includes(meme.description, query))
+        return _.filter(flattenAllMemesByCategories, meme => _.includes(_.toLower(meme.description), lowerCaseQuery))
     }
 
     saveSingleMemeToDataBase(meme) {

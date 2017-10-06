@@ -721,12 +721,10 @@ header {
   height: 100vh; }
   @media only screen and (max-width: 767px) {
     .home {
-      height: auto;
-      padding-bottom: 50px;
-      padding-top: 58px;
+      min-height: 100vh;
       display: block;
       position: relative;
-      top: 60px; } }
+      padding-top: 100px; } }
   .home img {
     max-width: 120px;
     height: auto;

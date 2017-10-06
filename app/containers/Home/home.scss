@@ -1,21 +1,18 @@
-.home{
-  background : $main-bg;
-  display:flex;
+.home {
+  background: $main-bg;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
 
-
-  @include mobile-medium{
-    height: auto;
-    padding-bottom:50px;
-    padding-top: 58px;
-    display:block;
+  @include mobile-medium {
+    min-height: 100vh;
+    display: block;
     position: relative;
-    top: $header-height;
-  }
+    padding-top: 100px;
 
+  }
 
   img {
     max-width: 120px;
