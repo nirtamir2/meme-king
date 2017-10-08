@@ -22,6 +22,8 @@ export default ({ thumbPath, description, rating, category, id, urlPath, width, 
         query
     }
 
+    const computedRating = (rating * 4) + helpers.getRandomNumber(0,1);
+
     return(
 
         <Link className="meme-thumb" style={{ width: `${width}%`, height: `${imageHeight}px` }} to={location} onClick={onClick}>
@@ -31,7 +33,7 @@ export default ({ thumbPath, description, rating, category, id, urlPath, width, 
             {(shouldShowRatingBadge && rating) && (
                 <span className="meme-thumb__download-counter">
                     <img src={smallCrown} className="crown"/>
-                    <span>{rating * 4}</span>
+                    <span>{computedRating}</span>
                 </span>
             )}
             <div className="meme-thumb__overlay">

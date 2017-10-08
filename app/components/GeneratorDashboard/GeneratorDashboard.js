@@ -30,6 +30,8 @@ export default class GeneratorDashboard extends Component {
 
     download = (event)=> {
         const { canvas } = this.props;
+        this.handleGoogleAnalytics();
+        this.updateMemeRating();
 
         canvas.deactivateAll().renderAll();
         const clickedElement = event.target.tagName === 'SPAN' ? event.target.parentNode : event.target;
@@ -41,6 +43,14 @@ export default class GeneratorDashboard extends Component {
         // need to enlarge canvas otherwise the svg will be clipped
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
 
+
+
+        if (helpers.isWebview()) {
+            this.sendBase64ToNative(canvas.toDataURL());
+            return;
+        }
+
+
         clickedElement.href = canvas.toDataURL();
         clickedElement.download = 'MemeKing';
 
@@ -51,10 +61,12 @@ export default class GeneratorDashboard extends Component {
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
         canvas.setZoom(1);
 
-        this.handleGoogleAnalytics();
-        this.updateMemeRating();
         this.saveMemeNameToLocalStorage();
     };
+
+    sendBase64ToNative = (base64) => {
+        window.postMessage(base64);
+    }
 
 
     saveMemeNameToLocalStorage = () => {

@@ -29,6 +29,15 @@ class Generator extends Component {
         isLoading: true,
         canvas: null,
         isCanvasReady: false,
+        uploadedImageFromWebView: null
+    }
+
+    componentWillMount() {
+        document.addEventListener('message', (e) => {
+             this.setState({uploadedImageFromWebView: e.data}, () => {
+                 this.createBoard(this.props.format)
+             })
+        })
     }
 
     componentDidMount() {
@@ -37,6 +46,8 @@ class Generator extends Component {
             this.createBoard(this.props.format);
             this.disableWindowScrollOnDrag(canvas);
         })
+
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -92,13 +103,17 @@ class Generator extends Component {
         const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150;
         const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200;
 
-        canvas.backgroundColor = colors.GRAY_LIGHT
+        const uploadedFromMobileApp = (this.state.uploadedImageFromWebView ? ('data:image/png;base64,' + this.state.uploadedImageFromWebView) : null);
+        const imageToDraw = uploadedFromMobileApp || urlPath;
+        const isUploadState = (uploadedFromMobileApp || this.props.isFromUpload);
+
+        canvas.backgroundColor = colors.GRAY_LIGHT;
         canvas.setWidth(canvasContainerWidth );
         canvas.clear();
 
-        console.log('is from upload ?', this.props.isFromUpload)
 
-        helpers.getDataUri(urlPath, this.props.isFromUpload, (dataUri) => {
+
+        helpers.getDataUri(imageToDraw, isUploadState , (dataUri) => {
 
             fabric.Image.fromURL(dataUri, image => {
 

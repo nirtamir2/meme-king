@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // helpers
-import { setHeightAndWidth } from '../../helpers/modifyImageDimensions';
+import helpers from 'helpers/helpers';
 
 // components
 import GeneratorDashboardButton from 'components/GeneratorDashboardButton/GeneratorDashboardButton';
@@ -42,7 +42,7 @@ export default class GeneratorUploader extends Component {
         const randomX = (Math.floor(Math.random() * canvas.width) + 1) /2;
         const randomY = (Math.floor(Math.random() * canvas.height) + 1) / 2;
         fabric.Image.fromURL(item, function (image) {
-            image = setHeightAndWidth(image, 100);
+            image = helpers.modifyImageDimensions(image, 100);
             image.left = randomX
             image.top = randomY;
             canvas.add(image);

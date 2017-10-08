@@ -144,6 +144,11 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
              })
      }
 
+     clearUserMemes = () => {
+         window.firebase.database().ref(`/${constants.database.userSavedMemesTable}`).remove()
+
+     }
+
 
     render() {
 
@@ -167,10 +172,6 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
                         htmlFor="images"
                 />
 
-                <Button label={'user memes'}
-                        onClick={this.getUserMemes}
-                        icon="glyphicon glyphicon-user"
-                />
 
                 <h4> or edit an existing meme:</h4>
                 <select value={this.state.category} onChange={this.onCategoryChange}>
@@ -178,6 +179,13 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
                         return <option key={_.uniqueId()}>{prop}</option>
                     })}
                 </select>
+
+                <Button label={'user memes'}
+                        onClick={this.getUserMemes}
+                        icon="glyphicon glyphicon-user"
+                />
+                <h6 className="text-center" onClick={this.clearUserMemes}> clear user memes </h6>
+
 
                 {this.state.userMemes && _.map(this.state.userMemes, meme => {
                     return(

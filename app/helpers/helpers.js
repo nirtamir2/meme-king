@@ -4,6 +4,8 @@ import uniqueId from './uniqueId';
 import isRTL from './isRtl';
 import modifyImageDimensions from './modifyImageDimensions';
 import getDataUri from './getDataUri';
+import getRandomNumber from './getRandomNumber';
+import isWebview from './isWebview';
 
 class Helpers {
 
@@ -14,6 +16,8 @@ class Helpers {
         this.isRTL = isRTL;
         this.modifyImageDimensions = modifyImageDimensions;
         this.getDataUri = getDataUri;
+        this.getRandomNumber = getRandomNumber;
+        this.isWebview = isWebview;
     }
 
 }

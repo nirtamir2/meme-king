@@ -1622,6 +1622,11 @@ input[type=file] {
   direction: ltr;
   color: #0097EB; }
 
+.box-admin h6 {
+  margin: 5px 0;
+  cursor: pointer;
+  font-size: 14px; }
+
 .box-admin select {
   height: 50px;
   width: 450px;
