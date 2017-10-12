@@ -19,6 +19,7 @@ const CLEAN_SLATE_MOBILE_HEIGHT = 380;
 
 // actions
 import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions';
+import { fetchSingleMeme } from 'actions/category-actions/category-actions';
 
 // assets
 import waterMarkDesktop from 'assets/images/watermark-desktop.jpg';
@@ -33,12 +34,18 @@ class Generator extends Component {
     }
 
     componentDidMount() {
+
+        const { isStandAlone, fetchSingleMeme, category, memeId } = this.props;
+
         const canvas = new fabric.Canvas('c', { allowTouchScrolling: true })
         this.setState({ canvas }, () => {
             this.createBoard(this.props.format);
             this.disableWindowScrollOnDrag(canvas);
         })
 
+        if (isStandAlone) {
+            fetchSingleMeme(category, memeId);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -268,7 +275,7 @@ function mapStateToProps(state, ownProps) {
     return {
         category: params.category,
         meme: currentMemeObj,
-        format: params.format,
+        format: params.format || 'normalFormat',
         type: params.type,
         memeId: memeId,
         history,
@@ -284,7 +291,8 @@ function mapDispatchToProps(dispatch) {
 
     return {
         updateMemeRating: (meme) => dispatch(updateMemeRating(meme)),
-        saveUserMemeToStorage: (dataUri) => dispatch(saveUserMemeToStorage(dataUri))
+        saveUserMemeToStorage: (dataUri) => dispatch(saveUserMemeToStorage(dataUri)),
+        fetchSingleMeme: (category, id) => dispatch(fetchSingleMeme(category, id))
     }
 }
 

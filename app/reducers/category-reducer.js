@@ -128,6 +128,35 @@ export default function(state=initialState, action){
 
 
 
+        case actionsConstants.FETCH_SINGLE_MEME_REQUEST:
+            return {
+                isFetching: false,
+                memes: [],
+            }
+            break;
+
+
+        case actionsConstants.FETCH_SINGLE_MEME_SUCCESS:
+            return {
+                isFetching: false,
+                memes: { ...state.memes, [payload.id] : payload },
+            }
+            break;
+
+        case actionsConstants.FETCH_SINGLE_MEME_FAILED:
+            return {
+                isFetching: false,
+                memes: []
+            }
+            break;
+
+
+
+
+
+
+
+
         default:
             return state
 

@@ -23,6 +23,18 @@ export function fetchCategory(category) {
     };
 }
 
+export function fetchSingleMeme(category, id) {
+    return (dispatch) => {
+
+        dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_REQUEST, payload: []});
+
+        window.firebase.database().ref(`/${constants.database.memesTable}/${category}/${id}`).once('value')
+            .then(snapshot => dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_SUCCESS, payload : snapshot.val()}))
+            .catch(error => dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_FAILED, error : error}));
+
+    };
+}
+
 export function fetchMyMemes() {
     return {
         payload: localStorageService.getItem('myMemes'),

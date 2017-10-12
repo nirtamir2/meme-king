@@ -26,6 +26,7 @@ export default class MainView extends Component {
             <div style={{width: '100%', backgroundColor: '#f6f6f6', height: '100vh', overflow: 'scroll'}}>
                 <Route  path='/memes/:category' render={this.renderCategoryPage}/>
                 <Route  path={`/memes/:category/generator/:id/:format`} component={Generator}/>
+                <Route  path={`/generator-standalone/:category/:id/:format`} render={(props) => <Generator {...props} isStandAlone={true} />}/>
                 <Route  exact path='/' component={Home}/>
                 <Route path={`/cropper`} component={Cropper}/>
                 <Route path="/generator/:type/:format" component={Generator}/>
