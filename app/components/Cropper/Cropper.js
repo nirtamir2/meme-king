@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import ReactCropper from 'react-cropper';
 
@@ -8,7 +9,21 @@ import PopupCover from 'components/PopupCover/PopupCover';
 // constants
 import globalConstants from 'constants/global';
 
+// helpers
+import helpers from 'helpers/helpers';
+
 export default class Cropper extends Component {
+
+    state = {
+        uploadedImageFromWebView: ''
+    }
+
+    componentWillMount() {
+        document.addEventListener('message', (e) => {
+            this.setState({uploadedImageFromWebView: 'data:image/png;base64,' + e.data})
+        })
+    }
+
 
     crop = () => {
        const image = this.cropper.getCroppedCanvas().toDataURL();
@@ -23,16 +38,18 @@ export default class Cropper extends Component {
     }
 
     closeCropper = () => {
-        document.querySelector(".cover").style.display = 'none';
         this.props.history.push('/')
     }
 
     render() {
+
+        const image = ((_.get(this.props, 'location.state.image')) || this.state.uploadedImageFromWebView);
+
         return (
             <PopupCover>
                 <div className="generator">
 
-                    <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeCropper} />
+                    {!helpers.isWebview() && <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeCropper} />}
 
                     <h1 className="text-center">
                     חיתוך התמונה
@@ -40,7 +57,7 @@ export default class Cropper extends Component {
 
                     <ReactCropper
                         ref={node => this.cropper = node}
-                        src={this.props.location.state.image}
+                        src={image}
                         style={{height: 400, width: '70%', marginLeft: 'auto', marginRight: 'auto'}}
                         background={false}
                         autoCropArea={1}

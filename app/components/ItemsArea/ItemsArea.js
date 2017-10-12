@@ -20,7 +20,8 @@ export default class ItemsArea extends Component {
         const { canvas } = this.props;
         const self= this;
         fabric.Image.fromURL(src, (image) => {
-            image = helpers.modifyImageDimensions(image, 120, 120);
+            const size = helpers.isMobile() ? 60 : 120;
+            image = helpers.modifyImageDimensions(image, size, size);
             image.left = canvas.width / 2;
             image.top = canvas.height / 2;
             canvas.add(image);

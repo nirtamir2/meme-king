@@ -1,10 +1,10 @@
 export default (picture, wantedMaxHeight, wantedMaxWidth, isNormalFormat) => {
-
-    const SPACE_TO_RECUDE_FROM_CANVAS = window.innerWidth < 767 ? 30 : 50;
+    const isMobile = (window.innerWidth < 767);
+    const SPACE_TO_RECUDE_FROM_CANVAS = isMobile ? 30 : 50;
     const container = document.querySelector('.generator__canvas-wrapper');
     const localWantedMaxWidth = (container.offsetWidth - SPACE_TO_RECUDE_FROM_CANVAS ) * (isNormalFormat ? 1 : 0.7);
     let maxWidth = wantedMaxWidth || window.innerWidth > 767 ? localWantedMaxWidth : container.offsetWidth * 0.9; // Max width for the image
-    let maxHeight = wantedMaxHeight || 500;    // Max height for the image
+    let maxHeight = wantedMaxHeight ||  isMobile ? 400 : 500;    // Max height for the image
     let ratio = 0;  // Used for aspect ratio
 
 

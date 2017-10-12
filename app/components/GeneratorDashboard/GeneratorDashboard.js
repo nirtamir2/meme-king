@@ -30,7 +30,9 @@ export default class GeneratorDashboard extends Component {
 
     download = (event)=> {
         const { canvas } = this.props;
+
         this.handleGoogleAnalytics();
+
         this.updateMemeRating();
 
         canvas.deactivateAll().renderAll();
@@ -44,9 +46,11 @@ export default class GeneratorDashboard extends Component {
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
 
 
-
         if (helpers.isWebview()) {
             this.sendBase64ToNative(canvas.toDataURL());
+            //!* need to set back canvas dimensions *
+            canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
+            canvas.setZoom(1);
             return;
         }
 
@@ -66,6 +70,7 @@ export default class GeneratorDashboard extends Component {
 
     sendBase64ToNative = (base64) => {
         window.postMessage(base64);
+
     }
 
 
@@ -75,7 +80,7 @@ export default class GeneratorDashboard extends Component {
 
     handleGoogleAnalytics() {
         const textAreas = document.getElementsByTagName('TEXTAREA');
-        const description = this.props.meme.description;
+        const description = _.get(this.props, 'meme.description');
         let text = `${description} : ${textAreas[0].value} ${textAreas[1].value}`;
         AnalyticsService.sendEvent('Meme Downloaded',`${this.props.format}, ${text}`);
         if(this.props.format === 'dank'){
