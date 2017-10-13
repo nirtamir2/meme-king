@@ -49,7 +49,7 @@ export default class Cropper extends Component {
             <PopupCover>
                 <div className="generator">
 
-                    {!helpers.isWebview() && <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeCropper} />}
+                    {!helpers.isWebview(_.get(this.props, 'location.search')) && <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeCropper} />}
 
                     <h1 className="text-center">
                     חיתוך התמונה
@@ -58,7 +58,7 @@ export default class Cropper extends Component {
                     <ReactCropper
                         ref={node => this.cropper = node}
                         src={image}
-                        style={{height: 400, width: '70%', marginLeft: 'auto', marginRight: 'auto'}}
+                        style={{height: helpers.isMobile() ? 300 : 400, width: '70%', marginLeft: 'auto', marginRight: 'auto'}}
                         background={false}
                         autoCropArea={1}
                     />
