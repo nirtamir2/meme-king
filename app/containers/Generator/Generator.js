@@ -1,13 +1,13 @@
 import _ from 'lodash'
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import classNames from 'classnames';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import classNames from 'classnames'
 
 // components
-import GeneratorDashboard from 'components/GeneratorDashboard/GeneratorDashboard';
-import PopupCover from 'components/PopupCover/PopupCover';
-import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature';
-import GeneratorDashboardSkeleton from 'components/GeneratorDashboardSkeleton/GeneratorDashboardSkeleton';
+import GeneratorDashboard from 'components/GeneratorDashboard/GeneratorDashboard'
+import PopupCover from 'components/PopupCover/PopupCover'
+import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
+import GeneratorDashboardSkeleton from 'components/GeneratorDashboardSkeleton/GeneratorDashboardSkeleton'
 
 // helpers
 import helpers from 'helpers/helpers'
@@ -15,15 +15,15 @@ import helpers from 'helpers/helpers'
 // constants
 import colors from 'constants/colors'
 import globalConstants from 'constants/global'
-const CLEAN_SLATE_MOBILE_HEIGHT = 380;
+const CLEAN_SLATE_MOBILE_HEIGHT = 380
 
 // actions
-import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions';
-import { fetchSingleMeme } from 'actions/category-actions/category-actions';
+import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions'
+import { fetchSingleMeme } from 'actions/category-actions/category-actions'
 
 // assets
-import waterMarkDesktop from 'assets/images/watermark-desktop.jpg';
-import watermarkMobile from 'assets/images/watermark-mobile.jpg';
+import waterMarkDesktop from 'assets/images/watermark-desktop.jpg'
+import watermarkMobile from 'assets/images/watermark-mobile.jpg'
 
 class Generator extends Component {
 
@@ -39,12 +39,12 @@ class Generator extends Component {
 
         const canvas = new fabric.Canvas('c', { allowTouchScrolling: true })
         this.setState({ canvas }, () => {
-            this.createBoard(this.props.format);
-            this.disableWindowScrollOnDrag(canvas);
+            this.createBoard(this.props.format)
+            this.disableWindowScrollOnDrag(canvas)
         })
 
         if (isStandAlone) {
-            fetchSingleMeme(category, memeId);
+            fetchSingleMeme(category, memeId)
         }
     }
 
@@ -59,16 +59,16 @@ class Generator extends Component {
 
     disableWindowScrollOnDrag = (canvas) => {
 
-        canvas.on('mouse:down', function() {
-            document.querySelector(".generator").style.overflow = 'visible';
-            document.querySelector("body").style.overflow = 'visible';
+        canvas.on('mouse:down', function () {
+            document.querySelector(".generator").style.overflow = 'visible'
+            document.querySelector("body").style.overflow = 'visible'
 
-        });
-        canvas.on('mouse:up', function() {
-            document.querySelector(".generator").style.overflow = 'scroll';
-            document.querySelector("body").style.overflow = 'scroll';
+        })
+        canvas.on('mouse:up', function () {
+            document.querySelector(".generator").style.overflow = 'scroll'
+            document.querySelector("body").style.overflow = 'scroll'
 
-        });
+        })
     }
 
     createBoard = (wantedFormat) => {
@@ -83,45 +83,44 @@ class Generator extends Component {
 
     createCleanSlate = () => {
         this.setState({ isLoading: false, isCanvasReady: true })
-        const { canvas } = this.state;
+        const { canvas } = this.state
 
         const DISTANCE = helpers.isMobile() ? 30 : 140
-        const width = helpers.isMobile() ? 300 : document.querySelector('.generator__canvas-wrapper').offsetWidth - DISTANCE;
-        const height = helpers.isMobile() ? CLEAN_SLATE_MOBILE_HEIGHT : 460;
-        canvas.backgroundColor = colors.WHITE;
-        canvas.setWidth(width);
-        canvas.setHeight(height);
-       this.addWaterMark();
+        const width = helpers.isMobile() ? 300 : document.querySelector('.generator__canvas-wrapper').offsetWidth - DISTANCE
+        const height = helpers.isMobile() ? CLEAN_SLATE_MOBILE_HEIGHT : 460
+        canvas.backgroundColor = colors.WHITE
+        canvas.setWidth(width)
+        canvas.setHeight(height)
+        this.addWaterMark()
     }
 
     addImage = (format) => {
 
-        const { urlPath } = this.props.meme || {};
-        const { canvas } = this.state;
-        const isNormalFormat = (format === globalConstants.format.normal);
-        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150;
-        const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200;
+        const { urlPath } = this.props.meme || {}
+        const { canvas } = this.state
+        const isNormalFormat = (format === globalConstants.format.normal)
+        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150
+        const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200
 
-        const imageToDraw = urlPath;
-        const isUploadState = (this.props.isFromUpload);
+        const imageToDraw = urlPath
+        const isUploadState = (this.props.isFromUpload)
 
-        canvas.backgroundColor = colors.GRAY_LIGHT;
-        canvas.setWidth(canvasContainerWidth );
-        canvas.clear();
+        canvas.backgroundColor = colors.GRAY_LIGHT
+        canvas.setWidth(canvasContainerWidth)
+        canvas.clear()
 
 
-
-        helpers.getDataUri(imageToDraw, isUploadState , (dataUri) => {
+        helpers.getDataUri(imageToDraw, isUploadState, (dataUri) => {
 
             fabric.Image.fromURL(dataUri, image => {
 
-                this.setState({ isLoading: false });
+                this.setState({ isLoading: false })
 
-                image = helpers.modifyImageDimensions(image, null, null, isNormalFormat);
+                image = helpers.modifyImageDimensions(image, null, null, isNormalFormat)
 
-                canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle);
-                canvas.setWidth( isNormalFormat ? image.width : image.width + 25);
-                canvas.backgroundColor = colors.WHITE;
+                canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle)
+                canvas.setWidth(isNormalFormat ? image.width : image.width + 25)
+                canvas.backgroundColor = colors.WHITE
                 canvas.add(image)
 
                 image.set({
@@ -137,8 +136,8 @@ class Generator extends Component {
                     selectable: true,
                 })
 
-                this.setState({ isCanvasReady: true });
-                this.addWaterMark();
+                this.setState({ isCanvasReady: true })
+                this.addWaterMark()
             })
         })
 
@@ -182,26 +181,26 @@ class Generator extends Component {
 
     closeGenerator = () => {
         const memeCategory = _.get(this.props, 'category')
-        const wantedPath = memeCategory ? `/memes/${memeCategory}` : `/`;
+        const wantedPath = memeCategory ? `/memes/${memeCategory}` : `/`
         const location = {
-            pathname : wantedPath,
+            pathname: wantedPath,
             query: this.props.query || {}
         }
         this.props.history.push(location)
     }
 
-    render(){
-        
-        const { isLoading, isCanvasReady, canvas } = this.state;
-        const { meme, format, history, location, type, query, saveUserMemeToStorage, isCleanSlateState, isWebView } = this.props;
+    render() {
+
+        const { isLoading, isCanvasReady, canvas } = this.state
+        const { meme, format, history, location, type, query, saveUserMemeToStorage, isCleanSlateState, isWebView } = this.props
 
         const mobileGeneratorDashboardTopPosition = ( (isCanvasReady && helpers.isMobile())
-                                            ?
-                                                (isCleanSlateState ? CLEAN_SLATE_MOBILE_HEIGHT :  `${_.get(this.canvasWrapper, 'offsetHeight')}px`)
-                                            :
-                                            null)
+            ?
+            (isCleanSlateState ? CLEAN_SLATE_MOBILE_HEIGHT : `${_.get(this.canvasWrapper, 'offsetHeight')}px`)
+            :
+            null)
 
-        const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {};
+        const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {}
 
         return (
             <PopupCover>
@@ -213,11 +212,13 @@ class Generator extends Component {
 
                     <div className="generator__wrapper">
 
-                        <div  className={classNames({ 'with-shadow' : isCanvasReady }, "generator__canvas-wrapper col-xs-12 col-sm-7")} ref={node => this.canvasWrapper = node}>
+                        <div
+                            className={classNames({ 'with-shadow': isCanvasReady }, "generator__canvas-wrapper col-xs-12 col-sm-7")}
+                            ref={node => this.canvasWrapper = node}>
                             <canvas id='c' dir="rtl"/>
                             {isLoading && <div className="spinner">Loading&</div>}
                         </div>
-                        
+
                         {isCanvasReady
                             ?
 
@@ -242,9 +243,10 @@ class Generator extends Component {
 
                     </div>
 
-                    {!isWebView && (<div className="generator__close glyphicon glyphicon-remove" onClick={this.closeGenerator}/>)}
+                    {!isWebView && (
+                        <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeGenerator}/>)}
 
-                    <GeneratorSignature className="hidden-xs" />
+                    <GeneratorSignature className="hidden-xs"/>
 
 
                 </div>
@@ -258,18 +260,18 @@ class Generator extends Component {
 
 function mapStateToProps(state, ownProps) {
 
-    const { match: { params }, location, history } = ownProps;
+    const { match: { params }, location, history } = ownProps
 
-    const memeId = params.id;
-    const isFromUpload = (_.get(location, 'state.from') === 'upload');
-    const isFromSearch = (_.get(location, 'state.from') === 'search');
+    const memeId = params.id
+    const isFromUpload = (_.get(location, 'state.from') === 'upload')
+    const isFromSearch = (_.get(location, 'state.from') === 'search')
     const currentMemeObj = (isFromUpload || isFromSearch) ?
         {
             urlPath: location.state.urlPath,
             id: helpers.uniqueId()
         }
         :
-        state.category.memes[params.id];
+        state.category.memes[params.id]
 
     return {
         category: params.category,
@@ -283,7 +285,7 @@ function mapStateToProps(state, ownProps) {
         isFromSearch,
         isWebView: helpers.isWebview(_.get(location, 'search')),
         query: location.query,
-        isCleanSlateState : (params.type === 'clean-slate')
+        isCleanSlateState: (params.type === 'clean-slate')
     }
 }
 
