@@ -18,7 +18,7 @@ export default class ItemsArea extends Component {
     addItem = (event) => {
         const src = event.target.src;
         const { canvas } = this.props;
-        const self= this;
+        const self = this;
         fabric.Image.fromURL(src, (image) => {
             const size = helpers.isMobile() ? 60 : 120;
             image = helpers.modifyImageDimensions(image, size, size);

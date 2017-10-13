@@ -7,6 +7,7 @@ import ItemsArea from '../ItemsArea/ItemsArea';
 import GeneratorUploader from '../GeneratorUploader/GeneratorUploader';
 import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContainer';
 import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature';
+import Modal from 'components/Modal/Modal';
 
 // services
 import LocalStorageService from 'services/LocalStorage';
@@ -176,7 +177,9 @@ export default class GeneratorDashboard extends Component {
                         onClick={this.toggleItemsArea}
                 />
 
-                {this.state.isItemsAreaOpen && canvas && <ItemsArea canvas={canvas} />}
+                <Modal onHide={() => this.setState({isItemsAreaOpen: false })} show={this.state.isItemsAreaOpen && canvas}>
+                    <ItemsArea canvas={canvas} />
+                </Modal>
 
                 <Button label={FORMAT_BUTTON_TEXT}
                         onClick={this.changeFormat}

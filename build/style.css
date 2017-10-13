@@ -1666,6 +1666,13 @@ input[type=file] {
   .login-area .login-btn {
     margin: 30px 0; }
 
+.modal-backdrop {
+  z-index: 9999; }
+
+.memeking-modal {
+  z-index: 9999 !important;
+  box-shadow: 0px 0px 16px -2px rgba(0, 0, 0, 0.4); }
+
 .search-loader,
 .search-loader:after {
   border-radius: 50%; }
