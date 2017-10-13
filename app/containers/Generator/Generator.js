@@ -15,7 +15,7 @@ import helpers from 'helpers/helpers'
 // constants
 import colors from 'constants/colors'
 import globalConstants from 'constants/global'
-const CLEAN_SLATE_MOBILE_HEIGHT = 380
+const CLEAN_SLATE_MOBILE_HEIGHT = 280
 
 // actions
 import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions'
