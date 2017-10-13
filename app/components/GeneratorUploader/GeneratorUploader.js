@@ -57,7 +57,7 @@ export default class GeneratorUploader extends Component {
     };
 
     render(){
-        const UPLOAD_TEXT =  "הוספת תמונות";
+        const UPLOAD_TEXT =  "תמונות";
 
         return (
             <div className="generator-uploader-wrapper">

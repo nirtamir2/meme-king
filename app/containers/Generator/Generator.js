@@ -196,7 +196,7 @@ class Generator extends Component {
 
         const mobileGeneratorDashboardTopPosition = ( (isCanvasReady && helpers.isMobile())
             ?
-            (isCleanSlateState ? CLEAN_SLATE_MOBILE_HEIGHT : `${_.get(this.canvasWrapper, 'offsetHeight')}px`)
+            (isCleanSlateState ? CLEAN_SLATE_MOBILE_HEIGHT : `${_.get(this.canvasWrapper, 'offsetHeight') - 20}px`)
             :
             null)
 

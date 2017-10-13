@@ -66,7 +66,7 @@ export default class TextFieldsContainer extends Component {
 
     render() {
        return  (
-           <div>
+           <div className="text-fields-container">
                {this.state.textInputs}
            </div>
        )

@@ -1,0 +1,8 @@
+.text-fields-container {
+
+  @include mobile-medium {
+    position: relative;
+    top: 85px;
+  }
+
+}

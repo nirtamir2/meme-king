@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import classNames from 'classNames';
 
-export default ({ label, icon , onClick, style, htmlFor, wrapWithLabel, isWaiting }) => {
+export default ({ label, icon , onClick, style, htmlFor, wrapWithLabel }) => {
 
-    if (isWaiting) {
-        return (
-            <div className="waiting-button" />
-        )
-    }
+    const text = <span>{label}</span>;
 
     if (wrapWithLabel) {
         return(
-            <label htmlFor={htmlFor} className={classNames('flex box-generator-button', style)} onClick={onClick}>
-                {icon && <span className={icon}/> }
-                <span>{label}</span>
-            </label>
+           <div>
+               <label htmlFor={htmlFor} className={classNames('flex box-generator-button', style)} onClick={onClick}>
+                   {icon && <span className={icon}/> }
+                   <span className="text hidden-xs">{label}</span>
+               </label>
+               <span className="text visible-mobile">{label}</span>
+           </div>
         )
     }
 
     return(
-        <a htmlFor={htmlFor} className={classNames('flex box-generator-button', style)} onClick={onClick}>
-            {icon && <span className={icon}/> }
-            <span>{label}</span>
-        </a>
+        <div>
+            <a htmlFor={htmlFor} className={classNames('flex box-generator-button', style)} onClick={onClick}>
+                {icon && <span className={icon}/> }
+                <span className="text hidden-xs">{label}</span>
+            </a>
+            <span className="text visible-mobile">{label}</span>
+        </div>
     )
 }

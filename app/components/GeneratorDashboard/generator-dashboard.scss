@@ -14,5 +14,21 @@
     padding-left: 0;
     padding-right: 0;
   }
+
+  .buttons-container {
+    @include mobile-medium {
+      background-color: $main-bg;
+      z-index: 9998;
+      width: 100%;
+      padding: 15px 35px;
+      position: fixed;
+      display: flex;
+      left: 0;
+      margin-right: auto;
+      margin-left: auto;
+      right: 0;
+      justify-content: space-between;
+    }
+  }
 }
 

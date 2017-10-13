@@ -1,0 +1,15 @@
+.generator-uploader-wrapper {
+
+  width: 100%;
+
+  label {
+    margin-bottom: 0;
+  }
+
+  @include mobile-medium {
+    width: auto;
+    display: inline-block;
+  }
+
+
+}

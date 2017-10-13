@@ -1,23 +1,24 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
+import _ from 'lodash'
+import React, { Component } from 'react'
+import classNames from 'classnames'
 
 // components
-import Button from '../GeneratorDashboardButton/GeneratorDashboardButton';
-import ItemsArea from '../ItemsArea/ItemsArea';
-import GeneratorUploader from '../GeneratorUploader/GeneratorUploader';
-import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContainer';
-import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature';
-import Modal from 'components/Modal/Modal';
+import Button from '../GeneratorDashboardButton/GeneratorDashboardButton'
+import ItemsArea from '../ItemsArea/ItemsArea'
+import GeneratorUploader from '../GeneratorUploader/GeneratorUploader'
+import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContainer'
+import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
+import Modal from 'components/Modal/Modal'
 
 // services
-import LocalStorageService from 'services/LocalStorage';
-import AnalyticsService from 'services/Analytics';
+import LocalStorageService from 'services/LocalStorage'
+import AnalyticsService from 'services/Analytics'
 
 // helpers
-import helpers from 'helpers/helpers';
+import helpers from 'helpers/helpers'
 
 // constants
-import globalConstants from 'constants/global';
+import globalConstants from 'constants/global'
 
 export default class GeneratorDashboard extends Component {
 
@@ -27,159 +28,148 @@ export default class GeneratorDashboard extends Component {
 
     toggleItemsArea = () => {
         this.setState({ isItemsAreaOpen: !this.state.isItemsAreaOpen })
-    };
+    }
 
-    download = (event)=> {
-        const { canvas } = this.props;
+    download = (event) => {
+        const { canvas } = this.props
 
-        this.handleGoogleAnalytics();
+        this.handleGoogleAnalytics()
 
-        this.updateMemeRating();
+        this.updateMemeRating()
 
-        canvas.deactivateAll().renderAll();
-        const clickedElement = event.target.tagName === 'SPAN' ? event.target.parentNode : event.target;
+        canvas.deactivateAll().renderAll()
+        const clickedElement = event.target.tagName === 'SPAN' ? event.target.parentNode : event.target
 
         //saveing the canvas and resizing it before downloading depends on screen resolution.
-        const zoom = helpers.isMobile() ? 2.5 : 1.3;
+        const zoom = helpers.isMobile() ? 2.5 : 1.3
 
-        canvas.setZoom(zoom);
+        canvas.setZoom(zoom)
         // need to enlarge canvas otherwise the svg will be clipped
-        canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
+        canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
 
         if (helpers.isWebview()) {
-            this.sendBase64ToNative(canvas.toDataURL());
+            this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *
-            canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
-            canvas.setZoom(1);
-            return;
+            canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
+            canvas.setZoom(1)
+            return
         }
 
 
-        clickedElement.href = canvas.toDataURL();
-        clickedElement.download = 'MemeKing';
+        clickedElement.href = canvas.toDataURL()
+        clickedElement.download = 'MemeKing'
 
 
-        this.props.saveUserMemeToStorage({urlPath : canvas.toDataURL(), date : new Date()});
+        this.props.saveUserMemeToStorage({ urlPath: canvas.toDataURL(), date: new Date() })
 
         //!* need to set back canvas dimensions *
-        canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
-        canvas.setZoom(1);
+        canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
+        canvas.setZoom(1)
 
-        this.saveMemeNameToLocalStorage();
-    };
+        this.saveMemeNameToLocalStorage()
+    }
 
     sendBase64ToNative = (base64) => {
-        window.postMessage(base64);
+        window.postMessage(base64)
 
     }
 
 
     saveMemeNameToLocalStorage = () => {
         LocalStorageService.addDownloadedMemeToMyMemesList(this.props.meme || null)
-    };
+    }
 
     handleGoogleAnalytics() {
-        const textAreas = document.getElementsByTagName('TEXTAREA');
-        const description = _.get(this.props, 'meme.description');
-        let text = `${description} : ${textAreas[0].value} ${textAreas[1].value}`;
-        AnalyticsService.sendEvent('Meme Downloaded',`${this.props.format}, ${text}`);
-        if(this.props.format === 'dank'){
-            AnalyticsService.sendEvent('Dank' , text);
+        const textAreas = document.getElementsByTagName('TEXTAREA')
+        const description = _.get(this.props, 'meme.description')
+        let text = `${description} : ${textAreas[0].value} ${textAreas[1].value}`
+        AnalyticsService.sendEvent('Meme Downloaded', `${this.props.format}, ${text}`)
+        if (this.props.format === 'dank') {
+            AnalyticsService.sendEvent('Dank', text)
         }
     }
 
 
     updateMemeRating = () => {
-       if (!(this.props.type === 'upload')) {
-           this.props.updateMemeRating(this.props.meme)
-       }
-    };
+        if (!(this.props.type === 'upload')) {
+            this.props.updateMemeRating(this.props.meme)
+        }
+    }
 
-    clearCanvas = ()=> {
-        this.props.canvas.clear();
-    };
+    clearCanvas = () => {
+        this.props.canvas.clear()
+    }
 
     addTextLine = () => {
-        this.TextFieldsContainer.addTextInput();
+        this.TextFieldsContainer.addTextInput()
     }
 
     crop = () => {
         const location = {
             pathname: '/cropper',
-            state : {
-                image : this.props.meme.urlPath
+            state: {
+                image: this.props.meme.urlPath
             }
         }
         this.props.history.push(location)
     }
 
     changeFormat = () => {
-        const { history, format, location, type, meme, query } = this.props;
-        const wantedFormat = (format === globalConstants.format.normal) ? globalConstants.format.dank : globalConstants.format.normal;
-        const wantedPath = location.pathname.replace(format, wantedFormat);
-        const from = _.get(location, 'state.from');
+        const { history, format, location, type, meme, query } = this.props
+        const wantedFormat = (format === globalConstants.format.normal) ? globalConstants.format.dank : globalConstants.format.normal
+        const wantedPath = location.pathname.replace(format, wantedFormat)
+        const from = _.get(location, 'state.from')
 
         if (from === 'search') {
             const location = {
-                pathname : wantedPath,
+                pathname: wantedPath,
                 state: {
                     urlPath: meme.urlPath,
-                    from : 'search'
+                    from: 'search'
                 },
                 query
             }
             history.push(location)
-        } else if( type === 'upload' || from === 'upload') {
+        } else if (type === 'upload' || from === 'upload') {
             const location = {
-                pathname : wantedPath,
+                pathname: wantedPath,
                 state: {
                     urlPath: meme.urlPath,
-                    from : 'upload'
+                    from: 'upload'
                 },
                 query
             }
             history.push(location)
         } else {
-            history.push(wantedPath);
+            history.push(wantedPath)
 
         }
     }
 
-    render(){
+    render() {
 
-        const { format, canvas, isCanvasReady, style } = this.props;
-        const FORMAT_BUTTON_TEXT = format === globalConstants.format.normal ? 'פורמט דאנק מימ' : "פורמט רגיל";
-        const ADD_TEXT_LINE =   "הוספת שורת טקסט" ;
-        const ADD_AN_ITEM =  "הוספת פריט" ;
-        const CLEAR_ALL =  "נקה הכל" ;
-        const DOWNLOAD = "הורדה" ;
+        const { format, canvas, isCanvasReady, style } = this.props
+        const FORMAT_BUTTON_TEXT = format === globalConstants.format.normal ? ' דאנק מימ' : " רגיל"
+        const ADD_TEXT_LINE = "טקסט"
+        const ADD_AN_ITEM = "פריטים"
+        const DOWNLOAD = "הורדה"
 
-        return (
-            <div style={style} className="box-generator-dashboard col-sm-5">
+        const buttonsStyle = style ? { top: (parseInt(_.head(_.split(style.top, 'px'))) + 15) + 'px' } : {}
 
-                {isCanvasReady && (
-                <TextFieldsContainer ref={ elem => this.TextFieldsContainer = elem}
-                                     canvas={canvas}
-                                     format={format}
-                />
-                )}
-
+        const Buttons = ({ className }) => (
+            <div className={classNames("buttons-container", className)} style={buttonsStyle}>
                 <Button
                     label={ADD_TEXT_LINE}
                     icon="glyphicon glyphicon-plus"
                     onClick={this.addTextLine}
                 />
 
-                <GeneratorUploader canvas={canvas} />
+                <GeneratorUploader canvas={canvas}/>
 
                 <Button label={ADD_AN_ITEM} icon="glyphicon glyphicon-sunglasses"
                         onClick={this.toggleItemsArea}
                 />
-
-                <Modal onHide={() => this.setState({isItemsAreaOpen: false })} show={this.state.isItemsAreaOpen && canvas}>
-                    <ItemsArea canvas={canvas} />
-                </Modal>
 
                 <Button label={FORMAT_BUTTON_TEXT}
                         onClick={this.changeFormat}
@@ -192,9 +182,32 @@ export default class GeneratorDashboard extends Component {
                         onClick={this.download}
                 />
 
-                <GeneratorSignature className="visible-xs" />
             </div>
-        );
+        )
+
+        return (
+            <div style={style} className="box-generator-dashboard col-sm-5">
+
+                {helpers.isMobile() && <Buttons />}
+
+                {isCanvasReady && (
+                    <TextFieldsContainer ref={ elem => this.TextFieldsContainer = elem}
+                                         canvas={canvas}
+                                         format={format}
+                    />
+                )}
+
+                {!helpers.isMobile() && <Buttons />}
+
+                <GeneratorSignature className="visible-xs"/>
+
+                <Modal onHide={() => this.setState({ isItemsAreaOpen: false })}
+                       show={this.state.isItemsAreaOpen && canvas}>
+                    <ItemsArea canvas={canvas}/>
+                </Modal>
+
+            </div>
+        )
     }
 }
 
