@@ -114,9 +114,11 @@ class Generator extends Component {
 
             fabric.Image.fromURL(dataUri, image => {
 
-                this.setState({ isLoading: false })
+                this.setState({ isLoading: false });
 
-                image = helpers.modifyImageDimensions(image, null, null, isNormalFormat)
+                const wantedMaxHeight = ((!isNormalFormat && helpers.isMobile()) ? 280 : null)
+
+                image = helpers.modifyImageDimensions(image, null, wantedMaxHeight, isNormalFormat)
 
                 canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle)
                 canvas.setWidth(isNormalFormat ? image.width : image.width + 25)

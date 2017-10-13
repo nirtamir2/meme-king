@@ -3,8 +3,6 @@ import classNames from 'classNames';
 
 export default ({ label, icon , onClick, style, htmlFor, wrapWithLabel }) => {
 
-    const text = <span>{label}</span>;
-
     if (wrapWithLabel) {
         return(
            <div>
