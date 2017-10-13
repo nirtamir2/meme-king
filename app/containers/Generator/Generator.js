@@ -202,7 +202,7 @@ class Generator extends Component {
             :
             null)
 
-        const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {}
+        const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {};
 
         return (
             <PopupCover>

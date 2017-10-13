@@ -54,6 +54,8 @@ $button-text-width: 154px;
       color: $mainGeneratorControllersColor;
       text-align: center;
       margin: 0 auto;
+      position: relative;
+      top: -3px;
     }
 
     &.visible-mobile {

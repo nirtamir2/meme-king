@@ -852,7 +852,9 @@ header {
         font-size: 10px;
         color: #0097EB;
         text-align: center;
-        margin: 0 auto; } }
+        margin: 0 auto;
+        position: relative;
+        top: -3px; } }
     .box-generator-button span.text.visible-mobile, .box-generator-button + .text.visible-mobile {
       display: none; }
       @media only screen and (max-width: 767px) {
@@ -1556,7 +1558,7 @@ input[type=file] {
       background-color: #f6f6f6;
       z-index: 9998;
       width: 100%;
-      padding: 15px 35px;
+      padding: 15px 35px 3px 35px;
       position: fixed;
       display: flex;
       left: 0;
@@ -1707,7 +1709,7 @@ input[type=file] {
 @media only screen and (max-width: 767px) {
   .text-fields-container {
     position: relative;
-    top: 85px; } }
+    top: 70px; } }
 
 .search-loader,
 .search-loader:after {
