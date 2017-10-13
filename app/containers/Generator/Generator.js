@@ -193,13 +193,14 @@ class Generator extends Component {
     render(){
         
         const { isLoading, isCanvasReady, canvas } = this.state;
-        const { meme, format, history, location, type, query, saveUserMemeToStorage, isCleanSlateState } = this.props;
+        const { meme, format, history, location, type, query, saveUserMemeToStorage, isCleanSlateState, isWebView } = this.props;
 
         const mobileGeneratorDashboardTopPosition = ( (isCanvasReady && helpers.isMobile())
                                             ?
                                                 (isCleanSlateState ? CLEAN_SLATE_MOBILE_HEIGHT :  `${_.get(this.canvasWrapper, 'offsetHeight')}px`)
                                             :
                                             null)
+
         const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {};
 
         return (
@@ -241,7 +242,7 @@ class Generator extends Component {
 
                     </div>
 
-                    {!helpers.isWebview() && (<div className="generator__close glyphicon glyphicon-remove" onClick={this.closeGenerator}/>)}
+                    {!isWebView && (<div className="generator__close glyphicon glyphicon-remove" onClick={this.closeGenerator}/>)}
 
                     <GeneratorSignature className="hidden-xs" />
 
@@ -259,7 +260,6 @@ function mapStateToProps(state, ownProps) {
 
     const { match: { params }, location, history } = ownProps;
 
-
     const memeId = params.id;
     const isFromUpload = (_.get(location, 'state.from') === 'upload');
     const isFromSearch = (_.get(location, 'state.from') === 'search');
@@ -271,7 +271,6 @@ function mapStateToProps(state, ownProps) {
         :
         state.category.memes[params.id];
 
-
     return {
         category: params.category,
         meme: currentMemeObj,
@@ -282,6 +281,7 @@ function mapStateToProps(state, ownProps) {
         location,
         isFromUpload,
         isFromSearch,
+        isWebView: helpers.isWebview(_.get(location, 'search')),
         query: location.query,
         isCleanSlateState : (params.type === 'clean-slate')
     }

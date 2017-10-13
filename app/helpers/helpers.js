@@ -6,6 +6,7 @@ import modifyImageDimensions from './modifyImageDimensions';
 import getDataUri from './getDataUri';
 import getRandomNumber from './getRandomNumber';
 import isWebview from './isWebview';
+import getQueryVariable from './getQueryVariable';
 
 class Helpers {
 
@@ -18,6 +19,7 @@ class Helpers {
         this.getDataUri = getDataUri;
         this.getRandomNumber = getRandomNumber;
         this.isWebview = isWebview;
+        this.getQueryVariable = getQueryVariable;
     }
 
 }
