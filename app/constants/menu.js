@@ -23,7 +23,7 @@ import generalIcon from 'assets/images/general-icon.jpg';
 import goalstarIcon from 'assets/images/goalstar-icon.jpg';
 import israeliTvIcon from 'assets/images/israeli_tv-icon.jpg';
 import mediaIcon from 'assets/images/media-icon.jpg';
-import crownIcon from 'assets/images/crown-icon.jpg';
+import crownIcon from 'assets/images/crown-icon.png';
 
 const menu = {
 

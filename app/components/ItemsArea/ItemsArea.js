@@ -30,6 +30,8 @@ export default class ItemsArea extends Component {
             self.bringAllTextForward()
         });
 
+        this.props.closeModal()
+
     };
 
     bringAllTextForward = () => {

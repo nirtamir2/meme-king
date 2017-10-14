@@ -203,7 +203,7 @@ export default class GeneratorDashboard extends Component {
 
                 <Modal onHide={() => this.setState({ isItemsAreaOpen: false })}
                        show={this.state.isItemsAreaOpen && canvas}>
-                    <ItemsArea canvas={canvas}/>
+                    <ItemsArea canvas={canvas} closeModal={() => this.setState({ isItemsAreaOpen: false })}/>
                 </Modal>
 
             </div>
