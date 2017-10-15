@@ -12,6 +12,7 @@ import MainView from 'components/MainView/MainView';
 import LocalStorageService from 'services/LocalStorage';
 import AnalyticsService from 'services/Analytics';
 import SentryService from 'services/SentryService';
+import WebViewService from 'services/webViewService';
 
 // helpers
 import helpers from 'helpers/helpers';
@@ -40,6 +41,8 @@ export default class App extends Component {
         AnalyticsService.sendEvent(helpers.isMobile() ? 'Mobile Entrance' : 'Desktop entrance');
 
         SentryService.init();
+
+        WebViewService.setIsWebView(helpers.getQueryVariable('origin') === 'mobile')
 
     };
 

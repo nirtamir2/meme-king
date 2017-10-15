@@ -15,7 +15,10 @@ import helpers from 'helpers/helpers'
 // constants
 import colors from 'constants/colors'
 import globalConstants from 'constants/global'
-const CLEAN_SLATE_MOBILE_HEIGHT = 280
+const CLEAN_SLATE_MOBILE_HEIGHT = 280;
+
+// services
+import WebViewService from 'services/webViewService';
 
 // actions
 import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions'
@@ -262,7 +265,8 @@ class Generator extends Component {
 
 function mapStateToProps(state, ownProps) {
 
-    const { match: { params }, location, history } = ownProps
+    const { match: { params }, location, history } = ownProps;
+    console.log(ownProps, 'own')
 
     const memeId = params.id
     const isFromUpload = (_.get(location, 'state.from') === 'upload')
@@ -275,6 +279,8 @@ function mapStateToProps(state, ownProps) {
         :
         state.category.memes[params.id]
 
+    console.log(WebViewService.isWebView, 'zzz')
+    console.log(WebViewService)
     return {
         category: params.category,
         meme: currentMemeObj,
@@ -285,7 +291,7 @@ function mapStateToProps(state, ownProps) {
         location,
         isFromUpload,
         isFromSearch,
-        isWebView: helpers.isWebview(_.get(location, 'search')),
+        isWebView: WebViewService.isWebView,
         query: location.query,
         isCleanSlateState: (params.type === 'clean-slate')
     }

@@ -12,6 +12,9 @@ import globalConstants from 'constants/global';
 // helpers
 import helpers from 'helpers/helpers';
 
+// services
+import WebViewService from 'services/webViewService';
+
 export default class Cropper extends Component {
 
     state = {
@@ -44,12 +47,12 @@ export default class Cropper extends Component {
     render() {
 
         const image = ((_.get(this.props, 'location.state.image')) || this.state.uploadedImageFromWebView);
-
+        console.log('c', WebViewService)
         return (
             <PopupCover>
                 <div className="generator">
 
-                    {!helpers.isWebview(_.get(this.props, 'location.search')) && <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeCropper} />}
+                    {!WebViewService.isWebView && <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeCropper} />}
 
                     <h1 className="text-center">
                     חיתוך התמונה

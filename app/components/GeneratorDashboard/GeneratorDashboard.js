@@ -13,6 +13,7 @@ import Modal from 'components/Modal/Modal'
 // services
 import LocalStorageService from 'services/LocalStorage'
 import AnalyticsService from 'services/Analytics'
+import WebViewService from 'services/webViewService';
 
 // helpers
 import helpers from 'helpers/helpers'
@@ -48,7 +49,7 @@ export default class GeneratorDashboard extends Component {
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
 
-        if (helpers.isWebview()) {
+        if (WebViewService.isWebView) {
             this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
