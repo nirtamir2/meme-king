@@ -36,7 +36,7 @@ MIXINS
 }
 
 @mixin mobile-medium {
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 1200px) {
     @content;
   }
 }
