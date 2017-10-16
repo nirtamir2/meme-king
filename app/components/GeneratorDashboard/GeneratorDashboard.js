@@ -187,7 +187,7 @@ export default class GeneratorDashboard extends Component {
         )
 
         return (
-            <div style={style} className="box-generator-dashboard col-sm-5">
+            <div style={style} className="box-generator-dashboard col-sm-12 col-lg-5">
 
                 {helpers.isMobile() && <Buttons />}
 

@@ -19,7 +19,7 @@ export default ({ label, icon , onClick, style, htmlFor, wrapWithLabel }) => {
         <div>
             <a htmlFor={htmlFor} className={classNames('flex box-generator-button', style)} onClick={onClick}>
                 {icon && <span className={icon}/> }
-                <span className="text hidden-xs">{label}</span>
+                <span className="text hidden-md hidden-xs">{label}</span>
             </a>
             <span className="text visible-mobile">{label}</span>
         </div>

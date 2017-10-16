@@ -218,7 +218,7 @@ class Generator extends Component {
                     <div className="generator__wrapper">
 
                         <div
-                            className={classNames({ 'with-shadow': isCanvasReady }, "generator__canvas-wrapper col-xs-12 col-sm-7")}
+                            className={classNames({ 'with-shadow': isCanvasReady }, "generator__canvas-wrapper col-md-12 col-lg-7")}
                             ref={node => this.canvasWrapper = node}>
                             <canvas id='c' dir="rtl"/>
                             {isLoading && <div className="spinner">Loading&</div>}
