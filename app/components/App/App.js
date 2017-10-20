@@ -42,7 +42,11 @@ export default class App extends Component {
 
         SentryService.init();
 
-        WebViewService.setIsWebView(helpers.getQueryVariable('origin') === 'mobile')
+        WebViewService.setIsWebView(helpers.getQueryVariable('origin') === 'mobile');
+
+        if(WebViewService.isWebView) {
+            AnalyticsService.sendEvent('Mobile App entrance');
+        }
 
     };
 
