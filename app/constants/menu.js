@@ -25,6 +25,14 @@ import israeliTvIcon from 'assets/images/israeli_tv-icon.jpg';
 import mediaIcon from 'assets/images/media-icon.jpg';
 import crownIcon from 'assets/images/crown-icon.png';
 
+// "new-memes": {
+//     title: 'ממים חדשים',
+//         icon: newMemesIcon,
+//         path: '/memes/new-memes',
+//         visible: true
+// },
+//
+
 const menu = {
 
     home: {
@@ -56,12 +64,6 @@ const menu = {
         visible: true
     },
 
-    "new-memes": {
-        title: 'ממים חדשים',
-        icon: newMemesIcon,
-        path: '/memes/new-memes',
-        visible: true
-    },
 
     dank: {
         title: "דאנק מימז",
