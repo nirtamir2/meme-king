@@ -53,7 +53,8 @@ export default class GeneratorDashboard extends Component {
             this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
-            canvas.setZoom(1)
+            canvas.setZoom(1);
+            this.handleGoogleAnalytics(true)
             return
         }
 
@@ -81,7 +82,13 @@ export default class GeneratorDashboard extends Component {
         LocalStorageService.addDownloadedMemeToMyMemesList(this.props.meme || null)
     }
 
-    handleGoogleAnalytics() {
+    handleGoogleAnalytics(isMobileApp) {
+
+        if(isMobileApp) {
+            AnalyticsService.sendEvent('Mobile App');
+            return;
+        }
+
         const textAreas = document.getElementsByTagName('TEXTAREA')
         const description = _.get(this.props, 'meme.description')
         let text = `${description} : ${textAreas[0].value} ${textAreas[1].value}`
