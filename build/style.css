@@ -493,7 +493,8 @@ a:hover, a:active {
   transition: box-shadow 0.3s;
   resize: none;
   text-align: right;
-  direction: rtl; }
+  direction: rtl;
+  font-size: 16px; }
   .box-meme-text-field textarea.focus, .search-input-wrapper input.focus, .box-meme-admin-editor .description-container textarea.focus, .login-area input.focus, .box-meme-text-field textarea:focus, .search-input-wrapper input:focus, .box-meme-admin-editor .description-container textarea:focus, .login-area input:focus, .box-meme-text-field textarea:active, .search-input-wrapper input:active, .box-meme-admin-editor .description-container textarea:active, .login-area input:active {
     box-shadow: inset 1px 1px 2px 0 #c9c9c9;
     outline: 0 !important; }
