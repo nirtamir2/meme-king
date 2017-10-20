@@ -207,7 +207,7 @@ export default class GeneratorDashboard extends Component {
 
                 {!helpers.isMobile() && <Buttons />}
 
-                <GeneratorSignature className="visible-xs"/>
+                <GeneratorSignature className="visible-mobile"/>
 
                 <Modal onHide={() => this.setState({ isItemsAreaOpen: false })}
                        show={this.state.isItemsAreaOpen && canvas}>

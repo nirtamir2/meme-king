@@ -99,4 +99,17 @@ a:hover, a:active{
   }
 }
 
+.visible-mobile {
+  display: none;
 
+  @include mobile-medium {
+    display: block;
+  }
+}
+
+
+.hidden-mobile {
+  @include mobile-medium {
+    display:none;
+  }
+}
