@@ -26,7 +26,8 @@ import { fetchSingleMeme } from 'actions/category-actions/category-actions'
 
 // assets
 import waterMarkDesktop from 'assets/images/watermark-desktop.jpg'
-import watermarkMobile from 'assets/images/watermark-mobile.jpg'
+import watermarkMobile from 'assets/images/watermark-mobile.jpg';
+import watermarkIos from 'assets/images/watermark-ios.jpg';
 
 class Generator extends Component {
 
@@ -148,10 +149,20 @@ class Generator extends Component {
 
     }
 
+    getWatermark() {
+        if (this.props.isWebView) {
+            return watermarkIos;
+        } else if(helpers.isMobile() ) {
+            return watermarkMobile;
+        } else {
+            return waterMarkDesktop;
+        }
+    }
+
     addWaterMark = () => {
 
         const { canvas } = this.state
-        const watermark = helpers.isMobile() ? watermarkMobile : waterMarkDesktop
+        const watermark = this.getWatermark();
         fabric.Image.fromURL(watermark, watermark => {
 
             canvas.add(watermark)
@@ -279,8 +290,6 @@ function mapStateToProps(state, ownProps) {
         :
         state.category.memes[params.id]
 
-    console.log(WebViewService.isWebView, 'zzz')
-    console.log(WebViewService)
     return {
         category: params.category,
         meme: currentMemeObj,
