@@ -84,6 +84,7 @@ import helpers from 'helpers/helpers';
     render() {
 
         const { memes, isFetching, category } = this.props;
+        const isPopoularSection = (category === 'popular' || category === 'all-time-popular');
 
         if(isFetching){
             return <Loader />
@@ -96,8 +97,11 @@ import helpers from 'helpers/helpers';
         }
 
         const filteredMemes = _.filter(memes, meme => _.includes( meme.description || '', this.state.searchValue));
+
+
+
         const arrayMemes = _.values(filteredMemes) || [];
-        const sortedMemes = arrayMemes.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const sortedMemes = isPopoularSection ? arrayMemes :  arrayMemes.sort((a, b) => new Date(b.date) - new Date(a.date));
         const memesToShow = (_.size(sortedMemes) > 0 ? sortedMemes : memes);
         const isMemesBeenSearchedAndNoResultsFound =((_.size(this.state.searchValue) > 2) && (_.isEmpty(filteredMemes)))
 

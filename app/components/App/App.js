@@ -32,10 +32,9 @@ export default class App extends Component {
         };
 
         firebase.initializeApp(config);
-        localStorage.clear();
 
         // localStorage
-       // LocalStorageService.init();
+       LocalStorageService.init();
 
         // google analytics
         AnalyticsService.init();

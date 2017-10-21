@@ -114,6 +114,7 @@ export default class GeneratorDashboard extends Component {
     }
 
     crop = () => {
+
         const location = {
             pathname: '/cropper',
             state: {
