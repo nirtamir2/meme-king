@@ -54,7 +54,8 @@ export default class GeneratorDashboard extends Component {
             //!* need to set back canvas dimensions *
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
             canvas.setZoom(1);
-            this.handleGoogleAnalytics(true)
+            this.handleGoogleAnalytics(true);
+            this.props.saveUserMemeToStorage({ urlPath: canvas.toDataURL(), date: new Date() })
             return
         }
 
