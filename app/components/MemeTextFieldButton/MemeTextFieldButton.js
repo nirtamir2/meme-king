@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 
-export default ({ icon, text, onClick, className }) => {
+class MemeTextFieldButton extends Component {
 
-    return (
-        <div className={classNames(className , 'text-control__btn')} onClick={onClick}>
-            {icon ? <span className={icon}/> : text}
-        </div>
-    );
+    render() {
+
+        const { icon, text, onClick, className, activeClassName } = this.props;
+
+        return(
+            <div className={classNames(className , 'text-control__btn')} onClick={onClick}>
+                {icon ? <span className={icon}/> : text}
+            </div>
+        )
+    }
 }
+
+export default MemeTextFieldButton;

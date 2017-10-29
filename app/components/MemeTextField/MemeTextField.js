@@ -116,11 +116,14 @@ export default class MemeTextField extends Component {
         const { fillTextBox, strokeTextBox } = this.state;
 
         //on move
-        fillTextBox.on('moving', function () {
-            strokeTextBox.top = fillTextBox.top - (strokeTextBox.strokeWidth / 2 * fillTextBox.scaleX)
-            strokeTextBox.left = fillTextBox.left - (strokeTextBox.strokeWidth / 2 * fillTextBox.scaleY)
+        fillTextBox.on('moving', () => {
+            const topPos = (fillTextBox.top - (strokeTextBox.strokeWidth / 2 * fillTextBox.scaleX));
+            const leftPos = (fillTextBox.left - (strokeTextBox.strokeWidth / 2 * fillTextBox.scaleY))
+            strokeTextBox.top = topPos
+            strokeTextBox.left = leftPos;
             strokeTextBox.bringToFront()
-            fillTextBox.bringToFront()
+            fillTextBox.bringToFront();
+            this.styleBothLayers({ top: topPos, left: leftPos })
         })
 
         //on rotating
@@ -142,18 +145,19 @@ export default class MemeTextField extends Component {
         stroke.left = fill.left - (stroke.strokeWidth / 2 * fill.scaleY)
     }
 
-    styleBothLayers = (wantedStyle) => {
+    styleBothLayers = (wantedFillStyle, wantedStrokeStyle) => {
         const { fillStyle, strokeStyle } = this.state;
+        const finalStrokeStyle = wantedStrokeStyle || wantedFillStyle;
 
         this.setState({
             fillStyle: {
                 ...fillStyle,
-                ...wantedStyle
+                ...wantedFillStyle
             },
 
             strokeStyle: {
                 ...strokeStyle,
-                ...wantedStyle
+                ...finalStrokeStyle
             }
         }, () => {
             this.matchStyleToState();
@@ -223,12 +227,8 @@ export default class MemeTextField extends Component {
             case 'toggleTextColor': {
                 const currentColor = this.state.fillStyle.fill;
                 const wantedColor = ((currentColor === colors.BLACK ) ? colors.WHITE : colors.BLACK);
-                this.styleBothLayers({'fill': wantedColor, shadow: 0});
+                this.styleBothLayers({'fill': wantedColor, shadow: 0}, {...this.state.strokeStyle, opacity: 0});
 
-                this.setState({ strokeStyle: {
-                    ...this.state.strokeStyle,
-                    opacity: 0
-                }}, () => this.matchStyleToState())
 
                 break;
             }
@@ -251,7 +251,7 @@ export default class MemeTextField extends Component {
                 />
 
                 <div className="flex">
-                    {_.map(buttons, button => <MemeTextFieldButton key={_.uniqueId()} {...button} onClick={() => this.handleAction(button.action)}/>)}
+                    {_.map(buttons, button => <MemeTextFieldButton key={helpers.uniqueId()} {...button} onClick={() => this.handleAction(button.action)}/>)}
                 </div>
 
             </div>

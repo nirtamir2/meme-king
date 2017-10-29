@@ -13,6 +13,10 @@ $text-control-btn : darken(#C6DFF3, 15%);
   color: white;
   cursor:pointer;
 
+  &.black {
+    color : black;
+  }
+
   &.bold{
     font-weight:bold !important;
   }

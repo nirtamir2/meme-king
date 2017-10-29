@@ -86,7 +86,7 @@ export default class GeneratorDashboard extends Component {
     handleGoogleAnalytics(isMobileApp) {
 
         if(isMobileApp) {
-            AnalyticsService.sendEvent('Mobile App');
+            AnalyticsService.sendEvent('Mobile App Download');
             return;
         }
 

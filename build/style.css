@@ -806,6 +806,8 @@ header {
   border-bottom: 4px solid #5da4dd;
   color: white;
   cursor: pointer; }
+  .text-control__btn.black {
+    color: black; }
   .text-control__btn.bold {
     font-weight: bold !important; }
   .text-control__btn.lite {

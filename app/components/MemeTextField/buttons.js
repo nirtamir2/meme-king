@@ -51,6 +51,6 @@ export default {
     toggleTextColor: {
         action: 'toggleTextColor',
         icon : 'glyphicon glyphicon-text-color',
-        className: (fillTextBox) => fillTextBox.fill === colors.WHITE ? colors.WHITE : colors.BLACK
+        activeClassName: 'black'
     }
 }
