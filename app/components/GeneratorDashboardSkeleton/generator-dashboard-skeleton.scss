@@ -8,6 +8,10 @@
     padding-right: 0;
   }
 
+  .btns-wrapper {
+    margin-bottom: 35px;
+
+  }
   .item {
     width: 100%;
     height: 45px;
@@ -30,6 +34,16 @@
 
     &.generator-btn-field {
       background-color : $mainGeneratorControllersColor;
+
+      @include mobile-medium {
+        width:30px;
+        height: 30px;
+        border-radius: 300px;
+        margin: 0 5px;
+
+      }
+
+
     }
   }
 

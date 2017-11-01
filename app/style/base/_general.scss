@@ -107,6 +107,14 @@ a:hover, a:active{
   }
 }
 
+.visible-mobile-flex {
+  display: none;
+
+  @include mobile-medium {
+    display: flex;
+  }
+}
+
 
 .hidden-mobile {
   @include mobile-medium {
