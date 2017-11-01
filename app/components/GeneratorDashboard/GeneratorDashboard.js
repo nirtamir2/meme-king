@@ -92,7 +92,7 @@ export default class GeneratorDashboard extends Component {
 
         const textAreas = document.getElementsByTagName('TEXTAREA')
         const description = _.get(this.props, 'meme.description')
-        let text = `${description} : ${textAreas[0].value} ${textAreas[1].value}`
+        let text = `${description} : ${_.get(textAreas[0], 'value')} ${_.get(textAreas[1], 'value')}`
         AnalyticsService.sendEvent('Meme Downloaded', `${this.props.format}, ${text}`)
         if (this.props.format === 'dank') {
             AnalyticsService.sendEvent('Dank', text)
@@ -106,23 +106,13 @@ export default class GeneratorDashboard extends Component {
         }
     }
 
-    clearCanvas = () => {
-        this.props.canvas.clear()
-    }
-
     addTextLine = () => {
         this.TextFieldsContainer.addTextInput()
     }
 
-    crop = () => {
-
-        const location = {
-            pathname: '/cropper',
-            state: {
-                image: this.props.meme.urlPath
-            }
-        }
-        this.props.history.push(location)
+    sendImageToCropper = () => {
+        AnalyticsService.sendEvent('Cropping from inside Generator')
+        this.props.history.push({ pathname: '/cropper', state:  {image: _.get(this.props, 'meme.urlPath') }})
     }
 
     changeFormat = () => {
@@ -150,7 +140,9 @@ export default class GeneratorDashboard extends Component {
                 },
                 query
             }
-            history.push(location)
+
+            history.push(location);
+
         } else {
             history.push(wantedPath)
 
@@ -174,6 +166,10 @@ export default class GeneratorDashboard extends Component {
                     icon="glyphicon glyphicon-plus"
                     onClick={this.addTextLine}
                 />
+
+                <Button label="חיתוך התמונה"
+                        icon="glyphicon glyphicon-scissors"
+                        onClick={this.sendImageToCropper}/>
 
                 <GeneratorUploader canvas={canvas}/>
 

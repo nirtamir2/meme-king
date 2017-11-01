@@ -23,7 +23,7 @@ export default class MainView extends Component {
 
     render(){
         return(
-            <div style={{width: '100%', backgroundColor: '#f6f6f6', height: '100vh', overflow: 'scroll'}}>
+            <div style={{width: '100%', backgroundColor:'#0097EB', height: '100vh', overflow: 'scroll'}}>
                 <Route  path='/memes/:category' render={this.renderCategoryPage}/>
                 <Route  path={`/memes/:category/generator/:id/:format`} component={Generator}/>
                 <Route  path={`/generator-standalone/:category/:id/:format`} render={(props) => <Generator {...props} isStandAlone={true} />}/>

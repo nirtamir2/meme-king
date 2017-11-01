@@ -49,12 +49,12 @@ const menu = {
         visible: true
     },
 
-    "my-memes": {
-        title: 'הממים האחרונים שלי',
-        icon: myMemesIcon,
-        path: '/memes/my-memes',
-        visible: true
-    },
+    // "my-memes": {
+    //     title: 'הממים האחרונים שלי',
+    //     icon: myMemesIcon,
+    //     path: '/memes/my-memes',
+    //     visible: true
+    // },
 
     "new-memes": {
         title: 'ממים חדשים',

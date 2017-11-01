@@ -1,5 +1,5 @@
 .home {
-  background: $main-bg;
+  background: $mainColor;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,7 +26,7 @@
   }
 
   &__main-title {
-    color: $mainColor;
+    color: white;
     text-align: center;
     font-size: 5rem;
     margin-top: 15px;

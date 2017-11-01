@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classNames';
 
-export default ({ label, icon , onClick, style, htmlFor, wrapWithLabel }) => {
+export default ({ label, icon , onClick, style, htmlFor, wrapWithLabel, className }) => {
 
     if (wrapWithLabel) {
         return(

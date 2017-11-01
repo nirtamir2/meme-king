@@ -14,6 +14,11 @@ header {
     height: 60px;
   }
 
+  @include mobile-medium{
+    background: $mainColor;
+
+  }
+
   img {
     max-width: 50px;
   }
@@ -56,7 +61,7 @@ header {
     position: absolute;
     height: 9px;
     width: 100%;
-    background: $mainColor;
+    background: white;
     border-radius: 9px;
     opacity: 1;
     left: 0;
