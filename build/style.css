@@ -505,6 +505,12 @@ a:hover, a:active {
     .visible-mobile {
       display: block; } }
 
+.visible-mobile-flex {
+  display: none; }
+  @media only screen and (max-width: 939px) {
+    .visible-mobile-flex {
+      display: flex; } }
+
 @media only screen and (max-width: 939px) {
   .hidden-mobile {
     display: none; } }
@@ -1593,6 +1599,9 @@ input[type=file] {
     padding-left: 0;
     padding-right: 0; } }
 
+.box-generator-skeleton .btns-wrapper {
+  margin-bottom: 35px; }
+
 .box-generator-skeleton .item {
   width: 100%;
   height: 45px;
@@ -1609,6 +1618,12 @@ input[type=file] {
     height: 35px; }
   .box-generator-skeleton .item.generator-btn-field {
     background-color: #0097EB; }
+    @media only screen and (max-width: 939px) {
+      .box-generator-skeleton .item.generator-btn-field {
+        width: 30px;
+        height: 30px;
+        border-radius: 300px;
+        margin: 0 5px; } }
 
 .box-generator-skeleton:first-of-type {
   margin-bottom: 0; }
