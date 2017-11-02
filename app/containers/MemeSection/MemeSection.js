@@ -112,8 +112,9 @@ import helpers from 'helpers/helpers';
                                  clearResults={() => this.setState({ searchValue : '' })}
                                  isFetching={false}
                                  emptyState={isMemesBeenSearchedAndNoResultsFound}
-                                 className="hidden-xs"
+                                 className="hidden-xs header-search-input"
                                  value={this.state.searchValue}
+
                     />
                 </MemeSectionBar>
                 <div className="memes-container">

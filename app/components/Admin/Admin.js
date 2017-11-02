@@ -158,6 +158,11 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
              })
      }
 
+     clearPersonalMessages = () => {
+         window.firebase.database().ref(`/${constants.database.personalMessageTable}`).remove();
+         this.setState({ personalMessages: {} })
+     }
+
 
     render() {
 
@@ -184,6 +189,8 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
                         onClick={this.getPersonalMessages}
                         icon="glyphicon glyphicon-chat"
                 />
+                <h6 className="text-center" onClick={this.clearPersonalMessages}> clear personal messages</h6>
+
 
 
                 <h4> or edit an existing meme:</h4>

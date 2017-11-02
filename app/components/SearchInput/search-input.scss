@@ -10,19 +10,28 @@
   }
 
 
-  & > label {
+
+  & > label{
     position: absolute;
     left: 15px;
-    top: 19px;
+    top: 26px;
     color: $mainColor;
+
+    @include mobile-medium {
+      top : 19px;
+    }
 
     &.glyphicon-remove {
 
       cursor:pointer;
       position: absolute;
       color: $mainColor;
-      top: 14px;
       font-size: 26px;
+      top: 22px;
+
+      @include mobile-medium {
+        top: 14px;
+      }
 
       &:hover{
         color: darken($mainColor, 10%);
@@ -37,13 +46,18 @@
   input{
 
     @extend %input;
-    height: 50px;
+    height: 65px;
     font-weight: 200;
     padding:17px;
     font-size: 25px;
     border: none;
     box-shadow: none;
     color: black;
+    border-radius: 5px;
+
+    @include mobile-medium {
+      height: 50px;
+    }
 
     &:focus {
       box-shadow: none;
