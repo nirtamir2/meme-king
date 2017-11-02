@@ -1,11 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export default ({ onClick, icon, label, htmlFor, className, center }) => {
+export default ({ onClick, icon, label, htmlFor, className, center, children }) => {
 
     return (
         <label htmlFor={htmlFor} className={classNames("box-cta-button", className)} onClick={onClick}>
-            <span className="text center"> {label} </span> {icon && <span className={icon} />}
+            <span className="text center"> {label || children} </span> {icon && <span className={icon} />}
         </label>
     )
 }

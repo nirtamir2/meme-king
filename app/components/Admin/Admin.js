@@ -145,8 +145,17 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
      }
 
      clearUserMemes = () => {
-         window.firebase.database().ref(`/${constants.database.userSavedMemesTable}`).remove()
+         window.firebase.database().ref(`/${constants.database.userSavedMemesTable}`).remove();
+         this.setState({ userMemes: {} })
 
+     }
+
+     getPersonalMessages = () => {
+
+         window.firebase.database().ref(`/${constants.database.personalMessageTable}`).once('value')
+             .then( snapshot => {
+                 this.setState({ personalMessages: snapshot.val() })
+             })
      }
 
 
@@ -170,6 +179,10 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
                         onClick={_.noop}
                         icon="glyphicon glyphicon-cloud-upload"
                         htmlFor="images"
+                />
+                <Button label={'personal messages'}
+                        onClick={this.getPersonalMessages}
+                        icon="glyphicon glyphicon-chat"
                 />
 
 
@@ -201,6 +214,19 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
                                                     key={_.uniqueId()}
                                                     onDelete={this.onDelete}
                                                     meme={meme} />)}
+
+                {this.state.personalMessages && _.map(this.state.personalMessages, data => {
+                    return(
+                        <div className="box-personal-messages">
+                            <h3>שם</h3>
+                            <p> {data.name}</p>
+                            <h3>אי מייל</h3>
+                            <p>{data.email}</p>
+                            <h3>הודעה</h3>
+                            <p> {data.message}</p>
+                        </div>
+                    )
+                })}
 
                 {(shouldShowCategorySection) && _.map(this.state.category, meme => <EditMemeArea
                                                         editMode={this.state.editMode}

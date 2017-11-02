@@ -6,8 +6,12 @@
   .results-wrapper{
     display:flex;
     justify-content:center;
-    padding: 20px;
     flex-wrap: wrap;
+
+    &.active{
+      padding: 20px;
+
+    }
 
     &.active{
       min-height: 200px;

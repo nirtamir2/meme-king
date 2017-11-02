@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 // actions
 import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 
@@ -51,6 +52,10 @@ import AnalyticsService from 'services/Analytics';
                 />
 
                 <Searcher history={history} />
+
+                <Link className="personal-messages-link text-center"  to="contact-page">
+                    בקשות ודיווח על באגים
+                </Link>
 
             </div>
         );

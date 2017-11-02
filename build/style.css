@@ -483,7 +483,7 @@ a:hover, a:active {
   input {
     font-size: 16px; } }
 
-.box-meme-text-field textarea, .search-input-wrapper input, .box-meme-admin-editor .description-container textarea, .login-area input {
+.box-meme-text-field textarea, .search-input-wrapper input, .box-meme-admin-editor .description-container textarea, .login-area input, .box-contact-page input, .box-contact-page textarea {
   display: block;
   width: 100%;
   height: 40px;
@@ -495,7 +495,7 @@ a:hover, a:active {
   text-align: right;
   direction: rtl;
   font-size: 16px; }
-  .box-meme-text-field textarea.focus, .search-input-wrapper input.focus, .box-meme-admin-editor .description-container textarea.focus, .login-area input.focus, .box-meme-text-field textarea:focus, .search-input-wrapper input:focus, .box-meme-admin-editor .description-container textarea:focus, .login-area input:focus, .box-meme-text-field textarea:active, .search-input-wrapper input:active, .box-meme-admin-editor .description-container textarea:active, .login-area input:active {
+  .box-meme-text-field textarea.focus, .search-input-wrapper input.focus, .box-meme-admin-editor .description-container textarea.focus, .login-area input.focus, .box-contact-page input.focus, .box-contact-page textarea.focus, .box-meme-text-field textarea:focus, .search-input-wrapper input:focus, .box-meme-admin-editor .description-container textarea:focus, .login-area input:focus, .box-contact-page input:focus, .box-contact-page textarea:focus, .box-meme-text-field textarea:active, .search-input-wrapper input:active, .box-meme-admin-editor .description-container textarea:active, .login-area input:active, .box-contact-page input:active, .box-contact-page textarea:active {
     box-shadow: inset 1px 1px 2px 0 #c9c9c9;
     outline: 0 !important; }
 
@@ -738,7 +738,8 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh; }
+  height: 100vh;
+  color: white; }
   @media only screen and (max-width: 939px) {
     .home {
       min-height: 100vh;
@@ -770,12 +771,17 @@ header {
       .home h2 {
         padding: 10px 20px;
         font-size: 20px; } }
+  .home .personal-messages-link {
+    color: white;
+    text-decoration: underline;
+    display: block; }
 
 .searcher .results-wrapper {
   display: flex;
   justify-content: center;
-  padding: 20px;
   flex-wrap: wrap; }
+  .searcher .results-wrapper.active {
+    padding: 20px; }
   .searcher .results-wrapper.active {
     min-height: 200px; }
     @media only screen and (max-width: 939px) {
@@ -797,6 +803,26 @@ header {
   @media only screen and (max-width: 939px) {
     .memes-section {
       margin-top: 60px; } }
+
+.box-notification {
+  background: #C3F3D4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-weight: 600;
+  height: 60px;
+  width: 400px;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  color: #519D7C; }
+  @media only screen and (max-width: 939px) {
+    .box-notification {
+      width: 100%;
+      top: 0;
+      left: 0;
+      right: 0; } }
 
 .box-meme-text-field {
   margin-bottom: 10px; }
@@ -841,7 +867,6 @@ header {
   background-color: #0097EB;
   color: #FFFFFF;
   text-decoration: none;
-  border-bottom: 4px solid #0076b8;
   border-radius: 5px;
   cursor: pointer;
   display: flex;
@@ -1073,7 +1098,12 @@ header {
     height: 50px;
     font-weight: 200;
     padding: 17px;
-    font-size: 25px; }
+    font-size: 25px;
+    border: none;
+    box-shadow: none;
+    color: black; }
+    .search-input-wrapper input:focus {
+      box-shadow: none; }
     .search-input-wrapper input::-webkit-input-placeholder {
       color: #0097EB;
       font-family: "Open Sans Hebrew"; }
@@ -1548,10 +1578,10 @@ input[type=file] {
   z-index: 9999; }
 
 .box-generator-signature {
-  position: absolute;
   left: 0;
   right: 0;
-  bottom: 4px; }
+  bottom: 4px;
+  margin-top: 40px; }
   @media only screen and (max-width: 939px) {
     .box-generator-signature {
       margin: 140px auto 10px auto;
@@ -1665,44 +1695,49 @@ input[type=file] {
     .box-meme-admin-editor .utils .box-cta-button {
       width: 100%; } }
 
-.box-admin h1 {
-  color: black;
-  text-align: center;
-  margin: 30px 40px; }
-
-.box-admin h4 {
-  margin: 30px 0;
-  text-align: center;
-  direction: ltr;
-  color: #0097EB; }
-
-.box-admin h6 {
-  margin: 5px 0;
-  cursor: pointer;
-  font-size: 14px; }
-
-.box-admin select {
-  height: 50px;
-  width: 450px;
-  display: block;
-  margin: 20px auto; }
-  @media only screen and (max-width: 939px) {
-    .box-admin select {
-      border: 1px solid black;
-      width: 300px; } }
-
-.box-admin .box-user-meme {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column; }
-  .box-admin .box-user-meme p.date {
-    margin: 20px 0; }
-  .box-admin .box-user-meme img {
-    width: 350px; }
+.box-admin {
+  color: white; }
+  .box-admin h1 {
+    color: black;
+    text-align: center;
+    margin: 30px 40px; }
+  .box-admin h4 {
+    margin: 30px 0;
+    text-align: center;
+    direction: ltr;
+    color: #0097EB; }
+  .box-admin h6 {
+    margin: 5px 0;
+    cursor: pointer;
+    font-size: 14px; }
+  .box-admin select {
+    height: 50px;
+    width: 450px;
+    display: block;
+    margin: 20px auto; }
+    @media only screen and (max-width: 939px) {
+      .box-admin select {
+        border: 1px solid black;
+        width: 300px; } }
+  .box-admin .box-user-meme {
+    width: 100%;
+    padding: 20px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; }
+    .box-admin .box-user-meme p.date {
+      margin: 20px 0; }
+    .box-admin .box-user-meme img {
+      width: 350px; }
+  .box-admin .box-personal-messages {
+    direction: rtl;
+    text-align: center;
+    border: 1px solid white;
+    padding: 20px; }
+    .box-admin .box-personal-messages h3 {
+      text-decoration: underline; }
 
 .login-area {
   align-self: center;
@@ -1743,6 +1778,49 @@ input[type=file] {
   .text-fields-container {
     position: relative;
     top: 70px; } }
+
+.box-contact-page {
+  color: white;
+  padding: 70px;
+  min-height: 400px; }
+  .box-contact-page .inputs-wrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
+  .box-contact-page h3 {
+    width: 60%;
+    margin: 40px auto;
+    line-height: 34px; }
+    @media only screen and (max-width: 939px) {
+      .box-contact-page h3 {
+        width: 100%;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 15px auto; } }
+  .box-contact-page input, .box-contact-page textarea {
+    margin: 15px 0;
+    max-width: 450px;
+    border: none;
+    box-shadow: none;
+    color: black; }
+    .box-contact-page input::-webkit-input-placeholder, .box-contact-page textarea::-webkit-input-placeholder {
+      color: #0097EB;
+      font-family: "Open Sans Hebrew"; }
+    .box-contact-page input:-moz-placeholder, .box-contact-page textarea:-moz-placeholder {
+      /* Firefox 18- */
+      color: #0097EB;
+      font-family: "Open Sans Hebrew"; }
+    .box-contact-page input::-moz-placeholder, .box-contact-page textarea::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #0097EB;
+      font-family: "Open Sans Hebrew"; }
+    .box-contact-page input:-ms-input-placeholder, .box-contact-page textarea:-ms-input-placeholder {
+      color: #0097EB;
+      font-family: "Open Sans Hebrew"; }
+    .box-contact-page input:focus, .box-contact-page textarea:focus {
+      box-shadow: none; }
+  .box-contact-page textarea {
+    height: 130px; }
 
 .search-loader,
 .search-loader:after {

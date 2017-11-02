@@ -7,6 +7,7 @@ import SideMenu from 'containers/SideMenu/SideMenu';
 
 // components
 import MainView from 'components/MainView/MainView';
+import Notification from 'containers/Notification/Notification';
 
 // services
 import LocalStorageService from 'services/LocalStorage';
@@ -57,6 +58,7 @@ export default class App extends Component {
                 <div className="flex">
                     <SideMenu />
                     <MainView />
+                    <Notification />
                 </div>
             </div>
         );

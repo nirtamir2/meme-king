@@ -79,7 +79,7 @@ class Searcher extends Component {
                         {`(${searchResults.length})`}
                     </p>
                 )}
-                <div className="results-wrapper" ref={node => this.resultsWrapper = node}>
+                <div className={classNames('results-wrapper', { 'active': !_.isEmpty(searchResults) })} ref={node => this.resultsWrapper = node}>
                     { _.map(searchResults, (meme) =>
                         <MemeThumb width={helpers.isMobile() ? 33 : 12.5}
                                    key={meme.id}

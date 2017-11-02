@@ -1,9 +1,9 @@
 .box-generator-signature {
 
-  position: absolute;
   left: 0;
   right: 0;
   bottom: 4px;
+  margin-top: 40px;
 
   @include mobile-medium{
     margin: 140px auto 10px auto;

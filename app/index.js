@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 
 const store = createStore(
     reducers,
-    applyMiddleware(thunk, apiMiddleware)
+    applyMiddleware(thunk, apiMiddleware),
 );
 
 // components

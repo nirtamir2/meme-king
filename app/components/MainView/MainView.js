@@ -9,6 +9,7 @@ import Generator from 'containers/Generator/Generator';
 // components
 import Cropper from 'components/Cropper/Cropper';
 import Admin from 'components/Admin/Admin';
+import ContactPage from 'components/ContactPage/ContactPage';
 
 export default class MainView extends Component {
 
@@ -30,6 +31,7 @@ export default class MainView extends Component {
                 <Route  exact path='/' component={Home}/>
                 <Route path={`/cropper`} component={Cropper}/>
                 <Route path="/generator/:type/:format" component={Generator}/>
+                <Route path="/contact-page" component={ContactPage}/>
                 <Route path="/admin" component={Admin}/>
             </div>
         )
