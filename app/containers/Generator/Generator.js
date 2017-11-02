@@ -310,7 +310,7 @@ function mapDispatchToProps(dispatch) {
 
     return {
         updateMemeRating: (meme) => dispatch(updateMemeRating(meme)),
-        saveUserMemeToStorage: (dataUri) => dispatch(saveUserMemeToStorage(dataUri)),
+        saveUserMemeToStorage: (data) => dispatch(saveUserMemeToStorage(data)),
         fetchSingleMeme: (category, id) => dispatch(fetchSingleMeme(category, id))
     }
 }

@@ -48,6 +48,7 @@ export default class GeneratorDashboard extends Component {
         // need to enlarge canvas otherwise the svg will be clipped
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
+        const memeData = { urlPath: canvas.toDataURL(), date: new Date(), isMobile: helpers.isMobile(), isMobileApp : helpers.isWebview }
 
         if (WebViewService.isWebView) {
             this.sendBase64ToNative(canvas.toDataURL())
@@ -55,7 +56,7 @@ export default class GeneratorDashboard extends Component {
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
             canvas.setZoom(1);
             this.handleGoogleAnalytics(true);
-            this.props.saveUserMemeToStorage({ urlPath: canvas.toDataURL(), date: new Date() })
+            this.props.saveUserMemeToStorage(memeData)
             return
         }
 
@@ -64,13 +65,13 @@ export default class GeneratorDashboard extends Component {
         clickedElement.download = 'MemeKing'
 
 
-        this.props.saveUserMemeToStorage({ urlPath: canvas.toDataURL(), date: new Date() })
+        this.props.saveUserMemeToStorage(memeData)
 
         //!* need to set back canvas dimensions *
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
         canvas.setZoom(1)
 
-        this.saveMemeNameToLocalStorage()
+       // this.saveMemeNameToLocalStorage()
     }
 
     sendBase64ToNative = (base64) => {

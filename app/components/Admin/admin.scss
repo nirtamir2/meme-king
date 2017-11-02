@@ -28,6 +28,7 @@
     width: 450px;
     display:block;
     margin: 20px auto;
+    color: black;
 
     @include mobile-medium {
       border: 1px solid black;

@@ -98,13 +98,21 @@ class StorageService {
         })
     }
 
-    async saveUserMeme(meme) {
+    async saveUserMeme(meme, includeDeviceData) {
         const fileName = uniqueId();
         const url = `https://storage.googleapis.com/meme-king-storage/user-memes/${fileName}.jpg`;
-        const memeObj = {
+        let memeObj = {
             urlPath : url,
             date: new Date().toString(),
             id: fileName,
+        }
+
+        if(includeDeviceData) {
+            memeObj = {
+                ...memeObj,
+                isMobile: meme.isMobile || '',
+                isMobileApp: meme.isMobileApp || ''
+            }
         }
 
         console.log(memeObj)
