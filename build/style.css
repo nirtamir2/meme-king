@@ -1767,6 +1767,8 @@ input[type=file] {
     align-items: center;
     justify-content: center;
     flex-direction: column; }
+    .box-admin .box-user-meme input {
+      color: black; }
     .box-admin .box-user-meme p.date {
       margin: 20px 0; }
     .box-admin .box-user-meme img {

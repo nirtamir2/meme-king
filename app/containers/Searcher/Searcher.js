@@ -51,7 +51,7 @@ class Searcher extends Component {
 
     }, 300, false)
 
-    openGenerator = (e) => {
+    openGenerator = (e, meme) => {
         e.preventDefault()
         const location = {
             pathname: `/generator/upload/${globalConstants.format.normal}`,
@@ -95,7 +95,7 @@ class Searcher extends Component {
                                    key={meme.id}
                                    {...meme}
                                    urlLinkDisabled
-                                   onClick={this.openGenerator}
+                                   onClick={(e) => this.openGenerator(e, meme)}
                                    category={meme.category}
                         />
                     )}

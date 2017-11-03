@@ -199,6 +199,7 @@ class Admin extends Component {
                                 size="sm"
                                 center
                         />
+                        <h6 className="text-center" onClick={() => this.setState({ memes: {} })}>clear meme editors</h6>
                     </div>
                     <div>
                         <Button label={'personal messages'}
@@ -243,10 +244,15 @@ class Admin extends Component {
 
                 {!_.isEmpty(filteredUserMemes) && <Title>({_.size(filteredUserMemes)})</Title>}
                 {filteredUserMemes && _.map(filteredUserMemes, meme => {
-
+                    console.log(meme)
                     return (
-                        <div className="box-user-meme">
+                        <div key={meme.id} className="box-user-meme margin-top-medium">
                             <img src={meme.urlPath}/>
+                            <div className="margin-top-medium">
+                                {meme.isMobile && <p>Mobile Device</p>}
+                                {meme.isDesktop && <p>Desktop</p>}
+                                {meme.isMobileApp && <p>iOS Mobile App</p>}
+                            </div>
                             <p>Date : {new Date(meme.date) && new Date(meme.date).toDateString()}</p>
                         </div>
                     )
