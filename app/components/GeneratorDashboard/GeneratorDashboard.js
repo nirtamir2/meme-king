@@ -48,7 +48,7 @@ export default class GeneratorDashboard extends Component {
         // need to enlarge canvas otherwise the svg will be clipped
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
-        const memeData = { urlPath: canvas.toDataURL(), date: new Date(), isMobile: helpers.isMobile(), isMobileApp : helpers.isWebview }
+        const memeData = { urlPath: canvas.toDataURL(), date: new Date(), isMobile: helpers.isMobile(), isMobileApp : WebViewService.isWebView, isDesktop: !helpers.isMobile() }
 
         if (WebViewService.isWebView) {
             this.sendBase64ToNative(canvas.toDataURL())

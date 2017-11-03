@@ -12,11 +12,6 @@ class SearchInput extends Component {
         onChange(value);
     };
 
-    clearResults = () => {
-        this.props.clearResults();
-    }
-
-
     getIcon = () => {
         const { isFetching } = this.props;
 
@@ -24,7 +19,7 @@ class SearchInput extends Component {
             return <div className="search-loader"> Loading... </div>
         }
         else if(this.props.value.length){
-            return <Icon name="REMOVE" onClick={this.clearResults}/>
+            return <Icon name="REMOVE" onClick={this.props.clearResults}/>
         }
         else{
             return <Icon name="SEARCH" />

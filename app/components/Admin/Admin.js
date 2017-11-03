@@ -233,6 +233,7 @@ class Admin extends Component {
                             <option value="none">see all</option>
                             <option value="isMobile">Mobile device</option>
                             <option value="isMobileApp">iOS mobile app</option>
+                            <option value="isDesktop"> Desktop</option>
                         </select>
                         <h4> filter memes by device</h4>
                     </div>
