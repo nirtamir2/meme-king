@@ -6,6 +6,7 @@ import { fetchCategory } from 'actions/category-actions/category-actions'
 
 // components
 import Button from 'components/Button/Button'
+import Title from 'components/Title/Title';
 
 // helpers
 import helpers from 'helpers/helpers'
@@ -21,7 +22,7 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
     return (
         <form onSubmit={onSubmit} className="login-area">
             <input type="password" value={value} onChange={onChange}/>
-            <Button className="login-btn" onClick={onSubmit} label="Login"/>
+            <Button center className="login-btn" onClick={onSubmit} label="Login"/>
         </form>
     )
 }
@@ -35,10 +36,6 @@ class Admin extends Component {
         anigma: '',
         userMemes: {},
         filter: 'none'
-    }
-
-    componentDidMount = () => {
-
     }
 
     bindUploadEvents() {
@@ -143,7 +140,6 @@ class Admin extends Component {
 
         window.firebase.database().ref(`/${constants.database.userSavedMemesTable}`).once('value')
             .then(snapshot => {
-                console.log(snapshot.val(), 'saved memes')
                 this.setState({ userMemes: snapshot.val() })
             })
     }
@@ -170,7 +166,6 @@ class Admin extends Component {
     onFilterChange = (event) => {
 
         const value = _.get(event, 'target.value');
-        console.log(value)
         this.setState({ filter: value });
     }
 
@@ -184,7 +179,7 @@ class Admin extends Component {
         }
 
         const filteredUserMemes = _.pickBy(this.state.userMemes, meme => this.state.filter === 'none' || !!_.get(meme, this.state.filter));
-        debugger;
+        const categories = { 'select category': {title : 'Select Category'}, ...menu};
         const shouldShowCategorySection = (this.state.editMode)
 
         return (
@@ -192,41 +187,60 @@ class Admin extends Component {
                 <h1>
                     Admin
                 </h1>
-                <input ref={node => this.input = node} type="file" name="files[]" id="images" className="inputfile"
-                       multiple/>
-                <Button label={'upload'}
-                        onClick={_.noop}
-                        icon="glyphicon glyphicon-cloud-upload"
-                        htmlFor="images"
-                />
-                <Button label={'personal messages'}
-                        onClick={this.getPersonalMessages}
-                        icon="glyphicon glyphicon-chat"
-                />
-                <h6 className="text-center" onClick={this.clearPersonalMessages}> clear personal messages</h6>
+
+                <div className="flex space-between dashboard">
+                    <div>
+                        <input ref={node => this.input = node} type="file" name="files[]" id="images" className="inputfile"
+                               multiple/>
+                        <Button label={'upload'}
+                                onClick={_.noop}
+                                icon="UPLOAD"
+                                htmlFor="images"
+                                size="sm"
+                                center
+                        />
+                    </div>
+                    <div>
+                        <Button label={'personal messages'}
+                                onClick={this.getPersonalMessages}
+                                icon="CHAT"
+                                size="sm"
+                                center
+                        />
+                        <h6 className="text-center" onClick={this.clearPersonalMessages}> clear personal messages</h6>
+
+                    </div>
+
+                    <div>
+                        <Button label={'user memes'}
+                                onClick={this.getUserMemes}
+                                icon="glyphicon glyphicon-user"
+                                size="sm"
+                                center
+                        />
+                        <h6 className="text-center" onClick={this.clearUserMemes}> clear user memes </h6>
+                    </div>
+                    <div>
+                        <select value={this.state.category} onChange={this.onCategoryChange}>
+                            {_.map(categories, (value, prop) => {
+                                return <option key={_.uniqueId()}>{prop}</option>
+                            })}
+                        </select>
+                    </div>
+
+                    <div>
+                        <select onChange={this.onFilterChange}>
+                            <option value="none">see all</option>
+                            <option value="isMobile">Mobile device</option>
+                            <option value="isMobileApp">iOS mobile app</option>
+                        </select>
+                        <h4> filter memes by device</h4>
+                    </div>
 
 
-                <h4> or edit an existing meme:</h4>
-                <select value={this.state.category} onChange={this.onCategoryChange}>
-                    {_.map(menu, (value, prop) => {
-                        return <option key={_.uniqueId()}>{prop}</option>
-                    })}
-                </select>
-                <h4> filter memes by device</h4>
-                <select onChange={this.onFilterChange}>
-                    <option value="none">see all</option>
-                    <option value="isMobile">Mobile device</option>
-                    <option value="isMobileApp">iOS mobile app</option>
-                </select>
+                </div>
 
-                <Button label={'user memes'}
-                        onClick={this.getUserMemes}
-                        icon="glyphicon glyphicon-user"
-                />
-                <h6 className="text-center" onClick={this.clearUserMemes}> clear user memes </h6>
-
-
-
+                {!_.isEmpty(filteredUserMemes) && <Title>({_.size(filteredUserMemes)})</Title>}
                 {filteredUserMemes && _.map(filteredUserMemes, meme => {
 
                     return (

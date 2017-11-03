@@ -61,7 +61,7 @@ export default class Uploader extends Component {
                     <input ref={node => this.input = node} type="file" name="files[]" id="files" className="inputfile" multiple/>
                     <Button label={UPLOADER_TEXT}
                             onClick={_.noop}
-                            icon="glyphicon glyphicon-cloud-upload"
+                            icon="UPLOAD"
                             htmlFor="files"
                     />
                 </div>

@@ -152,7 +152,7 @@ export default class GeneratorDashboard extends Component {
 
     render() {
 
-        const { format, canvas, isCanvasReady, style } = this.props
+        const { format, canvas, isCanvasReady, style, isCleanSlateState } = this.props
         const FORMAT_BUTTON_TEXT = format === globalConstants.format.normal ? ' דאנק מימ' : " רגיל"
         const ADD_TEXT_LINE = "טקסט"
         const ADD_AN_ITEM = "פריטים"
@@ -164,27 +164,30 @@ export default class GeneratorDashboard extends Component {
             <div className={classNames("buttons-container", className)} style={buttonsStyle}>
                 <Button
                     label={ADD_TEXT_LINE}
-                    icon="glyphicon glyphicon-plus"
+                    icon="PLUS"
                     onClick={this.addTextLine}
                 />
 
+                {!isCleanSlateState && (
                 <Button label="חיתוך התמונה"
-                        icon="glyphicon glyphicon-scissors"
+                        icon="SCISSORS"
                         onClick={this.sendImageToCropper}/>
+                )}
 
                 <GeneratorUploader canvas={canvas}/>
 
-                <Button label={ADD_AN_ITEM} icon="glyphicon glyphicon-sunglasses"
+                <Button label={ADD_AN_ITEM} icon="SUNGLASSES"
                         onClick={this.toggleItemsArea}
                 />
 
-                <Button label={FORMAT_BUTTON_TEXT}
+                {!isCleanSlateState && (
+                    <Button label={FORMAT_BUTTON_TEXT}
                         onClick={this.changeFormat}
-                        icon="glyphicon glyphicon-retweet"
-                />
+                        icon="RETWEET"
+                />)}
 
                 <Button label={DOWNLOAD}
-                        icon="glyphicon glyphicon-download-alt"
+                        icon="DOWNLOAD"
                         className={DOWNLOAD}
                         onClick={this.download}
                 />

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 // components
 import Form from 'react-bootstrap/lib/Form'
 import Button from 'components/Button/Button'
+import Title from 'components/Title/Title'
 
 // actions
 import { sendMessageToAdmin } from 'actions/admin-actions/admin-actions'
@@ -31,13 +32,13 @@ class ContactPage extends Component {
 
         return (
             <div className="box-contact-page container">
-                <h1 className="text-center">
+                <Title>
                     בקשות ודיווחים על באגים
-                </h1>
+                </Title>
 
-                <h3 className="text-center">
+                <Title size="h3" className="text-center margin-top-medium margin-bottom-medium">
                     אם גיליתם באגים, יש לכם הצעות לשיפור או שברצונכם להוסיף ממים למאגר, מוזמנים לשלוח לי הודעה.
-                </h3>
+                </Title>
                 <Form >
                     <div className="flex inputs-wrapper">
                         <input value={this.state.name} onChange={(e) => this.updateForm(e.target.value, 'name')}
@@ -48,7 +49,7 @@ class ContactPage extends Component {
                                   onChange={(e) => this.updateForm(e.target.value, 'message')} placeholder="הודעה"/>
                     </div>
                     {this.props.isLoading ? <h1 className="text-center">שולח...</h1> :
-                        <Button onClick={this.sendForm} type="submit"> שליחה</Button>}
+                        <Button center onClick={this.sendForm} type="submit"> שליחה</Button>}
                 </Form>
 
             </div>

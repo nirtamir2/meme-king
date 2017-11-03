@@ -1,12 +1,15 @@
 import React from 'react';
 
+// components
+import Icon from 'components/Icon/Icon';
+
 export default ({ setMemesPerRow, children }) => {
     return (
         <div className="box-meme-section-bar">
             {children}
             <div className="actions">
-                <div  onClick={() => setMemesPerRow('increment')} className="glyphicon glyphicon-zoom-out action"/>
-                <div onClick={() => setMemesPerRow('decrement')} className="glyphicon glyphicon-zoom-in action"/>
+                <Icon isRound  onClick={() => setMemesPerRow('increment')} name="ZOOM_OUT" className="action"/>
+                <Icon isRound onClick={() => setMemesPerRow('decrement')} name="ZOOM_IN" className="action"/>
             </div>
         </div>
     )

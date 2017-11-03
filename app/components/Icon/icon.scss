@@ -1,0 +1,28 @@
+.box-icon {
+
+
+
+  &.round {
+    color: $mainColor;
+    border :1px solid $mainColor;
+    height:30px;
+    width: 30px;
+    border-radius: 200px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+
+    &:hover {
+      background: $mainColor;
+      color: white;
+      cursor: pointer;
+    }
+
+    &:active {
+      background: darken($mainColor, 15%);
+
+    }
+
+  }
+}

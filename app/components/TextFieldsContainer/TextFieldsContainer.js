@@ -12,7 +12,6 @@ export default class TextFieldsContainer extends Component {
 
     componentDidMount() {
             this.resetTextInputs(this.props.canvas)
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -54,7 +53,17 @@ export default class TextFieldsContainer extends Component {
 
      addTextInput = () => {
         this.setState({
-            textInputs: [...this.state.textInputs, <MemeTextField key={_.uniqueId()} format={this.props.format} id={_.uniqueId()} remove={this.removeTextInput} canvas={this.props.canvas} position="middle" />]
+            textInputs: [
+                ...this.state.textInputs,
+                <MemeTextField
+                    key={_.uniqueId()}
+                    format={this.props.format}
+                    id={_.uniqueId()}
+                    remove={this.removeTextInput}
+                    canvas={this.props.canvas}
+                    position="middle"
+                />
+            ]
         })
     }
 

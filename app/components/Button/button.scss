@@ -13,16 +13,19 @@
   transition: 0.2s;
   cursor: pointer;
   padding: 20px;
-  margin: 20px auto;
+  margin: 20px auto 0 auto;
 
   @include mobile-medium {
     margin: 12px auto;
     width: 300px;
   }
 
-  &:first-of-type {
-    margin-bottom: 0;
-  }
+  &.size-sm {
+    width:225px;
+}
+
+
+
   &:hover{
     background: lighten($mainColor, 3%);
   }
@@ -37,12 +40,12 @@
     font-weight:400;
 
     &.center {
-      width: auto;
+      width: 100%;
       align-self: center;
     }
   }
 
-  span.glyphicon {
+  .box-icon {
     margin-right: auto;
   }
 

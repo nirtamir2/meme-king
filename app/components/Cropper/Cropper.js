@@ -1,19 +1,20 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import ReactCropper from 'react-cropper';
+import _ from 'lodash'
+import React, { Component } from 'react'
+import ReactCropper from 'react-cropper'
 
 // components
-import Button from 'components/Button/Button';
-import PopupCover from 'components/PopupCover/PopupCover';
+import Button from 'components/Button/Button'
+import GeneratorModal from 'components/GeneratorModal/GeneratorModal'
+import Title from 'components/Title/Title';
 
 // constants
-import globalConstants from 'constants/global';
+import globalConstants from 'constants/global'
 
 // helpers
-import helpers from 'helpers/helpers';
+import helpers from 'helpers/helpers'
 
 // services
-import WebViewService from 'services/webViewService';
+import WebViewService from 'services/webViewService'
 
 export default class Cropper extends Component {
 
@@ -23,20 +24,20 @@ export default class Cropper extends Component {
 
     componentWillMount() {
         document.addEventListener('message', (e) => {
-            this.setState({uploadedImageFromWebView: 'data:image/png;base64,' + e.data})
+            this.setState({ uploadedImageFromWebView: 'data:image/png;base64,' + e.data })
         })
     }
 
 
     crop = () => {
-       const image = this.cropper.getCroppedCanvas().toDataURL();
-       const location = {
-           pathname: `/generator/upload/${globalConstants.format.normal}`,
-           state: {
-               urlPath: image,
-               from : 'upload'
-           }
-       }
+        const image = this.cropper.getCroppedCanvas().toDataURL()
+        const location = {
+            pathname: `/generator/upload/${globalConstants.format.normal}`,
+            state: {
+                urlPath: image,
+                from: 'upload'
+            }
+        }
         this.props.history.push(location)
     }
 
@@ -46,31 +47,34 @@ export default class Cropper extends Component {
 
     render() {
 
-        const image = ((_.get(this.props, 'location.state.image')) || this.state.uploadedImageFromWebView);
-        console.log('c', WebViewService)
+        const image = ((_.get(this.props, 'location.state.image')) || this.state.uploadedImageFromWebView)
+
         return (
-            <PopupCover>
-                <div className="generator">
+            <GeneratorModal>
 
-                    {!WebViewService.isWebView && <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeCropper} />}
+                {!WebViewService.isWebView && <GeneratorModal.CloseButton onClick={this.closeCropper}/>}
 
-                    <h1 className="text-center">
+                <Title>
                     חיתוך התמונה
-                    </h1>
+                </Title>
 
-                    <ReactCropper
-                        ref={node => this.cropper = node}
-                        src={image}
-                        style={{height: helpers.isMobile() ? 300 : 400, width: '70%', marginLeft: 'auto', marginRight: 'auto'}}
-                        background={false}
-                        autoCropArea={1}
-                    />
+                <ReactCropper
+                    ref={node => this.cropper = node}
+                    src={image}
+                    style={{
+                        height: helpers.isMobile() ? 300 : 400,
+                        width: '70%',
+                        marginLeft: 'auto',
+                        marginRight: 'auto'
+                    }}
+                    background={false}
+                    autoCropArea={1}
+                />
 
-                    <Button onClick={this.crop} label="אישור" center className="center-block margin-top-md" />
+                <Button onClick={this.crop} label="אישור" center className="center-block margin-top-md"/>
 
 
-                </div>
-            </PopupCover>
+            </GeneratorModal>
         )
     }
 

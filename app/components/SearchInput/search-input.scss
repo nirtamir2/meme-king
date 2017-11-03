@@ -9,9 +9,7 @@
     width: 300px;
   }
 
-
-
-  & > label{
+  & > .box-icon{
     position: absolute;
     left: 15px;
     top: 26px;
@@ -39,6 +37,31 @@
       &.active{
         color: darken($mainColor, 20%);
 
+      }
+    }
+  }
+
+
+  &.size-sm {
+    & > .box-icon {
+      top: 14px;
+      color: $mainColor;
+
+      @include mobile-medium {
+        top: 14px;
+      }
+
+      &.glyphicon-remove {
+
+        cursor: pointer;
+        position: absolute;
+        color: $mainColor;
+        font-size: 26px;
+        top: 10px;
+
+        @include mobile-medium {
+          top: 10px;
+        }
       }
     }
   }

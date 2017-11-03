@@ -32,15 +32,6 @@
     }
 
     & > .action {
-      border :1px solid $mainColor;
-      color: $mainColor;
-      height:30px;
-      width: 30px;
-      border-radius: 200px;
-      display:flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 5px;
 
       &.glyphicon-zoom-in {
         font-size: 18px;
@@ -48,19 +39,6 @@
 
       &.glyphicon-zoom-out {
         font-size: 12px;
-      }
-
-      &:hover {
-        background: $mainColor;
-        color: white;
-        cursor: pointer;
-      }
-
-      &:active {
-
-        background: darken($mainColor, 15%);
-
-
       }
     }
 

@@ -4,27 +4,27 @@ import colors from 'constants/colors';
 export default {
     alignTextLeft: {
         action: 'alignTextLeft',
-        icon: 'glyphicon glyphicon-align-left',
+        icon: 'ALIGN_LEFT',
         text: '',
         className : 'text-left'
     },
 
     alignCenter: {
         action : 'alignTextCenter',
-        icon: "glyphicon glyphicon-align-center",
+        icon: "ALIGN_CENTER",
         text : '',
         className: 'text-right'
     },
 
     alignTextRight: {
         action: 'alignTextRight',
-        icon : 'glyphicon glyphicon-align-right',
+        icon : 'ALIGN_RIGHT',
         className: 'text-right'
     },
 
     remove: {
         action: 'remove',
-        icon: 'glyphicon glyphicon-trash'
+        icon: 'TRASH'
     },
 
     makeFontSmaller : {
@@ -50,7 +50,7 @@ export default {
 
     toggleTextColor: {
         action: 'toggleTextColor',
-        icon : 'glyphicon glyphicon-text-color',
+        icon : 'TEXT_COLOR',
         activeClassName: 'black'
     }
 }

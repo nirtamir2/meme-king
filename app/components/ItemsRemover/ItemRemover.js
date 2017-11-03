@@ -13,7 +13,7 @@ export default class ItemRemover extends Component {
         return (
             <div>
                 <div className="trash" onClick={this.removeSelectedItem}>
-                    <span className="glyphicon glyphicon-trash" />
+                    <span className="THRASH" />
                 </div>)
             </div>
         );

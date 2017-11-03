@@ -9,11 +9,10 @@ import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 // components
 import Uploader from '../../components/Uploader/Uploader';
 import Searcher from '../Searcher/Searcher';
-import Cropper from 'components/Cropper/Cropper';
+import Avatar from 'components/Avatar/Avatar';
 import Button from 'components/Button/Button';
-
-// assets
-import logo from 'assets/images/logo.png';
+import Title from 'components/Title/Title';
+import TextLink from 'components/TextLink/TextLink';
 
 //  services
 import AnalyticsService from 'services/Analytics';
@@ -32,15 +31,15 @@ import AnalyticsService from 'services/Analytics';
         return (
             <div className="home">
 
-                <img src={logo}/>
+                <Avatar isCentered/>
 
-                <h1 className="home__main-title">
+                <Title className="margin-top-small margin-bottom-small-title">
                   מימ קינג
-                </h1>
+                </Title>
 
                 <Button label="קטגוריות ממים"
                         onClick={()=> toggleSideBar(true)}
-                        icon="glyphicon glyphicon-th-list"
+                        icon="LIST"
                         className="flex hide-desktop"
                 />
 
@@ -48,14 +47,14 @@ import AnalyticsService from 'services/Analytics';
 
                 <Button label=" לוח חלק"
                         onClick={this.createCleanSlate}
-                        icon="glyphicon glyphicon-stop"
+                        icon="STOP"
                 />
 
                 <Searcher history={history} />
 
-                <Link className="personal-messages-link text-center"  to="contact-page">
+                <TextLink className="personal-messages-link text-center"  to="contact-page">
                     בקשות ודיווח על באגים
-                </Link>
+                </TextLink>
 
             </div>
         );

@@ -5,9 +5,11 @@ import classNames from 'classnames'
 
 // components
 import GeneratorDashboard from 'components/GeneratorDashboard/GeneratorDashboard'
-import PopupCover from 'components/PopupCover/PopupCover'
 import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
 import GeneratorDashboardSkeleton from 'components/GeneratorDashboardSkeleton/GeneratorDashboardSkeleton'
+import GeneratorModal from 'components/GeneratorModal/GeneratorModal'
+import Title from 'components/Title/Title'
+import Canvas from 'components/Canvas/Canvas'
 
 // helpers
 import helpers from 'helpers/helpers'
@@ -15,10 +17,10 @@ import helpers from 'helpers/helpers'
 // constants
 import colors from 'constants/colors'
 import globalConstants from 'constants/global'
-const CLEAN_SLATE_MOBILE_HEIGHT = 280;
+const CLEAN_SLATE_MOBILE_HEIGHT = 280
 
 // services
-import WebViewService from 'services/webViewService';
+import WebViewService from 'services/webViewService'
 
 // actions
 import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions'
@@ -26,8 +28,8 @@ import { fetchSingleMeme } from 'actions/category-actions/category-actions'
 
 // assets
 import waterMarkDesktop from 'assets/images/watermark-desktop.jpg'
-import watermarkMobile from 'assets/images/watermark-mobile.jpg';
-import watermarkIos from 'assets/images/watermark-ios.jpg';
+import watermarkMobile from 'assets/images/watermark-mobile.jpg'
+import watermarkIos from 'assets/images/watermark-ios.jpg'
 
 class Generator extends Component {
 
@@ -39,7 +41,7 @@ class Generator extends Component {
 
     componentDidMount() {
 
-        const { isStandAlone, fetchSingleMeme, category, memeId } = this.props;
+        const { isStandAlone, fetchSingleMeme, category, memeId } = this.props
 
         const canvas = new fabric.Canvas('c', { allowTouchScrolling: true })
         this.setState({ canvas }, () => {
@@ -118,7 +120,7 @@ class Generator extends Component {
 
             fabric.Image.fromURL(dataUri, image => {
 
-                this.setState({ isLoading: false });
+                this.setState({ isLoading: false })
 
                 const wantedMaxHeight = ((!isNormalFormat && helpers.isMobile()) ? 280 : null)
 
@@ -151,18 +153,18 @@ class Generator extends Component {
 
     getWatermark() {
         if (this.props.isWebView) {
-            return watermarkIos;
-        } else if(helpers.isMobile() ) {
-            return watermarkMobile;
+            return watermarkIos
+        } else if (helpers.isMobile()) {
+            return watermarkMobile
         } else {
-            return waterMarkDesktop;
+            return waterMarkDesktop
         }
     }
 
     addWaterMark = () => {
 
         const { canvas } = this.state
-        const watermark = this.getWatermark();
+        const watermark = this.getWatermark()
         fabric.Image.fromURL(watermark, watermark => {
 
             canvas.add(watermark)
@@ -207,67 +209,61 @@ class Generator extends Component {
 
     render() {
 
-        const { isLoading, isCanvasReady, canvas } = this.state
+        const { isLoading, isCanvasReady, canvas } = this.state;
+
         const { meme, format, history, location, type, query, saveUserMemeToStorage, isCleanSlateState, isWebView } = this.props
 
         const mobileGeneratorDashboardTopPosition = ( (isCanvasReady && helpers.isMobile())
             ?
-            (isCleanSlateState ? CLEAN_SLATE_MOBILE_HEIGHT : `${_.get(this.canvasWrapper, 'offsetHeight') - 20}px`)
+            (isCleanSlateState ? CLEAN_SLATE_MOBILE_HEIGHT : `${this.canvasWrapper.getHeight() - 20}px`)
             :
             null)
 
-        const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {};
+        const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {}
 
         return (
-            <PopupCover>
-                <div className="generator" key="1">
+            <GeneratorModal className="generator">
 
-                    <h1 className="text-center generator__title">
-                        מחולל הממים
-                    </h1>
+                <Title className="generator__title hidden-mobile margin-top-none">
+                    מחולל הממים
+                </Title>
 
-                    <div className="generator__wrapper">
+                <div className="generator__wrapper">
 
-                        <div
-                            className={classNames({ 'with-shadow': isCanvasReady }, "generator__canvas-wrapper col-md-12 col-lg-7")}
-                            ref={node => this.canvasWrapper = node}>
-                            <canvas id='c' dir="rtl"/>
-                            {isLoading && <div className="spinner">Loading&</div>}
-                        </div>
+                    <Canvas isCanvasReady={isCanvasReady} isLoading={isLoading} ref={node => this.canvasWrapper = node}/>
 
-                        {isCanvasReady
-                            ?
+                    {isCanvasReady
 
-                            <GeneratorDashboard
-                                query={query}
-                                history={history}
-                                style={dashboardStyle}
-                                type={type}
-                                saveUserMemeToStorage={saveUserMemeToStorage}
-                                location={location}
-                                meme={meme}
-                                format={format}
-                                isCanvasReady={isCanvasReady}
-                                canvas={canvas}
-                                updateMemeRating={this.props.updateMemeRating}
-                            />
-                            :
+                        ?
 
-                            <GeneratorDashboardSkeleton />
-                        }
+                        <GeneratorDashboard
+                            query={query}
+                            history={history}
+                            style={dashboardStyle}
+                            type={type}
+                            saveUserMemeToStorage={saveUserMemeToStorage}
+                            location={location}
+                            meme={meme}
+                            isCleanSlateState={isCleanSlateState}
+                            format={format}
+                            isCanvasReady={isCanvasReady}
+                            canvas={canvas}
+                            updateMemeRating={this.props.updateMemeRating}
+                        />
 
+                        :
 
-                    </div>
-
-                    {!isWebView && (
-                        <div className="generator__close glyphicon glyphicon-remove" onClick={this.closeGenerator}/>)}
-
-                    <GeneratorSignature className="hidden-xs"/>
+                        <GeneratorDashboardSkeleton />
+                    }
 
 
                 </div>
 
-            </PopupCover>
+                {!isWebView && (<GeneratorModal.CloseButton onClick={this.closeGenerator}/>)}
+
+                <GeneratorSignature className="hidden-xs"/>
+
+            </GeneratorModal>
         )
 
     }
@@ -276,8 +272,7 @@ class Generator extends Component {
 
 function mapStateToProps(state, ownProps) {
 
-    const { match: { params }, location, history } = ownProps;
-    console.log(ownProps, 'own')
+    const { match: { params }, location, history } = ownProps
 
     const memeId = params.id
     const isFromUpload = (_.get(location, 'state.from') === 'upload')

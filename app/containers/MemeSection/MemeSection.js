@@ -114,6 +114,7 @@ import helpers from 'helpers/helpers';
                                  emptyState={isMemesBeenSearchedAndNoResultsFound}
                                  className="hidden-xs header-search-input"
                                  value={this.state.searchValue}
+                                 size="sm"
 
                     />
                 </MemeSectionBar>

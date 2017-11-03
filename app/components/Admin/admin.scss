@@ -22,17 +22,26 @@
     font-size: 14px;
   }
 
+  .dashboard {
+    @include mobile-medium {
+      flex-direction: column;
+      justify-content:center;
+    }
+  }
 
   select {
-    height: 50px;
-    width: 450px;
+    height: 60px;
+    width: 200px;
     display:block;
-    margin: 20px auto;
+    margin: 19px 4px;
     color: black;
+
 
     @include mobile-medium {
       border: 1px solid black;
       width: 300px;
+      margin: 10px auto;
+
     }
   }
 

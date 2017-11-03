@@ -12,13 +12,11 @@
 
   h3 {
     width:60%;
-    margin: 40px auto;
-    line-height: 34px;
+    margin-right: auto;
+    margin-left: auto;
+
     @include mobile-medium {
       width: 100%;
-      font-size: 18px;
-      line-height:22px;
-      margin: 15px auto;
     }
   }
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
+import Icon from 'components/Icon/Icon';
+
 class MemeTextFieldButton extends Component {
 
     render() {
@@ -9,7 +11,7 @@ class MemeTextFieldButton extends Component {
 
         return(
             <div className={classNames(className , 'text-control__btn')} onClick={onClick}>
-                {icon ? <span className={icon}/> : text}
+                {icon ? <Icon name={icon}/> : text}
             </div>
         )
     }

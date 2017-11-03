@@ -1,6 +1,5 @@
 @import './utils/_variables.scss';
 
-@import 'vendors/all';
 @import 'layout/all';
 @import 'utils/all';
 @import 'base/all';
@@ -28,7 +27,7 @@
 @import '../components/Cropper/cropper';
 @import '../components/Button/button';
 @import '../components/Uploader/uploader';
-@import '../components/Loader/loader';
+@import '../components/Loader/round-empty-loader';
 @import '../components/MemeSectionBar/meme_section_bar';
 @import '../components/EmptyState/empty-state';
 @import '../components/PopupCover/popup-cover';
@@ -41,7 +40,14 @@
 @import '../components/GeneratorUploader/generator-uploader';
 @import '../components/TextFieldsContainer/text-fields-contianer';
 @import '../components/ContactPage/contact-page';
-
+@import '../components/GEneratorModal/generator-modal';
+@import '../components/Avatar/avatar';
+@import '../components/Title/title';
+@import '../components/TextLink/text-link';
+@import '../components/Canvas/canvas';
+@import '../components/Icon/icon';
+@import '../components/Loader/generator-spinner';
+@import './components/loaders/search-spinner';
 
 @import 'components/all';
 

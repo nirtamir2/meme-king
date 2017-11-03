@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-export default class SearchInput extends Component {
+// components
+import Icon from 'components/Icon/Icon';
+
+class SearchInput extends Component {
 
     onChange = ({ target }) => {
         const { value } = target;
@@ -21,10 +24,10 @@ export default class SearchInput extends Component {
             return <div className="search-loader"> Loading... </div>
         }
         else if(this.props.value.length){
-            return <label className="glyphicon glyphicon-remove" onClick={this.clearResults}/>
+            return <Icon name="REMOVE" onClick={this.clearResults}/>
         }
         else{
-            return <label className="glyphicon glyphicon-search" />
+            return <Icon name="SEARCH" />
         }
     }
 
@@ -32,10 +35,10 @@ export default class SearchInput extends Component {
     render = () => {
 
         const icon = this.getIcon();
-        const { className,  emptyState } = this.props;
+        const { className,  emptyState, size } = this.props;
 
         return(
-            <div className={classNames('search-input-wrapper', className)}>
+            <div className={classNames('search-input-wrapper', className, `size-${size}`)}>
                <input onChange={this.onChange}
                       placeholder="חיפוש מם"
                       value={this.props.value}
@@ -47,4 +50,10 @@ export default class SearchInput extends Component {
     }
 }
 
+
+SearchInput.defaultProps = {
+    size: 'md'
+};
+
+export default SearchInput;
 

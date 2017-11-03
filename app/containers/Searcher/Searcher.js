@@ -51,6 +51,16 @@ class Searcher extends Component {
 
     }, 300, false)
 
+    openGenerator = (e) => {
+        e.preventDefault()
+        const location = {
+            pathname: `/generator/upload/${globalConstants.format.normal}`,
+            state: { urlPath: meme.urlPath, from: 'search' },
+            query: { search: this.state.value }
+        }
+        this.props.history.push(location)
+    };
+
     onChange = (value) => {
         this.setState({ value })
         this.onSearch(value)
@@ -85,15 +95,7 @@ class Searcher extends Component {
                                    key={meme.id}
                                    {...meme}
                                    urlLinkDisabled
-                                   onClick={(e) => {
-                                       e.preventDefault()
-                                       const location = {
-                                           pathname: `/generator/upload/${globalConstants.format.normal}`,
-                                           state: { urlPath: meme.urlPath, from: 'search' },
-                                           query: { search: this.state.value }
-                                       }
-                                       this.props.history.push(location)
-                                   }}
+                                   onClick={this.openGenerator}
                                    category={meme.category}
                         />
                     )}

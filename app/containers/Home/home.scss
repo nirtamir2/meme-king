@@ -15,51 +15,13 @@
 
   }
 
-  img {
-    max-width: 120px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-
-    @include mobile-medium {
-      max-width: 60px;
-    }
-  }
-
-  &__main-title {
-    color: white;
-    text-align: center;
-    font-size: 5rem;
-    margin-top: 15px;
-    margin-bottom: 40px;
-    @include mobile-medium {
-      font-size: 26px;
-    }
-  }
-
-  h2 {
-    color: $mainColor;
-    text-align: center;
-    margin-bottom: 50px;
-    @include mobile-medium {
-      padding: 10px 20px;
-      font-size: 20px;
-    }
-
-  }
 
   .personal-messages-link {
-    color: white;
-    text-decoration: underline;
     display: block;
-    position: absolute;
-    bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 100px;
 
     @include mobile-medium {
-      position: static;
-      margin-top: 50px;
+        margin-top: 60px;
     }
   }
 

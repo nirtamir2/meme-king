@@ -3,20 +3,25 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
+
+// reducers
 import reducers from './reducers';
+
+// middlewares
 import { apiMiddleware } from 'redux-api-middleware';
 import thunk from 'redux-thunk';
-
-const store = createStore(
-    reducers,
-    applyMiddleware(thunk, apiMiddleware),
-);
 
 // components
 import App from './components/App/App';
 
 // styles
 import './style/style.scss';
+
+
+const store = createStore(
+    reducers,
+    applyMiddleware(thunk, apiMiddleware),
+);
 
 ReactDOM.render(
     <Provider store={store}>

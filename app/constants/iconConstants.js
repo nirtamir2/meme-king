@@ -1,0 +1,23 @@
+export default {
+    LIST: 'glyphicon glyphicon-th-list',
+    STOP : 'glyphicon glyphicon-stop',
+    PLUS: 'glyphicon glyphicon-plus',
+    SCISSORS: 'glyphicon glyphicon-scissors',
+    SUNGLASSES: 'glyphicon glyphicon-sunglasses',
+    RETWEET: 'glyphicon glyphicon-retweet',
+    DOWNLOAD: 'glyphicon glyphicon-download-alt',
+    THRASH: 'glyphicon glyphicon-trash',
+    ZOOM_OUT: 'glyphicon glyphicon-zoom-out action',
+    ZOOM_IN: 'glyphicon glyphicon-zoom-in action',
+    PICTURE: 'glyphicon glyphicon-picture',
+    ALIGN_LEFT: 'glyphicon glyphicon-align-left',
+    ALIGN_RIGHT: 'glyphicon glyphicon-align-right',
+    ALIGN_CENTER: 'glyphicon glyphicon-align-center',
+    TEXT_COLOR: 'glyphicon glyphicon-text-color',
+    REMOVE: 'glyphicon glyphicon-remove',
+    SEARCH: 'glyphicon glyphicon-search',
+    UPLOAD: 'glyphicon glyphicon-cloud-upload',
+    CHAT: 'glyphicon glyphicon-chat',
+    CLOSE: 'glyphicon glyphicon-close',
+    TRASH: 'glyphicon glyphicon-trash'
+}
