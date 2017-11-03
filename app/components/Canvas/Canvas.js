@@ -13,8 +13,8 @@ class Canvas extends Component {
 
         return (
             <div ref={node => this.canvasWrapper = node} className={classNames({ 'with-shadow': isCanvasReady }, 'generator__canvas-wrapper col-md-12 col-lg-7')}>
-                <canvas id='c' dir="rtl"/>
-                {isLoading && <div className="spinner">Loading&</div>}
+                <canvas height="1" id='c' dir="rtl" className={classNames({ 'loading' : isLoading })}/>
+                {isLoading && <div className="skeleton-canvas" />}
             </div>
         )
     }

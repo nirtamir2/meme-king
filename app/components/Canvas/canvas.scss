@@ -1,4 +1,4 @@
-
+$skeleton-color: #d7d7d7;
 .generator__canvas-wrapper {
 
   background: $main-bg;
@@ -27,6 +27,27 @@
 
 }
 
+
+.skeleton-canvas {
+  @include skeleton-animation($skeleton-color);
+  background: $skeleton-color;
+  width: 100%;
+  height: 400px;
+
+  @include mobile-medium {
+    height: 220px;
+    margin: 10px;
+    width: 94%;
+  }
+}
+
 canvas {
   width: 100%;
+
+  &.loading {
+    visibility: hidden;
+  }
+
 }
+
+

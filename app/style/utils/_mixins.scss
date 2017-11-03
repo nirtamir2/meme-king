@@ -116,3 +116,29 @@ MIXINS
     @content;
   }
 }
+
+@mixin skeleton-animation($color:#8d8d8d ) {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, $color, lighten($color, 6%), $color);
+    animation: progress 1s ease-in-out infinite;
+  }
+
+
+  @keyframes progress {
+    0% {
+      transform: translate3d(-100%, 0, 0);
+    }
+    100% {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+}

@@ -26,24 +26,6 @@ body{
   position: fixed;
   z-index: 901;
 }
-.loader{
-  display:none;
-  height:120px;
-  width:120px;
-  position: fixed;
-  z-index: 9998 !important;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
-  &-visible{
-    @extend .loader;
-    display:block;
-
-  }
-}
 
 .hebrew{
   direction :rtl;
