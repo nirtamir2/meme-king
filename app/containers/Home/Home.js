@@ -40,7 +40,7 @@ import AnalyticsService from 'services/Analytics';
                 <Button label="קטגוריות ממים"
                         onClick={()=> toggleSideBar(true)}
                         icon="LIST"
-                        className="flex hide-desktop"
+                        className="flex hide-desktop margin-bottom-none"
                 />
 
                 <Uploader history={history} />
