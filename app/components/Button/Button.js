@@ -13,7 +13,7 @@ const Button =  ({ onClick, icon, label, htmlFor, className, center, children, s
             {isLoading ?
                 <div id="activityIndicator" className="activityIndicator"/>
                 :
-                <span>
+                <span className="flex inner-container">
                     {text && <span className={classNames('text',{'center text-center': center})}>{text}</span> }
                     {icon && <Icon name={icon} />}
                 </span>
