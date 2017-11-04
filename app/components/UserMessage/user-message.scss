@@ -7,11 +7,20 @@
   padding: 15px;
   margin: 10px auto;
   min-height: 200px;
+  border-radius: 5px;
 
-  @include mobile-medium {
-    display: flex;
-    flex-direction: column-reverse;
-    width: 90%;
+  .inner-container {
+    @include mobile-medium {
+      display: flex;
+      flex-direction: column-reverse;
+      width: 90%;
+      margin: 0 auto;
+    }
+  }
+
+  .section-title {
+    padding-bottom: 35px;
+    border-bottom: 1px solid #8d8d8d;
   }
 
   .area {

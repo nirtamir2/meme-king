@@ -2473,12 +2473,17 @@ canvas {
   border: 1px solid white;
   padding: 15px;
   margin: 10px auto;
-  min-height: 200px; }
+  min-height: 200px;
+  border-radius: 5px; }
   @media only screen and (max-width: 939px) {
-    .box-user-message {
+    .box-user-message .inner-container {
       display: flex;
       flex-direction: column-reverse;
-      width: 90%; } }
+      width: 90%;
+      margin: 0 auto; } }
+  .box-user-message .section-title {
+    padding-bottom: 35px;
+    border-bottom: 1px solid #8d8d8d; }
   @media only screen and (max-width: 939px) {
     .box-user-message .area {
       border-bottom: 1px solid #8d8d8d; }

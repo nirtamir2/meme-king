@@ -43,10 +43,12 @@ class BugsContainer extends Component {
                 <div className="margin-top-medium margin-bottom-small cursor-pointer clearfix"
                      onClick={() => history.push('/bugs-page/contact-page')}>
                     <Icon isRound theme="white" className="margin-left-medium pull-right" name="PLUS"/>
-                    <Text className="pull-right add-action" inline theme="white"> דיווח על באגים / הצעת רעיונות לשיפור</Text>
+                    <Text className="pull-right add-action" inline theme="white">
+                    הוספת דיווח על באג / הצעות לשיפור
+                    </Text>
                 </div>
                 <Row>
-                    {_.map(sortedMessages, post => <UserMessage updateUserMessageLikes={updateUserMessageLikes} post={post} />)}
+                    {_.map(sortedMessages, post => <UserMessage key={post.id} updateUserMessageLikes={updateUserMessageLikes} post={post} />)}
                 </Row>
 
             </Grid>
