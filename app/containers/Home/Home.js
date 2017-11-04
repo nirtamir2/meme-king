@@ -33,7 +33,7 @@ import AnalyticsService from 'services/Analytics';
 
                 <Avatar isCentered/>
 
-                <Title className="margin-top-small margin-bottom-small-title">
+                <Title className="margin-top-small margin-bottom-medium">
                   מימ קינג
                 </Title>
 
