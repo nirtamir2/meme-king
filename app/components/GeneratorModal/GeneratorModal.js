@@ -5,8 +5,8 @@ import classNames from 'classnames'
 import Icon from 'components/Icon/Icon'
 import PopupCover from 'components/PopupCover/PopupCover'
 
-const GeneratorModal = ({ children, className }) => (
-    <PopupCover>
+const GeneratorModal = ({ children, className, onClose }) => (
+    <PopupCover onClick={onClose}>
         <div className={classNames('box-generator-modal', className)}>
             {children}
         </div>

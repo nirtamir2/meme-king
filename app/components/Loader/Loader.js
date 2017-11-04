@@ -1,12 +1,13 @@
 import React from 'react'
+import classNames from  'classnames';
 
-const Spinner = ({ type }) => {
+const Spinner = ({ type, className }) => {
 
     switch(type) {
 
         case 'round-empty': {
             return(
-                <div className="box-round-empty-loader">
+                <div className={classNames('box-round-empty-loader', className)}>
                     <div>
                         <div className="round-loader"/>
                     </div>

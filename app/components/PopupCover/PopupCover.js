@@ -1,8 +1,8 @@
 import React from 'react';
-import classNAmes from 'classnames';
+import classNames from 'classnames';
 
-export default ({ children, className, disabled }) => (
-    <div className={classNAmes({"box-popup-cover" : !disabled}, className)}>
+export default ({ children, className, disabled, onClick }) => (
+    <div className={classNames({"box-popup-cover" : !disabled}, className)}>
         {children}
     </div>
 )

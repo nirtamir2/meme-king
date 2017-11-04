@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+// components
+import Icon from 'components/Icon/Icon';
+
 export default class ItemRemover extends Component {
 
     removeSelectedItem = ()=> {
@@ -13,7 +16,7 @@ export default class ItemRemover extends Component {
         return (
             <div>
                 <div className="trash" onClick={this.removeSelectedItem}>
-                    <span className="THRASH" />
+                    <Icon name="THRASH" />
                 </div>)
             </div>
         );

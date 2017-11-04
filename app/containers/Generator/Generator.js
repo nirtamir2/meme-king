@@ -145,7 +145,9 @@ class Generator extends Component {
                 })
 
                 this.setState({ isCanvasReady: true })
-                this.addWaterMark()
+               if(format !== 'dankFormat') {
+                    this.addWaterMark();
+               }
             })
         })
 
@@ -222,7 +224,7 @@ class Generator extends Component {
         const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {}
 
         return (
-            <GeneratorModal className="generator">
+            <GeneratorModal onClose={this.closeGenerator} className="generator">
 
                 <Title className="generator__title hidden-mobile margin-top-none">
                     מחולל הממים

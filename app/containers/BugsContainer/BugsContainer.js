@@ -10,6 +10,7 @@ import Title from 'components/Title/Title'
 import Text from 'components/Text/Text'
 import Icon from 'components/Icon/Icon'
 import UserMessage from 'components/UserMessage/UserMessage';
+import Loader from 'components/Loader/Loader';
 
 // actions
 import { fetchUserMessages, updateUserMessageLikes } from 'actions/user-messages-actions/user-messages-actions'
@@ -22,10 +23,10 @@ class BugsContainer extends Component {
     }
 
     render() {
-        const { history, messages , updateUserMessageLikes} = this.props
+        const { history, messages , updateUserMessageLikes, isLoading  } = this.props
 
         const arrayMessages = _.values(messages) || [];
-        debugger;
+
         const sortedMessages = arrayMessages.sort((a, b) => new Date(b.date) - new Date(a.date))
 
 
@@ -48,7 +49,7 @@ class BugsContainer extends Component {
                     </Text>
                 </div>
                 <Row>
-                    {_.map(sortedMessages, post => <UserMessage key={post.id} updateUserMessageLikes={updateUserMessageLikes} post={post} />)}
+                    {isLoading ? <Loader className="margin-top-extra-large" /> : _.map(sortedMessages, post => <UserMessage key={post.id} updateUserMessageLikes={updateUserMessageLikes} post={post} />)}
                 </Row>
 
             </Grid>

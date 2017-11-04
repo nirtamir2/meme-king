@@ -32,7 +32,7 @@ export default class GeneratorDashboard extends Component {
     }
 
     download = (clickedElement) => {
-        const { canvas } = this.props
+        const { canvas, saveUserMemeToStorage } = this.props
 
         this.handleGoogleAnalytics()
 
@@ -43,24 +43,21 @@ export default class GeneratorDashboard extends Component {
         //saveing the canvas and resizing it before downloading depends on screen resolution.
         const zoom = helpers.isMobile() ? 2.5 : 1.3
 
-        canvas.setZoom(zoom)
+        canvas.setZoom(zoom);
         // need to enlarge canvas otherwise the svg will be clipped
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
         const memeData = { urlPath: canvas.toDataURL(), date: new Date(), isMobile: helpers.isMobile(), isMobileApp : WebViewService.isWebView, isDesktop: !helpers.isMobile() }
-        console.log('before')
+
         if (WebViewService.isWebView) {
-            console.log('is web view')
             this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
             canvas.setZoom(1);
             this.handleGoogleAnalytics(true);
-            this.props.saveUserMemeToStorage(memeData)
-            return
+            saveUserMemeToStorage(memeData)
+            return;
         }
-
-        console.log(event.target)
 
         clickedElement.href = canvas.toDataURL()
         clickedElement.download = 'MemeKing'
@@ -71,8 +68,6 @@ export default class GeneratorDashboard extends Component {
         //!* need to set back canvas dimensions *
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
         canvas.setZoom(1)
-
-       // this.saveMemeNameToLocalStorage()
     }
 
     sendBase64ToNative = (base64) => {
@@ -94,7 +89,7 @@ export default class GeneratorDashboard extends Component {
 
         const textAreas = document.getElementsByTagName('TEXTAREA')
         const description = _.get(this.props, 'meme.description')
-        let text = `${description} : ${_.get(textAreas[0], 'value')} ${_.get(textAreas[1], 'value')}`
+        let text = `${description || 'User typed text'} : ${_.get(_.head(textAreas), 'value', '')} ${_.get(_.tail(textAreas), 'value', '')}`
         AnalyticsService.sendEvent('Meme Downloaded', `${this.props.format}, ${text}`)
         if (this.props.format === 'dank') {
             AnalyticsService.sendEvent('Dank', text)
