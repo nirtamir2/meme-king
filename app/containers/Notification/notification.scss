@@ -10,12 +10,13 @@
   position: fixed;
   bottom: 20px;
   left: 20px;
-  color: #519D7C;
+  color: $green-success;
 
   @include mobile-medium {
     width: 100%;
     top: 0;
     left: 0;
     right: 0;
+    height: 60px;
   }
 }

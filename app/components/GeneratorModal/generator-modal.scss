@@ -35,6 +35,10 @@ $closeColor: darkgray;
     cursor: pointer;
     z-index: 9999;
 
+    &.white {
+      color: white;
+    }
+
     @include mobile-medium {
       position: fixed;
       top: 0;
@@ -44,7 +48,8 @@ $closeColor: darkgray;
     }
 
     &:hover {
-      color: darken($closeColor, 10%)
+      color: darken($closeColor, 10%);
+      background: transparent;
     }
     &:active {
       color: darken($closeColor, 20%)

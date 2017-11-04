@@ -1,20 +1,27 @@
+import _ from 'lodash';
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 // components
 import Form from 'react-bootstrap/lib/Form'
 import Button from 'components/Button/Button'
-import Title from 'components/Title/Title'
+import Text from 'components/Text/Text';
+import Modal from 'components/Modal/Modal'
+import GeneratorModal from 'components/GeneratorModal/GeneratorModal';
 
 // actions
-import { sendMessageToAdmin } from 'actions/admin-actions/admin-actions'
+import { sendMessageToAdmin, fetchUserMessages } from 'actions/user-messages-actions/user-messages-actions';
+
+// helpers
+import helpers from 'helpers/helpers';
 
 class ContactPage extends Component {
 
     state = {
         name: '',
         email: '',
-        message: ''
+        message: '',
+        type: 'bug'
     }
 
     updateForm = (value, type) => {
@@ -22,37 +29,43 @@ class ContactPage extends Component {
     }
 
     sendForm = () => {
-        const { name, email, message, } = this.state
-        this.props.sendMessageToAdmin({ name, email, message }).then(() => {
-            this.setState({ name: '', email: '', message: '' })
+        const { name, email, message, type } = this.state
+        this.props.sendMessageToAdmin({ name, email, message, type, id: helpers.uniqueId(), date: new Date().toDateString() }).then(() => {
+            this.setState({ name: '', email: '', message: '' });
+
+            _.delay(() => { this.props.history.goBack(); this.props.fetchUserMessages();}, 1000);
         })
     }
 
     render() {
 
+        const { isLoading, history } = this.props;
+        const { name, email, message, type } = this.state;
         return (
-            <div className="box-contact-page container">
-                <Title>
-                    בקשות ודיווחים על באגים
-                </Title>
-
-                <Title size="h3" className="text-center margin-top-medium margin-bottom-medium">
-                    אם גיליתם באגים, יש לכם הצעות לשיפור או שברצונכם להוסיף ממים למאגר, מוזמנים לשלוח לי הודעה.
-                </Title>
+            <Modal onHide={() => history.goBack()} show={true} className="box-contact-page">
+                <GeneratorModal.CloseButton theme="white" onClick={() => history.goBack()} />
                 <Form >
                     <div className="flex inputs-wrapper">
-                        <input value={this.state.name} onChange={(e) => this.updateForm(e.target.value, 'name')}
+                        <input value={name} onChange={(e) => this.updateForm(e.target.value, 'name')}
                                placeholder="שם" type="name"/>
-                        <input value={this.state.email} onChange={(e) => this.updateForm(e.target.value, 'email')}
+                        <input value={email} onChange={(e) => this.updateForm(e.target.value, 'email')}
                                placeholder="אי-מייל" type="email"/>
-                        <textarea value={this.state.message}
-                                  onChange={(e) => this.updateForm(e.target.value, 'message')} placeholder="הודעה"/>
+                        <div className="radios-wrapper margin-top-medium">
+                            <span className="clearfix radio-label margin-left-small pull-right">
+                                <input onChange={() => this.updateForm('bug', 'type')} checked={type === 'bug'} className="pull-right margin-left-small" type="radio" name="type"/>
+                                <Text className="pull-right" inline> באג</Text>
+                            </span>
+                            <span className="clearfix radio-label margin-left-small pull-right">
+                                <input onChange={() => this.updateForm('proposal', 'type')} checked={type === 'proposal'} className="pull-right margin-left-small" type="radio" name="type"/>
+                                <Text className="pull-right" inline> הצעה</Text>
+                            </span>
+                        </div>
+                        <textarea value={message} onChange={(e) => this.updateForm(e.target.value, 'message')} placeholder="הודעה"/>
                     </div>
-                    {this.props.isLoading ? <h1 className="text-center">שולח...</h1> :
-                        <Button center onClick={this.sendForm} type="submit"> שליחה</Button>}
+                    <Button center onClick={this.sendForm} isLoading={isLoading} type="submit"> שליחה</Button>
                 </Form>
 
-            </div>
+            </Modal>
 
         )
     }
@@ -60,9 +73,9 @@ class ContactPage extends Component {
 
 function mapStateToProps(state) {
     return {
-        isLoading: state.postsRequests.isLoading
+        isLoading: state.userMessages.isLoading
     }
 }
 
-export default connect(mapStateToProps, { sendMessageToAdmin })(ContactPage)
+export default connect(mapStateToProps, { sendMessageToAdmin, fetchUserMessages})(ContactPage)
 

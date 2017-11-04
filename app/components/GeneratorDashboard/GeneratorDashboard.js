@@ -31,7 +31,7 @@ export default class GeneratorDashboard extends Component {
         this.setState({ isItemsAreaOpen: !this.state.isItemsAreaOpen })
     }
 
-    download = (event) => {
+    download = (clickedElement) => {
         const { canvas } = this.props
 
         this.handleGoogleAnalytics()
@@ -39,7 +39,6 @@ export default class GeneratorDashboard extends Component {
         this.updateMemeRating()
 
         canvas.deactivateAll().renderAll()
-        const clickedElement = event.target.tagName === 'SPAN' ? event.target.parentNode : event.target
 
         //saveing the canvas and resizing it before downloading depends on screen resolution.
         const zoom = helpers.isMobile() ? 2.5 : 1.3
@@ -49,8 +48,9 @@ export default class GeneratorDashboard extends Component {
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
         const memeData = { urlPath: canvas.toDataURL(), date: new Date(), isMobile: helpers.isMobile(), isMobileApp : WebViewService.isWebView, isDesktop: !helpers.isMobile() }
-
+        console.log('before')
         if (WebViewService.isWebView) {
+            console.log('is web view')
             this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
@@ -60,6 +60,7 @@ export default class GeneratorDashboard extends Component {
             return
         }
 
+        console.log(event.target)
 
         clickedElement.href = canvas.toDataURL()
         clickedElement.download = 'MemeKing'
@@ -188,7 +189,6 @@ export default class GeneratorDashboard extends Component {
 
                 <Button label={DOWNLOAD}
                         icon="DOWNLOAD"
-                        className={DOWNLOAD}
                         onClick={this.download}
                 />
 

@@ -19,5 +19,10 @@ export default {
     UPLOAD: 'glyphicon glyphicon-cloud-upload',
     CHAT: 'glyphicon glyphicon-chat',
     CLOSE: 'glyphicon glyphicon-close',
-    TRASH: 'glyphicon glyphicon-trash'
+    TRASH: 'glyphicon glyphicon-trash',
+    THUMBS_UP: 'glyphicon glyphicon-thumbs-up',
+    THUMBS_DOWN: 'glyphicon glyphicon-thumbs-down',
+    ERROR: 'glyphicon glyphicon-ban-circle',
+    LAMP: 'glyphicon glyphicon-lamp'
+
 }

@@ -52,7 +52,7 @@ import AnalyticsService from 'services/Analytics';
 
                 <Searcher history={history} />
 
-                <TextLink className="personal-messages-link text-center"  to="contact-page">
+                <TextLink className="personal-messages-link text-center"  to="bugs-page">
                     בקשות ודיווח על באגים
                 </TextLink>
 

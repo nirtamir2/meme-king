@@ -5,6 +5,10 @@
   height: 100px;
   border-radius: 100px;
 
+  &.block {
+    display:block;
+  }
+
   &.center {
     margin: 0 auto;
     display: block;
@@ -16,6 +20,12 @@
       height: 60px;
     }
   }
+
+  &.size-sm {
+    width: 45px;
+    height: 45px;
+  }
+
 
   &.size-xxs {
     width: 40px;

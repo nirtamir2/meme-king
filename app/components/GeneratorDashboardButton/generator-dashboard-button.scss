@@ -23,12 +23,12 @@ $button-text-width: 154px;
     height: 30px;
     border: none;
     border-radius: 100px;
-    display: flex;
     margin: 0 auto;
     align-items: center;
     justify-content: center;
     position: relative;
     box-shadow: 2px 2px 20px -6px rgba(0, 0, 0, 0.70);
+    display: block
   }
 
   &:active {
@@ -54,7 +54,7 @@ $button-text-width: 154px;
       text-align: center;
       margin: 5px auto;
       position: relative;
-      top: -3px;
+      top: 20px;
       width:30px;
 
     }
@@ -62,7 +62,8 @@ $button-text-width: 154px;
     &.visible-mobile {
       display: none;
       @include mobile-medium {
-        display: inline-block;
+        display: block;
+        margin: 0 auto;
       }
 
     }
@@ -78,10 +79,10 @@ $button-text-width: 154px;
     margin-right: 20px;
 
     @include mobile-medium {
-      margin-right: 0;
       font-size: 14px;
       position: relative;
-      top: -1px;
+      top: 8px;
+      left: 8px;
     }
 
   }

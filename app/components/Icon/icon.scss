@@ -8,7 +8,7 @@
     height:30px;
     width: 30px;
     border-radius: 200px;
-    display:flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     margin: 0 5px;
@@ -21,8 +21,85 @@
 
     &:active {
       background: darken($mainColor, 15%);
-
     }
 
+  }
+
+  &.brand {
+    color: lightblue;
+    border-color: lightblue;
+
+    &.active {
+      background: lightblue;
+      color: white;
+    }
+
+    &:hover {
+      background: lightblue;
+      color: white;
+      cursor: pointer;
+    }
+
+    &:active {
+      background: darken(lightblue, 15%);
+    }
+  }
+
+  &.success {
+    color: $green-success;
+    border-color: $green-success;
+
+    &.active {
+      background: $green-success;
+      color: white;
+    }
+
+    &:hover {
+      background: $green-success;
+      color: white;
+      cursor: pointer;
+    }
+
+    &:active {
+      background: darken($green-success, 15%);
+    }
+  }
+
+  &.danger {
+    color: $danger;
+    border-color: $danger;
+
+    &:hover {
+      background: $danger;
+      color: white;
+      cursor: pointer;
+    }
+
+    &:active {
+      background: darken($danger, 15%);
+    }
+  }
+
+  &.white {
+    color: white;
+    border-color: white;
+
+    &:hover {
+      color: white;
+      cursor: pointer;
+    }
+
+    &:active {
+
+    }
+  }
+
+  &.size-xl {
+    font-size: 26px;
+
+    &.round {
+      height: 50px;
+      width: 50px;
+    }
   }
 }

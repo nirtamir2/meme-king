@@ -13,8 +13,8 @@ const GeneratorModal = ({ children, className }) => (
     </PopupCover>
 )
 
-GeneratorModal.CloseButton = ({ onClick }) => (
-    <Icon name="REMOVE" onClick={onClick} className="box-generator-modal__close"/>
+GeneratorModal.CloseButton = ({ onClick, theme }) => (
+    <Icon name="REMOVE" onClick={onClick} className={classNames('box-generator-modal__close', theme)}/>
 )
 
 export default GeneratorModal

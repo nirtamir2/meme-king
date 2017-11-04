@@ -1,5 +1,15 @@
+.box-title {
 
-h3 {
-  line-height: 33px;
+  &.white {
+    color: white;
+  }
 
+  &.h3 {
+    line-height: 33px;
+    @include mobile-medium {
+      font-size:22px;
+    }
+
+
+  }
 }

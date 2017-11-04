@@ -13,6 +13,7 @@
 @import '../containers/Searcher/searcher';
 @import '../containers/MemeSection/memes-section';
 @import '../containers/Notification/notification';
+@import '../containers/BugsContainer/bugs-container';
 
 
 @import '../components/MemeTextField/text-input';
@@ -48,4 +49,6 @@
 @import '../components/Icon/icon';
 @import '../components/Loader/generator-spinner';
 @import './components/loaders/search-spinner';
+@import '../components/UserMessage/user-message';
+@import '../components/Text/Text';
 

@@ -9,10 +9,10 @@ import logo from 'assets/images/logo.png';
 
 
     render() {
-        const { imgSrc, size, isCentered } = this.props;
+        const { imgSrc, size, isCentered, className, block } = this.props;
 
         return(
-            <div className={classNames('box-avatar', `size-${size}`, {'center': isCentered})}>
+            <div className={classNames('box-avatar', `size-${size}`, {'center': isCentered}, {'block': block }, className)}>
                 <img src={imgSrc} />
             </div>
         )
@@ -22,7 +22,8 @@ import logo from 'assets/images/logo.png';
 
 Avatar.defaultProps = {
     imgSrc: logo,
-    size: 'md'
+    size: 'md',
+    block: false
 }
 
 export default Avatar;
