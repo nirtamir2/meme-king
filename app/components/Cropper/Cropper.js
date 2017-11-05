@@ -47,7 +47,13 @@ export default class Cropper extends Component {
 
     render() {
 
-        const image = ((_.get(this.props, 'location.state.image')) || this.state.uploadedImageFromWebView)
+        const image = ((_.get(this.props, 'location.state.image')) || this.state.uploadedImageFromWebView);
+        const cropperStyle = {
+            height: helpers.isMobile() ? 300 : 400,
+            width: '70%',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+        };
 
         return (
             <GeneratorModal>
@@ -61,12 +67,7 @@ export default class Cropper extends Component {
                 <ReactCropper
                     ref={node => this.cropper = node}
                     src={image}
-                    style={{
-                        height: helpers.isMobile() ? 300 : 400,
-                        width: '70%',
-                        marginLeft: 'auto',
-                        marginRight: 'auto'
-                    }}
+                    style={cropperStyle}
                     background={false}
                     autoCropArea={1}
                 />
