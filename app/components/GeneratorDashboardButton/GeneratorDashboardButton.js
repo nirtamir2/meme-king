@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react'
-import classNames from 'classNames'
+import classNames from 'classnames'
 
 // components
 import Icon from 'components/Icon/Icon'
