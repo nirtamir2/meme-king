@@ -54,8 +54,8 @@ class Searcher extends Component {
     openGenerator = (e, meme) => {
         e.preventDefault()
         const location = {
-            pathname: `/generator/upload/${globalConstants.format.normal}`,
-            state: { urlPath: meme.urlPath, from: 'search' },
+            pathname: `/memes/${meme.category}/generator/${meme.id}/${globalConstants.format.normal}`,
+            state: { urlPath: meme.urlPath },
             query: { search: this.state.value }
         }
         this.props.history.push(location)

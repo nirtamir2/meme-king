@@ -280,13 +280,9 @@ function mapStateToProps(state, ownProps) {
     const isFromUpload = (_.get(location, 'state.from') === 'upload')
     const isFromSearch = (_.get(location, 'state.from') === 'search')
     const currentMemeObj = (isFromUpload || isFromSearch) ?
-        {
-            urlPath: location.state.urlPath,
-            id: helpers.uniqueId()
-        }
+        _.find(state.search.searchResults, { id: memeId})
         :
-        state.category.memes[params.id]
-
+        state.category.memes[memeId];
     return {
         category: params.category,
         meme: currentMemeObj,
