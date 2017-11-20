@@ -1,7 +1,7 @@
 .box-generator-dashboard {
+
   position: relative;
   z-index: 1;
-
 
   .space-between {
     @include mobile-medium {
@@ -16,8 +16,10 @@
   }
 
   .buttons-container {
+
     @include mobile-medium {
       background-color: $main-bg;
+      height: 79px;
       z-index: 9998;
       width: 100%;
       padding: 15px 10px 3px 10px;
@@ -29,6 +31,8 @@
       right: 0;
       justify-content: space-between;
     }
+
   }
+
 }
 
