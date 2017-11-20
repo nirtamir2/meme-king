@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 
@@ -21,24 +22,16 @@ const socialLinks = {
     }
 };
 
-export default ()=>{
-
-
-    const getSocialLinks = ()=>{
-       return Object.keys(socialLinks).map(social => {
-           const current = socialLinks[social];
-           return (
-               <a href={current.link} >
-                   <FontAwesome size="2x" name={current.iconName} />
-               </a>
-           )
-       })
-    }
+export default () => {
 
     return(
         <div className="about-page">
           <div className="container">
-
+              {_.map(socialLinks, socialLink => (
+                  <a href={socialLink.link} >
+                      <FontAwesome size="2x" name={socialLink.iconName} />
+                  </a>
+              ))}
           </div>
         </div>
     )

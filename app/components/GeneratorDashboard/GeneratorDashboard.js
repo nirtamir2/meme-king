@@ -48,7 +48,7 @@ export default class GeneratorDashboard extends Component {
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
         const memeData = { urlPath: canvas.toDataURL(), date: new Date(), isMobile: helpers.isMobile(), isMobileApp : WebViewService.isWebView, isDesktop: !helpers.isMobile() }
-
+        console.log(memeData)
         if (WebViewService.isWebView) {
             this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *

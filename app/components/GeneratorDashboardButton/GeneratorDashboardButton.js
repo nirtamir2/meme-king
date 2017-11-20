@@ -28,8 +28,6 @@ export default class GeneratorDashboardButton extends Component {
 
         const mobileLabel = (<span className="text visible-mobile">{label}</span>)
 
-
-
         if (wrapWithLabel) {
             return (
                 <label ref={node => {

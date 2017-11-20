@@ -111,7 +111,8 @@ class StorageService {
             memeObj = {
                 ...memeObj,
                 isMobile: meme.isMobile || '',
-                isMobileApp: meme.isMobileApp || ''
+                isMobileApp: meme.isMobileApp || '',
+                isDesktop: meme.isDesktop
             }
         }
 
