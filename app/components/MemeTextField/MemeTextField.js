@@ -123,7 +123,7 @@ export default class MemeTextField extends Component {
             strokeTextBox.left = leftPos;
             strokeTextBox.bringToFront()
             fillTextBox.bringToFront();
-            this.styleBothLayers({ top: topPos, left: leftPos })
+            this.styleBothLayers({ top: topPos, left: leftPos, width: fillTextBox.width })
         })
 
         //on rotating
