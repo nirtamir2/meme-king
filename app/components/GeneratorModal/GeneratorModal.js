@@ -7,7 +7,7 @@ import PopupCover from 'components/PopupCover/PopupCover'
 
 const GeneratorModal = ({ children, className, onClose }) => (
     <PopupCover onClick={onClose}>
-        <div className={classNames('box-generator-modal', className)}>
+        <div className={classNames('box-generator-modal', className)} onClick={(e) => {e.stopPropagation()}}>
             {children}
         </div>
     </PopupCover>
