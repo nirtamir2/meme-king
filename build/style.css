@@ -796,7 +796,6 @@ header {
   background: #0097EB;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
   color: white; }
@@ -1201,6 +1200,8 @@ header {
         color: #ED5E68; }
       .search-input-wrapper input.empty:-ms-input-placeholder {
         color: #ED5E68; }
+  .search-input-wrapper .no-results {
+    color: #ED5E68 !important; }
 
 .menu-item {
   list-style: none;
@@ -1883,6 +1884,7 @@ input[type=file] {
   @media only screen and (max-width: 939px) {
     .box-generator-dashboard .buttons-container {
       background-color: #f6f6f6;
+      height: 79px;
       z-index: 9998;
       width: 100%;
       padding: 15px 10px 3px 10px;
