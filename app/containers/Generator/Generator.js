@@ -274,15 +274,20 @@ class Generator extends Component {
 
 function mapStateToProps(state, ownProps) {
 
-    const { match: { params }, location, history } = ownProps
+    const { match: { params }, location, history } = ownProps;
 
     const memeId = params.id
     const isFromUpload = (_.get(location, 'state.from') === 'upload')
-    const isFromSearch = (_.get(location, 'state.from') === 'search')
-    const currentMemeObj = (isFromUpload || isFromSearch) ?
-        _.find(state.search.searchResults, { id: memeId})
-        :
-        state.category.memes[memeId];
+    const isFromSearch = (_.get(location, 'state.from') === 'search');
+    let currentMemeObj;
+    if(isFromSearch) {
+        currentMemeObj = _.find(state.search.searchResults, { id: memeId});
+    } else if(isFromUpload) {
+        currentMemeObj = _.get(location, 'state')
+    } else {
+        currentMemeObj = state.category.memes[memeId];
+    }
+
     return {
         category: params.category,
         meme: currentMemeObj,

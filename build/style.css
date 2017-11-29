@@ -798,7 +798,8 @@ header {
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  color: white; }
+  color: white;
+  justify-content: center; }
   @media only screen and (max-width: 939px) {
     .home {
       min-height: 100vh;

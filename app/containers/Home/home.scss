@@ -5,6 +5,7 @@
   align-items: center;
   height: 100vh;
   color: white;
+  justify-content: center;
 
   @include mobile-medium {
     min-height: 100vh;
