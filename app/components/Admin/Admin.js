@@ -130,6 +130,10 @@ class Admin extends Component {
 
     onSubmit = () => {
         if (this.state.anigma === '~memeking07') {
+            this.setState({ isAuthenticated: true, isSuperAdmin: true }, () => {
+                this.bindUploadEvents()
+            })
+        } else if (this.state.anigma === 'admin1234') {
             this.setState({ isAuthenticated: true }, () => {
                 this.bindUploadEvents()
             })
@@ -172,8 +176,9 @@ class Admin extends Component {
 
     render() {
 
+        const { isSuperAdmin, isAuthenticated } = this.state;
 
-        if (!this.state.isAuthenticated) {
+        if (!isAuthenticated) {
             return <LoginArea value={this.state.anigma} onSubmit={this.onSubmit}
                               onChange={event => this.setState({ anigma: event.target.value })}/>
         }
@@ -201,43 +206,51 @@ class Admin extends Component {
                         />
                         <h6 className="text-center" onClick={() => this.setState({ memes: {} })}>clear meme editors</h6>
                     </div>
-                    <div>
-                        <Button label={'personal messages'}
-                                onClick={this.getPersonalMessages}
-                                icon="CHAT"
-                                size="sm"
-                                center
-                        />
-                        <h6 className="text-center" onClick={this.clearPersonalMessages}> clear personal messages</h6>
+                    {isSuperAdmin && (
+                        <div>
+                            <Button label={'personal messages'}
+                                    onClick={this.getPersonalMessages}
+                                    icon="CHAT"
+                                    size="sm"
+                                    center
+                            />
+                            <h6 className="text-center" onClick={this.clearPersonalMessages}> clear personal messages</h6>
 
-                    </div>
+                        </div>
+                    )}
 
-                    <div>
-                        <Button label={'user memes'}
-                                onClick={this.getUserMemes}
-                                icon="glyphicon glyphicon-user"
-                                size="sm"
-                                center
-                        />
-                        <h6 className="text-center" onClick={this.clearUserMemes}> clear user memes </h6>
-                    </div>
-                    <div>
-                        <select value={this.state.category} onChange={this.onCategoryChange}>
-                            {_.map(categories, (value, prop) => {
-                                return <option key={_.uniqueId()}>{prop}</option>
-                            })}
-                        </select>
-                    </div>
+                    {isSuperAdmin && (
+                        <div>
+                            <Button label={'user memes'}
+                                    onClick={this.getUserMemes}
+                                    icon="glyphicon glyphicon-user"
+                                    size="sm"
+                                    center
+                            />
+                            <h6 className="text-center" onClick={this.clearUserMemes}> clear user memes </h6>
+                        </div>
+                    )}
+                    {isSuperAdmin && (
+                        <div>
+                            <select value={this.state.category} onChange={this.onCategoryChange}>
+                                {_.map(categories, (value, prop) => {
+                                    return <option key={_.uniqueId()}>{prop}</option>
+                                })}
+                            </select>
+                        </div>
+                    )}
 
-                    <div>
-                        <select onChange={this.onFilterChange}>
-                            <option value="none">see all</option>
-                            <option value="isMobile">Mobile device</option>
-                            <option value="isMobileApp">iOS mobile app</option>
-                            <option value="isDesktop"> Desktop</option>
-                        </select>
-                        <h4> filter memes by device</h4>
-                    </div>
+                    {isSuperAdmin && (
+                        <div>
+                            <select onChange={this.onFilterChange}>
+                                <option value="none">see all</option>
+                                <option value="isMobile">Mobile device</option>
+                                <option value="isMobileApp">iOS mobile app</option>
+                                <option value="isDesktop"> Desktop</option>
+                            </select>
+                            <h4> filter memes by device</h4>
+                        </div>
+                    )}
 
 
                 </div>
