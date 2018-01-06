@@ -69,7 +69,7 @@ export default class Editor extends Component {
                 <img src={urlPath} style={{width: '350px'}} />
 
                 <div className="description-container">
-                        <textarea value={this.state.meme.description} rows="5" onChange={this.onDescriptionChange} />
+                        <textarea style={{ color: 'black' }} value={this.state.meme.description} rows="5" onChange={this.onDescriptionChange} />
                     </div>
                 <div className="utils">
                     {!this.props.editMode && (
