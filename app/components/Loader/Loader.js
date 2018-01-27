@@ -16,6 +16,11 @@ const Spinner = ({ type, className }) => {
                 </div>
             )
         }
+        case 'spinner': {
+            return(
+                <div className="spinner"/>
+            )
+        }
     }
 }
 

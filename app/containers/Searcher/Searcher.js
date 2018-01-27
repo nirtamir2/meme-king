@@ -31,7 +31,6 @@ class Searcher extends Component {
     }
 
     clearResults = () => {
-
         this.setState({ active: false, value: '' })
         this.props.cleanSearchResults()
     }
@@ -54,8 +53,8 @@ class Searcher extends Component {
     openGenerator = (e, meme) => {
         e.preventDefault()
         const location = {
-            pathname: `/memes/${meme.category}/generator/${meme.id}/${globalConstants.format.normal}`,
-            state: { urlPath: meme.urlPath },
+            pathname: `/search/generator/${meme.id}/${globalConstants.format.normal}`,
+            state: { urlPath: meme.urlPath, from : 'search' },
             query: { search: this.state.value }
         }
         this.props.history.push(location)
@@ -73,25 +72,26 @@ class Searcher extends Component {
 
     render() {
 
-        const { searchResults, isFetching } = this.props
+        const { searchResults, isFetching, className } = this.props
         const { active } = this.state
         const showNoMemesMessage = (!_.size(searchResults) && active && !isFetching )
 
         return (
-            <div className={classNames('searcher', active && 'active')}>
+            <div className={classNames('searcher', active && 'active', className)}>
                 <SearchInput onChange={this.onChange}
                              clearResults={this.clearResults}
                              isFetching={isFetching}
-                             value={this.state.value}
+                             hasResults={ _.size(searchResults)}
+                             value={this.state.value }
                 />
                 {!_.isEmpty(searchResults) && (
-                    <p className="number_of_memes_found">
+                    <p className="number_of_memes_found margin-top-small">
                         {`(${searchResults.length})`}
                     </p>
                 )}
                 <div className={classNames('results-wrapper', { 'active': !_.isEmpty(searchResults) })} ref={node => this.resultsWrapper = node}>
                     { _.map(searchResults, (meme) =>
-                        <MemeThumb width={helpers.isMobile() ? 33 : 12.5}
+                        <MemeThumb
                                    key={meme.id}
                                    {...meme}
                                    urlLinkDisabled
@@ -102,7 +102,7 @@ class Searcher extends Component {
 
                 </div>
                 { showNoMemesMessage && (
-                    <p className="text-center">
+                    <p className="text-center margin-top-small">
                         לא נמצאו ממים מתאימים
                     </p>
                 )}
@@ -112,6 +112,7 @@ class Searcher extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+
     return {
         searchResults: state.search.searchResults,
         isFetching: state.search.isFetching,

@@ -3,7 +3,7 @@ const recursive = require('recursive-readdir')
 const path = require('path')
 const _ = require('lodash')
 const storage = require('@google-cloud/storage');
-const uniqueId = require('../app/helpers/uniqueId');
+const uniqueId = require('../../app/helpers/uniqueId');
 var stream = require('stream');
 
 // services
@@ -55,7 +55,6 @@ class StorageService {
         };
 
         DatabaseService.saveSingleMemeToDataBase(finalMeme);
-        console.log(finalMeme, 'final meme');
     }
 
     uploadToStorage(image, fileName, category, type) {
@@ -74,9 +73,6 @@ class StorageService {
                 file = this.myBucket.file(`/${type}/${category}/${fileName}.jpg`);
             }
 
-            console.log(isUserSavedMemeCase)
-
-
 
             bufferStream.pipe(file.createWriteStream({
                 metadata: {
@@ -93,7 +89,6 @@ class StorageService {
                 .on('finish', function () {
                     // The file upload is complete.
                     resolve()
-                    console.log('new meme upload complete')
                 })
         })
     }

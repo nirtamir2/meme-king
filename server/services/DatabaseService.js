@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const DatesService =  require('./DatesService');
-const constants = require('../app/constants/global');
+const constants = require('../../app/constants/global');
 
 const admin = require("firebase-admin");
 const dbConstants = constants.database;
@@ -13,7 +13,7 @@ class DatabaseService {
         let fireBaseConfig = {};
 
         if (!isProduction) {
-            fireBaseConfig = require('../anigma/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js');
+            fireBaseConfig = require('../../anigma/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js');
 
         } else {
             fireBaseConfig = {
@@ -86,11 +86,8 @@ class DatabaseService {
     async getSearchMemes(query) {
         const lowerCaseQuery = _.toLower(query);
         const data = await this.getAllMemes();
-        const allMemesByCategories =  data.val();
-        let flattenAllMemesByCategories = {};
-       _.forEach(allMemesByCategories , category => flattenAllMemesByCategories = {...flattenAllMemesByCategories, ...category });
 
-        return _.filter(flattenAllMemesByCategories, meme => _.includes(_.toLower(meme.description), lowerCaseQuery))
+        return _.filter(data, meme => _.includes(_.toLower(meme.description), lowerCaseQuery))
     }
 
     saveSingleMemeToDataBase(meme) {
@@ -104,8 +101,28 @@ class DatabaseService {
 
     }
 
+    getCategory(category) {
+
+        return new Promise(resolve => {
+            this.database.ref(`/${dbConstants.memesTable}/`).once('value').then(data => {
+                resolve(_.get(data.val(), category))
+            });
+
+
+        })
+    }
+
     getAllMemes() {
-        return this.database.ref(`/${dbConstants.memesTable}/`).once('value');
+
+        return new Promise(resolve => {
+             this.database.ref(`/${dbConstants.memesTable}/`).once('value').then(data => {
+                 let flattenData = []
+                 _.forEach(data.val(), category => flattenData = [...flattenData, ..._.values(category)])
+                 resolve(flattenData)
+             });
+
+
+        })
     }
 
     saveUserMeme(meme) {

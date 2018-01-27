@@ -20,10 +20,6 @@ class UserMessage extends Component {
         likesClicked: false
     }
 
-    componentDidMount() {
-        console.log('mount')
-    }
-
     updateUserLikes = () => {
         const { updateUserMessageLikes, post } = this.props;
         this.setState({ likesClicked : true })

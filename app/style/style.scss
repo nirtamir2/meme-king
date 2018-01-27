@@ -14,6 +14,7 @@
 @import '../containers/MemeSection/memes-section';
 @import '../containers/Notification/notification';
 @import '../containers/BugsContainer/bugs-container';
+@import '../containers/MemeSuggestionsContainer/meme-suggestions-container';
 
 
 @import '../components/MemeTextField/text-input';
@@ -31,6 +32,7 @@
 @import '../components/Loader/round-empty-loader';
 @import '../components/MemeSectionBar/meme_section_bar';
 @import '../components/EmptyState/empty-state';
+@import '../components/PopupCover/popup-cover';
 @import '../components/PopupCover/popup-cover';
 @import '../components/GeneratorSignature/generator-signature';
 @import '../components/GeneratorDashboard/generator-dashboard';
@@ -51,4 +53,5 @@
 @import './components/loaders/search-spinner';
 @import '../components/UserMessage/user-message';
 @import '../components/Text/text';
+@import '../components/Label/label';
 

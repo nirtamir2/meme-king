@@ -19,6 +19,12 @@
     border-color: transparent;
   }
 
+  .box-title {
+    @include desktop-small {
+      font-size: 17px;
+    }
+  }
+
   span{
     font-size:16px;
     color: $mainColor;

@@ -23,6 +23,13 @@ export function fetchCategory(category) {
     };
 }
 
+export function addMemeToCategory(meme) {
+    return {
+        type: 'ADD_MEME_TO_CATEGORY',
+        payload: meme
+    }
+}
+
 export function fetchSingleMeme(category, id) {
     return (dispatch) => {
 

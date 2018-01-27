@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React  from 'react';
 import LazyLoad from 'react-lazyload';
+import classNames from 'classnames';
 
 // components
 import { Link } from 'react-router-dom';
@@ -14,9 +15,8 @@ import helpers from 'helpers/helpers';
 // assets
 import smallCrown from 'assets/images/small-crown.png';
 
-export default ({ thumbPath, description, rating, category, id, urlPath, width, onClick=_.noop, shouldShowRatingBadge, query }) => {
+export default ({ thumbPath, description, rating, category, id, urlPath, width, onClick=_.noop, shouldShowRatingBadge, query, className }) => {
 
-    const imageHeight = helpers.isMobile() ? (width * 3) : (width * 10);
     const location = {
         pathname: `/memes/${category}/generator/${id}/${globalConstants.format.normal}`,
         query
@@ -26,7 +26,7 @@ export default ({ thumbPath, description, rating, category, id, urlPath, width, 
 
     return(
 
-        <Link className="meme-thumb" style={{ width: `${width}%`, height: `${imageHeight}px` }} to={location} onClick={onClick}>
+        <Link className={classNames(className, 'meme-thumb')} to={location} onClick={onClick}>
             {/*<LazyLoad  offset={window.innerWidth > 767 ? 100 : 300} height={window.innerWidth < 767 ? 100 : 160}>*/}
             <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img" />
             {/*</LazyLoad>*/}

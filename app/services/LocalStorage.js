@@ -9,7 +9,6 @@ class LocalStorage {
             localStorage.setItem('isAlreadyCleared' , true );
         }
 
-        console.log('init local storage service', localStorage)
 
     }
 

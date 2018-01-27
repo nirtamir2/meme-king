@@ -40,7 +40,7 @@ import AnalyticsService from 'services/Analytics';
                 <Button label="קטגוריות ממים"
                         onClick={()=> toggleSideBar(true)}
                         icon="LIST"
-                        className="flex hide-desktop margin-bottom-none"
+                        className="flex hide-desktop margin-bottom-none margin-top-small"
                 />
 
                 <Uploader history={history} />
@@ -48,9 +48,10 @@ import AnalyticsService from 'services/Analytics';
                 <Button label=" לוח חלק"
                         onClick={this.createCleanSlate}
                         icon="STOP"
+                        className="margin-top-small"
                 />
 
-                <Searcher history={history} />
+                <Searcher className="margin-top-small" history={history} />
 
                 <TextLink className="personal-messages-link text-center"  to="bugs-page">
                     בקשות ודיווח על באגים

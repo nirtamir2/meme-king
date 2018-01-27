@@ -10,12 +10,15 @@ const NODE_ENVIRONMENT = appArgs.env
 const isProduction = (!(NODE_ENVIRONMENT === 'development'))
 
 // services
-const DatabaseService = require('./server/DatabaseService')
-const StorageService = require('./server/StorageService')
+const DatabaseService = require('./server/services/DatabaseService')
+const StorageService = require('./server/services/StorageService')
 
 // init
 DatabaseService.init(isProduction);
 StorageService.init(isProduction);
+
+// helpers
+const helpers = require('./server/helpers/helpers');
 
 
 // USE
@@ -73,38 +76,39 @@ app.use(function (req, res, next) {
 app.get('/api/get-weekly-popular-memes', async function (req, res) {
     const data = await DatabaseService.getWeeklyPopularMemes()
     const topPopularMemes = _.slice(_.reverse(_.sortBy(data.val(), 'rating')), 0, 48)
-    const obj = {}
-    _.forEach(topPopularMemes, meme => obj[meme.id] = meme)
-    res.send(obj)
+    res.send(helpers.arrayToObjById(topPopularMemes))
 })
 
 app.get('/api/search', async function (req, res) {
-    const data = await DatabaseService.getSearchMemes(req.query.search)
+    const data = await DatabaseService.getSearchMemes(req.query.search);
+    console.log(data)
     res.send(data)
 })
 
 app.get('/api/all-time-popular-memes', async function (req, res) {
-    const data = await DatabaseService.getAllMemes()
-    let flattenData = []
-    _.forEach(data.val(), category => flattenData = [...flattenData, ..._.values(category)])
-    const sortedData = _.slice(flattenData.sort((a, b) => b.rating - a.rating), 0, 72)
-    const obj = {}
-    _.forEach(sortedData, meme => obj[meme.id] = meme)
-    res.send(obj)
+    const data = await DatabaseService.getAllMemes();
+    const sortedData = _.slice(data.sort((a, b) => b.rating - a.rating), 0, 72);
+    res.send(helpers.arrayToObjById(sortedData))
 })
 
 app.get('/api/new-memes', async function (req, res) {
     const data = await DatabaseService.getAllMemes();
-    let flattenData = []
-    _.forEach(data.val(), category => flattenData = [...flattenData, ..._.values(category)]);
-    const filteredData = flattenData.filter(meme => meme.date);
+    const filteredData = _.values(data).filter(meme => meme.date);
     const sortedData = _.slice(filteredData.sort((a, b) => new Date(b.date) - new Date( a.date)), 0, 72)
-    const obj = {}
-    _.forEach(sortedData, meme => obj[meme.id] = meme);
-    console.log(obj)
+    res.send(helpers.arrayToObjById(sortedData))
+});
 
-    res.send(obj)
-})
+app.get('/api/meme-suggestions', async function (req, res) {
+    const data = await DatabaseService.getCategory(req.query.category);
+    console.log(_.size(data));
+    console.log(_.sampleSize(data))
+    const response = {
+        category: req.query.category,
+        memes: helpers.arrayToObjById(_.sampleSize(data, req.query.size))
+    }
+    res.send(response);
+
+});
 
 
 // POST

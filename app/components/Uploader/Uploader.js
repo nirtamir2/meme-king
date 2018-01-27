@@ -49,14 +49,13 @@ export default class Uploader extends Component {
         this.props.history.push(location)
     }
 
-    render(){
+    render() {
 
+        const { className } = this.props;
         const UPLOADER_TEXT =  "העלאת תמונה" ;
 
         return (
-            <div>
-
-                <div>
+                <div className={className}>
 
                     <input ref={node => this.input = node} type="file" name="files[]" id="files" className="inputfile" multiple/>
                     <Button label={UPLOADER_TEXT}
@@ -65,7 +64,6 @@ export default class Uploader extends Component {
                             htmlFor="files"
                     />
                 </div>
-            </div>
         );
     }
 }

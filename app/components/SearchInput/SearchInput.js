@@ -13,12 +13,12 @@ class SearchInput extends Component {
     };
 
     getIcon = () => {
-        const { isFetching, emptyState } = this.props;
+        const { isFetching, emptyState, hasResults } = this.props;
 
         if(isFetching ){
             return <div className="search-loader"> Loading... </div>
         }
-        else if(this.props.value.length){
+        else if(this.props.value.length || hasResults){
             return <Icon name="REMOVE" onClick={this.props.clearResults} className={classNames({ 'no-results': emptyState })}/>
         }
         else{
@@ -30,12 +30,12 @@ class SearchInput extends Component {
     render = () => {
 
         const icon = this.getIcon();
-        const { className,  emptyState, size } = this.props;
+        const { className,  emptyState, size, placeholder } = this.props;
 
         return(
             <div className={classNames('search-input-wrapper', className, `size-${size}`)}>
                <input onChange={this.onChange}
-                      placeholder="חיפוש מם"
+                      placeholder={placeholder || "חיפוש מם"}
                       value={this.props.value}
                       className={classNames({'empty' : emptyState}, className)}
                />

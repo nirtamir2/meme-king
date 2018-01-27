@@ -1,31 +1,22 @@
 
 
 .box-meme-section-bar {
-  position:fixed;
+  position: absolute;
   top: 0;
-  left: 0;
-  width: calc(100% - 280px);
+  width: 100%;
   background: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
   height: 60px;
   z-index: 9999;
   box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.6);
 
-
   @include mobile-medium {
-    width: auto;
-    background: transparent;
-    box-shadow: none;
+    display: none;
   }
 
   .actions {
-    display: flex;
-    position:relative;
-    left: 60px;
-    margin-right: auto;
 
     @include mobile-medium {
       left: 10px;
@@ -45,10 +36,9 @@
   }
 
   .search-input-wrapper {
-    margin: 0;
-    height: 40px;
-    align-self: center;
-    margin-right: auto;
+
+    margin: auto;
+
     input {
       height: 40px;
       box-shadow: inset 1px 1px 2px 0 #c9c9c9;

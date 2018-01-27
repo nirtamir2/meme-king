@@ -9,6 +9,7 @@ import GeneratorUploader from '../GeneratorUploader/GeneratorUploader'
 import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContainer'
 import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
 import Modal from 'components/Modal/Modal'
+import MemeSuggestions from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer';
 
 // services
 import LocalStorageService from 'services/LocalStorage'
@@ -48,7 +49,6 @@ export default class GeneratorDashboard extends Component {
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
         const memeData = { urlPath: canvas.toDataURL(), date: new Date(), isMobile: helpers.isMobile(), isMobileApp : WebViewService.isWebView, isDesktop: !helpers.isMobile() }
-        console.log(memeData)
         if (WebViewService.isWebView) {
             this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *
@@ -148,7 +148,7 @@ export default class GeneratorDashboard extends Component {
 
     render() {
 
-        const { format, canvas, isCanvasReady, style, isCleanSlateState } = this.props
+        const { format, canvas, isCanvasReady, style, isCleanSlateState, isFromUpload, isStandAlone, isFromSearch, currentMemeCategory, suggestions } = this.props
         const FORMAT_BUTTON_TEXT = format === globalConstants.format.normal ? ' דאנק מימ' : " רגיל"
         const ADD_TEXT_LINE = "טקסט"
         const ADD_AN_ITEM = "פריטים"
@@ -203,6 +203,8 @@ export default class GeneratorDashboard extends Component {
                 )}
 
                 {!helpers.isMobile() && <Buttons />}
+                {(isCanvasReady && helpers.isMobile() && !isFromSearch && !isStandAlone && !isFromUpload && !isCleanSlateState) &&
+                <MemeSuggestions  category={currentMemeCategory} suggestions={suggestions}  />}
 
                 <GeneratorSignature className="visible-mobile"/>
 

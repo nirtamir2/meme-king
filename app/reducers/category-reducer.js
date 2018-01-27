@@ -1,4 +1,5 @@
 import actionsConstants from 'actions/category-actions/category-actions-constants';
+import suggestionsConstants from 'actions/suggestions-actions/action-suggestions-constants';
 
 const initialState = {
     memes: []
@@ -149,6 +150,17 @@ export default function(state=initialState, action){
                 memes: []
             }
             break;
+
+        case 'ADD_MEME_TO_CATEGORY':
+            return {
+                isFetching: false,
+                memes: {
+                    ...state.memes,
+                    [payload.id]: payload
+                }
+            }
+            break;
+
 
 
 

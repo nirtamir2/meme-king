@@ -10,6 +10,7 @@ import GeneratorDashboardSkeleton from 'components/GeneratorDashboardSkeleton/Ge
 import GeneratorModal from 'components/GeneratorModal/GeneratorModal'
 import Title from 'components/Title/Title'
 import Canvas from 'components/Canvas/Canvas'
+import MemeSuggestionsContainer from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer'
 
 // helpers
 import helpers from 'helpers/helpers'
@@ -25,6 +26,7 @@ import WebViewService from 'services/webViewService'
 // actions
 import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions'
 import { fetchSingleMeme } from 'actions/category-actions/category-actions'
+import { fetchMemeSuggestions } from 'actions/suggestions-actions/suggestions-actions';
 
 // assets
 import waterMarkDesktop from 'assets/images/watermark-desktop.jpg'
@@ -45,6 +47,7 @@ class Generator extends Component {
 
         const canvas = new fabric.Canvas('c', { allowTouchScrolling: true })
         this.setState({ canvas }, () => {
+            this.props.fetchMemeSuggestions();
             this.createBoard(this.props.format)
             this.disableWindowScrollOnDrag(canvas)
         })
@@ -61,6 +64,11 @@ class Generator extends Component {
                 this.createBoard(nextProps.format)
             })
         }
+
+        if (this.props.memeId !== nextProps.memeId) {
+            this.props.fetchMemeSuggestions();
+        }
+
     }
 
     disableWindowScrollOnDrag = (canvas) => {
@@ -213,7 +221,22 @@ class Generator extends Component {
 
         const { isLoading, isCanvasReady, canvas } = this.state;
 
-        const { meme, format, history, location, type, query, saveUserMemeToStorage, isCleanSlateState, isWebView } = this.props
+        const {
+            meme,
+            format,
+            history,
+            location,
+            type,
+            query,
+            isFromSearch,
+            isStandAlone,
+            isFromUpload,
+            saveUserMemeToStorage,
+            isCleanSlateState,
+            isWebView,
+            suggestions,
+            currentMemeCategory
+        } = this.props
 
         const mobileGeneratorDashboardTopPosition = ( (isCanvasReady && helpers.isMobile())
             ?
@@ -246,6 +269,11 @@ class Generator extends Component {
                             saveUserMemeToStorage={saveUserMemeToStorage}
                             location={location}
                             meme={meme}
+                            suggestions={suggestions}
+                            currentMemeCategory={currentMemeCategory}
+                            isStandAlone={isStandAlone}
+                            isFromSearch={isFromSearch}
+                            isFromUpload={isFromUpload}
                             isCleanSlateState={isCleanSlateState}
                             format={format}
                             isCanvasReady={isCanvasReady}
@@ -260,6 +288,9 @@ class Generator extends Component {
 
 
                 </div>
+
+                {(!isFromSearch && !isStandAlone && !helpers.isMobile() && !isFromUpload && !isCleanSlateState) &&
+                <MemeSuggestionsContainer category={currentMemeCategory} suggestions={suggestions} />}
 
                 {!isWebView && (<GeneratorModal.CloseButton onClick={this.closeGenerator}/>)}
 
@@ -300,17 +331,22 @@ function mapStateToProps(state, ownProps) {
         isFromSearch,
         isWebView: WebViewService.isWebView,
         query: location.query,
-        isCleanSlateState: (params.type === 'clean-slate')
+        isCleanSlateState: (params.type === 'clean-slate'),
+        suggestions: _.get(state, 'suggestions.memes'),
+        currentMemeCategory: _.get(state, 'suggestions.category')
     }
 }
 
-function mapDispatchToProps(dispatch) {
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+    const { category } = _.get(stateProps, 'meme', {});
 
     return {
-        updateMemeRating: (meme) => dispatch(updateMemeRating(meme)),
-        saveUserMemeToStorage: (data) => dispatch(saveUserMemeToStorage(data)),
-        fetchSingleMeme: (category, id) => dispatch(fetchSingleMeme(category, id))
+        ...ownProps,
+        ...stateProps,
+        ...dispatchProps,
+        fetchMemeSuggestions: () => dispatchProps.fetchMemeSuggestions(category, helpers.isMobile() ? 3 : 6)
+
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Generator)
+export default connect(mapStateToProps, { fetchSingleMeme, saveUserMemeToStorage, updateMemeRating, fetchMemeSuggestions }, mergeProps)(Generator)

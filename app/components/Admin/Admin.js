@@ -257,7 +257,6 @@ class Admin extends Component {
 
                 {!_.isEmpty(filteredUserMemes) && <Title>({_.size(filteredUserMemes)})</Title>}
                 {filteredUserMemes && _.map(filteredUserMemes, meme => {
-                    console.log(meme)
                     return (
                         <div key={meme.id} className="box-user-meme margin-top-medium">
                             <img src={meme.urlPath}/>

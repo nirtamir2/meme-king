@@ -9,6 +9,13 @@
   position:relative;
   cursor:pointer;
   float: left;
+  width: 12.5%;
+  height: 130px;
+
+  @include mobile-medium {
+    width: 33%;
+    height: 80px;
+  }
 
   .meme-thumb__download-counter{
     background :rgba(0,0,0, 0.5);

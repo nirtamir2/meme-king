@@ -49,7 +49,6 @@ export function updateUserMessageLikes(message) {
     const wantedLikes = message.likes ? parseInt(message.likes) + 1 : 1;
     return (dispatch) => {
         window.firebase.database().ref(`/${constants.database.personalMessageTable}/${message.id}/likes`).set(wantedLikes).then(() => {
-            console.log('hy')
             return dispatch(fetchSingleMessage(message.id))
         })
 

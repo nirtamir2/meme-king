@@ -108,6 +108,7 @@ import helpers from 'helpers/helpers';
                     <SearchInput onChange={query => this.setState({ searchValue : query })}
                                  clearResults={() => this.setState({ searchValue : '' })}
                                  isFetching={false}
+                                 placeholder="חיפוש בקטגוריה"
                                  emptyState={isMemesBeenSearchedAndNoResultsFound}
                                  className="hidden-xs header-search-input"
                                  value={this.state.searchValue}
