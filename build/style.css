@@ -825,6 +825,9 @@ header {
       .searcher .results-wrapper.active {
         min-height: initial; } }
 
+.searcher .search-input-wrapper {
+  margin: 0 auto; }
+
 .searcher .meme-thumb img {
   max-width: 100%; }
 
@@ -836,10 +839,11 @@ header {
       font-size: 20px; } }
 
 .memes-section {
-  margin-top: 60px; }
+  padding-top: 60px;
+  position: relative; }
   @media only screen and (max-width: 939px) {
     .memes-section {
-      margin-top: 60px; } }
+      padding-top: 60px; } }
 
 .box-notification {
   background: #C3F3D4;
@@ -866,6 +870,55 @@ header {
   padding: 65px 15px; }
   .box-bugs-container .add-action {
     width: 85%; }
+
+.box-meme-suggestions-container {
+  border: 1px solid #8d8d8d;
+  border-radius: 5px;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 15px 10px 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  position: relative; }
+  @media only screen and (max-width: 939px) {
+    .box-meme-suggestions-container {
+      width: 100%; } }
+  .box-meme-suggestions-container.fetching {
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    background: #ececec;
+    justify-content: center;
+    align-items: center; }
+    .box-meme-suggestions-container.fetching::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #ececec, #fbfbfb, #ececec);
+      animation: progress 1s ease-in-out infinite; }
+
+@keyframes progress {
+  0% {
+    transform: translate3d(-100%, 0, 0); }
+  100% {
+    transform: translate3d(100%, 0, 0); } }
+    .box-meme-suggestions-container.fetching .box-title {
+      z-index: 9999;
+      color: #0097EB;
+      direction: rtl; }
+  .box-meme-suggestions-container .box-label {
+    position: absolute !important;
+    top: -13px;
+    right: 26px;
+    z-index: 9999; }
+    @media only screen and (max-width: 939px) {
+      .box-meme-suggestions-container .box-label {
+        top: -10px;
+        right: 5px; } }
 
 .box-meme-text-field {
   margin-bottom: 10px; }
@@ -1015,7 +1068,13 @@ header {
 .meme-thumb {
   position: relative;
   cursor: pointer;
-  float: left; }
+  float: left;
+  width: 12.5%;
+  height: 130px; }
+  @media only screen and (max-width: 939px) {
+    .meme-thumb {
+      width: 33%;
+      height: 80px; } }
   .meme-thumb .meme-thumb__download-counter {
     background: rgba(0, 0, 0, 0.5);
     color: white;
@@ -1118,7 +1177,6 @@ header {
 
 .search-input-wrapper {
   width: 450px;
-  margin: 30px auto;
   position: relative; }
   @media only screen and (max-width: 939px) {
     .search-input-wrapper {
@@ -1220,6 +1278,9 @@ header {
     color: white;
     border-radius: 4px;
     border-color: transparent; }
+  @media only screen and (min-width: 900px) and (max-width: 1439px) {
+    .menu-item .box-title {
+      font-size: 17px; } }
   .menu-item span {
     font-size: 16px;
     color: #0097EB; }
@@ -1498,8 +1559,7 @@ header {
   height: 60px;
   transition: 0.2s;
   cursor: pointer;
-  padding: 20px;
-  margin: 20px auto 0 auto; }
+  padding: 20px; }
   .box-cta-button .inner-container {
     align-items: center;
     justify-content: space-around;
@@ -1787,40 +1847,28 @@ input[type=file] {
     color: white; }
 
 .box-meme-section-bar {
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 0;
-  width: calc(100% - 280px);
+  width: 100%;
   background: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
   height: 60px;
   z-index: 9999;
   box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.6); }
   @media only screen and (max-width: 939px) {
     .box-meme-section-bar {
-      width: auto;
-      background: transparent;
-      box-shadow: none; } }
-  .box-meme-section-bar .actions {
-    display: flex;
-    position: relative;
-    left: 60px;
-    margin-right: auto; }
-    @media only screen and (max-width: 939px) {
-      .box-meme-section-bar .actions {
-        left: 10px; } }
-    .box-meme-section-bar .actions > .action.glyphicon-zoom-in {
-      font-size: 18px; }
-    .box-meme-section-bar .actions > .action.glyphicon-zoom-out {
-      font-size: 12px; }
+      display: none; } }
+  @media only screen and (max-width: 939px) {
+    .box-meme-section-bar .actions {
+      left: 10px; } }
+  .box-meme-section-bar .actions > .action.glyphicon-zoom-in {
+    font-size: 18px; }
+  .box-meme-section-bar .actions > .action.glyphicon-zoom-out {
+    font-size: 12px; }
   .box-meme-section-bar .search-input-wrapper {
-    margin: 0;
-    height: 40px;
-    align-self: center;
-    margin-right: auto; }
+    margin: auto; }
     .box-meme-section-bar .search-input-wrapper input {
       height: 40px;
       box-shadow: inset 1px 1px 2px 0 #c9c9c9; }
@@ -1853,6 +1901,16 @@ input[type=file] {
   top: 0;
   z-index: 9999; }
 
+.box-popup-cover {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9999; }
+
 .box-generator-signature {
   left: 0;
   right: 0;
@@ -1860,7 +1918,7 @@ input[type=file] {
   margin-top: 40px; }
   @media only screen and (max-width: 939px) {
     .box-generator-signature {
-      margin: 140px auto 10px auto;
+      margin: 0 auto;
       max-width: 80%;
       position: static; } }
   @media only screen and (max-width: 939px) {
@@ -1994,7 +2052,7 @@ input[type=file] {
     height: 60px;
     width: 200px;
     display: block;
-    margin: 19px 4px;
+    margin: 0 4px;
     color: black; }
     @media only screen and (max-width: 939px) {
       .box-admin select {
@@ -2062,7 +2120,8 @@ input[type=file] {
 @media only screen and (max-width: 939px) {
   .text-fields-container {
     position: relative;
-    top: 70px; } }
+    top: 70px;
+    margin-bottom: 90px; } }
 
 .box-contact-page {
   color: white;
@@ -2523,3 +2582,67 @@ canvas {
 
 .box-text.inline-block {
   display: inline-block; }
+
+/*
+----------------------------------------------------
+LABEL
+----------------------------------------------------
+*/
+.box-label.label {
+  position: relative;
+  display: inline-block;
+  text-transform: capitalize;
+  border: 1px solid black;
+  line-height: 20px;
+  border-radius: 5px;
+  margin-right: 5px;
+  color: black; }
+  .box-label.label.lg {
+    padding: 0.6em 0.8em;
+    border-radius: 4px; }
+  .box-label.label.md {
+    padding: 0.2em 0.6em 0.2em;
+    font-size: 1.4rem;
+    border-radius: 5px; }
+  .box-label.label.sm {
+    font-size: 12px;
+    padding: 3px 5px;
+    border-radius: 5px;
+    line-height: 12px; }
+  .box-label.label.bold {
+    font-weight: 700; }
+
+.box-label.label-default {
+  background: #0097EB;
+  color: white;
+  border: #0097EB; }
+
+.box-label.block {
+  display: block; }
+
+.box-label.clickable {
+  cursor: pointer; }
+
+.box-label.uppercase {
+  text-transform: uppercase; }
+
+.box-label .close-icon {
+  cursor: pointer;
+  margin-left: 7px;
+  font-size: 11px;
+  color: gray; }
+
+.box-label .box-label-action-icon:first-child {
+  margin-right: 5px; }
+
+.box-label-action-icon {
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  line-height: 20px;
+  cursor: pointer; }
+
+.box-label-emphasis {
+  color: black;
+  margin-left: 3px; }
