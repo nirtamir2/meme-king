@@ -1074,7 +1074,7 @@ header {
   @media only screen and (max-width: 939px) {
     .meme-thumb {
       width: 33%;
-      height: 80px; } }
+      height: 120px; } }
   .meme-thumb .meme-thumb__download-counter {
     background: rgba(0, 0, 0, 0.5);
     color: white;
