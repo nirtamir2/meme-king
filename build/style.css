@@ -840,10 +840,19 @@ header {
 
 .memes-section {
   padding-top: 60px;
-  position: relative; }
+  position: relative;
+  overflow-x: hidden;
+  padding-left: 15px; }
   @media only screen and (max-width: 939px) {
     .memes-section {
-      padding-top: 60px; } }
+      padding-top: 60px;
+      padding-left: 12px; } }
+  .memes-section .memes-container {
+    display: flex;
+    flex-flow: row wrap;
+    margin-left: -8px;
+    /* Adjustment for the gutter */
+    background: #0087d2; }
 
 .box-notification {
   background: #C3F3D4;
@@ -1069,12 +1078,34 @@ header {
   position: relative;
   cursor: pointer;
   float: left;
-  width: 12.5%;
-  height: 130px; }
+  flex: auto;
+  height: 180px;
+  min-width: 130px;
+  margin: 0 8px 8px 0;
+  /* Some gutter */ }
+  .meme-thumb:nth-child(4n+1) {
+    width: 140px; }
+  .meme-thumb:nth-child(4n+2) {
+    width: 200px; }
+  .meme-thumb:nth-child(4n+3) {
+    width: 130px; }
+  .meme-thumb:nth-child(4n+4) {
+    width: 250px; }
   @media only screen and (max-width: 939px) {
     .meme-thumb {
       width: 33%;
-      height: 120px; } }
+      height: 120px;
+      min-width: 100px;
+      margin: 0 5px 5px 0;
+      /* Some gutter */ }
+      .meme-thumb:nth-child(4n+1) {
+        width: 30px; }
+      .meme-thumb:nth-child(4n+2) {
+        width: 85px; }
+      .meme-thumb:nth-child(4n+3) {
+        width: 60px; }
+      .meme-thumb:nth-child(4n+4) {
+        width: 130px; } }
   .meme-thumb .meme-thumb__download-counter {
     background: rgba(0, 0, 0, 0.5);
     color: white;
