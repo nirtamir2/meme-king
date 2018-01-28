@@ -156,7 +156,10 @@ export default function(state=initialState, action){
                 isFetching: false,
                 memes: {
                     ...state.memes,
-                    [payload.id]: payload
+                    [payload.id]: {
+                        ...payload,
+                        hidden: true
+                    }
                 }
             }
             break;

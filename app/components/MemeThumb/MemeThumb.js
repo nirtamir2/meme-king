@@ -15,7 +15,7 @@ import helpers from 'helpers/helpers';
 // assets
 import smallCrown from 'assets/images/small-crown.png';
 
-export default ({ thumbPath, description, rating, category, id, urlPath, width, onClick=_.noop, shouldShowRatingBadge, query, className }) => {
+export default ({ thumbPath, description, rating, category, id, urlPath, width, onClick=_.noop, shouldShowRatingBadge, query, className, hidden }) => {
 
     const location = {
         pathname: `/memes/${category}/generator/${id}/${globalConstants.format.normal}`,
@@ -24,12 +24,14 @@ export default ({ thumbPath, description, rating, category, id, urlPath, width, 
 
     const computedRating = (rating * 4) + helpers.getRandomNumber(0,1);
 
+    if(hidden) {
+        return null;
+    }
+
     return(
 
         <Link className={classNames(className, 'meme-thumb')} to={location} onClick={onClick}>
-            {/*<LazyLoad  offset={window.innerWidth > 767 ? 100 : 300} height={window.innerWidth < 767 ? 100 : 160}>*/}
             <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img" />
-            {/*</LazyLoad>*/}
             {(shouldShowRatingBadge && rating) && (
                 <span className="meme-thumb__download-counter">
                     <img src={smallCrown} className="crown"/>
