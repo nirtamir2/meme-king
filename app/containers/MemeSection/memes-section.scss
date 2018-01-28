@@ -11,7 +11,7 @@
 
   .memes-container {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row-reverse wrap;
     margin-left: -8px; /* Adjustment for the gutter */
     background: darken($mainColor, 5%);
   }
