@@ -9,45 +9,56 @@
   position:relative;
   cursor:pointer;
   float: left;
-  flex: auto;
-  height: 180px;
-  min-width: 130px;
-  margin: 0 8px 8px 0; /* Some gutter */
 
-  &:nth-child(4n+1){
-    width: 140px;
-  }
-  &:nth-child(4n+2){
-    width: 200px;
-  }
-  &:nth-child(4n+3){
-    width: 130px;
-  }
-  &:nth-child(4n+4){
-    width: 250px;
-  }
+  width: 12.5%;
+  height: 130px;
 
   @include mobile-medium {
     width: 33%;
-    height: 120px;
-
-    min-width: 100px;
-    margin: 0 5px 5px 0; /* Some gutter */
-
-    &:nth-child(4n+1){
-      width: 30px;
-    }
-    &:nth-child(4n+2){
-      width: 85px;
-    }
-    &:nth-child(4n+3){
-      width: 60px;
-    }
-    &:nth-child(4n+4){
-      width: 130px;
-    }
+    height: 80px;
   }
 
+  .masonry & {
+    flex: auto;
+    height: 180px;
+    min-width: 130px;
+    margin: 0 8px 8px 0; /* Some gutter */
+
+    &:nth-child(4n+1){
+      width: 140px;
+    }
+    &:nth-child(4n+2){
+      width: 200px;
+    }
+    &:nth-child(4n+3){
+      width: 130px;
+    }
+    &:nth-child(4n+4){
+      width: 250px;
+    }
+
+    @include mobile-medium {
+      width: 33%;
+      height: 120px;
+
+      min-width: 100px;
+      margin: 0 5px 5px 0; /* Some gutter */
+
+      &:nth-child(4n+1){
+        width: 30px;
+      }
+      &:nth-child(4n+2){
+        width: 85px;
+      }
+      &:nth-child(4n+3){
+        width: 60px;
+      }
+      &:nth-child(4n+4){
+        width: 130px;
+      }
+    }
+
+  }
   .meme-thumb__download-counter{
     background :rgba(0,0,0, 0.5);
     color: white;

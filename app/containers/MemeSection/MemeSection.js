@@ -116,7 +116,7 @@ import helpers from 'helpers/helpers';
 
                     />
                 </MemeSectionBar>
-                <div className="memes-container">
+                <div className="memes-container masonry">
                     {_.map(memesToShow, meme =>
                         <MemeThumb
                             shouldShowRatingBadge={category === 'popular' || category ==='all-time-popular'}
