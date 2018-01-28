@@ -81,7 +81,6 @@ app.get('/api/get-weekly-popular-memes', async function (req, res) {
 
 app.get('/api/search', async function (req, res) {
     const data = await DatabaseService.getSearchMemes(req.query.search);
-    console.log(data)
     res.send(data)
 })
 
@@ -100,8 +99,6 @@ app.get('/api/new-memes', async function (req, res) {
 
 app.get('/api/meme-suggestions', async function (req, res) {
     const data = await DatabaseService.getCategory(req.query.category);
-    console.log(_.size(data));
-    console.log(_.sampleSize(data))
     const response = {
         category: req.query.category,
         memes: helpers.arrayToObjById(_.sampleSize(data, req.query.size))
