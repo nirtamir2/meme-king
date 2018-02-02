@@ -1,16 +1,10 @@
 
-
-.LazyLoad{
-  height: 100%;
-}
-
-
 .meme-thumb{
   position:relative;
   cursor:pointer;
   float: left;
 
-  width: 12.5%;
+  width: 25%;
   height: 130px;
 
   @include mobile-medium {

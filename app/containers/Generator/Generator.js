@@ -113,7 +113,7 @@ class Generator extends Component {
         const { urlPath } = this.props.meme || {}
         const { canvas } = this.state
         const isNormalFormat = (format === globalConstants.format.normal)
-        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150
+        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150;
         const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200
 
         const imageToDraw = urlPath
@@ -153,6 +153,8 @@ class Generator extends Component {
                 })
 
                 this.setState({ isCanvasReady: true })
+
+
                if(format !== 'dankFormat') {
                     this.addWaterMark();
                }
@@ -249,9 +251,6 @@ class Generator extends Component {
         return (
             <GeneratorModal onClose={this.closeGenerator} className="generator">
 
-                <Title className="generator__title hidden-mobile margin-top-none">
-                    מחולל הממים
-                </Title>
 
                 <div className="generator__wrapper">
 
