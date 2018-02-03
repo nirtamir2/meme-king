@@ -23,7 +23,9 @@ import helpers from 'helpers/helpers';
 class CollageSwitcher extends React.Component {
 
     openCollageGenerator = () => {
-        this.props.history.push(`/memes/${_.get(this.props, 'match.params.category')}/generator-collage`)
+        const props = this.props;
+        debugger;
+        this.props.history.push(`/memes/${_.get(this.props, 'match.params.category', this.props.category)}/generator-collage`);
     }
 
     render() {
@@ -81,7 +83,6 @@ function mapStateToProps(state, ownProps) {
         isCollageMode: state.collage.isCollageMode,
         collageMemeAmount: _.size(state.collage.memes),
         collageMemeLimit: state.collage.limit,
-        category: _.get(ownProps, 'match.params.category', '')
     }
 }
 
@@ -102,4 +103,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
 }
 
 
-export default withRouter(connect(mapStateToProps, { setCollageMode, resetCollageMemes }, mergeProps)(CollageSwitcher))
+export default connect(mapStateToProps, { setCollageMode, resetCollageMemes }, mergeProps)(withRouter(CollageSwitcher))

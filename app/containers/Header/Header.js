@@ -14,8 +14,8 @@ import CollageSwitcher from 'containers/CollageSwitcher/CollageSwitcher';
 export class Header extends Component {
 
     render(){
-        const { toggleSideBar, isSideBarOpen, isCollageMode, isMemeSection } = this.props;
-
+        const { toggleSideBar, isSideBarOpen, isCollageMode, isMemeSection, categoryName } = this.props;
+        debugger;
         const hamburgerToggleClass = isSideBarOpen ? 'open' : '';
 
         return (
@@ -25,15 +25,15 @@ export class Header extends Component {
                     <span/>
                     <span/>
                 </span>
-                {isMemeSection && <CollageSwitcher />}
+                {isMemeSection && <CollageSwitcher category={categoryName} />}
             </header>
         )
     }
 }
 
 
-function mapStateToProps(state, ownProps) {
-    const isMemeSection = _.includes(_.get(ownProps, 'location.pathname'), 'memes')
+function mapStateToProps(state) {
+    const isMemeSection = _.includes(window.location.href, 'memes')
 
     return {
         isSideBarOpen: state.isSideBarOpen,
@@ -47,4 +47,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ toggleSideBar }, dispatch)
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header))

@@ -46,7 +46,7 @@
     "react-fontawesome": "1.6.1",
     "react-lazyload": "2.2.7",
     "react-redux": "5.0.6",
-    "react-router": "4.2.0",
+    "react-router": "^4.2.0",
     "react-router-dom": "4.1.1",
     "react-router-redux": "4.0.8",
     "recursive-readdir": "2.2.1",
