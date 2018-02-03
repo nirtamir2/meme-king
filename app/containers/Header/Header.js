@@ -15,7 +15,7 @@ export class Header extends Component {
 
     render(){
         const { toggleSideBar, isSideBarOpen, isCollageMode, isMemeSection, categoryName } = this.props;
-        debugger;
+
         const hamburgerToggleClass = isSideBarOpen ? 'open' : '';
 
         return (

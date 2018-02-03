@@ -23,8 +23,7 @@ import helpers from 'helpers/helpers';
 class CollageSwitcher extends React.Component {
 
     openCollageGenerator = () => {
-        const props = this.props;
-        debugger;
+
         this.props.history.push(`/memes/${_.get(this.props, 'match.params.category', this.props.category)}/generator-collage`);
     }
 

@@ -154,7 +154,6 @@ class Generator extends Component {
             pathname: wantedPath,
             query: this.props.query || {}
         }
-        debugger;
         this.props.history.push(location)
     }
 

@@ -21,7 +21,7 @@ export default class ItemsArea extends Component {
         const self = this;
         fabric.Image.fromURL(src, (image) => {
             const size = helpers.isMobile() ? 60 : 120;
-            image = helpers.modifyImageDimensions(image, size, size);
+            image = helpers.modifyImageDimensions({ image, wantedMaxWidth: size, wantedMaxHeight: size });
             image.left = canvas.width / 2;
             image.top = canvas.height / 2;
             canvas.add(image);

@@ -7,7 +7,7 @@ export default ({ image, wantedMaxHeight, wantedMaxWidth }) => {
     let maxHeight = wantedMaxHeight || (isMobile ? 700 : 500)
     let ratio = 0;  // Used for aspect ratio
 
-
+    debugger;
     //handles the case of really small images - this will make the image in the size of the canvas.
     if(image.width < maxWidth){
         let ratio = maxWidth / image.width;

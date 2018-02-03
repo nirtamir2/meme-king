@@ -42,7 +42,7 @@ export default class GeneratorUploader extends Component {
         const randomX = (Math.floor(Math.random() * canvas.width) + 1) /2;
         const randomY = (Math.floor(Math.random() * canvas.height) + 1) / 2;
         fabric.Image.fromURL(item, function (image) {
-            image = helpers.modifyImageDimensions(image, 100);
+            image = helpers.modifyImageDimensions({ image, wantedMaxHeight: 100 });
             image.left = randomX
             image.top = randomY;
             canvas.add(image);
