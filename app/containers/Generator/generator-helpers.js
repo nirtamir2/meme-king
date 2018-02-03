@@ -7,12 +7,16 @@ import colors from 'constants/colors';
 
 export const addImageAsync = (image) => {
     return new Promise(resolve => {
-        fabric.Image.fromURL(image,  (image) => {
 
-            resolve(image);
+        helpers.getDataUri(image, false, dataUri => {
+
+            fabric.Image.fromURL(dataUri, (image) => {
+
+                resolve(image);
+
+            })
 
         })
-
     })
 }
 
