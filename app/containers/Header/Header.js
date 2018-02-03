@@ -8,9 +8,6 @@ import { withRouter } from 'react-router';
 // actions
 import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 
-// constants
-import categories from 'constants/menu';
-
 // components
 import CollageSwitcher from 'containers/CollageSwitcher/CollageSwitcher';
 
