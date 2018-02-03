@@ -9,6 +9,8 @@ header {
   justify-content: space-between;
   z-index: 8000;
 
+  transition: 0.5s;
+
   &.collage-mode {
     background: $pink;
   }

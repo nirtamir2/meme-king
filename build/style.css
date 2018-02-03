@@ -698,6 +698,7 @@ header {
   background: #f6f6f6;
   justify-content: space-between;
   z-index: 8000;
+  transition: 0.5s;
   display: none; }
   header.collage-mode {
     background: #ff8898; }
