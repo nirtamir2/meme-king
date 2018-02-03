@@ -54,7 +54,6 @@ class Generator extends Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.isCleanSlateState || this.props.isCleanSlateState) {
-            debugger;
             return;
         }
 
@@ -71,7 +70,6 @@ class Generator extends Component {
     }
 
     createBoard = (wantedFormat) => {
-        debugger;
             if (this.state.canvas) {
                 this.addImage(wantedFormat)
             }
@@ -167,7 +165,6 @@ class Generator extends Component {
             if(isCollageMode) {
                 createCollage({ collageMemes, canvas, callback: () =>  this.setState({ isLoading: false, isCanvasReady: true })});
             } else if(isCleanSlateState) {
-                debugger;
                 this.setState({ isCanvasReady: false, isLoading: true }, () => {
                     this.createCleanSlate();
                 });
