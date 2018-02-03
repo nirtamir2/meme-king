@@ -49,7 +49,7 @@ class Canvas extends Component {
         return (
             <div ref={node => this.canvasWrapper = node} className={classNames('with-shadow', 'generator__canvas-wrapper col-md-12 col-lg-7')}>
                 <span className={classNames('canvas-inner-wrapper', { 'hidden' : isLoading })}>
-                    <canvas style={{ visibility: isLoading ? 'hidden': 'visible' }} height={1} id='c' dir="rtl" className={classNames({ 'loading' : isLoading })}/>
+                    <canvas height={1} id='c' dir="rtl" className={classNames({ 'loading' : isLoading })}/>
                 </span>
                 {isLoading && <div className="skeleton-canvas" />}
             </div>
