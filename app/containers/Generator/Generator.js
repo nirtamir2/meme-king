@@ -102,6 +102,7 @@ class Generator extends Component {
         const { urlPath } = this.props.meme || {};
         const { canvas } = this.state;
 
+        canvas.backgroundColor = colors.WHITE;
         const isNormalFormat = (format === globalConstants.format.normal)
         const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150;
         const canvasContainerWidth = getCanvasContainerWidth();
