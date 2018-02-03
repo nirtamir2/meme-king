@@ -8,6 +8,14 @@
     color: black;
   }
 
+  &.pink {
+    color: $pink;
+  }
+
+  &.brand {
+    color: $mainColor;
+  }
+
   &.size-lg {
     font-size: 26px;
   }
@@ -18,6 +26,14 @@
 
   &.size-sm {
     font-size: 15px;
+  }
+
+  &.size-xs {
+    font-size: 11px;
+  }
+
+  &.size-xxs {
+    font-size: 9px;
   }
 
   &.inline-block {

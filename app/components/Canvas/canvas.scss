@@ -1,13 +1,20 @@
 .generator__canvas-wrapper {
 
-  background: $main-bg;
   z-index:8000;
+  background: $main-bg;
+
   &.with-shadow {
     @include mobile-medium {
       border-bottom: none;
       box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.2);
       display: flex;
       justify-content: center;
+    }
+  }
+
+  &.canvas-inner-wrapper {
+    &.hidden {
+      display: none;
     }
   }
 

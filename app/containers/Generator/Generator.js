@@ -14,6 +14,7 @@ import MemeSuggestionsContainer from 'containers/MemeSuggestionsContainer/MemeSu
 
 // helpers
 import helpers from 'helpers/helpers'
+import { addImageAsync, createCollage } from './generator-helpers';
 
 // constants
 import colors from 'constants/colors'
@@ -28,10 +29,7 @@ import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/me
 import { fetchSingleMeme } from 'actions/category-actions/category-actions'
 import { fetchMemeSuggestions } from 'actions/suggestions-actions/suggestions-actions';
 
-// assets
-import waterMarkDesktop from 'assets/images/watermark-desktop.jpg'
-import watermarkMobile from 'assets/images/watermark-mobile.jpg'
-import watermarkIos from 'assets/images/watermark-ios.jpg'
+const getCanvasContainerWidth = () => (document.querySelector('.generator__canvas-wrapper').offsetWidth);
 
 class Generator extends Component {
 
@@ -45,22 +43,23 @@ class Generator extends Component {
 
         const { isStandAlone, fetchSingleMeme, category, memeId } = this.props
 
-        const canvas = new fabric.Canvas('c', { allowTouchScrolling: true })
-        this.setState({ canvas }, () => {
-            this.props.fetchMemeSuggestions();
-            this.createBoard(this.props.format)
-            this.disableWindowScrollOnDrag(canvas)
-        })
+        this.props.fetchMemeSuggestions();
 
         if (isStandAlone) {
             fetchSingleMeme(category, memeId)
         }
+
+
     }
 
     componentWillReceiveProps(nextProps) {
+        if(nextProps.isCleanSlateState || this.props.isCleanSlateState) {
+            debugger;
+            return;
+        }
 
         if ((this.props.format !== nextProps.format) || (this.props.meme !== nextProps.meme)) {
-            this.setState({ isCanvasReady: false }, () => {
+            this.setState({ isCanvasReady: false, isLoading: true }, () => {
                 this.createBoard(nextProps.format)
             })
         }
@@ -71,32 +70,15 @@ class Generator extends Component {
 
     }
 
-    disableWindowScrollOnDrag = (canvas) => {
-
-        canvas.on('mouse:down', function () {
-            document.querySelector(".generator").style.overflow = 'visible'
-            document.querySelector("body").style.overflow = 'visible'
-
-        })
-        canvas.on('mouse:up', function () {
-            document.querySelector(".generator").style.overflow = 'scroll'
-            document.querySelector("body").style.overflow = 'scroll'
-
-        })
-    }
-
     createBoard = (wantedFormat) => {
-        if (this.props.isCleanSlateState) {
-            this.createCleanSlate()
-        } else {
+        debugger;
             if (this.state.canvas) {
                 this.addImage(wantedFormat)
             }
-        }
     }
 
+
     createCleanSlate = () => {
-        this.setState({ isLoading: false, isCanvasReady: true })
         const { canvas } = this.state
 
         const DISTANCE = helpers.isMobile() ? 30 : 140
@@ -105,43 +87,50 @@ class Generator extends Component {
         canvas.backgroundColor = colors.WHITE
         canvas.setWidth(width)
         canvas.setHeight(height)
-        this.addWaterMark()
+        this.addWaterMark();
+        this.setState({ isLoading: false, isCanvasReady: true })
+
+    }
+
+    addWaterMark = () => {
+        const { isWebView } = this.props;
+        const { canvas } = this.state;
+        const isMobile = helpers.isMobile();
+        helpers.addWaterMark({ isMobile, canvas, isWebView })
     }
 
     addImage = (format) => {
 
-        const { urlPath } = this.props.meme || {}
-        const { canvas } = this.state
+        const { urlPath } = this.props.meme || {};
+        const { canvas } = this.state;
+
         const isNormalFormat = (format === globalConstants.format.normal)
         const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150;
-        const canvasContainerWidth = document.querySelector('.generator__canvas-wrapper').offsetWidth - 200
+        const canvasContainerWidth = getCanvasContainerWidth();
 
-        const imageToDraw = urlPath
         const isUploadState = (this.props.isFromUpload)
-
-        canvas.backgroundColor = colors.GRAY_LIGHT
-        canvas.setWidth(canvasContainerWidth)
-        canvas.clear()
+        canvas.setWidth(canvasContainerWidth);
+        canvas.clear();
 
 
-        helpers.getDataUri(imageToDraw, isUploadState, (dataUri) => {
+        helpers.getDataUri(urlPath, isUploadState, dataUri => {
 
             fabric.Image.fromURL(dataUri, image => {
 
                 this.setState({ isLoading: false })
 
-                const wantedMaxHeight = ((!isNormalFormat && helpers.isMobile()) ? 280 : null)
+                const wantedMaxHeight = ((!isNormalFormat && helpers.isMobile()) ? 280 : null);
+                const wantedMaxWidth = isNormalFormat ? (getCanvasContainerWidth() - 50) : (getCanvasContainerWidth() - (helpers.isMobile() ? 100 : 200))
 
-                image = helpers.modifyImageDimensions(image, null, wantedMaxHeight, isNormalFormat)
+                image = helpers.modifyImageDimensions({ image, wantedMaxHeight, wantedMaxWidth , isNormalFormat })
 
                 canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle)
                 canvas.setWidth(isNormalFormat ? image.width : image.width + 25)
-                canvas.backgroundColor = colors.WHITE
                 canvas.add(image)
 
                 image.set({
                     top: isNormalFormat ? 0 : (spaceToADDForDankFormatStyle - 15),
-                    left: isNormalFormat ? 0 : (10),
+                    left: isNormalFormat ? 0 : 10,
                     hoverCursor: "default",
                     lockMovementX: isNormalFormat,
                     lockMovementY: isNormalFormat,
@@ -153,59 +142,9 @@ class Generator extends Component {
                 })
 
                 this.setState({ isCanvasReady: true })
-
-
-               if(format !== 'dankFormat') {
-                    this.addWaterMark();
-               }
             })
         })
 
-    }
-
-    getWatermark() {
-        if (this.props.isWebView) {
-            return watermarkIos
-        } else if (helpers.isMobile()) {
-            return watermarkMobile
-        } else {
-            return waterMarkDesktop
-        }
-    }
-
-    addWaterMark = () => {
-
-        const { canvas } = this.state
-        const watermark = this.getWatermark()
-        fabric.Image.fromURL(watermark, watermark => {
-
-            canvas.add(watermark)
-
-            const mobilePosition = {
-                left: 0,
-                top: canvas.height - 6,
-                width: 50, height: 6,
-                opacity: 0.5
-            }
-
-            const desktopPosition = {
-                left: 0,
-                top: canvas.height - 12,
-                width: 99, height: 12,
-                opacity: 0.5
-            }
-
-            const currentNeededPosition = (helpers.isMobile() ? mobilePosition : desktopPosition)
-
-            watermark.set({
-                lockMovementX: true,
-                lockMovementY: true,
-                ...currentNeededPosition
-            })
-
-            canvas.bringToFront(watermark)
-            canvas.renderAll()
-        })
     }
 
 
@@ -217,6 +156,28 @@ class Generator extends Component {
             query: this.props.query || {}
         }
         this.props.history.push(location)
+    }
+
+    setCanvas = canvas => {
+
+        const { isCollageMode, collageMemes, isCleanSlateState } = this.props;
+
+        this.setState({ canvas }, () => {
+
+            if(isCollageMode) {
+                createCollage({ collageMemes, canvas, callback: () =>  this.setState({ isLoading: false, isCanvasReady: true })});
+            } else if(isCleanSlateState) {
+                debugger;
+                this.setState({ isCanvasReady: false, isLoading: true }, () => {
+                    this.createCleanSlate();
+                });
+
+            }
+
+            else {
+                this.createBoard(this.props.format);
+            }
+        })
     }
 
     render() {
@@ -237,7 +198,8 @@ class Generator extends Component {
             isCleanSlateState,
             isWebView,
             suggestions,
-            currentMemeCategory
+            currentMemeCategory,
+            isCollageMode
         } = this.props
 
         const mobileGeneratorDashboardTopPosition = ( (isCanvasReady && helpers.isMobile())
@@ -254,7 +216,7 @@ class Generator extends Component {
 
                 <div className="generator__wrapper">
 
-                    <Canvas isCanvasReady={isCanvasReady} isLoading={isLoading} ref={node => this.canvasWrapper = node}/>
+                    <Canvas setCanvas={this.setCanvas} isLoading={isLoading} ref={node => this.canvasWrapper = node}/>
 
                     {isCanvasReady
 
@@ -268,6 +230,7 @@ class Generator extends Component {
                             saveUserMemeToStorage={saveUserMemeToStorage}
                             location={location}
                             meme={meme}
+                            isCollageMode={isCollageMode}
                             suggestions={suggestions}
                             currentMemeCategory={currentMemeCategory}
                             isStandAlone={isStandAlone}
@@ -332,7 +295,9 @@ function mapStateToProps(state, ownProps) {
         query: location.query,
         isCleanSlateState: (params.type === 'clean-slate'),
         suggestions: _.get(state, 'suggestions.memes'),
-        currentMemeCategory: _.get(state, 'suggestions.category')
+        currentMemeCategory: _.get(state, 'suggestions.category'),
+        isCollageMode: ownProps.isCollageMode,
+        collageMemes: _.get(state, 'collage.memes', {})
     }
 }
 

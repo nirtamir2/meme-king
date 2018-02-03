@@ -4,14 +4,20 @@ header {
   top: 0;
   position: fixed;
   width: 100%;
-  display: flex;
   align-items: center;
   background: $main-bg;
   justify-content: space-between;
   z-index: 8000;
 
+  &.collage-mode {
+    background: $pink;
+  }
+
+  display: none;
+
   @include mobile-and-tablet {
     height: 60px;
+    display: flex;
   }
 
   @include mobile-medium{
@@ -37,7 +43,6 @@ header {
 .hamburger {
   width: 60px;
   height: 45px;
-  position: absolute;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
@@ -99,8 +104,8 @@ header {
   }
 
   &.open {
-    position: absolute;
-    top:11px;
+
+    height: 39px;
     span {
       &:nth-child(1) {
         top: 18px;

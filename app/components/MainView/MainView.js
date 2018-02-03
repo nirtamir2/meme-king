@@ -29,6 +29,7 @@ export default class MainView extends Component {
                 <Route path={`/search/generator/:id/:format`} render={(props) => <Generator {...props} />} />
                 <Route  path='/memes/:category' render={this.renderCategoryPage}/>
                 <Route  path={`/memes/:category/generator/:id/:format`} component={Generator}/>
+                <Route  path={`/memes/:category/generator-collage`} render={(props) => <Generator {...props} isCollageMode />}/>
                 <Route  path={`/generator-standalone/:category/:id/:format`} render={(props) => <Generator {...props} isStandAlone={true} />}/>
                 <Route path="/bugs-page" component={BugsPage}/>
                 <Route path="/bugs-page/contact-page" component={ContactPage}/>

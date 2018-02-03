@@ -4,22 +4,24 @@ import { connect } from 'react-redux';
 
 // actions
 import { fetchMyMemes, fetchCategory, fetchWeeklyPopularMemes, fetchNewMemes, fetchAllTimePopularMemes } from 'actions/category-actions/category-actions';
+import { addOrRemoveMemeFromCollage } from 'actions/collage-actions/collage-actions';
+import { showNotification } from 'actions/notification-actions/notification-actions';
 
 // components
 import MemeThumb from 'components/MemeThumb/MemeThumb'
 import BtnScrollToTop from '../../components/BtnScrollToTop/BtnScrollToTop';
 import Loader from 'components/Loader/Loader';
 import MemeSectionBar from 'components/MemeSectionBar/MemeSectionBar';
-import EmptyState from 'components/EmptyState/EmptyState';
 import SearchInput from 'components/SearchInput/SearchInput';
+import Text from 'components/Text/Text';
+import CollageSwitcher from 'containers/CollageSwitcher/CollageSwitcher';
 
-// helpers
-import helpers from 'helpers/helpers';
+// services
+import AnalyticsService from 'services/Analytics'
 
  class MemeSection extends Component {
 
      state = {
-         memesPerRow : helpers.isMobile() ? 3 : 8,
          searchValue : ''
      }
 
@@ -67,34 +69,22 @@ import helpers from 'helpers/helpers';
         }
     }
 
-    setMemesPerRow = (action) => {
-        const { memesPerRow } = this.state;
-        switch (action) {
-            case 'increment' : {
-                this.setState( { memesPerRow : memesPerRow + 1});
-                break;
-            }
-            case 'decrement' : {
-                this.setState( { memesPerRow : memesPerRow - 1});
-                break;
-            }
+     handleCollageClick = (e, meme) => {
+        e.preventDefault();
+         const { collageMemes, collageMemeLimit, showNotification } = this.props;
+         AnalyticsService.sendEvent('add meme to collage clicked');
+        if((_.size(collageMemes) === collageMemeLimit) && !_.find(collageMemes, { id: meme.id })) {
+            showNotification({ message: `you can't add more than ${collageMemeLimit} memes to the collage`});
+            return;
         }
-    }
+
+        this.props.addOrRemoveMemeFromCollage(meme);
+     }
 
     render() {
 
-        const { memes, isFetching, category } = this.props;
+        const { memes, isFetching, category, isCollageMode, collageMemes, collageMemeLimit } = this.props;
         const isPopularSection = (category === 'popular' || category === 'all-time-popular');
-
-        if(isFetching){
-            return <Loader />
-        }
-
-        else if (_.isEmpty(memes)) {
-            return (
-                <EmptyState />
-            )
-        }
 
         const filteredMemes = _.filter(memes, meme => _.includes( meme.description || '', this.state.searchValue));
         const arrayMemes = _.values(filteredMemes) || [];
@@ -104,7 +94,8 @@ import helpers from 'helpers/helpers';
 
         return (
             <div className="memes-section">
-                <MemeSectionBar setMemesPerRow={this.setMemesPerRow}>
+                <MemeSectionBar theme={isCollageMode ? 'pink' : ''}>
+
                     <SearchInput onChange={query => this.setState({ searchValue : query })}
                                  clearResults={() => this.setState({ searchValue : '' })}
                                  isFetching={false}
@@ -115,18 +106,39 @@ import helpers from 'helpers/helpers';
                                  size="sm"
 
                     />
-                </MemeSectionBar>
-                <div className="memes-container masonry">
-                    {_.map(memesToShow, meme =>
-                        <MemeThumb
-                            shouldShowRatingBadge={category === 'popular' || category ==='all-time-popular'}
-                            width={100 / this.state.memesPerRow}
-                            key={meme.id}
-                            {...meme}
-                            category={category || meme.category }
-                        />
+
+                    <CollageSwitcher className="margin-right-small" />
+
+                    {isCollageMode && (
+                        <Text
+                            size={'md'}
+                            weight={200}
+                            inline
+                            theme={'white'}
+                            className="margin-bottom-none margin-top-extra-small margin-right-auto margin-left-small pull-left"
+                        >
+                            ({_.size(collageMemes)}/{collageMemeLimit})
+                        </Text>
                     )}
-                </div>
+
+                </MemeSectionBar>
+                {isFetching
+                    ?
+                    <Loader/>
+                    :
+                    <div className="memes-container masonry">
+                        {_.map(memesToShow, meme =>
+                            <MemeThumb
+                                shouldShowRatingBadge={category === 'popular' || category ==='all-time-popular'}
+                                key={meme.id}
+                                isInCollage={_.find(collageMemes, { id: meme.id })}
+                                {...meme}
+                                onClick={isCollageMode ? (e) => this.handleCollageClick(e, meme) : null}
+                                category={category || meme.category }
+                            />
+                        )}
+                    </div>
+                }
             </div>
         );
     }
@@ -138,7 +150,12 @@ function mapStateToProps(state, ownProps) {
        category: ownProps.category,
        memes : state.category.memes,
        isFetching : state.category.isFetching,
-       error: state.category.error
+       error: state.category.error,
+       isCollageMode: state.collage.isCollageMode,
+        collageMemes: _.get(state, 'collage.memes', {}),
+        collageMemeLimit: _.get(state, 'collage.memes.limig', 4)
+
+
     }
 }
 
@@ -149,7 +166,9 @@ function mapDispatchToProps(dispatch, ownProps) {
         fetchMyMemes: () => dispatch(fetchMyMemes()),
         fetchWeeklyPopularMemes : () => dispatch(fetchWeeklyPopularMemes()),
         fetchNewMemes : () => dispatch(fetchNewMemes()),
-        fetchAllTimePopularMemes: () => dispatch(fetchAllTimePopularMemes())
+        fetchAllTimePopularMemes: () => dispatch(fetchAllTimePopularMemes()),
+        addOrRemoveMemeFromCollage : (meme) => dispatch(addOrRemoveMemeFromCollage({ meme })),
+        showNotification: (data) => dispatch(showNotification(data))
     }
 }
 

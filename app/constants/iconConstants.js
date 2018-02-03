@@ -1,4 +1,7 @@
 export default {
+    ARROW_LEFT_CIRCLE: 'glyphicon glyphicon-circle-arrow-left',
+    CHECK: 'glyphicon glyphicon-ok',
+    NEW_WINDOW: 'glyphicon glyphicon-new-window',
     LIST: 'glyphicon glyphicon-th-list',
     STOP : 'glyphicon glyphicon-stop',
     PLUS: 'glyphicon glyphicon-plus',

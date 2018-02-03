@@ -10,33 +10,36 @@ import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 // constants
 import categories from 'constants/menu';
 
+// components
+import CollageSwitcher from 'containers/CollageSwitcher/CollageSwitcher';
+
 export class Header extends Component {
 
     render(){
-        const { toggleSideBar, isSideBarOpen, categoryName } = this.props;
+        const { toggleSideBar, isSideBarOpen, isCollageMode } = this.props;
 
         const hamburgerToggleClass = isSideBarOpen ? 'open' : '';
-        const title = (_.get(categories, `${categoryName}.title` ) ||' מלך הממים');
 
         return (
-            <header className="visible-xs">
+            <header className={classNames({ 'collage-mode': isCollageMode })}>
                 <span className={classNames(hamburgerToggleClass, 'hamburger')} onClick={() => toggleSideBar(!isSideBarOpen) }>
                     <span/>
                     <span/>
                     <span/>
                 </span>
-                <h1>{title}</h1>
+                <CollageSwitcher />
             </header>
         )
     }
 }
 
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
 
     return {
         isSideBarOpen: state.isSideBarOpen,
-        categoryName: _.get( state, 'category.name')
+        categoryName: _.get( state, 'category.name'),
+        isCollageMode: _.get(state, 'collage.isCollageMode')
     }
 }
 

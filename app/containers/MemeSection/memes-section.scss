@@ -3,6 +3,10 @@
   position: relative;
   overflow-x: hidden;
   padding-left: 15px;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  min-height: 100vh;
 
   @include mobile-medium {
     padding-top: $header-height ;
@@ -17,4 +21,74 @@
   }
 
 
+}
+
+
+
+
+.box-meme-section-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  z-index: 9999;
+  left: 0;
+  box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.6);
+  transition: 0.5s;
+
+  .inner-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+  }
+
+  &.pink {
+    background: $pink;
+  }
+
+  @include mobile-medium {
+    display: none;
+  }
+
+  .actions {
+
+    @include mobile-medium {
+      left: 10px;
+    }
+
+    & > .action {
+
+      &.glyphicon-zoom-in {
+        font-size: 18px;
+      }
+
+      &.glyphicon-zoom-out {
+        font-size: 12px;
+      }
+    }
+
+  }
+
+  .search-input-wrapper {
+    width: 280px;
+    margin-right: 10px;
+
+    input {
+      height: 40px;
+      box-shadow: inset 1px 1px 2px 0 #c9c9c9;
+
+    }
+
+    > label {
+      top: 16px;
+    }
+
+    .glyphicon-remove {
+      top: 10px;
+    }
+  }
 }

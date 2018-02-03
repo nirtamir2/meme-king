@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 // components
 import { Link } from 'react-router-dom';
+import Icon from 'components/Icon/Icon';
 
 // constants
 import globalConstants from 'constants/global';
@@ -15,7 +16,7 @@ import helpers from 'helpers/helpers';
 // assets
 import smallCrown from 'assets/images/small-crown.png';
 
-export default ({ thumbPath, description, rating, category, id, urlPath, width, onClick=_.noop, shouldShowRatingBadge, query, className, hidden }) => {
+export default ({ thumbPath, description, rating, category, id, urlPath, onClick=_.noop, shouldShowRatingBadge, query, className, hidden, isInCollage }) => {
 
     const location = {
         pathname: `/memes/${category}/generator/${id}/${globalConstants.format.normal}`,
@@ -30,13 +31,16 @@ export default ({ thumbPath, description, rating, category, id, urlPath, width, 
 
     return(
 
-        <Link className={classNames(className, 'meme-thumb')} to={location} onClick={onClick}>
+        <Link className={classNames(className, 'meme-thumb', { 'marked-in-collage': isInCollage })} to={location} onClick={onClick}>
             <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img" />
             {(shouldShowRatingBadge && rating) && (
                 <span className="meme-thumb__download-counter">
                     <img src={smallCrown} className="crown"/>
                     <span>{computedRating}</span>
                 </span>
+            )}
+            {isInCollage && (
+                <Icon className="in-collage-badge" theme="pink" name="CHECK" />
             )}
             <div className="meme-thumb__overlay">
                 <p className="meme-thumb__details">

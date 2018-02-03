@@ -2,6 +2,8 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router';
+import classNames from 'classnames';
 
 // actions
 import { toggleSideBar } from 'actions/sidebar-actions/sidebar-actions';
@@ -38,7 +40,7 @@ export class SideMenu extends Component {
 
     render = () => {
 
-        const { isSideBarOpen } = this.props;
+        const { isSideBarOpen, isMemeSection } = this.props;
 
         const { onClose } = this;
 
@@ -49,7 +51,8 @@ export class SideMenu extends Component {
         }
 
         return (
-            <div className="sidebar">
+            <div className={classNames('sidebar', { 'with-margin-top': isMemeSection })}>
+
                 <ul>
                     {_.map(visibleMenu, menuItem => {
 
@@ -73,9 +76,11 @@ export class SideMenu extends Component {
 }
 
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+    const isMemeSection = _.includes(_.get(ownProps, 'location.pathname'), 'memes')
    return {
-        isSideBarOpen: state.isSideBarOpen
+        isSideBarOpen: state.isSideBarOpen,
+       isMemeSection
    }
 }
 
@@ -83,4 +88,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ toggleSideBar }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideMenu)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SideMenu))

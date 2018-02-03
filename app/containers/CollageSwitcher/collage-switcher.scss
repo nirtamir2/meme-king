@@ -1,0 +1,83 @@
+.box-collage-switcher {
+
+  display: flex;
+  align-items:center;
+  flex-direction: row-reverse;
+
+
+  .inner-switcher {
+
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid $pink;
+    position :relative;
+    height: 40px;
+    padding: 15px 5px;
+    justify-content: flex-end;
+
+    @include mobile-and-tablet {
+      border-color: white;
+      color: white !important;
+    }
+
+
+    &.active {
+      background :white;
+      border-color: white;
+    }
+
+  }
+
+  .collage-label {
+    margin-left: 2px;
+  }
+
+  .text-container {
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+
+  }
+
+  .switcher-cta {
+    @include mobile-medium {
+      position: fixed;
+      bottom: 5px;
+      left: 5px;
+      background: $pink;
+      padding: 5px;
+      border-radius: 4px;
+      display: flex;
+      opacity: 0;
+      box-shadow: 2px 4px 18px -6px rgba(0, 0, 0, 1);
+
+      &.is-visible {
+        opacity: 1;
+      }
+
+      .open-generator {
+        margin-right: 0;
+      }
+
+      .clean-collage {
+        margin-right: 0;
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .collage-icon {
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+
+    img {
+      width: 25px;
+    }
+  }
+}

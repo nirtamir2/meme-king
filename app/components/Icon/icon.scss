@@ -25,6 +25,32 @@
 
   }
 
+  &.main-brand {
+    color: $mainColor;
+
+    &:hover {
+      color: darken($mainColor, 5%);
+    }
+
+    &:active {
+      color: darken($mainColor, 10%);
+    }
+
+  }
+
+  &.pink {
+    color: $pink;
+
+    &:hover {
+      color: darken($pink, 5%);
+    }
+
+    &:active {
+      color: darken($pink, 10%);
+    }
+
+  }
+
   &.brand {
     color: lightblue;
     border-color: lightblue;
@@ -43,6 +69,10 @@
     &:active {
       background: darken(lightblue, 15%);
     }
+  }
+
+  &.success-light {
+    color: $success-light;
   }
 
   &.success {
@@ -93,6 +123,8 @@
 
     }
   }
+
+
 
   &.size-xl {
     font-size: 26px;

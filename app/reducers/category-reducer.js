@@ -1,5 +1,4 @@
 import actionsConstants from 'actions/category-actions/category-actions-constants';
-import suggestionsConstants from 'actions/suggestions-actions/action-suggestions-constants';
 
 const initialState = {
     memes: []

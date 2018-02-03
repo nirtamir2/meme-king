@@ -5,6 +5,10 @@
   z-index: 900;
   background: white;
 
+  &.with-margin-top {
+    margin-top: 60px;
+  }
+
   @include mobile-medium {
     position: fixed;
     margin-top: $header-height;

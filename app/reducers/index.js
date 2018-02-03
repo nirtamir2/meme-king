@@ -7,6 +7,7 @@ import searchReducer from './search-reducer';
 import userMessagesReducer from './user-messages-reducer';
 import notificationReducer from './notifications-reducer';
 import suggestionsReducer from './suggestions-reducer';
+import collageReducer from './collage-reducer';
 
 const rootReducer = combineReducers({
     isSideBarOpen: isSideBarOpen,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     search: searchReducer,
     userMessages: userMessagesReducer,
     notifications: notificationReducer,
-    suggestions: suggestionsReducer
+    suggestions: suggestionsReducer,
+    collage: collageReducer
 });
 
 export default rootReducer;

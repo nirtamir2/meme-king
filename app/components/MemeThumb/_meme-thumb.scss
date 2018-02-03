@@ -12,6 +12,30 @@
     height: 80px;
   }
 
+  &.marked-in-collage {
+
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+    }
+
+    .in-collage-badge {
+      position: absolute;
+      right: 05px;
+      top: 5px;
+      z-index: 802;
+    }
+
+  }
+
   .masonry & {
     flex: auto;
     height: 180px;
@@ -116,6 +140,7 @@
     height: 100%;
     transition :0.4s;
     background: rgba(0,0,0,0.7);
+    z-index: 801;
 
 
     .meme-thumb__details{

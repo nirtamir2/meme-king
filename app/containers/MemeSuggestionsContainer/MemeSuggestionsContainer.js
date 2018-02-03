@@ -28,7 +28,7 @@ class MemeSuggestionsContainer extends Component {
         const { category: backgroundCategory, format } = _.get(this.props, 'match.params', {})
         this.props.addMemeToCategory(meme)
         const location = {
-            pathname:  `/memes/${backgroundCategory}/generator/${meme.id}/${format}`,
+            pathname:  `/memes/${backgroundCategory}/generator/${meme.id}/${format || 'normalFormat'}`,
 
         }
 

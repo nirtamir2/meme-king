@@ -10,7 +10,7 @@ export class Notification extends Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.message !== this.props.message) {
-            _.delay(this.props.clearNotifications, 3000)
+            _.delay(this.props.clearNotifications, 4000)
         }
     }
 

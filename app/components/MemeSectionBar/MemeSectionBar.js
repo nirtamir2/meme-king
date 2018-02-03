@@ -1,13 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 
-// components
-import Icon from 'components/Icon/Icon';
-
-export default ({ setMemesPerRow, children }) => {
+export default ({ children, theme }) => {
     return (
-        <div className="box-meme-section-bar">
-            {children}
-
+        <div className={classNames('box-meme-section-bar', theme)}>
+            <div className="inner-container">
+                {children}
+            </div>
         </div>
     )
 }

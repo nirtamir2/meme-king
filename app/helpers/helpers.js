@@ -7,7 +7,8 @@ import getDataUri from './getDataUri';
 import getRandomNumber from './getRandomNumber';
 import isWebview from './isWebview';
 import getQueryVariable from './getQueryVariable';
-
+import addWaterMark from './addWaterMark';
+import sendDownloadedMemeAnalyticsEvent from './sendDownloadedMemeAnlyticsEvent';
 class Helpers {
 
     constructor() {
@@ -20,6 +21,8 @@ class Helpers {
         this.getRandomNumber = getRandomNumber;
         this.isWebview = isWebview;
         this.getQueryVariable = getQueryVariable;
+        this.addWaterMark = addWaterMark;
+        this.sendDownloadedMemeAnalyticsEvent = sendDownloadedMemeAnalyticsEvent;
     }
 
 }

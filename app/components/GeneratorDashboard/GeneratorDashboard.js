@@ -33,11 +33,11 @@ export default class GeneratorDashboard extends Component {
     }
 
     download = (clickedElement) => {
-        const { canvas, saveUserMemeToStorage } = this.props
+        const { canvas, saveUserMemeToStorage, format, meme, isCollageMode } = this.props
 
-        this.handleGoogleAnalytics()
+        helpers.sendDownloadedMemeAnalyticsEvent({ format, meme });
 
-        this.updateMemeRating()
+        this.updateMemeRating();
 
         canvas.deactivateAll().renderAll()
 
@@ -48,13 +48,20 @@ export default class GeneratorDashboard extends Component {
         // need to enlarge canvas otherwise the svg will be clipped
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
-        const memeData = { urlPath: canvas.toDataURL(), date: new Date(), isMobile: helpers.isMobile(), isMobileApp : WebViewService.isWebView, isDesktop: !helpers.isMobile() }
+        const memeData = {
+            urlPath: canvas.toDataURL(),
+            date: new Date(),
+            isMobile: helpers.isMobile(),
+            isMobileApp : WebViewService.isWebView,
+            isDesktop: !helpers.isMobile()
+        }
+
         if (WebViewService.isWebView) {
             this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
             canvas.setZoom(1);
-            this.handleGoogleAnalytics(true);
+            helpers.sendDownloadedMemeAnalyticsEvent({ isMobileApp: true, format, meme, isCollageMode });
             saveUserMemeToStorage(memeData)
             return;
         }
@@ -67,33 +74,12 @@ export default class GeneratorDashboard extends Component {
 
         //!* need to set back canvas dimensions *
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
-        canvas.setZoom(1)
+        canvas.setZoom(1);
+
     }
 
     sendBase64ToNative = (base64) => {
         window.postMessage(base64)
-
-    }
-
-
-    saveMemeNameToLocalStorage = () => {
-        LocalStorageService.addDownloadedMemeToMyMemesList(this.props.meme || null)
-    }
-
-    handleGoogleAnalytics(isMobileApp) {
-
-        if(isMobileApp) {
-            AnalyticsService.sendEvent('Mobile App Download');
-            return;
-        }
-
-        const textAreas = document.getElementsByTagName('TEXTAREA')
-        const description = _.get(this.props, 'meme.description')
-        let text = `${description || 'User typed text'} : ${_.get(_.head(textAreas), 'value', '')} ${_.get(_.tail(textAreas), 'value', '')}`
-        AnalyticsService.sendEvent('Meme Downloaded', `${this.props.format}, ${text}`)
-        if (this.props.format === 'dank') {
-            AnalyticsService.sendEvent('Dank', text)
-        }
     }
 
 
@@ -113,12 +99,14 @@ export default class GeneratorDashboard extends Component {
     }
 
     changeFormat = () => {
+
         const { history, format, location, type, meme, query } = this.props
         const wantedFormat = (format === globalConstants.format.normal) ? globalConstants.format.dank : globalConstants.format.normal
         const wantedPath = location.pathname.replace(format, wantedFormat)
         const from = _.get(location, 'state.from')
 
         if (from === 'search') {
+
             const location = {
                 pathname: wantedPath,
                 state: {
@@ -127,8 +115,12 @@ export default class GeneratorDashboard extends Component {
                 },
                 query
             }
-            history.push(location)
+
+            history.push(location);
+
+
         } else if (type === 'upload' || from === 'upload') {
+
             const location = {
                 pathname: wantedPath,
                 state: {
@@ -141,6 +133,7 @@ export default class GeneratorDashboard extends Component {
             history.push(location);
 
         } else {
+
             history.push(wantedPath)
 
         }
