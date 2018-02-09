@@ -91,10 +91,13 @@ class Generator extends Component {
     }
 
     addWaterMark = () => {
-        const { isWebView } = this.props;
+        const { isWebView, format } = this.props;
         const { canvas } = this.state;
+
         const isMobile = helpers.isMobile();
+
         helpers.addWaterMark({ isMobile, canvas, isWebView })
+
     }
 
     addImage = (format) => {
@@ -140,8 +143,11 @@ class Generator extends Component {
                     selectable: true,
                 });
 
-                this.addWaterMark();
 
+                if(format !== 'dankFormat') {
+                    this.addWaterMark();
+
+                }
 
                 this.setState({ isCanvasReady: true })
             })
