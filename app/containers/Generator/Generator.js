@@ -138,7 +138,10 @@ class Generator extends Component {
                     lockUniScaling: isNormalFormat,
                     hasBorders: !isNormalFormat,
                     selectable: true,
-                })
+                });
+
+                this.addWaterMark();
+
 
                 this.setState({ isCanvasReady: true })
             })
@@ -164,16 +167,17 @@ class Generator extends Component {
         this.setState({ canvas }, () => {
 
             if(isCollageMode) {
-                createCollage({ collageMemes, canvas, callback: () =>  this.setState({ isLoading: false, isCanvasReady: true })});
+                createCollage({ collageMemes, addWaterMark: this.addWaterMark, canvas, callback: () =>  this.setState({ isLoading: false, isCanvasReady: true })});
+
             } else if(isCleanSlateState) {
                 this.setState({ isCanvasReady: false, isLoading: true }, () => {
                     this.createCleanSlate();
+
                 });
 
-            }
-
-            else {
+            } else {
                 this.createBoard(this.props.format);
+
             }
         })
     }
@@ -228,6 +232,7 @@ class Generator extends Component {
                             saveUserMemeToStorage={saveUserMemeToStorage}
                             location={location}
                             meme={meme}
+                            addWaterMark={this.addWaterMark}
                             isCollageMode={isCollageMode}
                             suggestions={suggestions}
                             currentMemeCategory={currentMemeCategory}

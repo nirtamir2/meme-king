@@ -4,7 +4,7 @@ export default ({ image, wantedMaxHeight, wantedMaxWidth }) => {
     const isMobile = helpers.isMobile();
     const containerWidth = (document.querySelector('.generator__canvas-wrapper').offsetWidth);
     let maxWidth = wantedMaxWidth || (isMobile ? 300 : containerWidth);
-    let maxHeight = wantedMaxHeight || (isMobile ? 700 : 500)
+    let maxHeight = wantedMaxHeight || (isMobile ? 550 : 500)
     let ratio = 0;  // Used for aspect ratio
 
     debugger;

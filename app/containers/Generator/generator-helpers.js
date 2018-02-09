@@ -20,7 +20,7 @@ export const addImageAsync = (image) => {
     })
 }
 
-export const createCollage = ({ collageMemes, canvas, callback }) => {
+export const createCollage = ({ collageMemes, canvas, callback, addWaterMark }) => {
 
     const commonImageProperties = {
         hoverCursor: "default",
@@ -63,8 +63,12 @@ export const createCollage = ({ collageMemes, canvas, callback }) => {
 
             canvas.add(image);
 
+
+
             callback();
         })
+
+        addWaterMark();
 
     });
 
