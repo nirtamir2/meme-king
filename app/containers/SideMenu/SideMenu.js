@@ -17,6 +17,8 @@ import menu from 'constants/menu';
 // helpers
 import helpers from 'helpers/helpers';
 
+import hava from 'assets/images/hava.jpg';
+
 export class SideMenu extends Component {
 
     onClose = () => {
@@ -52,7 +54,7 @@ export class SideMenu extends Component {
 
         return (
             <div className={classNames('sidebar', { 'with-margin-top': isMemeSection })}>
-
+                <div className="hidden-xs menu-headline" style={{ 'background-image': `url('${hava}')` }} />
                 <ul>
                     {_.map(visibleMenu, menuItem => {
 

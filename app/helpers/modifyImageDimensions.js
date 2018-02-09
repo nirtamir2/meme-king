@@ -4,10 +4,9 @@ export default ({ image, wantedMaxHeight, wantedMaxWidth }) => {
     const isMobile = helpers.isMobile();
     const containerWidth = (document.querySelector('.generator__canvas-wrapper').offsetWidth);
     let maxWidth = wantedMaxWidth || (isMobile ? 300 : containerWidth);
-    let maxHeight = wantedMaxHeight || (isMobile ? 550 : 500)
+    let maxHeight = wantedMaxHeight || (isMobile ? 350 : 500)
     let ratio = 0;  // Used for aspect ratio
 
-    debugger;
     //handles the case of really small images - this will make the image in the size of the canvas.
     if(image.width < maxWidth){
         let ratio = maxWidth / image.width;
