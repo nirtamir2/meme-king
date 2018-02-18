@@ -1315,7 +1315,7 @@ header {
     height: 100%;
     transition: 0.4s;
     background: rgba(0, 0, 0, 0.7);
-    z-index: 801; }
+    z-index: 500; }
     .meme-thumb .meme-thumb__overlay .meme-thumb__details {
       color: white;
       position: absolute;
