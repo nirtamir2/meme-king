@@ -6,10 +6,10 @@
   z-index: 9999;
   font-weight: 600;
   height: 60px;
-  width: 400px;
+  width: 100%;
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  bottom: 0;
+  left: 0;
   color: $green-success;
 
   @include mobile-medium {
@@ -19,4 +19,17 @@
     right: 0;
     height: 60px;
   }
+}
+
+.box-modal-notification {
+
+  img {
+    width: 40px;
+  }
+
+  .box-text {
+    width: 70%;
+    margin: 0 auto;
+  }
+
 }

@@ -34,7 +34,7 @@ class UserMessage extends Component {
         return(
             <div className="box-user-message">
                 <Title className="margin-bottom-medium section-title" size="h2">
-                    <Icon name={isBug ? 'ERROR' : 'LAMP'} className={classNames(isBug ? 'danger' : 'brand', 'margin-left-extra-small')} />
+                    <Icon name={isBug ? 'ERROR' : 'LAMP'} theme={isBug ? 'danger' : 'brand'} className={classNames( 'margin-left-extra-small')} />
                     {isBug ? 'באג' : 'הצעה'}
                 </Title>
                 <Row className="inner-container" key={post.id} >

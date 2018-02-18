@@ -30,12 +30,12 @@ class LocalStorage {
         localStorage.setItem('myMemes', JSON.stringify(myMemesList));
     }
 
-    setItem = (item) => {
-        localStorage.setItem(JSON.stringify(item));
+    setItem = (item, value) => {
+        localStorage.setItem(item, value);
     }
 
 
-    getItem = (name)=>{
+    getItem = (name) => {
         return JSON.parse(localStorage.getItem(name))
     }
 

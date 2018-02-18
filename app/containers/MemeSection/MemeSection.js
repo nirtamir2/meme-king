@@ -74,7 +74,7 @@ import AnalyticsService from 'services/Analytics'
          const { collageMemes, collageMemeLimit, showNotification } = this.props;
          AnalyticsService.sendEvent('add meme to collage clicked');
         if((_.size(collageMemes) === collageMemeLimit) && !_.find(collageMemes, { id: meme.id })) {
-            showNotification({ message: `you can't add more than ${collageMemeLimit} memes to the collage`});
+            showNotification({ message:  'כרגע אפשר להוסיף רק '+ collageMemeLimit +  ' ממים לקולאז׳' , type: 'danger'});
             return;
         }
 
@@ -94,33 +94,8 @@ import AnalyticsService from 'services/Analytics'
 
         return (
             <div className="memes-section">
-                <MemeSectionBar theme={isCollageMode ? 'pink' : ''}>
-
-                    <SearchInput onChange={query => this.setState({ searchValue : query })}
-                                 clearResults={() => this.setState({ searchValue : '' })}
-                                 isFetching={false}
-                                 placeholder="חיפוש בקטגוריה"
-                                 emptyState={isMemesBeenSearchedAndNoResultsFound}
-                                 className="hidden-xs header-search-input"
-                                 value={this.state.searchValue}
-                                 size="sm"
-
-                    />
-
-                    <CollageSwitcher className="margin-right-small" />
-
-                    {isCollageMode && (
-                        <Text
-                            size={'md'}
-                            weight={200}
-                            inline
-                            theme={'white'}
-                            className="margin-bottom-none margin-top-extra-small margin-right-auto margin-left-small pull-left"
-                        >
-                            ({_.size(collageMemes)}/{collageMemeLimit})
-                        </Text>
-                    )}
-
+                <MemeSectionBar>
+                    <CollageSwitcher className="margin-right-small pull-left" />
                 </MemeSectionBar>
                 {isFetching
                     ?

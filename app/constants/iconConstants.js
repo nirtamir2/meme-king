@@ -1,5 +1,6 @@
 export default {
     ARROW_LEFT_CIRCLE: 'glyphicon glyphicon-circle-arrow-left',
+    BELL: 'fa fa-bell',
     CHECK: 'glyphicon glyphicon-ok',
     NEW_WINDOW: 'glyphicon glyphicon-new-window',
     LIST: 'glyphicon glyphicon-th-list',
@@ -10,6 +11,7 @@ export default {
     RETWEET: 'glyphicon glyphicon-retweet',
     DOWNLOAD: 'glyphicon glyphicon-download-alt',
     THRASH: 'glyphicon glyphicon-trash',
+    IMAGES: 'fa fa-images',
     ZOOM_OUT: 'glyphicon glyphicon-zoom-out action',
     ZOOM_IN: 'glyphicon glyphicon-zoom-in action',
     PICTURE: 'glyphicon glyphicon-picture',

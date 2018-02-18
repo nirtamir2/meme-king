@@ -10,7 +10,7 @@ const Icon =  ({ name, top, className, onClick, isRound, size, theme, isActive }
     return (
         <i style={{top : top}}
            onClick={onClick}
-           className={classNames('box-icon',`size-${size}`,theme, { 'clickable': _.isFunction(onClick) }, { 'active' : isActive }, { 'round': isRound }, iconConstants[name], className)}
+           className={classNames('box-icon',`size-${size}`,`theme-${theme}`, { 'clickable': _.isFunction(onClick) }, { 'active' : isActive }, { 'round': isRound }, iconConstants[name], className)}
         />
     )
 }

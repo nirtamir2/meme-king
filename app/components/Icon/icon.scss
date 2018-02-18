@@ -25,7 +25,7 @@
 
   }
 
-  &.main-brand {
+  &.theme-main-brand {
     color: $mainColor;
 
     &:hover {
@@ -38,7 +38,7 @@
 
   }
 
-  &.pink {
+  &.theme-pink {
     color: $pink;
 
     &:hover {
@@ -51,7 +51,7 @@
 
   }
 
-  &.brand {
+  &.theme-brand {
     color: lightblue;
     border-color: lightblue;
 
@@ -71,11 +71,11 @@
     }
   }
 
-  &.success-light {
+  &.theme-success-light {
     color: $success-light;
   }
 
-  &.success {
+  &.theme-success {
     color: $green-success;
     border-color: $green-success;
 
@@ -95,7 +95,7 @@
     }
   }
 
-  &.danger {
+  &.theme-danger {
     color: $danger;
     border-color: $danger;
 
@@ -110,7 +110,7 @@
     }
   }
 
-  &.white {
+  &.theme-white {
     color: white;
     border-color: white;
 
@@ -133,5 +133,9 @@
       height: 50px;
       width: 50px;
     }
+  }
+
+  &.size-super {
+    font-size: 100px;
   }
 }

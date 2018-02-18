@@ -19,7 +19,7 @@ export class Header extends Component {
         const hamburgerToggleClass = isSideBarOpen ? 'open' : '';
 
         return (
-            <header className={classNames({ 'collage-mode': isCollageMode })}>
+            <header>
                 <span className={classNames(hamburgerToggleClass, 'hamburger')} onClick={() => toggleSideBar(!isSideBarOpen) }>
                     <span/>
                     <span/>

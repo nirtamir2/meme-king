@@ -1,12 +1,26 @@
 
 import collageConstants  from './collage-actions-constants';
 const { SET_COLLAGE_STATE, ADD_OR_REMOVE_MEME_FROM_COLLAGE, RESET_COLLAGE_MEMES } = collageConstants;
+import { showNotification } from 'actions/notification-actions/notification-actions';
+import LocalStorageService from 'services/LocalStorage';
 
 export function setCollageMode({ isCollageMode }) {
-    return  {
-        type: SET_COLLAGE_STATE,
-        payload: { isCollageMode }
+
+    return dispatch => {
+
+        const alreadySeenModalMessage = LocalStorageService.getItem('seenCollageMessage');
+
+        if (isCollageMode && !alreadySeenModalMessage ) {
+            dispatch(showNotification({ message: 'מצב קולאז׳ מופעל, בחרו עד 4 ממים לשילוב יחדיו' }));
+            LocalStorageService.setItem('seenCollageMessage', 'true')
+        }
+
+        return  dispatch({
+            type: SET_COLLAGE_STATE,
+            payload: { isCollageMode }
+        })
     }
+
 }
 
 export function addOrRemoveMemeFromCollage({ meme }) {

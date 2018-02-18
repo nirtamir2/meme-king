@@ -1,31 +1,37 @@
 .box-collage-switcher {
 
   display: flex;
-  align-items:center;
+  align-items: center;
   flex-direction: row-reverse;
-
+  margin-right: auto;
 
   .inner-switcher {
 
     display: flex;
     align-items: center;
-    border-radius: 4px;
     cursor: pointer;
     border: 1px solid $pink;
-    position :relative;
+    border-radius: 50px;
+    position: relative;
+    width: 40px;
     height: 40px;
-    padding: 15px 5px;
-    justify-content: flex-end;
+    padding: 5px;
+    justify-content: center;
 
     @include mobile-and-tablet {
       border-color: white;
       color: white !important;
+      width: 35px;
+      height: 35px;
     }
 
-
     &.active {
-      background :white;
-      border-color: white;
+      background: lighten($pink, 20%);
+      border-color: $pink;
+
+      @include mobile-medium {
+        border-color: white;
+      }
     }
 
   }
@@ -43,41 +49,31 @@
   }
 
   .switcher-cta {
-    @include mobile-medium {
-      position: fixed;
-      bottom: 5px;
-      left: 5px;
-      background: $pink;
-      padding: 5px;
-      border-radius: 4px;
-      display: flex;
-      opacity: 0;
-      box-shadow: 2px 4px 18px -6px rgba(0, 0, 0, 1);
+    position: fixed;
+    top: 40%;
+    left: 0px;
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    box-shadow: 2px 4px 18px -6px rgba(0, 0, 0, 1);
+    z-index: 9999;
+    padding: 15px;
+    flex-direction: column;
+    height: 100px;
+    justify-content: space-between;
 
-      &.is-visible {
-        opacity: 1;
-      }
-
-      .open-generator {
-        margin-right: 0;
-      }
-
-      .clean-collage {
-        margin-right: 0;
-        margin-left: 15px;
-      }
+    &.is-visible {
+      opacity: 1;
     }
+
   }
 
   .collage-icon {
-    border-radius: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: 0.5s;
-
-    img {
-      width: 25px;
-    }
   }
 }

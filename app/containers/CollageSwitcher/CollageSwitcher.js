@@ -16,6 +16,7 @@ import collageIcon from 'assets/images/collage.png'
 // components
 import Text from 'components/Text/Text';
 import Icon from 'components/Icon/Icon';
+import Tooltip from 'components/Tooltip/Tooltip';
 
 // helpers
 import helpers from 'helpers/helpers';
@@ -36,42 +37,29 @@ class CollageSwitcher extends React.Component {
                 <span className={classNames('switcher-cta', { 'is-visible': (collageMemeAmount > 1) })}>
                      {(collageMemeAmount > 1) && (
                          <Icon
+                             onClick={this.openCollageGenerator}
+                             className="open-generator"
+                             size="xl" t
+                             theme="pink"
+                             name={'NEW_WINDOW'}
+                         />
+                     )}
+                     {(collageMemeAmount > 1) && (
+                         <Icon
                              onClick={this.props.resetCollageMemes}
-                             className="margin-right-small clean-collage"
+                             className="clean-collage"
                              size="xl"
-                             theme="white"
+                             theme="pink"
                              name="TRASH"/>
                      )}
-                    {(collageMemeAmount > 1) && (
-                        <Icon
-                            onClick={this.openCollageGenerator}
-                            className="margin-right-small open-generator"
-                            size="xl" t
-                            theme="white"
-                            name={helpers.isMobile() ? 'NEW_WINDOW': 'ARROW_LEFT_CIRCLE'}
-                        />
-                    )}
-
                 </span>
+                <Tooltip text="קולאז׳" placement="bottom">
                 <span onClick={setCollageMode} className={classNames('inner-switcher', { 'active': isCollageMode })}>
-
                     <div className={classNames('pull-left collage-icon',)}>
-                        <img src={collageIcon}/>
+                        <Icon name="IMAGES" theme={helpers.isMobile() ?  (isCollageMode ? 'pink' : 'white') : 'pink'} />
                     </div>
-                    <div className="text-container">
-                        <Text
-                            size={'sm'}
-                            weight={400}
-                            inline
-                            theme={helpers.isMobile() && !isCollageMode ? 'white' : 'pink'}
-                            className={classNames('pull-left margin-bottom-none margin-right-tiny collage-label')}
-                        >
-                            קולאז׳
-                        </Text>
-
-
-                    </div>
-            </span>
+                </span>
+                </Tooltip>
             </div>
         )
     }
