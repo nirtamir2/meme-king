@@ -1,10 +1,6 @@
 export default {
     ARROW_LEFT_CIRCLE: 'glyphicon glyphicon-circle-arrow-left',
     BELL: 'fa fa-bell',
-    INFO: 'fa fa-info-circle',
-    GITHUB: 'fab fa-github',
-    FACEBOOK: 'fab fa-facebook',
-    ENVELOPE: 'fa fa-envelope-open',
     CHECK: 'glyphicon glyphicon-ok',
     NEW_WINDOW: 'glyphicon glyphicon-new-window',
     LIST: 'glyphicon glyphicon-th-list',

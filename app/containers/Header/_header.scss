@@ -1,20 +1,21 @@
 header {
   height: $header-height;
-  box-shadow: -9px -4px 29px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 9px 11px -8px rgba(0, 0, 0, 0.4);
   top: 0;
   position: fixed;
   width: 100%;
   align-items: center;
   background: $main-bg;
   justify-content: space-between;
-  z-index: 1000;
+  z-index: 8000;
+
   transition: 0.5s;
-  display: none;
 
   &.collage-mode {
     background: $pink;
   }
 
+  display: none;
 
   @include mobile-and-tablet {
     height: 60px;

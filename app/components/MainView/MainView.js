@@ -11,7 +11,7 @@ import Cropper from 'components/Cropper/Cropper';
 import Admin from 'components/Admin/Admin';
 import ContactPage from 'components/ContactPage/ContactPage';
 import BugsPage from 'containers/BugsContainer/BugsContainer';
-import About from 'components/About/About';
+
 export default class MainView extends Component {
 
     renderCategoryPage = (props) => {
@@ -34,12 +34,10 @@ export default class MainView extends Component {
                 <Route path="/bugs-page" component={BugsPage}/>
                 <Route path="/bugs-page/contact-page" component={ContactPage}/>
                 <Route  exact path='/' component={Home}/>
-                <Route path="/about" component={About}/>
                 <Route path={`/cropper`} component={Cropper}/>
                 <Route path="/generator/:type/:format" component={Generator}/>
                 <Route path="/contact-page" component={ContactPage}/>
                 <Route path="/admin" component={Admin}/>
-
             </div>
         )
     }
