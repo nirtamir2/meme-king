@@ -70,7 +70,7 @@ export default class GeneratorDashboard extends Component {
         clickedElement.download = 'MemeKing'
 
 
-        this.props.saveUserMemeToStorage(memeData)
+       // this.props.saveUserMemeToStorage(memeData)
 
         //!* need to set back canvas dimensions *
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)

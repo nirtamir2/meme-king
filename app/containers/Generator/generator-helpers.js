@@ -42,7 +42,7 @@ export const createCollage = ({ collageMemes, canvas, callback, addWaterMark }) 
         _.forEach(images, image => {
 
             if(canvas.height < 10) {
-                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: helpers.isMobile() ? 180 : 300,  })
+                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: helpers.isMobile() ? 180 : 300 })
                 canvas.setWidth(image.width)
                 canvas.setHeight(image.height);
                 image.set({

@@ -693,14 +693,14 @@ a:hover, a:active {
 
 header {
   height: 60px;
-  box-shadow: 4px 9px 11px -8px rgba(0, 0, 0, 0.4);
+  box-shadow: -9px -4px 29px 6px rgba(0, 0, 0, 0.4);
   top: 0;
   position: fixed;
   width: 100%;
   align-items: center;
   background: #f6f6f6;
   justify-content: space-between;
-  z-index: 8000;
+  z-index: 1000;
   transition: 0.5s;
   display: none; }
   header.collage-mode {
@@ -842,12 +842,23 @@ header {
       display: block;
       position: relative;
       padding-top: 100px; } }
+  .home .info-icon {
+    position: absolute;
+    left: 20px;
+    top: 20px; }
+    @media only screen and (max-width: 939px) {
+      .home .info-icon {
+        top: 14px;
+        z-index: 9999;
+        position: static;
+        text-align: center;
+        margin-top: 20px; } }
   .home .personal-messages-link {
     display: block;
     margin-top: 100px; }
     @media only screen and (max-width: 939px) {
       .home .personal-messages-link {
-        margin-top: 60px; } }
+        margin-top: 20px; } }
 
 .searcher .results-wrapper {
   display: flex;
@@ -2566,6 +2577,9 @@ canvas {
     height: 50px;
     width: 50px; }
 
+.box-icon.size-xxl {
+  font-size: 35px; }
+
 .box-icon.size-super {
   font-size: 100px; }
 
@@ -2846,3 +2860,36 @@ LABEL
 .box-label-emphasis {
   color: black;
   margin-left: 3px; }
+
+.box-about {
+  direction: rtl; }
+  .box-about .row {
+    display: flex;
+    flex-direction: row-reverse; }
+    @media only screen and (max-width: 939px) {
+      .box-about .row {
+        flex-direction: column-reverse; } }
+  .box-about .box-text {
+    font-size: 20px;
+    line-height: 1.8; }
+  .box-about .benya-image {
+    width: 100%;
+    object-fit: cover;
+    height: 400px; }
+    @media only screen and (max-width: 939px) {
+      .box-about .benya-image {
+        height: 150px; } }
+  .box-about .socials-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 5px;
+    border-radius: 3px; }
+    .box-about .socials-container .box-icon {
+      margin: 15px auto; }
+      .box-about .socials-container .box-icon.facebook {
+        color: #3b5998; }
+      .box-about .socials-container .box-icon.email {
+        color: #0097EB; }

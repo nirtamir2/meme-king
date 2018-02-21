@@ -13,6 +13,7 @@ import Avatar from 'components/Avatar/Avatar';
 import Button from 'components/Button/Button';
 import Title from 'components/Title/Title';
 import TextLink from 'components/TextLink/TextLink';
+import Icon from 'components/Icon/Icon';
 
 //  services
 import AnalyticsService from 'services/Analytics';
@@ -30,7 +31,9 @@ import AnalyticsService from 'services/Analytics';
 
         return (
             <div className="home">
-
+                <Link className="info-icon hidden-xs" to="/about">
+                    <Icon name="INFO" size="xxl" theme="white" />
+                </Link>
                 <Avatar isCentered/>
 
                 <Title className="margin-top-small margin-bottom-large">
@@ -52,6 +55,11 @@ import AnalyticsService from 'services/Analytics';
                 />
 
                 <Searcher className="margin-top-small" history={history} />
+
+
+                <Link className="info-icon visible-xs" to="/about">
+                    <Icon name="INFO" size="xxl" theme="white" />
+                </Link>
 
                 <TextLink className="personal-messages-link text-center"  to="bugs-page">
                     בקשות ודיווח על באגים

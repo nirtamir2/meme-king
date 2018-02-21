@@ -34,7 +34,6 @@ export class Header extends Component {
 
 function mapStateToProps(state) {
     const isMemeSection = _.includes(window.location.href, 'memes')
-
     return {
         isSideBarOpen: state.isSideBarOpen,
         categoryName: _.get( state, 'category.name'),
