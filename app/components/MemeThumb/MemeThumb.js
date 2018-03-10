@@ -47,7 +47,6 @@ export default ({ thumbPath, description, rating, category, id, urlPath, onClick
                     <span className="meme-thumb__description">
                         {description}
                     </span>
-                    <br/>
                 </p>
             </div>
         </Link>

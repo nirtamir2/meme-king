@@ -9,6 +9,10 @@ export default {
         sentry: {
             isOn: true
         }
+    },
+
+    features: {
+        memeSuggestions: false
     }
 
 }

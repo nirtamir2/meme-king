@@ -64,7 +64,8 @@ app.use(function (req, res, next) {
 
 app.use(function (req, res, next) {
 
-    const isApiRequest = req.url.match(/\/api\/*/g)
+    const isApiRequest = req.url.match(/\/api\/*/g);
+
     if (!isApiRequest) {
         res.sendFile(path.join(__dirname + '/build/index.html'));
     } else {
@@ -75,7 +76,7 @@ app.use(function (req, res, next) {
 
 app.get('/api/get-weekly-popular-memes', async function (req, res) {
     const data = await DatabaseService.getWeeklyPopularMemes()
-    const topPopularMemes = _.slice(_.reverse(_.sortBy(data.val(), 'rating')), 0, 48)
+    const topPopularMemes = _.slice(_.reverse(_.sortBy(data.val(), 'rating')), 0, 64)
     res.send(helpers.arrayToObjById(topPopularMemes))
 })
 

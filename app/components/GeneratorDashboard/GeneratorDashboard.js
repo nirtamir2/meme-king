@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import config from 'config/config';
 
 // components
 import Button from '../GeneratorDashboardButton/GeneratorDashboardButton'
@@ -196,7 +197,7 @@ export default class GeneratorDashboard extends Component {
                 )}
 
                 {!helpers.isMobile() && <Buttons />}
-                {(isCanvasReady && helpers.isMobile() && !isFromSearch && !isStandAlone && !isFromUpload && !isCleanSlateState) &&
+                {(isCanvasReady && helpers.isMobile() && !isFromSearch && !isStandAlone && !isFromUpload && !isCleanSlateState) && config.features.memeSuggestions &&
                 <MemeSuggestions  category={currentMemeCategory} suggestions={suggestions}  />}
 
                 <GeneratorSignature className="visible-mobile"/>

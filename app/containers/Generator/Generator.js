@@ -29,6 +29,8 @@ import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/me
 import { fetchSingleMeme } from 'actions/category-actions/category-actions'
 import { fetchMemeSuggestions } from 'actions/suggestions-actions/suggestions-actions';
 
+import config from 'config/config';
+
 const getCanvasContainerWidth = () => (document.querySelector('.generator__canvas-wrapper').offsetWidth);
 
 class Generator extends Component {
@@ -260,7 +262,7 @@ class Generator extends Component {
 
                 </div>
 
-                {(!isFromSearch && !isStandAlone && !helpers.isMobile() && !isFromUpload && !isCleanSlateState) &&
+                {(!isFromSearch && !isStandAlone && !helpers.isMobile() && !isFromUpload && !isCleanSlateState) && config.features.memeSuggestions &&
                 <MemeSuggestionsContainer category={currentMemeCategory} suggestions={suggestions} />}
 
                 {!isWebView && (<GeneratorModal.CloseButton onClick={this.closeGenerator}/>)}
@@ -317,7 +319,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         ...ownProps,
         ...stateProps,
         ...dispatchProps,
-        fetchMemeSuggestions: () => dispatchProps.fetchMemeSuggestions(category, helpers.isMobile() ? 3 : 6)
+        fetchMemeSuggestions: () => {} //dispatchProps.fetchMemeSuggestions(category, helpers.isMobile() ? 3 : 6)
 
     }
 }

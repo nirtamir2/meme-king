@@ -39,21 +39,6 @@ class MemeSuggestionsContainer extends Component {
 
         const { suggestions, isFetching } = this.props;
 
-        //
-        // if((_.isEmpty(suggestions))) {
-        //     return null;
-        // }
-        //
-        // if(isFetching) {
-        //     return (
-        //         <Row className="box-meme-suggestions-container margin-top-medium text-center fetching">
-        //             <Title className="margin-top-none" size="h2" align="center">
-        //                 טוען ממים דומים...
-        //             </Title>
-        //         </Row>
-        //         )
-        // }
-
         return(
 
                 <Row className="box-meme-suggestions-container margin-top-medium">
