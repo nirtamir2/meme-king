@@ -21,6 +21,8 @@ StorageService.init(isProduction);
 const helpers = require('./server/helpers/helpers');
 
 
+
+
 // USE
 
 app.use(bodyParser({ limit: '50mb' }))
@@ -104,6 +106,41 @@ app.get('/api/meme-suggestions', async function (req, res) {
         category: req.query.category,
         memes: helpers.arrayToObjById(_.sampleSize(data, req.query.size))
     }
+    res.send(response);
+
+});
+
+app.get('/api/random-meme', async function (req, res) {
+
+    const randomCategories = [
+        'dank',
+        'israeli',
+        'pop',
+        'parlament',
+        'classic',
+        'general',
+        'eretz_nehederet',
+        'tv_abroad',
+        'mashups',
+        'standup',
+        'goalstar',
+        'israeli_tv',
+        'animals',
+        'commercials',
+        'asi_guri',
+        'media',
+        'jews',
+    ]
+
+    const randomCategoryIndex = Math.floor(Math.random() * ((_.size(randomCategories) - 1 )  + 1));
+    const data = await DatabaseService.getCategory(randomCategories[randomCategoryIndex]);
+    const randomMemeIndex = Math.floor(Math.random() * ((_.size(data) - 1 )  + 1));
+    const randomMeme = _.values(data)[randomMemeIndex];
+
+    const response = {
+        randomMeme
+    }
+
     res.send(response);
 
 });
