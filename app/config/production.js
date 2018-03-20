@@ -12,7 +12,8 @@ export default {
     },
 
     features: {
-        memeSuggestions: false
+        memeSuggestions: false,
+        saveUserMemeToStorage: true,
     }
 
 }
