@@ -69,7 +69,6 @@ app.use(function (req, res, next) {
     const isApiRequest = req.url.match(/\/api\/*/g);
 
     if (!isApiRequest) {
-        res.header('X-FRAME-OPTIONS', 'ALLOW-FROM ' + req.query.domain);
         res.sendFile(path.join(__dirname + '/build/index.html'));
     } else {
         next();
