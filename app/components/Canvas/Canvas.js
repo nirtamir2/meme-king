@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import classNames from 'classnames'
 
 //helpers
-import helpers from 'helpers/helpers'
+import helpers from 'helpers/helpers';
+
+// components
+import Col from 'react-bootstrap/lib/Col';
 
 class Canvas extends Component {
 
@@ -13,7 +16,9 @@ class Canvas extends Component {
 
 
     componentDidMount() {
+
         const canvas = new fabric.Canvas('c', { allowTouchScrolling: true });
+
         this.setState({ canvas }, () => {
             this.props.setCanvas(canvas);
             if(helpers.isMobile()) {
@@ -44,10 +49,11 @@ class Canvas extends Component {
     }
 
     render() {
+
         const { isLoading } = this.props;
 
         return (
-            <div ref={node => this.canvasWrapper = node} className={classNames('with-shadow', 'generator__canvas-wrapper col-md-12 col-lg-7')}>
+            <div ref={node => this.canvasWrapper = node} className={classNames('with-shadow', 'generator__canvas-wrapper')}>
                 <span className={classNames('canvas-inner-wrapper', { 'hidden' : isLoading })}>
                     <canvas height={1} id='c' dir="rtl" className={classNames({ 'loading' : isLoading })}/>
                 </span>

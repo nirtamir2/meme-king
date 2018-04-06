@@ -1,31 +1,36 @@
 import React from 'react';
 import classNames from 'classnames';
+import { addStyle } from 'react-bootstrap/lib/utils/bootstrapUtils';
+import PropTypes from 'prop-types';
 
 // components
-import Icon from 'components/Icon/Icon';
+import BootstrapButton from 'react-bootstrap/lib/Button';
+import ActivityIndicator from 'components/ActivityIndicator/ActivityIndicator';
 
-const Button =  ({ onClick, icon, label, htmlFor, className, center, children, size, isLoading }) => {
+addStyle(BootstrapButton, 'brand');
+addStyle(BootstrapButton, 'brand-gray-border');
 
-    const text = (label || children)
+const Button =  ({ onClick, className, children, isLoading, ...rest }) => {
 
     return (
-        <label htmlFor={htmlFor} className={classNames("box-cta-button", className, `size-${size}`)} onClick={onClick}>
+        <BootstrapButton className={classNames("box-cta-button", className)} onClick={onClick} {...rest}>
             {isLoading ?
-                <div id="activityIndicator" className="activityIndicator"/>
+                <ActivityIndicator />
                 :
-                <span className="flex inner-container">
-                    {text && <span className={classNames('text',{'center text-center': center})}>{text}</span> }
-                    {icon && <Icon name={icon} />}
-                </span>
-
+                children
             }
-
-        </label>
+        </BootstrapButton>
     )
 }
 
 Button.defaultProps = {
-    size: 'md'
+    size: 'md',
+    bsStyle: 'brand'
+};
+
+Button.propTypes = {
+    bsStyle: PropTypes.oneOf([ 'brand', 'default', 'brand-gray-border' ])
 }
+
 
 export default Button;

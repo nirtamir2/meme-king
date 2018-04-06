@@ -6,20 +6,19 @@ import classNames from 'classnames'
 // components
 import GeneratorDashboard from 'components/GeneratorDashboard/GeneratorDashboard'
 import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
-import GeneratorDashboardSkeleton from 'components/GeneratorDashboardSkeleton/GeneratorDashboardSkeleton'
 import GeneratorModal from 'components/GeneratorModal/GeneratorModal'
-import Title from 'components/Title/Title'
 import Canvas from 'components/Canvas/Canvas'
-import MemeSuggestionsContainer from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer'
+import Col from 'react-bootstrap/lib/Col';
+import Title from 'components/Title/Title';
 
 // helpers
 import helpers from 'helpers/helpers'
-import { addImageAsync, createCollage } from './generator-helpers';
+import { addImageAsync, createCollage, getCanvasContainerWidth } from './generator-helpers';
 
 // constants
-import colors from 'constants/colors'
-import globalConstants from 'constants/global'
-const CLEAN_SLATE_MOBILE_HEIGHT = 280
+import colors from 'constants/colors';
+import globalConstants from 'constants/global';
+import generatorConstants from './generator-constants';
 
 // services
 import WebViewService from 'services/webViewService'
@@ -28,72 +27,61 @@ import WebViewService from 'services/webViewService'
 import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions'
 import { fetchSingleMeme } from 'actions/category-actions/category-actions'
 import { fetchMemeSuggestions } from 'actions/suggestions-actions/suggestions-actions';
-
-import config from 'config/config';
-
-const getCanvasContainerWidth = () => (document.querySelector('.generator__canvas-wrapper').offsetWidth);
+import { setUploadImage } from 'actions/upload-actions/upload-actions';
+import { resetCollageMemes } from 'actions/collage-actions/collage-actions';
 
 class Generator extends Component {
 
     state = {
         isLoading: true,
         canvas: null,
-        isCanvasReady: false,
+        canvasHeight: '240px'
     }
 
     componentDidMount() {
 
         const { isStandAlone, fetchSingleMeme, category, memeId } = this.props
 
-        this.props.fetchMemeSuggestions();
-
         if (isStandAlone) {
             fetchSingleMeme(category, memeId)
         }
 
-
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.isCleanSlateState || this.props.isCleanSlateState) {
+
+        const { format, isCleanSlateState, meme } = this.props;
+        if(nextProps.isCleanSlateState || isCleanSlateState) {
             return;
         }
 
-        if ((this.props.format !== nextProps.format) || (this.props.meme !== nextProps.meme)) {
-            this.setState({ isCanvasReady: false, isLoading: true }, () => {
-                this.createBoard(nextProps.format)
+        if ((format !== nextProps.format) || (meme !== nextProps.meme)) {
+            this.setState({ isLoading: true }, () => {
+                this.addImage(nextProps.format)
             })
         }
 
-        if (this.props.memeId !== nextProps.memeId) {
-            this.props.fetchMemeSuggestions();
-        }
-
     }
 
-    createBoard = (wantedFormat) => {
-            if (this.state.canvas) {
-                this.addImage(wantedFormat)
-            }
-    }
 
 
     createCleanSlate = () => {
-        const { canvas } = this.state
+        const { canvas } = this.state;
 
-        const DISTANCE = helpers.isMobile() ? 30 : 140
-        const width = helpers.isMobile() ? 300 : document.querySelector('.generator__canvas-wrapper').offsetWidth - DISTANCE
-        const height = helpers.isMobile() ? CLEAN_SLATE_MOBILE_HEIGHT : 460
+        const DISTANCE = helpers.isMobile() ? 30 : 140;
+        const mobileHeight = generatorConstants.cleanSlate.MOBILE_HEIGHT;
+        const width = helpers.isMobile() ? 300 : document.querySelector('.generator__canvas-wrapper').offsetWidth - DISTANCE;
+        const height = helpers.isMobile() ? mobileHeight  : 460;
         canvas.backgroundColor = colors.WHITE
-        canvas.setWidth(width)
-        canvas.setHeight(height)
+        canvas.setWidth(width);
+        canvas.setHeight(height);
         this.addWaterMark();
-        this.setState({ isLoading: false, isCanvasReady: true })
+        this.setState({ isLoading: false, canvasHeight: `${mobileHeight}px` })
 
     }
 
     addWaterMark = () => {
-        const { isWebView, format } = this.props;
+        const { isWebView } = this.props;
         const { canvas } = this.state;
 
         const isMobile = helpers.isMobile();
@@ -104,87 +92,91 @@ class Generator extends Component {
 
     addImage = (format) => {
 
-        const { urlPath } = this.props.meme || {};
+        const { isUpload, meme } = this.props;
+        const { urlPath } = meme || {};
         const { canvas } = this.state;
 
+        if(!canvas) {
+            return;
+        }
+
         canvas.backgroundColor = colors.WHITE;
-        const isNormalFormat = (format === globalConstants.format.normal)
-        const spaceToADDForDankFormatStyle = helpers.isMobile() ? 120 : 150;
+        const isNormalFormat = (format === globalConstants.format.normal);
+        const formatData = _.get(generatorConstants, ['formats', format]);
+
         const canvasContainerWidth = getCanvasContainerWidth();
 
-        const isUploadState = (this.props.isFromUpload)
         canvas.setWidth(canvasContainerWidth);
         canvas.clear();
 
 
-        helpers.getDataUri(urlPath, isUploadState, dataUri => {
+        addImageAsync({ image: urlPath, dontPerformConversion: isUpload }).then(image => {
 
-            fabric.Image.fromURL(dataUri, image => {
+            if (!image) {
+                return;
+            }
 
-                this.setState({ isLoading: false })
+            const wantedMaxHeight = formatData.image.getWantedMaxHeight();
+            const wantedMaxWidth = formatData.image.getWantedMaxWidth();
 
-                const wantedMaxHeight = ((!isNormalFormat && helpers.isMobile()) ? 280 : null);
-                const wantedMaxWidth = isNormalFormat ? (getCanvasContainerWidth() - 50) : (getCanvasContainerWidth() - (helpers.isMobile() ? 100 : 200))
+            image = helpers.modifyImageDimensions({ image, wantedMaxHeight, wantedMaxWidth , isNormalFormat });
 
-                image = helpers.modifyImageDimensions({ image, wantedMaxHeight, wantedMaxWidth , isNormalFormat })
+            canvas.setHeight(formatData.board.getHeight(image));
+            canvas.setWidth(formatData.board.getWidth(image));
 
-                canvas.setHeight(isNormalFormat ? image.height : image.height + spaceToADDForDankFormatStyle)
-                canvas.setWidth(isNormalFormat ? image.width : image.width + 25)
-                canvas.add(image)
+            canvas.add(image);
 
-                image.set({
-                    top: isNormalFormat ? 0 : (spaceToADDForDankFormatStyle - 15),
-                    left: isNormalFormat ? 0 : 10,
-                    hoverCursor: "default",
-                    lockMovementX: isNormalFormat,
-                    lockMovementY: isNormalFormat,
-                    lockScalingX: isNormalFormat,
-                    lockScalingY: isNormalFormat,
-                    lockUniScaling: isNormalFormat,
-                    hasBorders: !isNormalFormat,
-                    selectable: true,
-                });
+            image.set(formatData.image.style);
 
+            this.setState({ isLoading: false , canvasHeight: `${image.height}px` })
 
-                if(format !== 'dankFormat') {
-                    this.addWaterMark();
+            if(format !== 'dankFormat') {
+                this.addWaterMark();
 
-                }
+            }
 
-                this.setState({ isCanvasReady: true })
-            })
         })
 
     }
 
 
     closeGenerator = () => {
+        const { isCollageMode, resetCollageMemes } = this.props;
         const memeCategory = _.get(this.props, 'category')
         const wantedPath = memeCategory ? `/memes/${memeCategory}` : `/`
         const location = {
             pathname: wantedPath,
             query: this.props.query || {}
         }
-        this.props.history.push(location)
+
+        if (isCollageMode) {
+            resetCollageMemes();
+        }
+
+        this.props.history.push(location);
     }
 
     setCanvas = canvas => {
 
-        const { isCollageMode, collageMemes, isCleanSlateState } = this.props;
+        const { isCollageMode, collageMemes, isCleanSlateState, format } = this.props;
 
         this.setState({ canvas }, () => {
 
-            if(isCollageMode) {
-                createCollage({ collageMemes, addWaterMark: this.addWaterMark, canvas, callback: () =>  this.setState({ isLoading: false, isCanvasReady: true })});
+            if (isCollageMode) {
 
-            } else if(isCleanSlateState) {
-                this.setState({ isCanvasReady: false, isLoading: true }, () => {
+                createCollage({ collageMemes, addWaterMark: this.addWaterMark, canvas, callback: canvas =>  {
+                    this.setState({ isLoading: false, canvasHeight: `${canvas.height}px`})
+                }});
+
+            } else if (isCleanSlateState) {
+
+                this.setState({ isLoading: true }, () => {
                     this.createCleanSlate();
-
                 });
 
             } else {
-                this.createBoard(this.props.format);
+
+                this.addImage(format)
 
             }
         })
@@ -192,78 +184,65 @@ class Generator extends Component {
 
     render() {
 
-        const { isLoading, isCanvasReady, canvas } = this.state;
+        const { isLoading, canvas, canvasHeight } = this.state;
 
         const {
             meme,
             format,
             history,
             location,
-            type,
-            query,
-            isFromSearch,
-            isStandAlone,
-            isFromUpload,
             saveUserMemeToStorage,
             isCleanSlateState,
             isWebView,
-            suggestions,
-            currentMemeCategory,
-            isCollageMode
+            isCollageMode,
+            setUploadImage
         } = this.props
 
-        const mobileGeneratorDashboardTopPosition = ( (isCanvasReady && helpers.isMobile())
-            ?
-            (isCleanSlateState ? CLEAN_SLATE_MOBILE_HEIGHT : `${this.canvasWrapper.getHeight() - 20}px`)
-            :
-            null)
 
-        const dashboardStyle = mobileGeneratorDashboardTopPosition ? { top: mobileGeneratorDashboardTopPosition } : {}
+        const dashboardStyle = { top: helpers.isMobile() ? canvasHeight : null };
 
         return (
             <GeneratorModal onClose={this.closeGenerator} className="generator">
 
-
+                {!helpers.isMobile() && (
+                    <span>
+                    <Title className="text-center margin-bottom-small" direction="rtl">
+                        מחולל הממים
+                    </Title>
+                        <Title size="h4" className="text-center margin-bottom-medium" direction="rtl">
+                            {_.toUpper(_.get(meme, 'description'))}
+                        </Title>
+                    </span>
+                )}
                 <div className="generator__wrapper">
 
-                    <Canvas setCanvas={this.setCanvas} isLoading={isLoading} ref={node => this.canvasWrapper = node}/>
+                    <Col lg={7} md={12}>
+                        <Canvas
+                            setCanvas={this.setCanvas}
+                            isLoading={isLoading}
+                            ref={node => this.canvasWrapper = node}
+                        />
+                    </Col>
 
-                    {isCanvasReady
-
-                        ?
-
+                    <Col sm={12} lg={5}>
                         <GeneratorDashboard
-                            query={query}
                             history={history}
                             style={dashboardStyle}
-                            type={type}
+                            setUploadImage={setUploadImage}
+                            isLoading={isLoading}
                             saveUserMemeToStorage={saveUserMemeToStorage}
                             location={location}
                             meme={meme}
-                            addWaterMark={this.addWaterMark}
                             isCollageMode={isCollageMode}
-                            suggestions={suggestions}
-                            currentMemeCategory={currentMemeCategory}
-                            isStandAlone={isStandAlone}
-                            isFromSearch={isFromSearch}
-                            isFromUpload={isFromUpload}
                             isCleanSlateState={isCleanSlateState}
                             format={format}
-                            isCanvasReady={isCanvasReady}
                             canvas={canvas}
                             updateMemeRating={this.props.updateMemeRating}
                         />
-
-                        :
-
-                        <GeneratorDashboardSkeleton />
-                    }
+                    </Col>
 
 
                 </div>
-
-                {(!isFromSearch && !isStandAlone && !helpers.isMobile() && !isFromUpload && !isCleanSlateState) && config.features.memeSuggestions &&
-                <MemeSuggestionsContainer category={currentMemeCategory} suggestions={suggestions} />}
 
                 {!isWebView && (<GeneratorModal.CloseButton onClick={this.closeGenerator}/>)}
 
@@ -281,15 +260,16 @@ function mapStateToProps(state, ownProps) {
     const { match: { params }, location, history } = ownProps;
 
     const memeId = params.id
-    const isFromUpload = (_.get(location, 'state.from') === 'upload')
-    const isFromSearch = (_.get(location, 'state.from') === 'search');
+    const isUpload = (_.get(params, 'type') === 'upload')
+
     let currentMemeObj;
-    if(isFromSearch) {
-        currentMemeObj = _.find(state.search.searchResults, { id: memeId});
-    } else if(isFromUpload) {
-        currentMemeObj = _.get(location, 'state')
+
+    if (isUpload) {
+        currentMemeObj = {
+            urlPath: _.head(_.get(state, 'upload.images'))
+        }
     } else {
-        currentMemeObj = state.category.memes[memeId];
+        currentMemeObj = state.category.memes[memeId] || _.find(state.search.searchResults, { id: memeId });
     }
 
     return {
@@ -300,14 +280,11 @@ function mapStateToProps(state, ownProps) {
         memeId: memeId,
         history,
         location,
-        isFromUpload,
-        isFromSearch,
+        isUpload,
         isWebView: WebViewService.isWebView,
         query: location.query,
         isCleanSlateState: (params.type === 'clean-slate'),
         suggestions: _.get(state, 'suggestions.memes'),
-        currentMemeCategory: _.get(state, 'suggestions.category'),
-        isCollageMode: ownProps.isCollageMode,
         collageMemes: _.get(state, 'collage.memes', {})
     }
 }
@@ -319,9 +296,9 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         ...ownProps,
         ...stateProps,
         ...dispatchProps,
-        fetchMemeSuggestions: () => {} //dispatchProps.fetchMemeSuggestions(category, helpers.isMobile() ? 3 : 6)
+        fetchMemeSuggestions: () => dispatchProps.fetchMemeSuggestions(category, helpers.isMobile() ? 3 : 6)
 
     }
 }
 
-export default connect(mapStateToProps, { fetchSingleMeme, saveUserMemeToStorage, updateMemeRating, fetchMemeSuggestions }, mergeProps)(Generator)
+export default connect(mapStateToProps, { fetchSingleMeme, setUploadImage, saveUserMemeToStorage, resetCollageMemes, updateMemeRating, fetchMemeSuggestions }, mergeProps)(Generator)

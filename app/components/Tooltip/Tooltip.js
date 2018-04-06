@@ -4,7 +4,7 @@ import React from 'react';
 import BootstrapTooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
-const Tooltip = ({ text, placement, children, ...rest }) => {
+const Tooltip = ({ text, placement, children, defaultOverlayShown, ...rest }) => {
     if (!text) {
         return children || null;
     }
@@ -12,7 +12,7 @@ const Tooltip = ({ text, placement, children, ...rest }) => {
     const tooltip = <BootstrapTooltip id={text} {...rest} >{text}</BootstrapTooltip>;
 
     return (
-        <OverlayTrigger placement={placement} overlay={tooltip} {...rest} >
+        <OverlayTrigger defaultOverlayShown={defaultOverlayShown} className="box-tooltip" placement={placement} overlay={tooltip} {...rest} >
             {children}
         </OverlayTrigger>
     );

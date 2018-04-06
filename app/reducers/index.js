@@ -8,6 +8,9 @@ import userMessagesReducer from './user-messages-reducer';
 import notificationReducer from './notifications-reducer';
 import suggestionsReducer from './suggestions-reducer';
 import collageReducer from './collage-reducer';
+import uploadReducer from './upload-reducer';
+import { reducer as formReducers } from 'redux-form';
+
 
 const rootReducer = combineReducers({
     isSideBarOpen: isSideBarOpen,
@@ -16,7 +19,9 @@ const rootReducer = combineReducers({
     userMessages: userMessagesReducer,
     notifications: notificationReducer,
     suggestions: suggestionsReducer,
-    collage: collageReducer
+    collage: collageReducer,
+    upload: uploadReducer,
+    form: formReducers
 });
 
 export default rootReducer;

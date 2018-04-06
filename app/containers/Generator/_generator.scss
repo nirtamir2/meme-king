@@ -1,6 +1,10 @@
 
 .generator {
 
+  @include mobile-medium {
+    padding-top: 5px !important;
+  }
+
   .generator__wrapper {
     margin: 0 auto;
     width: 80%;

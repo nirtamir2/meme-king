@@ -9,7 +9,7 @@ import Grid from 'react-bootstrap/lib/Grid'
 import Title from 'components/Title/Title'
 import Text from 'components/Text/Text'
 import Icon from 'components/Icon/Icon'
-import UserMessage from 'components/UserMessage/UserMessage';
+import UserMessage from './UserMessage/UserMessage';
 import Loader from 'components/Loader/Loader';
 
 // actions
@@ -49,7 +49,12 @@ class BugsContainer extends Component {
                     </Text>
                 </div>
                 <Row>
-                    {isLoading ? <Loader className="margin-top-extra-large" /> : _.map(sortedMessages, post => <UserMessage key={post.id} updateUserMessageLikes={updateUserMessageLikes} post={post} />)}
+                    {isLoading
+                        ?
+                        <Loader className="margin-top-extra-large" />
+                        :
+                        _.map(sortedMessages, post => <UserMessage key={post.id} updateUserMessageLikes={updateUserMessageLikes} post={post} />)
+                    }
                 </Row>
 
             </Grid>

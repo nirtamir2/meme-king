@@ -8,24 +8,18 @@ import { withRouter } from 'react-router';
 // actions
 import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 
-// components
-import CollageSwitcher from 'containers/CollageSwitcher/CollageSwitcher';
-
 export class Header extends Component {
 
     render(){
-        const { toggleSideBar, isSideBarOpen, isCollageMode, isMemeSection, categoryName } = this.props;
-
-        const hamburgerToggleClass = isSideBarOpen ? 'open' : '';
+        const { toggleSideBar, isSideBarOpen } = this.props;
 
         return (
             <header>
-                <span className={classNames(hamburgerToggleClass, 'hamburger')} onClick={() => toggleSideBar(!isSideBarOpen) }>
+                <span className={classNames({ 'open': isSideBarOpen }, 'hamburger')} onClick={() => toggleSideBar(!isSideBarOpen) }>
                     <span/>
                     <span/>
                     <span/>
                 </span>
-                {isMemeSection && <CollageSwitcher category={categoryName} />}
             </header>
         )
     }
@@ -33,13 +27,10 @@ export class Header extends Component {
 
 
 function mapStateToProps(state) {
-    const isMemeSection = _.includes(window.location.href, 'memes')
 
     return {
         isSideBarOpen: state.isSideBarOpen,
         categoryName: _.get( state, 'category.name'),
-        isCollageMode: _.get(state, 'collage.isCollageMode'),
-        isMemeSection
     }
 }
 

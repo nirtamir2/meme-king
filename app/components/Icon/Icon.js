@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import classNames from 'classnames';
+import PropTyps from 'prop-types';
 
 // constants
 import iconConstants from 'constants/iconConstants';
@@ -19,6 +20,10 @@ Icon.defaultProps = {
     name: 'CLOSE',
     size: 'md',
     theme: 'default',
+}
+
+Icon.propTypes = {
+    theme: PropTyps.oneOf(['default', 'white', 'black', 'pink-dark', 'pink'])
 }
 
 export default Icon;

@@ -9,7 +9,7 @@ import Generator from 'containers/Generator/Generator';
 // components
 import Cropper from 'components/Cropper/Cropper';
 import Admin from 'components/Admin/Admin';
-import ContactPage from 'components/ContactPage/ContactPage';
+import ContactPage from 'containers/BugsContainer/ContactPage/ContactPage';
 import BugsPage from 'containers/BugsContainer/BugsContainer';
 
 export default class MainView extends Component {
@@ -30,12 +30,13 @@ export default class MainView extends Component {
                 <Route  path='/memes/:category' render={this.renderCategoryPage}/>
                 <Route  path={`/memes/:category/generator/:id/:format`} component={Generator}/>
                 <Route  path={`/memes/:category/generator-collage`} render={(props) => <Generator {...props} isCollageMode />}/>
+                <Route  path={`/generator-collage`} render={(props) => <Generator {...props} isCollageMode />}/>
                 <Route  path={`/generator-standalone/:category/:id/:format`} render={(props) => <Generator {...props} isStandAlone={true} />}/>
+                <Route path="/generator/:type/:format" component={Generator}/>
                 <Route path="/bugs-page" component={BugsPage}/>
                 <Route path="/bugs-page/contact-page" component={ContactPage}/>
                 <Route  exact path='/' component={Home}/>
                 <Route path={`/cropper`} component={Cropper}/>
-                <Route path="/generator/:type/:format" component={Generator}/>
                 <Route path="/contact-page" component={ContactPage}/>
                 <Route path="/admin" component={Admin}/>
             </div>

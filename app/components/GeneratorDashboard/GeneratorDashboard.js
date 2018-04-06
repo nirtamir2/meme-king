@@ -4,24 +4,58 @@ import classNames from 'classnames'
 import config from 'config/config';
 
 // components
-import Button from '../GeneratorDashboardButton/GeneratorDashboardButton'
+import Button from 'components/Button/Button';
 import ItemsArea from '../ItemsArea/ItemsArea'
-import GeneratorUploader from '../GeneratorUploader/GeneratorUploader'
 import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContainer'
 import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
 import Modal from 'components/Modal/Modal'
-import MemeSuggestions from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer';
+import Icon from 'components/Icon/Icon';
+import Col from 'react-bootstrap/lib/Col';
+import GeneratorDashboardSkeleton from 'components/GeneratorDashboard/DashboardSkeleton';
 
 // services
-import LocalStorageService from 'services/LocalStorage'
 import AnalyticsService from 'services/Analytics'
 import WebViewService from 'services/webViewService';
 
 // helpers
-import helpers from 'helpers/helpers'
+import helpers from 'helpers/helpers';
+import { addImageAsync, createCollage, getCanvasContainerWidth } from 'containers/Generator/generator-helpers';
 
 // constants
-import globalConstants from 'constants/global'
+import globalConstants from 'constants/global';
+import dashboardConstants from './dashboard-constants';
+
+const Buttons = ({ className, canvas, isCleanSlateState, format, actions }) => (
+    <div className={classNames("buttons-container", className)}>
+
+        {_.map(_.values(dashboardConstants.buttons), (button) => {
+            return (
+                button.show({ isCleanSlateState }) && (
+                    <Col
+                        className={'padding-right-none padding-left-none'}
+                        xs={2}
+                        sm={6}
+                    >
+                        <Button
+                            onClick={actions[button.onClick]}
+                            onDrop={actions[button.onDrop]}
+                            block
+                            multiple
+                            bsStyle="brand-gray-border"
+                            className="flex space-between dashboard-button weight-600"
+                            componentClass={button.componentClass}
+                        >
+                            <Icon className="margin-right-small" name={button.icon} />
+                            <span className="dashboard-button-label">{button.getLabel({ format })}</span>
+                        </Button>
+                    </Col>
+                )
+            )
+        })}
+
+    </div>
+)
+
 
 export default class GeneratorDashboard extends Component {
 
@@ -29,16 +63,12 @@ export default class GeneratorDashboard extends Component {
         isItemsAreaOpen: false,
     }
 
-    toggleItemsArea = () => {
-        this.setState({ isItemsAreaOpen: !this.state.isItemsAreaOpen })
-    }
-
-    download = (clickedElement) => {
-        const { canvas, saveUserMemeToStorage, format, meme, isCollageMode } = this.props
+    download = () => {
+        const { canvas, saveUserMemeToStorage, format, meme, isCollageMode, updateMemeRating } = this.props
 
         helpers.sendDownloadedMemeAnalyticsEvent({ format, meme });
 
-        this.updateMemeRating();
+        updateMemeRating(this.props.meme);
 
         canvas.deactivateAll().renderAll()
 
@@ -46,6 +76,7 @@ export default class GeneratorDashboard extends Component {
         const zoom = helpers.isMobile() ? 2.5 : 1.3
 
         canvas.setZoom(zoom);
+
         // need to enlarge canvas otherwise the svg will be clipped
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
@@ -63,16 +94,17 @@ export default class GeneratorDashboard extends Component {
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
             canvas.setZoom(1);
             helpers.sendDownloadedMemeAnalyticsEvent({ isMobileApp: true, format, meme, isCollageMode });
-            saveUserMemeToStorage(memeData)
             return;
         }
 
-        clickedElement.href = canvas.toDataURL()
-        clickedElement.download = 'MemeKing'
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL();
+        link.download = 'MemeKing';
+        link.click();
 
 
        if (config.features.saveUserMemeToStorage ) {
-            this.props.saveUserMemeToStorage(memeData)
+            saveUserMemeToStorage(memeData)
         }
 
         //!* need to set back canvas dimensions *
@@ -85,122 +117,87 @@ export default class GeneratorDashboard extends Component {
         window.postMessage(base64)
     }
 
+    uploadFiles = acceptedFiles => {
+        const { canvas } = this.props;
 
-    updateMemeRating = () => {
-        if (!(this.props.type === 'upload')) {
-            this.props.updateMemeRating(this.props.meme)
-        }
+
+        _.forEach(acceptedFiles, file => {
+
+            const randomX = (Math.floor(Math.random() * canvas.width) + 1) /2;
+            const randomY = (Math.floor(Math.random() * canvas.height) + 1) / 2;
+
+            fabric.Image.fromURL(file.preview, function (image) {
+                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: 100 });
+                image.left = randomX
+                image.top = randomY;
+                canvas.add(image);
+                image.set({hoverCursor: "default"});
+                image.lockMovementX = false;
+                image.lockMovementY = false;
+                image.hasBorders = true;
+                image.selectable = true;
+                canvas.bringForward(image);
+
+            });
+        });
     }
 
-    addTextLine = () => {
-        this.TextFieldsContainer.addTextInput()
-    }
 
     sendImageToCropper = () => {
-        AnalyticsService.sendEvent('Cropping from inside Generator')
-        this.props.history.push({ pathname: '/cropper', state:  {image: _.get(this.props, 'meme.urlPath') }})
+        AnalyticsService.sendEvent('Cropping from inside Generator');
+        this.props.setUploadImage(this.props.canvas.toDataURL()).then(() => {
+            this.props.history.push({ pathname: '/cropper' });
+        })
     }
 
     changeFormat = () => {
 
-        const { history, format, location, type, meme, query } = this.props
+        const { history, format, location } = this.props
         const wantedFormat = (format === globalConstants.format.normal) ? globalConstants.format.dank : globalConstants.format.normal
         const wantedPath = location.pathname.replace(format, wantedFormat)
         const from = _.get(location, 'state.from')
 
-        if (from === 'search') {
-
-            const location = {
-                pathname: wantedPath,
-                state: {
-                    urlPath: meme.urlPath,
-                    from: 'search'
-                },
-                query
-            }
-
-            history.push(location);
-
-
-        } else if (type === 'upload' || from === 'upload') {
-
-            const location = {
-                pathname: wantedPath,
-                state: {
-                    urlPath: meme.urlPath,
-                    from: 'upload'
-                },
-                query
-            }
-
-            history.push(location);
-
-        } else {
-
-            history.push(wantedPath)
-
-        }
+        history.push(wantedPath)
     }
 
     render() {
 
-        const { format, canvas, isCanvasReady, style, isCleanSlateState, isFromUpload, isStandAlone, isFromSearch, currentMemeCategory, suggestions } = this.props
-        const FORMAT_BUTTON_TEXT = format === globalConstants.format.normal ? ' דאנק מימ' : " רגיל"
-        const ADD_TEXT_LINE = "טקסט"
-        const ADD_AN_ITEM = "פריטים"
-        const DOWNLOAD = "הורדה"
+        const { format, canvas, style, isCleanSlateState, isLoading } = this.props
 
-        const buttonsStyle = style ? { top: (parseInt(_.head(_.split(style.top, 'px'))) + 15) + 'px' } : {}
+        if (isLoading) {
+            return (
+                <GeneratorDashboardSkeleton style={style} />
+            )
+        }
 
-        const Buttons = ({ className }) => (
-            <div className={classNames("buttons-container", className)} style={buttonsStyle}>
-                <Button
-                    label={ADD_TEXT_LINE}
-                    icon="PLUS"
-                    onClick={this.addTextLine}
-                />
-
-                {!isCleanSlateState && (
-                <Button label="חיתוך התמונה"
-                        icon="SCISSORS"
-                        onClick={this.sendImageToCropper}/>
-                )}
-
-                <GeneratorUploader canvas={canvas}/>
-
-                <Button label={ADD_AN_ITEM} icon="SUNGLASSES"
-                        onClick={this.toggleItemsArea}
-                />
-
-                {!isCleanSlateState && (
-                    <Button label={FORMAT_BUTTON_TEXT}
-                        onClick={this.changeFormat}
-                        icon="RETWEET"
-                />)}
-
-                <Button label={DOWNLOAD}
-                        icon="DOWNLOAD"
-                        onClick={this.download}
-                />
-
-            </div>
+        const buttons = (
+            <Buttons
+                canvas={canvas}
+                isCleanSlateState={isCleanSlateState}
+                format={format}
+                actions={{
+                    download: this.download,
+                    uploadFiles: this.uploadFiles,
+                    addTextLine: () => this.TextFieldsContainer.addTextInput(),
+                    changeFormat: this.changeFormat,
+                    toggleItemsArea: () => this.setState({ isItemsAreaOpen: !this.state.isItemsAreaOpen }),
+                    sendImageToCropper: this.sendImageToCropper
+                }}
+            />
         )
 
         return (
-            <div style={style} className="box-generator-dashboard col-sm-12 col-lg-5">
+            <div style={style} className="box-generator-dashboard">
 
-                {helpers.isMobile() && <Buttons />}
+                {helpers.isMobile() && buttons}
 
-                {isCanvasReady && (
-                    <TextFieldsContainer ref={ elem => this.TextFieldsContainer = elem}
-                                         canvas={canvas}
-                                         format={format}
-                    />
-                )}
+                <TextFieldsContainer
+                    ref={ elem => this.TextFieldsContainer = elem}
+                    canvas={canvas}
+                    format={format}
+                />
 
-                {!helpers.isMobile() && <Buttons />}
-                {(isCanvasReady && helpers.isMobile() && !isFromSearch && !isStandAlone && !isFromUpload && !isCleanSlateState) && config.features.memeSuggestions &&
-                <MemeSuggestions  category={currentMemeCategory} suggestions={suggestions}  />}
+                {!helpers.isMobile() && buttons}
 
                 <GeneratorSignature className="visible-mobile"/>
 

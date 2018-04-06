@@ -1,5 +1,4 @@
 .memes-section {
-  padding-top : $meme-section-bar-height;
   position: relative;
   overflow-x: hidden;
   padding-left: 15px;
@@ -7,6 +6,7 @@
   justify-content:center;
   align-items: center;
   min-height: 100vh;
+  background: $black;
 
   @include mobile-medium {
     padding-top: $header-height ;
@@ -17,72 +17,6 @@
     display: flex;
     flex-flow: row-reverse wrap;
     margin-left: -8px; /* Adjustment for the gutter */
-    background: darken($mainColor, 5%);
   }
 
-
-}
-
-
-
-
-.box-meme-section-bar {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  left: 0;
-  box-shadow: -1px 14px 18px -10px rgba(0, 0, 0, 0.6);
-  transition: 0.5s;
-  z-index: 700;
-
-  &.pink {
-    background: $pink;
-  }
-
-  @include mobile-medium {
-    display: none;
-  }
-
-  .actions {
-
-    @include mobile-medium {
-      left: 10px;
-    }
-
-    & > .action {
-
-      &.glyphicon-zoom-in {
-        font-size: 18px;
-      }
-
-      &.glyphicon-zoom-out {
-        font-size: 12px;
-      }
-    }
-
-  }
-
-  .search-input-wrapper {
-    width: 280px;
-    margin-right: 10px;
-
-    input {
-      height: 40px;
-      box-shadow: inset 1px 1px 2px 0 #c9c9c9;
-
-    }
-
-    > label {
-      top: 16px;
-    }
-
-    .glyphicon-remove {
-      top: 10px;
-    }
-  }
 }

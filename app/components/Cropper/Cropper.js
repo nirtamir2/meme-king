@@ -1,11 +1,13 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import ReactCropper from 'react-cropper'
+import { connect } from 'react-redux';
 
 // components
 import Button from 'components/Button/Button'
 import GeneratorModal from 'components/GeneratorModal/GeneratorModal'
 import Title from 'components/Title/Title';
+import Col from 'react-bootstrap/lib/Col';
 
 // constants
 import globalConstants from 'constants/global'
@@ -14,9 +16,12 @@ import globalConstants from 'constants/global'
 import helpers from 'helpers/helpers'
 
 // services
-import WebViewService from 'services/webViewService'
+import WebViewService from 'services/webViewService';
 
-export default class Cropper extends Component {
+// actions
+import { setUploadImage } from 'actions/upload-actions/upload-actions';
+
+class Cropper extends Component {
 
     state = {
         uploadedImageFromWebView: ''
@@ -30,15 +35,11 @@ export default class Cropper extends Component {
 
 
     crop = () => {
-        const image = this.cropper.getCroppedCanvas().toDataURL()
-        const location = {
-            pathname: `/generator/upload/${globalConstants.format.normal}`,
-            state: {
-                urlPath: image,
-                from: 'upload'
-            }
-        }
-        this.props.history.push(location)
+
+        const image = this.cropper.getCroppedCanvas().toDataURL();
+        this.props.setUploadImage(image).then(() => {
+            this.props.history.push(`/generator/upload/${globalConstants.format.normal}`);
+        })
     }
 
     closeCropper = () => {
@@ -47,7 +48,7 @@ export default class Cropper extends Component {
 
     render() {
 
-        const image = ((_.get(this.props, 'location.state.image')) || this.state.uploadedImageFromWebView);
+        const image = ((_.get(this.props, 'image')) || this.state.uploadedImageFromWebView);
         const cropperStyle = {
             height: helpers.isMobile() ? 300 : 400,
             width: '70%',
@@ -72,7 +73,11 @@ export default class Cropper extends Component {
                     autoCropArea={1}
                 />
 
-                <Button onClick={this.crop} label="אישור" center className="center-block margin-top-md"/>
+                <Col xs={12} sm={4} smOffset={4}>
+                    <Button block onClick={this.crop} center className="center-block margin-top-md">
+                        אישור
+                    </Button>
+                </Col>
 
 
             </GeneratorModal>
@@ -80,3 +85,11 @@ export default class Cropper extends Component {
     }
 
 }
+
+function mapStateToProps(state) {
+    return {
+        image: _.head(_.get(state, 'upload.images'))
+    }
+}
+
+export default connect(mapStateToProps, { setUploadImage })(Cropper)

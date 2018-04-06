@@ -11,10 +11,7 @@ import { showNotification } from 'actions/notification-actions/notification-acti
 import MemeThumb from 'components/MemeThumb/MemeThumb'
 import BtnScrollToTop from '../../components/BtnScrollToTop/BtnScrollToTop';
 import Loader from 'components/Loader/Loader';
-import MemeSectionBar from 'components/MemeSectionBar/MemeSectionBar';
-import SearchInput from 'components/SearchInput/SearchInput';
-import Text from 'components/Text/Text';
-import CollageSwitcher from 'containers/CollageSwitcher/CollageSwitcher';
+import Toolbar from 'containers/Toolbar/Toolbar';
 
 // services
 import AnalyticsService from 'services/Analytics'
@@ -90,16 +87,15 @@ import AnalyticsService from 'services/Analytics'
         const arrayMemes = _.values(filteredMemes) || [];
         const sortedMemes = isPopularSection ? arrayMemes :  arrayMemes.sort((a, b) => new Date(b.date) - new Date(a.date));
         const memesToShow = (_.size(sortedMemes) > 0 ? sortedMemes : memes);
-        const isMemesBeenSearchedAndNoResultsFound =((_.size(this.state.searchValue) > 2) && (_.isEmpty(filteredMemes)))
 
         return (
             <div className="memes-section">
-                <MemeSectionBar>
-                    <CollageSwitcher className="margin-right-small pull-left" />
-                </MemeSectionBar>
+
+                {!isFetching && <Toolbar />}
+
                 {isFetching
                     ?
-                    <Loader/>
+                    <Loader theme="brand"/>
                     :
                     <div className="memes-container masonry">
                         {_.map(memesToShow, meme =>

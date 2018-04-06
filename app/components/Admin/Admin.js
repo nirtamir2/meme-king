@@ -7,13 +7,13 @@ import { fetchCategory } from 'actions/category-actions/category-actions'
 // components
 import Button from 'components/Button/Button'
 import Title from 'components/Title/Title';
+import EditMemeArea from 'components/Admin/MemeAdminEditor/MemeAdminEditor'
 
 // helpers
 import helpers from 'helpers/helpers'
 
 import menu from 'constants/menu'
 
-import EditMemeArea from 'components/MemeAdminEditor/MemeAdminEditor'
 
 // constants
 import constants from 'constants/global'
@@ -302,10 +302,7 @@ class Admin extends Component {
 }
 
 
-function mapStateToProps(state, ownProps) {
-
-    const { match: { params }, location, history } = ownProps
-
+function mapStateToProps(state) {
 
     return {
         category: state.category.memes

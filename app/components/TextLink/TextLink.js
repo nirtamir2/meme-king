@@ -13,8 +13,4 @@ const TextLink =  ({children, className, ...props}) => {
     )
 }
 
-TextLink.defaultProps = {
-    name: 'CLOSE'
-}
-
 export default TextLink;

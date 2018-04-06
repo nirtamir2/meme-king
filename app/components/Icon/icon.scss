@@ -51,6 +51,19 @@
 
   }
 
+  &.theme-pink-dark {
+    color: darken($pink, 20%);
+
+    &:hover {
+      color: darken($pink, 30%);
+    }
+
+    &:active {
+      color: darken($pink, 30%);
+    }
+
+  }
+
   &.theme-brand {
     color: lightblue;
     border-color: lightblue;
@@ -118,13 +131,21 @@
       color: white;
       cursor: pointer;
     }
+  }
 
-    &:active {
+  &.theme-black {
+    color: black;
+    border-color: black;
 
+    &:hover {
+      color: black;
+      cursor: pointer;
     }
   }
 
-
+  &.size-xs {
+    font-size: 10px;
+  }
 
   &.size-xl {
     font-size: 26px;
@@ -133,6 +154,10 @@
       height: 50px;
       width: 50px;
     }
+  }
+
+  &.size-xxl {
+    font-size: 38px;
   }
 
   &.size-super {

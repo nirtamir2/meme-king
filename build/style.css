@@ -698,7 +698,7 @@ header {
   position: fixed;
   width: 100%;
   align-items: center;
-  background: #f6f6f6;
+  background: $gray-background;
   justify-content: space-between;
   z-index: 8000;
   transition: 0.5s;
@@ -2104,7 +2104,7 @@ input[type=file] {
       padding-right: 0; } }
   @media only screen and (max-width: 939px) {
     .box-generator-dashboard .buttons-container {
-      background-color: #f6f6f6;
+      background-color: $gray-background;
       height: 79px;
       z-index: 9998;
       width: 100%;
@@ -2360,7 +2360,7 @@ input[type=file] {
   overflow: scroll;
   direction: ltr;
   padding: 25px;
-  background: #f6f6f6; }
+  background: $gray-background; }
   @media only screen and (max-width: 939px) {
     .box-generator-modal {
       border-radius: 0;
@@ -2431,7 +2431,7 @@ input[type=file] {
 
 .generator__canvas-wrapper {
   z-index: 8000;
-  background: #f6f6f6; }
+  background: $gray-background; }
   @media only screen and (max-width: 939px) {
     .generator__canvas-wrapper.with-shadow {
       border-bottom: none;

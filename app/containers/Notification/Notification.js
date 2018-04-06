@@ -11,7 +11,6 @@ import Modal from 'components/Modal/Modal';
 import Title from 'components/Title/Title';
 import Text from 'components/Text/Text';
 import logo from 'assets/images/logo.png';
-import Icon from 'components/Icon/Icon';
 
 export class Notification extends Component {
 

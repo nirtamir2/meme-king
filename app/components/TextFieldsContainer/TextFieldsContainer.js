@@ -6,8 +6,28 @@ import MemeTextField from 'components/MemeTextField/MemeTextField';
 
 export default class TextFieldsContainer extends Component {
 
-    state = {
-        textInputs: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            textInputs: [
+                <MemeTextField
+                    format={props.format || 'normalFormat'}
+                    key={_.uniqueId()}
+                    id={_.uniqueId()}
+                    remove={this.removeTextInput}
+                    canvas={props.canvas}
+                    position="top"
+                />,
+                <MemeTextField
+                    format={props.format || 'normalFormat'}
+                    key={_.uniqueId()}
+                    id={_.uniqueId()} r
+                    remove={this.removeTextInput}
+                    canvas={props.canvas}
+                    position="bottom"
+                />
+            ]
+        }
     }
 
     componentDidMount() {
@@ -25,6 +45,7 @@ export default class TextFieldsContainer extends Component {
                 this.resetTextInputs(nextProps.canvas)
             })
         }
+
 
     }
 

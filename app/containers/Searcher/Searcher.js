@@ -3,31 +3,26 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import classNames from 'classnames'
+import { withRouter } from 'react-router-dom';
 
 // actions
 import {fetchSearchResults, cleanSearchResults} from 'actions/search-actions/search-actions'
 
 // components
-import MemeThumb from 'components/MemeThumb/MemeThumb'
-import SearchInput from 'components/SearchInput/SearchInput'
+import AutoComplete from 'components/AutoComplete/AutoComplete';
+import Text from 'components/Text/Text';
+import Avatar from 'components/Avatar/Avatar';
 
 // constants
 import globalConstants from 'constants/global'
 
 // helpers
-import helpers from 'helpers/helpers'
-
-// services
-import AnalyticsService from 'services/Analytics'
+import helpers from 'helpers/helpers';
 
 class Searcher extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            active: false,
-            value: _.get(props, 'query.search') || ''
-        }
+    state = {
+        value: ''
     }
 
     clearResults = () => {
@@ -35,79 +30,55 @@ class Searcher extends Component {
         this.props.cleanSearchResults()
     }
 
-    onSearch = _.debounce((value) => {
-        if (value.length >= 3) {
-            this.props.fetchSearchResults(value)
-
-            this.handleGoogleAnalytics(value)
-            this.setState({ active: true })
-        } else if (!value) {
-            this.setState({ active: false })
-            this.props.cleanSearchResults(value)
-        } else {
-            this.setState({ active: false })
-        }
-
-    }, 300, false)
-
-    openGenerator = (e, meme) => {
-        e.preventDefault()
-        const location = {
-            pathname: `/search/generator/${meme.id}/${globalConstants.format.normal}`,
-            state: { urlPath: meme.urlPath, from : 'search' },
-            query: { search: this.state.value }
-        }
-        this.props.history.push(location)
+    openGenerator = (meme) => {
+        this.props.history.push(`/search/generator/${meme.id}/${globalConstants.format.normal}`);
     };
 
-    onChange = (value) => {
-        this.setState({ value })
-        this.onSearch(value)
+    loadOptions = (input, callback) => {
+
+        if (!input) {
+            callback();
+            return
+        }
+
+        if (input.length >= 3) {
+            this.props.fetchSearchResults(input).then(() => {
+                callback(null, { options:  _.map(this.props.searchResults, meme =>  _.assign({}, { label: meme.description }, meme)) });
+            });
+        }
+    };
+
+    getSearchResultComponent = ({ option }) => {
+        return (
+            <div onClick={() => this.openGenerator(option)} className="clearfix search-result-component">
+                <Avatar size="sm" imgSrc={option.thumbPath} className="pull-left margin-top-extra-small" />
+                <Text size="md" theme="black" className="pull-right margin-top-small">
+                    {_.truncate(option.description, { length: helpers.isMobile() ? 20 : 40})}
+                </Text>
+            </div>
+        )
     }
-
-    handleGoogleAnalytics = _.once((value) => {
-        AnalyticsService.sendEvent('Search', value)
-    })
-
 
     render() {
 
-        const { searchResults, isFetching, className } = this.props
-        const { active } = this.state
-        const showNoMemesMessage = (!_.size(searchResults) && active && !isFetching )
-
         return (
-            <div className={classNames('searcher', active && 'active', className)}>
-                <SearchInput onChange={this.onChange}
-                             clearResults={this.clearResults}
-                             isFetching={isFetching}
-                             hasResults={ _.size(searchResults)}
-                             value={this.state.value }
-                />
-                {!_.isEmpty(searchResults) && (
-                    <p className="number_of_memes_found margin-top-small">
-                        {`(${searchResults.length})`}
-                    </p>
-                )}
-                <div className={classNames('results-wrapper', { 'active': !_.isEmpty(searchResults) })} ref={node => this.resultsWrapper = node}>
-                    { _.map(searchResults, (meme) =>
-                        <MemeThumb
-                                   key={meme.id}
-                                   {...meme}
-                                   urlLinkDisabled
-                                   onClick={(e) => this.openGenerator(e, meme)}
-                                   category={meme.category}
-                        />
-                    )}
-
-                </div>
-                { showNoMemesMessage && (
-                    <p className="text-center margin-top-small">
-                        לא נמצאו ממים מתאימים
-                    </p>
-                )}
-            </div>
+            <AutoComplete.Async
+                id="state-select"
+                loadOptions={this.loadOptions}
+                name="selected-state"
+                placeholder="חיפוש"
+                searchPromptText="חיפוש מימ לפי מילת מפתח"
+                noResultsText="לא נמצאו ממים מתאימים"
+                loadingPlaceholder="מחפש ממים מתאימים..."
+                className="box-searcher"
+                clearable={true}
+                onBlurResetsInput={false}
+                value={this.state.value}
+                onChange={(value) => this.setState({ value })}
+                optionComponent={this.getSearchResultComponent}
+            />
         )
+
     }
 }
 
@@ -116,7 +87,6 @@ function mapStateToProps(state, ownProps) {
     return {
         searchResults: state.search.searchResults,
         isFetching: state.search.isFetching,
-        query: _.get(ownProps, 'history.location.query') || {},
     }
 }
 
@@ -124,4 +94,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ fetchSearchResults, cleanSearchResults }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Searcher)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Searcher))

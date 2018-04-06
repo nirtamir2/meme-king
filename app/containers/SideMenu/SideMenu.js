@@ -1,39 +1,35 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router';
-import classNames from 'classnames';
+import _ from 'lodash'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import classNames from 'classnames'
 
 // actions
-import { toggleSideBar } from 'actions/sidebar-actions/sidebar-actions';
+import { toggleSideBar } from 'actions/sidebar-actions/sidebar-actions'
 
 // components
-import MenuItem from "components/SideBarItem/SideBarItem";
+import MenuItem from "components/SideBarItem/SideBarItem"
 
 // constants
-import menu from 'constants/menu';
+import menu from 'constants/menu'
 
 // helpers
-import helpers from 'helpers/helpers';
-
-// assets
-import hava from 'assets/images/hava2.jpg';
+import helpers from 'helpers/helpers'
 
 export class SideMenu extends Component {
 
     onClose = () => {
-       if (helpers.isMobile()) {
-           this.props.toggleSideBar(false)
-       }
-    };
+        if (helpers.isMobile()) {
+            this.props.toggleSideBar(false)
+        }
+    }
 
     componentWillReceiveProps(nextProps) {
         if (helpers.isMobile()) {
-            const cover = document.querySelector(".cover");
-            cover.style.display = nextProps.isSideBarOpen ? 'block' : 'none';
+            const cover = document.querySelector(".cover")
+            cover.style.display = nextProps.isSideBarOpen ? 'block' : 'none'
             if (nextProps.isSideBarOpen) {
-                cover.onclick = () => nextProps.toggleSideBar(false);
+                cover.onclick = () => nextProps.toggleSideBar(false)
             } else {
                 cover.removeEventListener("onClick", () => nextProps.toggleSideBar(false))
             }
@@ -43,34 +39,34 @@ export class SideMenu extends Component {
 
     render = () => {
 
-        const { isSideBarOpen, isMemeSection } = this.props;
+        const { isSideBarOpen } = this.props
 
-        const { onClose } = this;
+        const { onClose } = this
 
-        const visibleMenu = _.filter({...menu}, item => item.visible);
+        const visibleMenu = _.filter({ ...menu }, item => item.visible)
 
         if (!isSideBarOpen) {
-            return null;
+            return null
         }
 
         return (
-            <div className={classNames('sidebar padding-top-small', { 'with-margin-top': isMemeSection })}>
-                {/*<div className="hidden-xs menu-headline" style={{ 'background-image': `url('${hava}')` }} />*/}
+            <div className={classNames('sidebar padding-top-small')}>
                 <ul>
                     {_.map(visibleMenu, menuItem => {
 
-                        const { title, path, linkText, icon } = menuItem;
+                        const { title, path, linkText, icon } = menuItem
 
                         return (
-                            <MenuItem onClick={onClose}
-                                      title={title}
-                                      path={path}
-                                      linkText={linkText || title}
-                                      icon={icon}
-                                      key={_.uniqueId()}
+                            <MenuItem
+                                onClick={onClose}
+                                title={title}
+                                path={path}
+                                linkText={linkText || title}
+                                icon={icon}
+                                key={_.uniqueId()}
                             />
                         )
-                        })
+                    })
                     }
                 </ul>
             </div>
@@ -80,15 +76,10 @@ export class SideMenu extends Component {
 
 
 function mapStateToProps(state, ownProps) {
-    const isMemeSection = _.includes(_.get(ownProps, 'location.pathname'), 'memes')
-   return {
+
+    return {
         isSideBarOpen: state.isSideBarOpen,
-       isMemeSection
-   }
+    }
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleSideBar }, dispatch)
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SideMenu))
+export default withRouter(connect(mapStateToProps, { toggleSideBar })(SideMenu))

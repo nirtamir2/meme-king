@@ -1,15 +1,11 @@
 .box-generator-signature {
 
-  left: 0;
-  right: 0;
-  bottom: 4px;
-  margin-top: 40px;
+  margin-top: 60px;
 
   @include mobile-medium{
     margin: 0 auto;
     max-width: 80%;
     position:static;
-
   }
 
   h4{

@@ -28,6 +28,14 @@
   justify-content: center;
   position: relative;
 
+
+  &.theme-brand {
+    .round-loader {
+      border: $mainColor 4pt solid;
+    }
+
+  }
+
   .round-loader {
     width: 50pt;
     height: 50pt;

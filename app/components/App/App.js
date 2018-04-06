@@ -34,9 +34,6 @@ export default class App extends Component {
 
         firebase.initializeApp(config);
 
-        // localStorage
-       LocalStorageService.init();
-
         // google analytics
         AnalyticsService.init();
         AnalyticsService.sendEvent(helpers.isMobile() ? 'Mobile Entrance' : 'Desktop entrance');

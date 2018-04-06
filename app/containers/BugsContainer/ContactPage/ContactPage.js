@@ -1,0 +1,76 @@
+import _ from 'lodash';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
+// components
+import Form from 'react-bootstrap/lib/Form'
+import Button from 'components/Button/Button'
+import Modal from 'components/Modal/Modal'
+import GeneratorModal from 'components/GeneratorModal/GeneratorModal';
+import { reduxForm, Field } from 'redux-form';
+import { renderField, renderColoredRadio } from 'components/FormComponents/FormComponents';
+import withModalNavigation from 'components/WithNavigationModal/WithNavigationModal';
+
+// actions
+import { sendMessageToAdmin, fetchUserMessages } from 'actions/user-messages-actions/user-messages-actions';
+
+// helpers
+import helpers from 'helpers/helpers';
+
+class ContactPage extends Component {
+
+    render() {
+
+        const { isLoading, history, handleSubmit, show, onHide } = this.props;
+
+        return (
+            <Modal onHide={onHide} show={show} className="box-contact-page">
+                <GeneratorModal.CloseButton onClick={onHide} />
+                <Form className="padding-top-large" onSubmit={handleSubmit}>
+                    <div className="inputs-wrapper">
+                        <Field className="block margin-top-small" component={renderField} name="name" placeholder="שם"/>
+                        <Field className="block margin-top-small" component={renderField}  name="email" placeholder="אי-מייל"/>
+                        <Field className="block margin-top-small" component={renderColoredRadio} value="bug"  type="radio" name="type" label="הצעה" />
+                        <Field className="block margin-top-small" component={renderColoredRadio} value="proposal"  type="radio" name="type" label="באג" />
+                        <Field
+                            className="block margin-top-small"
+                            componentClass="textarea"
+                            placeholder="הודעה"
+                            component={renderField}
+                            name="message"
+                            type="textarea"
+                        />
+                    </div>
+                    <Button className="margin-top-small" block isLoading={isLoading} type="submit"> שליחה</Button>
+                </Form>
+
+            </Modal>
+
+        )
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        isLoading: state.userMessages.isLoading
+    }
+}
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+    return {
+        ...ownProps,
+        ...stateProps,
+        ...dispatchProps,
+        onSubmit: data =>  {
+            return dispatchProps.sendMessageToAdmin({ ...data, date: new Date().toDateString() }).then(() => {
+                dispatchProps.fetchUserMessages();
+                ownProps.onHide();
+            });
+        }
+    }
+}
+
+const ContactForm = reduxForm({ form: 'suggestions' })(ContactPage);
+
+export default withModalNavigation(connect(mapStateToProps, { sendMessageToAdmin, fetchUserMessages }, mergeProps)(ContactForm), {  customUrl : '/bugs-page'})
+

@@ -3,36 +3,71 @@
   position: relative;
   z-index: 1;
 
-  .space-between {
+  .buttons-container {
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+
     @include mobile-medium {
-      flex-direction: column;
+      position:fixed;
+      width: 98%;
+      left: 0;
+      right: 0;
+      margin-right: auto;
+      margin-left: auto;
+      z-index: 9999;
+      justify-content: space-between;
+      display: flex;
+    }
+
+    .dashboard-button {
+      @include mobile-medium {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .box-icon {
+          margin-right: 0;
+        }
+
+        .dashboard-button-label {
+          margin-top: 5px;
+          font-size: 11px;
+        }
+      }
     }
   }
 
   @include mobile-medium {
-    top: 200px;
     padding-left: 0;
     padding-right: 0;
   }
-
-  .buttons-container {
-
-    @include mobile-medium {
-      background-color: $main-bg;
-      height: 79px;
-      z-index: 9998;
-      width: 100%;
-      padding: 15px 10px 3px 10px;
-      position: fixed;
-      display: flex;
-      left: 0;
-      margin-right: auto;
-      margin-left: auto;
-      right: 0;
-      justify-content: space-between;
-    }
-
-  }
-
 }
 
+
+.box-dashboard-skeleton {
+
+  .mock-text-field {
+    margin-bottom: 5px;
+
+    .mock-input {
+
+      height: 70px;
+      background: $white;
+      @include skeleton-animation($white);
+    }
+
+    .mock-buttons {
+      height: 50px;
+      background: $text-control-btn-color;
+      @include skeleton-animation($text-control-btn-color);
+    }
+  }
+
+  .box-cta-button {
+    @include skeleton-animation($mainColor);
+
+  }
+}

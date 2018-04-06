@@ -7,7 +7,7 @@ import items from './items';
 import helpers  from 'helpers/helpers';
 
 // components
-import ItemRemover from '../ItemsRemover/ItemRemover';
+import ItemRemover from './ItemRemover';
 
 export default class ItemsArea extends Component {
 

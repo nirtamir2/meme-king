@@ -1,42 +1,15 @@
 
 
-.searcher{
+.box-searcher{
 
+  .search-result-component {
+    border-bottom: 1px solid $lightGray;
+    padding: 10px;
+    cursor: pointer;
 
-  .results-wrapper{
-    display:flex;
-    justify-content:center;
-    flex-wrap: wrap;
-
-    &.active{
-      padding: 20px;
-
-    }
-
-    &.active{
-      min-height: 200px;
-      @include mobile-medium{
-        min-height: initial;
-      }
-    }
-
-  }
-
-  .search-input-wrapper {
-    margin: 0 auto
-  }
-
-  .meme-thumb{
-    img{
-      max-width: 100%;
+    &:hover {
+      background: $lightGray;
     }
   }
 
-  .number_of_memes_found{
-    text-align:center;
-    font-size:30px;
-    @include mobile-medium{
-      font-size:20px;
-    }
-  }
 }

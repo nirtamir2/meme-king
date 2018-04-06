@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react'
+import classNames from 'classnames';
 
 // constants
 import constants from './constants'
@@ -10,7 +11,8 @@ import colors from 'constants/colors';
 import helpers from 'helpers/helpers';
 
 // components
-import MemeTextFieldButton from 'components/MemeTextFieldButton/MemeTextFieldButton';
+import MemeTextFieldButtons from 'components/MemeTextField/MemeTextFieldButtons';
+import FormControl from 'components/FormControl/FormControl';
 
 const getSharedStyles =  (canvas, position, initialFontSize) => {
     return {
@@ -24,12 +26,38 @@ const getSharedStyles =  (canvas, position, initialFontSize) => {
 
 export default class MemeTextField extends Component {
 
-    constructor(props) {
-        super(props);
-        const { canvas, position } = props;
+    state = {
+
+        textValue: '',
+
+        fillStyle: {},
+        strokeStyle: {},
+
+        fillTextBox: {},
+
+        strokeTextBox: {},
+
+        isFocused: false
+    }
+
+    componentDidMount() {
+        const { canvas, position , format } = this.props;
+        const shouldStyleTextToDankFormat = (format === 'dankFormat' && position === 'top');
+        this.initializeField({ canvas, position });
+        if (shouldStyleTextToDankFormat) {
+            this.handleAction('toggleTextColor');
+            setTimeout(() => this.handleAction('makeFontLight'), 200);
+            setTimeout(() =>  this.styleBothLayers({textAlign: 'right'}), 500);
+            setTimeout(() =>  this.styleBothLayers({fontSize: helpers.isMobile() ?  24 : 28}), 700);
+            setTimeout(() =>  this.styleBothLayers({lineHeight: 1.3}), 90000)
+
+        }
+    }
+
+    initializeField = ({ canvas, position }) => {
         const initialFontSize = (canvas.width / 10);
 
-       const sharedStyles = getSharedStyles(canvas, position, initialFontSize);
+        const sharedStyles = getSharedStyles(canvas, position, initialFontSize);
 
         const strokeStyle = {
             ...constants.strokeStyle,
@@ -42,7 +70,7 @@ export default class MemeTextField extends Component {
             ...sharedStyles,
         };
 
-        this.state = {
+        this.setState({
 
             textValue: '',
 
@@ -52,27 +80,17 @@ export default class MemeTextField extends Component {
             fillTextBox: new fabric.Textbox("", {...fillStyle}),
 
             strokeTextBox: new fabric.Textbox("", {...strokeStyle})
-        }
-
-    }
-
-    componentDidMount() {
-        const shouldStyleTextToDankFormat = (this.props.format === 'dankFormat' && this.props.position === 'top');
-
-        if (shouldStyleTextToDankFormat) {
-            this.handleAction('toggleTextColor');
-            setTimeout(() => this.handleAction('makeFontLight'), 200);
-            setTimeout(() =>  this.styleBothLayers({textAlign: 'right'}), 500);
-            setTimeout(() =>  this.styleBothLayers({fontSize: helpers.isMobile() ?  24 : 28}), 700);
-            setTimeout(() =>  this.styleBothLayers({lineHeight: 1.3}), 90000)
-
-        }
+        });
     }
 
     componentWillUnmount(){
-        this.props.canvas.remove(this.state.fillTextBox);
-        this.props.canvas.remove(this.state.strokeTextBox);
-        this.setState({ textValue : ''});
+        const { canvas } = this.props;
+        if (canvas) {
+            canvas.remove(this.state.fillTextBox);
+            canvas.remove(this.state.strokeTextBox);
+            this.setState({ textValue : ''});
+        }
+
     }
 
     setCanvasDirection = (value) => {
@@ -105,7 +123,7 @@ export default class MemeTextField extends Component {
 
     addTextToCanvas = () => {
         const { canvas } = this.props
-        const { strokeTextBox, fillTextBox } = this.state
+        const { strokeTextBox, fillTextBox } = this.state;
         this.setState({ alreadyOnCanvas : true })
         canvas.add(strokeTextBox)
         canvas.add(fillTextBox)
@@ -232,6 +250,20 @@ export default class MemeTextField extends Component {
 
                 break;
             }
+
+            case 'makeFontWhite': {
+                this.styleBothLayers({'fill': colors.WHITE, shadow: 0}, {...this.state.strokeStyle, opacity: 0});
+
+
+                break;
+            }
+
+            case 'makeFontBlack': {
+                this.styleBothLayers({'fill': colors.BLACK, shadow: 0}, {...this.state.strokeStyle, opacity: 0});
+
+
+                break;
+            }
         }
 
         this.props.canvas.renderAll();
@@ -239,20 +271,28 @@ export default class MemeTextField extends Component {
 
     render() {
 
+        const { isFocused, fillStyle, textValue } = this.state;
+
         return (
 
-            <div className="box-meme-text-field clearfix">
+            <div className={classNames({ 'focused': isFocused }, 'box-meme-text-field clearfix')}>
 
-                <textarea placeholder={'טקסט'}
-                          value={this.state.textValue}
-                          onChange={event => this.onInputChange(event)}
-                          type='text'
-                          id={Math.random()}
+                <FormControl
+                    placeholder={'טקסט'}
+                    value={textValue}
+                    onChange={event => this.onInputChange(event)}
+                    type='text'
+                    theme="bottom-flat"
+                    className={'input-lg'}
+                    id={Math.random()}
+                    componentClass="textarea"
+                    onFocus={() => this.setState({ isFocused: true })}
+                    onBlur={() => this.setState({ isFocused: false })}
+                    dir="rtl"
                 />
 
-                <div className="flex">
-                    {_.map(buttons, button => <MemeTextFieldButton key={helpers.uniqueId()} {...button} onClick={() => this.handleAction(button.action)}/>)}
-                </div>
+
+                <MemeTextFieldButtons currentColor={fillStyle.fill} handleAction={this.handleAction} />
 
             </div>
         )
