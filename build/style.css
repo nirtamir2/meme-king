@@ -2936,11 +2936,8 @@ LABEL
         width: 98%;
         left: 0;
         right: 0;
-        margin-right: auto;
-        margin-left: auto;
         z-index: 9999;
-        justify-content: space-between;
-        display: flex; } }
+        display: block; } }
     @media only screen and (max-width: 939px) {
       .box-generator-dashboard .buttons-container .dashboard-button {
         display: flex;
