@@ -61,7 +61,6 @@ class MemeTextFieldButtons extends React.Component {
                     </Popover>}
                 >
                     <FieldButton
-                        active={this.state['toggleAlign']}
                         icon={'ALIGN_CENTER'}
                     />
                 </OverlayTrigger>
@@ -85,8 +84,7 @@ class MemeTextFieldButtons extends React.Component {
                     </Popover>
                 }>
 
-                    <FieldButton
-                        active={this.state['toggleFontWeight']}>
+                    <FieldButton>
                         <Icon name="BOLD"
                     />
                     </FieldButton>
@@ -113,7 +111,6 @@ class MemeTextFieldButtons extends React.Component {
                     <FieldButton
                         className={classNames({ 'black': currentColor === colors.BLACK })}
                         icon={'TEXT_COLOR'}
-                        active={this.state['toggleColor']}
                     />
                 </OverlayTrigger>
 
@@ -135,7 +132,6 @@ class MemeTextFieldButtons extends React.Component {
                 }>
                     <FieldButton
                         icon={'TEXT_SIZE'}
-                        active={this.state['toggleSize']}
                     />
                 </OverlayTrigger>
 

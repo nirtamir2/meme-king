@@ -2,7 +2,6 @@
 import collageConstants  from './collage-actions-constants';
 const { SET_COLLAGE_STATE, ADD_OR_REMOVE_MEME_FROM_COLLAGE, RESET_COLLAGE_MEMES } = collageConstants;
 import { showNotification } from 'actions/notification-actions/notification-actions';
-import LocalStorageService from 'services/LocalStorage';
 
 export function setCollageMode({ isCollageMode }) {
 

@@ -7,9 +7,6 @@ import config from 'config/config';
 import dataActionConstants from './category-actions-constants';
 import constants from 'constants/global';
 
-// services
-import localStorageService from 'services/LocalStorage';
-
 export function fetchCategory(category) {
 
     return (dispatch) => {
@@ -40,13 +37,6 @@ export function fetchSingleMeme(category, id) {
             .catch(error => dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_FAILED, error : error}));
 
     };
-}
-
-export function fetchMyMemes() {
-    return {
-        payload: localStorageService.getItem('myMemes'),
-        type: dataActionConstants.FETCH_MY_MEMES
-    }
 }
 
 export function fetchWeeklyPopularMemes() {

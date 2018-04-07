@@ -14,15 +14,11 @@ import withModalNavigation from 'components/WithNavigationModal/WithNavigationMo
 // actions
 import { sendMessageToAdmin, fetchUserMessages } from 'actions/user-messages-actions/user-messages-actions';
 
-// helpers
-import helpers from 'helpers/helpers';
-
 class ContactPage extends Component {
 
     render() {
 
         const { handleSubmit, submitting, show, onHide } = this.props;
-        console.log(submitting)
         return (
             <Modal onHide={onHide} show={show} className="box-contact-page">
                 <GeneratorModal.CloseButton onClick={onHide} />
@@ -62,8 +58,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         ...stateProps,
         ...dispatchProps,
         onSubmit: data =>  {
-
             return dispatchProps.sendMessageToAdmin({ ...data, date: new Date().toDateString() }).then(() => {
+                dispatchProps.fetchUserMessages();
                 ownProps.onHide();
             });
         }

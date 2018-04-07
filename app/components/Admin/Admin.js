@@ -8,9 +8,11 @@ import { fetchCategory } from 'actions/category-actions/category-actions'
 import Button from 'components/Button/Button'
 import Title from 'components/Title/Title';
 import EditMemeArea from 'components/Admin/MemeAdminEditor/MemeAdminEditor'
+import Dropzone from 'components/DropZone/DropZone';
 
 // helpers
 import helpers from 'helpers/helpers'
+import { blobToString } from 'containers/Generator/generator-helpers';
 
 import menu from 'constants/menu'
 
@@ -22,7 +24,9 @@ const LoginArea = ({ onChange, value, onSubmit }) => {
     return (
         <form onSubmit={onSubmit} className="login-area">
             <input type="password" value={value} onChange={onChange}/>
-            <Button center className="login-btn" onClick={onSubmit} label="Login"/>
+            <Button center className="login-btn" onClick={onSubmit} >
+                Login
+            </Button>
         </form>
     )
 }
@@ -38,22 +42,10 @@ class Admin extends Component {
         filter: 'none'
     }
 
-    bindUploadEvents() {
-        document.getElementById('images').addEventListener('change', this.handleFileSelect, false)
-        File.prototype.convertToBase64 = (callback) => {
-            this.reader = new FileReader()
-            this.reader.onloadend = function (e) {
-                callback(e.target.result, e.target.error)
-            }
-        }
-    }
-
     componentWillReceiveProps(nextProps) {
         if (this.props.category !== nextProps.category) {
             this.setState({ category: nextProps.category })
         }
-
-
     }
 
 
@@ -79,30 +71,23 @@ class Admin extends Component {
 
     }
 
-    handleFileSelect = (event) => {
-        const files = event.target.files
-        const self = this// FileList object
-        // Loop through the FileList and render image files as thumbnails.
-        for (let i = 0, f; f = files[i]; i++) {
-            // Only process image files.
-            if (!f.type.match('image.*')) {
-                continue
-            }
-            const reader = new FileReader()
-            // Closure to capture the file information.
-            reader.onload = (function (theFile) {
-                return async function (e) {
-                    const meme = await self.createMemeObj(e.target.result)
-                    self.setState({
-                        memes: { ...self.state.memes, [meme.id]: meme },
+    handleFileSelect = async (selectedFiles) => {
+        const promisesToBase64 = _.map(selectedFiles,file => blobToString({ blob: file }) );
+
+        Promise.all(promisesToBase64).then(images => {
+            const promises = _.map(images, image => this.createMemeObj(image));
+
+            Promise.all(promises).then(memes => {
+                _.forEach(memes, meme => {
+                    this.setState({
+                        memes: { ...this.state.memes, [meme.id]: meme },
                         editMode: false,
                         userMemes: false
                     })
-                }
-            })(f)
-            reader.readAsDataURL(f)
-        }
-        this.input.value = ''
+                })
+            })
+
+        })
 
     }
 
@@ -131,11 +116,9 @@ class Admin extends Component {
     onSubmit = () => {
         if (this.state.anigma === '~memeking07') {
             this.setState({ isAuthenticated: true, isSuperAdmin: true }, () => {
-                this.bindUploadEvents()
             })
         } else if (this.state.anigma === 'admin1234') {
             this.setState({ isAuthenticated: true }, () => {
-                this.bindUploadEvents()
             })
         }
     }
@@ -195,25 +178,26 @@ class Admin extends Component {
 
                 <div className="flex space-between dashboard">
                     <div>
-                        <input ref={node => this.input = node} type="file" name="files[]" id="images" className="inputfile"
-                               multiple/>
-                        <Button label={'upload'}
-                                onClick={_.noop}
-                                icon="UPLOAD"
-                                htmlFor="images"
-                                size="sm"
-                                center
-                        />
+                        <Button
+                            onDrop={this.handleFileSelect}
+                            size="sm"
+                            componentClass={Dropzone}
+                            center
+                            multiple
+                        >
+                            upload
+                        </Button>
                         <h6 className="text-center" onClick={() => this.setState({ memes: {} })}>clear meme editors</h6>
                     </div>
                     {isSuperAdmin && (
                         <div>
-                            <Button label={'personal messages'}
-                                    onClick={this.getPersonalMessages}
-                                    icon="CHAT"
-                                    size="sm"
-                                    center
-                            />
+                            <Button
+                                onClick={this.getPersonalMessages}
+                                size="sm"
+                                center
+                            >
+                                personal messages
+                            </Button>
                             <h6 className="text-center" onClick={this.clearPersonalMessages}> clear personal messages</h6>
 
                         </div>
@@ -221,12 +205,13 @@ class Admin extends Component {
 
                     {isSuperAdmin && (
                         <div>
-                            <Button label={'user memes'}
-                                    onClick={this.getUserMemes}
-                                    icon="glyphicon glyphicon-user"
-                                    size="sm"
-                                    center
-                            />
+                            <Button
+                                onClick={this.getUserMemes}
+                                size="sm"
+                                center
+                            >
+                                user memes
+                            </Button>
                             <h6 className="text-center" onClick={this.clearUserMemes}> clear user memes </h6>
                         </div>
                     )}

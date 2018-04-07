@@ -10,7 +10,6 @@ import MainView from 'components/MainView/MainView';
 import Notification from 'containers/Notification/Notification';
 
 // services
-import LocalStorageService from 'services/LocalStorage';
 import AnalyticsService from 'services/Analytics';
 import SentryService from 'services/SentryService';
 import WebViewService from 'services/webViewService';

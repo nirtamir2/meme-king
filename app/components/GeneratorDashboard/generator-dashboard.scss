@@ -45,7 +45,13 @@
 .box-dashboard-skeleton {
 
   .mock-text-field {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    border: 2px solid transparent;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    overflow: hidden;
 
     .mock-input {
 
@@ -56,8 +62,8 @@
 
     .mock-buttons {
       height: 50px;
-      background: $text-control-btn-color;
-      @include skeleton-animation($text-control-btn-color);
+      background: $lightGray;
+      @include skeleton-animation($lightGray);
     }
   }
 

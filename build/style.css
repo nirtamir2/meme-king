@@ -1673,8 +1673,6 @@ header {
     background: #cfcfcf; }
   .box-meme-admin-editor select {
     width: 100%; }
-  .box-meme-admin-editor .danger {
-    background: #ED5E68; }
   .box-meme-admin-editor .description-container {
     display: flex;
     flex-direction: column; }
@@ -1691,9 +1689,6 @@ header {
       width: 200px; }
   @media only screen and (max-width: 939px) {
     .box-meme-admin-editor .utils {
-      width: 100%; } }
-  @media only screen and (max-width: 939px) {
-    .box-meme-admin-editor .utils .box-cta-button {
       width: 100%; } }
 
 .box-admin {
@@ -2956,7 +2951,13 @@ LABEL
       padding-right: 0; } }
 
 .box-dashboard-skeleton .mock-text-field {
-  margin-bottom: 5px; }
+  margin-bottom: 10px;
+  border: 2px solid transparent;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  overflow: hidden; }
   .box-dashboard-skeleton .mock-text-field .mock-input {
     height: 70px;
     background: #fff;
@@ -2979,7 +2980,7 @@ LABEL
     transform: translate3d(100%, 0, 0); } }
   .box-dashboard-skeleton .mock-text-field .mock-buttons {
     height: 50px;
-    background: #637DCF;
+    background: #f1f1f1;
     position: relative;
     overflow: hidden; }
     .box-dashboard-skeleton .mock-text-field .mock-buttons::after {
@@ -2989,7 +2990,7 @@ LABEL
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, #637DCF, #7a91d6, #637DCF);
+      background: linear-gradient(90deg, #f1f1f1, white, #f1f1f1);
       animation: progress 1s ease-in-out infinite; }
 
 @keyframes progress {

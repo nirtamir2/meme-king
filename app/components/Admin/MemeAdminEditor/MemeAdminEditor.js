@@ -8,6 +8,7 @@ import menu from 'constants/menu';
 
 // components
 import Button from 'components/Button/Button';
+import FormControl from 'components/FormControl/FormControl';
 
 // config
 import config from 'config/config';
@@ -69,7 +70,13 @@ export default class Editor extends Component {
                 <img src={urlPath} style={{width: '350px'}} />
 
                 <div className="description-container">
-                        <textarea style={{ color: 'black' }} value={this.state.meme.description} rows="5" onChange={this.onDescriptionChange} />
+                        <FormControl
+                            componentClass="textarea"
+                            style={{ color: 'black' }}
+                            value={this.state.meme.description}
+                            rows="5"
+                            onChange={this.onDescriptionChange}
+                        />
                     </div>
                 <div className="utils">
                     {!this.props.editMode && (
@@ -79,8 +86,12 @@ export default class Editor extends Component {
                             })}
                         </select>
                     )}
-                    <Button onClick={this.onSave} label="Save meme"/>
-                    <Button onClick={this.onDelete} className="danger" label="Delete meme"/>
+                    <Button className="margin-top-small" block bsStyle="success" onClick={this.onSave} >
+                        Save meme
+                    </Button>
+                    <Button className="margin-top-small" block onClick={this.onDelete} bsStyle="danger" >
+                        Delete meme
+                    </Button>
                 </div>
             </div>
         )
