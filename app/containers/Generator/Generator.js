@@ -199,16 +199,16 @@ class Generator extends Component {
         } = this.props
 
 
-        const dashboardStyle = { top: helpers.isMobile() ? canvasHeight : null };
+        const dashboardStyle = { top: helpers.isMobile() ? '250px' : null };
 
         return (
             <GeneratorModal onClose={this.closeGenerator} className="generator">
 
                 {!helpers.isMobile() && (
                     <span>
-                    <Title className="text-center margin-bottom-small" direction="rtl">
-                        מחולל הממים
-                    </Title>
+                        <Title className="text-center margin-bottom-small" direction="rtl">
+                            מחולל הממים
+                        </Title>
                         <Title size="h4" className="text-center margin-bottom-medium" direction="rtl">
                             {_.toUpper(_.get(meme, 'description'))}
                         </Title>
