@@ -5,9 +5,6 @@ import classNames from 'classnames'
 //helpers
 import helpers from 'helpers/helpers';
 
-// components
-import Col from 'react-bootstrap/lib/Col';
-
 class Canvas extends Component {
 
     state = {
@@ -20,8 +17,11 @@ class Canvas extends Component {
         const canvas = new fabric.Canvas('c', { allowTouchScrolling: true });
 
         this.setState({ canvas }, () => {
+
             this.props.setCanvas(canvas);
-            if(helpers.isMobile()) {
+
+            if (helpers.isMobile()) {
+
                 this.disableWindowScrollOnDrag();
             }
         });

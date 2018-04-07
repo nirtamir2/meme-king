@@ -21,8 +21,8 @@ class ContactPage extends Component {
 
     render() {
 
-        const { isLoading, history, handleSubmit, show, onHide } = this.props;
-
+        const { handleSubmit, submitting, show, onHide } = this.props;
+        console.log(submitting)
         return (
             <Modal onHide={onHide} show={show} className="box-contact-page">
                 <GeneratorModal.CloseButton onClick={onHide} />
@@ -30,8 +30,8 @@ class ContactPage extends Component {
                     <div className="inputs-wrapper">
                         <Field className="block margin-top-small" component={renderField} name="name" placeholder="שם"/>
                         <Field className="block margin-top-small" component={renderField}  name="email" placeholder="אי-מייל"/>
-                        <Field className="block margin-top-small" component={renderColoredRadio} value="bug"  type="radio" name="type" label="הצעה" />
-                        <Field className="block margin-top-small" component={renderColoredRadio} value="proposal"  type="radio" name="type" label="באג" />
+                        <Field className="block margin-top-small" component={renderColoredRadio} value="proposal"  type="radio" name="type" label="הצעה" />
+                        <Field className="block margin-top-small" component={renderColoredRadio} value="bug" type="radio" name="type" label="באג" />
                         <Field
                             className="block margin-top-small"
                             componentClass="textarea"
@@ -41,7 +41,7 @@ class ContactPage extends Component {
                             type="textarea"
                         />
                     </div>
-                    <Button className="margin-top-small" block isLoading={isLoading} type="submit"> שליחה</Button>
+                    <Button className="margin-top-small" block isLoading={submitting} type="submit"> שליחה</Button>
                 </Form>
 
             </Modal>
@@ -62,8 +62,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         ...stateProps,
         ...dispatchProps,
         onSubmit: data =>  {
+
             return dispatchProps.sendMessageToAdmin({ ...data, date: new Date().toDateString() }).then(() => {
-                dispatchProps.fetchUserMessages();
                 ownProps.onHide();
             });
         }

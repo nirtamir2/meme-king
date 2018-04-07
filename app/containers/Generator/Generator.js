@@ -127,11 +127,8 @@ class Generator extends Component {
             canvas.add(image);
 
             image.set(formatData.image.style);
-            const height = canvas.height;
 
-            debugger;
-
-            this.setState({ isLoading: false , canvasHeight: `${height}px` })
+            this.setState({ isLoading: false , canvasHeight: `${canvas.height}px` })
 
             if(format !== 'dankFormat') {
                 this.addWaterMark();

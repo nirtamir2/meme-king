@@ -24,7 +24,8 @@ import { setUploadImage } from 'actions/upload-actions/upload-actions';
 class Cropper extends Component {
 
     state = {
-        uploadedImageFromWebView: ''
+        uploadedImageFromWebView: '',
+        isLoading: false
     }
 
     componentWillMount() {
@@ -36,10 +37,17 @@ class Cropper extends Component {
 
     crop = () => {
 
-        const image = this.cropper.getCroppedCanvas().toDataURL();
-        this.props.setUploadImage(image).then(() => {
-            this.props.history.push(`/generator/upload/${globalConstants.format.normal}`);
-        })
+        this.setState({ isLoading: true }, () => {
+            const image = this.cropper.getCroppedCanvas().toDataURL();
+
+            _.delay(() => {
+                this.props.setUploadImage(image).then(() => {
+                    this.props.history.push(`/generator/upload/${globalConstants.format.normal}`);
+                })
+            }, 500);
+        });
+
+
     }
 
     closeCropper = () => {
@@ -47,6 +55,8 @@ class Cropper extends Component {
     }
 
     render() {
+
+        const { isLoading } = this.state;
 
         const image = ((_.get(this.props, 'image')) || this.state.uploadedImageFromWebView);
         const cropperStyle = {
@@ -74,7 +84,7 @@ class Cropper extends Component {
                 />
 
                 <Col xs={12} sm={4} smOffset={4}>
-                    <Button block onClick={this.crop} center className="center-block margin-top-md">
+                    <Button isLoading={isLoading} block onClick={this.crop} center className="center-block margin-top-md">
                         אישור
                     </Button>
                 </Col>
