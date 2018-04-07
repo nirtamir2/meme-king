@@ -196,10 +196,14 @@ class Generator extends Component {
             isWebView,
             isCollageMode,
             setUploadImage
-        } = this.props
+        } = this.props;
+
+        const canvasHeightComputed = _.get(this, 'canvasWrapper.getHeight') && _.isFunction(_.get(this, 'canvasWrapper.getHeight'))
+            ?  `${this.canvasWrapper.getHeight() + 50}px`
+            : null;
 
 
-        const dashboardStyle = { top: helpers.isMobile() ? canvasHeight : null };
+        const dashboardStyle = { top: helpers.isMobile() ? canvasHeightComputed : null };
 
         return (
             <GeneratorModal onClose={this.closeGenerator} className="generator">

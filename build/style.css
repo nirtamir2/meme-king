@@ -2936,7 +2936,7 @@ LABEL
         width: 98%;
         left: 0;
         right: 0;
-        z-index: 9999;
+        z-index: 9999 !important;
         display: block; } }
     @media only screen and (max-width: 939px) {
       .box-generator-dashboard .buttons-container .dashboard-button {
