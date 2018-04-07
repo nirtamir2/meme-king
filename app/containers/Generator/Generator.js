@@ -198,12 +198,7 @@ class Generator extends Component {
             setUploadImage
         } = this.props;
 
-        const canvasHeightComputed = _.get(this, 'canvasWrapper.getHeight') && _.isFunction(_.get(this, 'canvasWrapper.getHeight'))
-            ?  `${this.canvasWrapper.getHeight() + 50}px`
-            : null;
-
-
-        const dashboardStyle = { top: helpers.isMobile() ? canvasHeightComputed : null };
+        const dashboardStyle = { top: helpers.isMobile() ? canvasHeight : null };
 
         return (
             <GeneratorModal onClose={this.closeGenerator} className="generator">

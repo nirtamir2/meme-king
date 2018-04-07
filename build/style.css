@@ -2936,10 +2936,9 @@ LABEL
     @media only screen and (max-width: 939px) {
       .box-generator-dashboard .buttons-container {
         width: 98%;
-        left: 0;
-        right: 0;
-        z-index: 9999 !important;
-        display: block; } }
+        z-index: 9999;
+        justify-content: space-between;
+        display: flex; } }
     @media only screen and (max-width: 939px) {
       .box-generator-dashboard .buttons-container .dashboard-button {
         display: flex;
