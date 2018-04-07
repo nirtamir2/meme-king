@@ -199,7 +199,7 @@ class Generator extends Component {
         } = this.props
 
 
-        const dashboardStyle = { top: helpers.isMobile() ? '250px' : null };
+        const dashboardStyle = { top: helpers.isMobile() ? canvasHeight : null };
 
         return (
             <GeneratorModal onClose={this.closeGenerator} className="generator">
