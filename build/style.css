@@ -1784,8 +1784,11 @@ header {
 @media only screen and (max-width: 939px) {
   .text-fields-container {
     position: relative;
-    top: 70px;
-    margin-bottom: 90px; } }
+    top: 10px;
+    margin-bottom: 90px;
+    display: flex;
+    flex-direction: column;
+    width: 100%; } }
 
 .box-generator-modal {
   position: fixed;
@@ -2932,7 +2935,6 @@ LABEL
     flex-direction: row-reverse; }
     @media only screen and (max-width: 939px) {
       .box-generator-dashboard .buttons-container {
-        position: fixed;
         width: 98%;
         left: 0;
         right: 0;

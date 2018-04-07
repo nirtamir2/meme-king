@@ -10,7 +10,6 @@
     flex-direction: row-reverse;
 
     @include mobile-medium {
-      position:fixed;
       width: 98%;
       left: 0;
       right: 0;

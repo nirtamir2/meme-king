@@ -2,8 +2,11 @@
 
   @include mobile-medium {
     position: relative;
-    top: 70px;
+    top: 10px;
     margin-bottom: 90px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 
 }
