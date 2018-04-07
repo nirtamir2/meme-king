@@ -57,6 +57,7 @@ module.exports =  function({ env }) {
         plugins: [
             new webpack.DefinePlugin({
                 'ENV': JSON.stringify(env),
+                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
             }),
             isProduction ? new UglifyJSPlugin() : _.noop,
             new ExtractTextPlugin('style.css'),
