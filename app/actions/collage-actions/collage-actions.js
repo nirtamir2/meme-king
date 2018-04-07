@@ -7,11 +7,8 @@ export function setCollageMode({ isCollageMode }) {
 
     return dispatch => {
 
-        const alreadySeenModalMessage = LocalStorageService.getItem('seenCollageMessage');
-
         if (isCollageMode) {
             dispatch(showNotification({ message: 'מצב קולאז׳ מופעל, בחרו עד 4 ממים לשילוב יחדיו' }));
-           // LocalStorageService.setItem('seenCollageMessage', 'true')
         }
 
         return  dispatch({
