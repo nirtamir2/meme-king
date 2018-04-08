@@ -44,11 +44,10 @@ export default class MemeTextField extends Component {
         const shouldStyleTextToDankFormat = (format === 'dankFormat' && position === 'top');
         this.initializeField({ canvas, position });
         if (shouldStyleTextToDankFormat) {
-            this.handleAction('toggleTextColor');
-            setTimeout(() => this.handleAction('makeFontLight'), 200);
-            setTimeout(() =>  this.styleBothLayers({textAlign: 'right'}), 500);
-            setTimeout(() =>  this.styleBothLayers({fontSize: helpers.isMobile() ?  24 : 28}), 700);
-            setTimeout(() =>  this.styleBothLayers({lineHeight: 1.3}), 90000)
+            this.handleAction('makeFontBlack');
+            setTimeout(() =>  this.styleBothLayers({textAlign: 'right'}, {textAlign: 'right'}), 500);
+            setTimeout(() =>  this.styleBothLayers({fontSize: helpers.isMobile() ?  24 : 28}, {fontSize: helpers.isMobile() ?  24 : 28}), 700);
+            setTimeout(() =>  this.styleBothLayers({lineHeight: 1.3}, {lineHeight: 1.3}), 90000)
 
         }
     }
