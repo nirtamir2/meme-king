@@ -1,6 +1,6 @@
 
 import helpers from 'helpers/helpers';
-const shadow = helpers.isMobile() ? 'black 2px 2px 5px' : 'black 2px 2px 10px';
+export const shadow = helpers.isMobile() ? 'black 2px 2px 5px' : 'black 2px 2px 10px';
 
 export default {
 

@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 // constants
 import constants from './constants'
-import buttons from './buttons';
 import colors from 'constants/colors';
 
 // helpers
@@ -252,16 +251,17 @@ export default class MemeTextField extends Component {
             }
 
             case 'makeFontWhite': {
-                this.styleBothLayers({'fill': colors.WHITE, shadow: 0}, {...this.state.strokeStyle, opacity: 0});
-
-
+                this.styleBothLayers({
+                        fill: colors.WHITE ,
+                        shadow: constants.fillStyle.shadow,
+                        fontFamily: constants.fillStyle.fontFamily,
+                        fontWeight: 700
+                    }, {...this.state.strokeStyle, opacity: 1 });
                 break;
             }
 
             case 'makeFontBlack': {
-                this.styleBothLayers({'fill': colors.BLACK, shadow: 0}, {...this.state.strokeStyle, opacity: 0});
-
-
+                this.styleBothLayers({'fill': colors.BLACK, shadow: 0 , 'fontFamily': 'Open Sans Hebrew', fontWeight: 100 }, {...this.state.strokeStyle, opacity: 0});
                 break;
             }
         }

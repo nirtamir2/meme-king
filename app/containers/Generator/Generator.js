@@ -28,7 +28,7 @@ import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/me
 import { fetchSingleMeme } from 'actions/category-actions/category-actions'
 import { fetchMemeSuggestions } from 'actions/suggestions-actions/suggestions-actions';
 import { setUploadImage } from 'actions/upload-actions/upload-actions';
-import { resetCollageMemes } from 'actions/collage-actions/collage-actions';
+import { setCollageMode } from 'actions/collage-actions/collage-actions';
 
 class Generator extends Component {
 
@@ -66,6 +66,7 @@ class Generator extends Component {
 
 
     createCleanSlate = () => {
+
         const { canvas } = this.state;
 
         const DISTANCE = helpers.isMobile() ? 30 : 140;
@@ -96,7 +97,7 @@ class Generator extends Component {
         const { urlPath } = meme || {};
         const { canvas } = this.state;
 
-        if(!canvas) {
+        if (!canvas) {
             return;
         }
 
@@ -141,19 +142,15 @@ class Generator extends Component {
 
 
     closeGenerator = () => {
-        const { isCollageMode, resetCollageMemes } = this.props;
-        const memeCategory = _.get(this.props, 'category')
-        const wantedPath = memeCategory ? `/memes/${memeCategory}` : `/`
-        const location = {
-            pathname: wantedPath,
-            query: this.props.query || {}
-        }
+        const { isCollageMode, setCollageMode, category } = this.props;
+
+        const wantedPath = category ? `/memes/${category}` : `/`
 
         if (isCollageMode) {
-            resetCollageMemes();
+            setCollageMode({ isCollageMode: false });
         }
 
-        this.props.history.push(location);
+        this.props.history.push(wantedPath);
     }
 
     setCanvas = canvas => {
@@ -281,7 +278,6 @@ function mapStateToProps(state, ownProps) {
         location,
         isUpload,
         isWebView: WebViewService.isWebView,
-        query: location.query,
         isCleanSlateState: (params.type === 'clean-slate'),
         suggestions: _.get(state, 'suggestions.memes'),
         collageMemes: _.get(state, 'collage.memes', {})
@@ -300,4 +296,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps, { fetchSingleMeme, setUploadImage, saveUserMemeToStorage, resetCollageMemes, updateMemeRating, fetchMemeSuggestions }, mergeProps)(Generator)
+export default connect(mapStateToProps, { fetchSingleMeme, setUploadImage, saveUserMemeToStorage, setCollageMode, updateMemeRating, fetchMemeSuggestions }, mergeProps)(Generator)

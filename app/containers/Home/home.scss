@@ -14,13 +14,13 @@
   }
 
   .personal-messages-link {
+
     display: block;
-    position: absolute;
-    @include absolute-center();
-    bottom: 50px;
+    margin-top: 80px;
 
     @include mobile-medium {
-
+      position: absolute;
+      @include absolute-center();
       bottom: 20px;
     }
   }

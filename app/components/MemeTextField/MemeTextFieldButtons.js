@@ -65,30 +65,30 @@ class MemeTextFieldButtons extends React.Component {
                     />
                 </OverlayTrigger>
 
-                <OverlayTrigger
-                    onClick={this.toggleActive('toggleFontWeight')}
-                    rootClose={true}
-                    placement="bottom"
-                    trigger={['click']}
-                    onExit={this.toggleActive('toggleFontWeight')}
-                    overlay={
-                    <Popover theme="navy" id="weight-popover">
-                        <Row>
-                            <Col  onClick={() => handleAction('makeFontLight')} xs={6} className="clickable text-center">
-                                <Icon size="xs" theme="white" name="A" />
-                            </Col>
-                            <Col onClick={() => handleAction('makeFontBold')} xs={6} className="clickable text-center weight-600">
-                                <Icon theme="white" name="A" />
-                            </Col>
-                        </Row>
-                    </Popover>
-                }>
+                {/*<OverlayTrigger*/}
+                    {/*onClick={this.toggleActive('toggleFontWeight')}*/}
+                    {/*rootClose={true}*/}
+                    {/*placement="bottom"*/}
+                    {/*trigger={['click']}*/}
+                    {/*onExit={this.toggleActive('toggleFontWeight')}*/}
+                    {/*overlay={*/}
+                    {/*<Popover theme="navy" id="weight-popover">*/}
+                        {/*<Row>*/}
+                            {/*<Col  onClick={() => handleAction('makeFontLight')} xs={6} className="clickable text-center">*/}
+                                {/*<Icon size="xs" theme="white" name="A" />*/}
+                            {/*</Col>*/}
+                            {/*<Col onClick={() => handleAction('makeFontBold')} xs={6} className="clickable text-center weight-600">*/}
+                                {/*<Icon theme="white" name="A" />*/}
+                            {/*</Col>*/}
+                        {/*</Row>*/}
+                    {/*</Popover>*/}
+                {/*}>*/}
 
-                    <FieldButton>
-                        <Icon name="BOLD"
-                    />
-                    </FieldButton>
-                </OverlayTrigger>
+                    {/*<FieldButton>*/}
+                        {/*<Icon name="BOLD"*/}
+                    {/*/>*/}
+                    {/*</FieldButton>*/}
+                {/*</OverlayTrigger>*/}
 
                 <OverlayTrigger
                     onClick={this.toggleActive('toggleColor')}
@@ -121,11 +121,11 @@ class MemeTextFieldButtons extends React.Component {
                     overlay={
                     <Popover theme="navy" id="color-popover">
                         <Row>
-                            <Col className="clickable" onClick={() => handleAction('makeFontLarger')} xs={6}>
-                                <Icon  theme="white" name={'PLUS'}/>
-                            </Col>
                             <Col className="clickable" onClick={() => handleAction('makeFontSmaller')} xs={6}>
                                 <Icon theme="white" name={'MINUS'}/>
+                            </Col>
+                            <Col className="clickable" onClick={() => handleAction('makeFontLarger')} xs={6}>
+                                <Icon  theme="white" name={'PLUS'}/>
                             </Col>
                         </Row>
                     </Popover>
