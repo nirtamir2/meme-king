@@ -70,7 +70,7 @@ export default class GeneratorDashboard extends Component {
 
         updateMemeRating(this.props.meme);
 
-        canvas.deactivateAll().renderAll()
+        canvas.deactivateAll().renderAll();
 
         //saveing the canvas and resizing it before downloading depends on screen resolution.
         const zoom = helpers.isMobile() ? 2.5 : 1.3
@@ -144,9 +144,15 @@ export default class GeneratorDashboard extends Component {
 
 
     sendImageToCropper = () => {
+
         AnalyticsService.sendEvent('Cropping from inside Generator');
-        this.props.setUploadImage(this.props.canvas.toDataURL()).then(() => {
-            this.props.history.push({ pathname: '/cropper' });
+
+        const { canvas, history, setUploadImage } = this.props;
+
+        canvas.deactivateAll().renderAll();
+
+        setUploadImage(canvas.toDataURL()).then(() => {
+            history.push({ pathname: '/cropper' });
         })
     }
 
