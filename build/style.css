@@ -848,15 +848,15 @@ header {
       padding-top: 85px; } }
   .home .personal-messages-link {
     display: block;
-    position: absolute;
-    position: absolute;
-    margin-right: auto;
-    margin-left: auto;
-    left: 0;
-    right: 0;
-    bottom: 50px; }
+    margin-top: 80px; }
     @media only screen and (max-width: 939px) {
       .home .personal-messages-link {
+        position: absolute;
+        position: absolute;
+        margin-right: auto;
+        margin-left: auto;
+        left: 0;
+        right: 0;
         bottom: 20px; } }
 
 .box-searcher .search-result-component {
@@ -1281,7 +1281,7 @@ header {
     border-color: transparent; }
   @media only screen and (min-width: 900px) and (max-width: 1439px) {
     .menu-item .box-title {
-      font-size: 17px; } }
+      font-size: 16px; } }
   .menu-item span {
     font-size: 16px;
     color: #0097EB; }
