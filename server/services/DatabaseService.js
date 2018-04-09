@@ -41,6 +41,10 @@ class DatabaseService {
 
     updatePopularMemeRating(meme) {
 
+        if (!_.get(meme, 'id') || !meme) {
+            return;
+        }
+
         const currentWeekId = DatesService.getCurrentWeekId();
         const popularTableRef = this.database.ref(dbConstants.weeklyPopularTable);
 
@@ -127,6 +131,9 @@ class DatabaseService {
 
     saveUserMeme(meme) {
         const table = this.database.ref(dbConstants.userSavedMemesTable);
+        const other = { ...meme };
+        delete other.urlPath;
+        console.log('firebase meme', other)
         table.ref.child(meme.id).set(meme);
     }
 

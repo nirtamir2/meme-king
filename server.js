@@ -172,6 +172,7 @@ app.post('/api/delete-meme', function (req, res) {
 })
 
 app.post('/api/save-user-meme', function (req, res) {
+    console.log(_.keys(req.body))
     StorageService.saveUserMeme(req.body, true)
     res.sendStatus(200)
 });
