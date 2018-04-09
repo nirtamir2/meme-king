@@ -167,13 +167,11 @@ app.post('/api/edit-meme', function (req, res) {
 })
 
 app.post('/api/delete-meme', function (req, res) {
-    console.log('delete', req.body.id)
     DatabaseService.deleteMeme(req.body)
     res.sendStatus(200)
 })
 
 app.post('/api/save-user-meme', function (req, res) {
-   console.log('save user meme ', req.body.isMobile)
     StorageService.saveUserMeme(req.body, true)
     res.sendStatus(200)
 });

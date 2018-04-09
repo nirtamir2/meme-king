@@ -41,7 +41,6 @@ class StorageService {
 
     async uploadNewMemeAndSaveToDataBase(meme) {
 
-        console.log(meme, 'new meme---')
         const fileName = meme.id
         const url = `https://storage.googleapis.com/meme-king-storage/memes/${meme.category}/${fileName}.jpg`
         const thumbUrl = `https://storage.googleapis.com/meme-king-storage/meme-thumbs/${meme.category}/${fileName}.jpg`
@@ -110,8 +109,6 @@ class StorageService {
         const fileData = _.get(meme, 'urlPath');
 
         DatabaseService.saveUserMeme(memeObj);
-
-        console.log('saved user meme', memeObj);
 
         //  await this.uploadToStorage(fileData, fileName, null, 'user-memes');
         return await this.uploadToStorage({ image: fileData, destination: `/user-memes/${fileName}.jpg` });

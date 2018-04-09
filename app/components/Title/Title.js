@@ -1,10 +1,10 @@
 import React from 'react'
 import classNames from 'classnames'
 
-const Title = ({ size, children, className, align, theme, direction }) => {
+const Title = ({ size, children, className, align, theme, direction, italic }) => {
 
     const properties = {
-        className: classNames(className, `text-${align}`, theme, size, `direction-${direction}`, 'box-title')
+        className: classNames(className, `text-${align}`, theme, size, `direction-${direction}`, 'box-title', { italic })
     }
 
     switch (size) {

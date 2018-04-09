@@ -205,7 +205,7 @@ class Generator extends Component {
                         <Title className="text-center margin-bottom-small" direction="rtl">
                             מחולל הממים
                         </Title>
-                        <Title size="h4" className="text-center margin-bottom-medium" direction="rtl">
+                        <Title italic size="h4" className="text-center margin-bottom-medium" direction="rtl">
                             {_.toUpper(_.get(meme, 'description'))}
                         </Title>
                     </span>
