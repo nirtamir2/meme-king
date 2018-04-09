@@ -2,17 +2,17 @@ const fs = require('fs')
 const recursive = require('recursive-readdir')
 const path = require('path')
 const _ = require('lodash')
-const storage = require('@google-cloud/storage');
-const uniqueId = require('../../app/helpers/uniqueId');
-var stream = require('stream');
+const storage = require('@google-cloud/storage')
+const uniqueId = require('../../app/helpers/uniqueId')
+var stream = require('stream')
 
 // services
-const DatabaseService = require('./DatabaseService');
+const DatabaseService = require('./DatabaseService')
 
 class StorageService {
 
     init(isProduction) {
-        if(isProduction) {
+        if (isProduction) {
             this.gcs = storage({
                 credentials: {
                     "type": "service_account",
@@ -39,39 +39,38 @@ class StorageService {
 
     }
 
-    async uploadMemeAndSaveToDataBase(meme) {
+    async uploadNewMemeAndSaveToDataBase(meme) {
 
-        const fileName = meme.id;
+        console.log(meme, 'new meme---')
+        const fileName = meme.id
         const url = `https://storage.googleapis.com/meme-king-storage/memes/${meme.category}/${fileName}.jpg`
         const thumbUrl = `https://storage.googleapis.com/meme-king-storage/meme-thumbs/${meme.category}/${fileName}.jpg`
 
-        await this.uploadToStorage(meme.urlPath,  meme.id, meme.category, 'memes')
-        await this.uploadToStorage(meme.thumbPath,  meme.id, meme.category, 'meme-thumbs')
+        await this.uploadToStorage({ image: meme.urlPath, destination: `/memes/${meme.category}/${meme.id}.jpg` })
+        await this.uploadToStorage({ image: meme.thumbPath, destination: `/meme-thumbs/${meme.category}/${meme.id}.jpg` })
 
         const finalMeme = {
             ...meme,
             urlPath: url,
             thumbPath: thumbUrl
-        };
+        }
 
-        DatabaseService.saveSingleMemeToDataBase(finalMeme);
+       DatabaseService.saveSingleMemeToDataBase(finalMeme)
+
+        return url;
     }
 
-    uploadToStorage(image, fileName, category, type) {
+    uploadToStorage({ image, destination }) {
+
         return new Promise(resolve => {
+
             const base64Image = image.split(';base64,').pop()
+
             const bufferStream = new stream.PassThrough()
+
             bufferStream.end(new Buffer(base64Image, 'base64'))
 
-            const isUserSavedMemeCase = !category;
-
-
-            let file ;
-            if (isUserSavedMemeCase) {
-                file = this.myBucket.file(`/${type}/${fileName}.jpg`)
-            } else {
-                file = this.myBucket.file(`/${type}/${category}/${fileName}.jpg`);
-            }
+            const file = this.myBucket.file(destination)
 
 
             bufferStream.pipe(file.createWriteStream({
@@ -86,38 +85,49 @@ class StorageService {
             }))
                 .on('error', function (err) {
                 })
-                .on('finish', function () {
+                .on('finish', function (file) {
                     // The file upload is complete.
-                    resolve()
+                    resolve();
                 })
         })
     }
 
-    async saveUserMeme(meme, includeDeviceData) {
+    async saveUserMeme(meme) {
+
         const fileName = uniqueId();
+
         const url = `https://storage.googleapis.com/meme-king-storage/user-memes/${fileName}.jpg`;
+
         let memeObj = {
-            urlPath : url,
+            urlPath: url,
             date: new Date().toString(),
             id: fileName,
+            isMobile: meme.isMobile || '',
+            isMobileApp: meme.isMobileApp || '',
+            isDesktop: meme.isDesktop
         }
 
-        if(includeDeviceData) {
-            memeObj = {
-                ...memeObj,
-                isMobile: meme.isMobile || '',
-                isMobileApp: meme.isMobileApp || '',
-                isDesktop: meme.isDesktop
-            }
-        }
-
-        console.log(memeObj)
-        const fileData = _.get(meme , 'urlPath');
-
-        await this.uploadToStorage(fileData, fileName, null, 'user-memes');
+        const fileData = _.get(meme, 'urlPath');
 
         DatabaseService.saveUserMeme(memeObj);
-        console.log('saved user meme')
+
+        console.log('saved user meme', memeObj);
+
+        //  await this.uploadToStorage(fileData, fileName, null, 'user-memes');
+        return await this.uploadToStorage({ image: fileData, destination: `/user-memes/${fileName}.jpg` });
+
+    }
+
+    saveSuggestedMeme({ meme = {} }){
+        return new Promise(resolve => {
+            const fileName = uniqueId();
+            const url = `https://storage.googleapis.com/meme-king-storage/suggested-memes/${fileName}.jpg`;
+
+            this.uploadToStorage({ image: meme.urlPath, destination: `/suggested-memes/${fileName}.jpg` }).then(() => {
+                DatabaseService.saveSuggestedMeme({ meme: { ...meme, id: fileName, urlPath: url } });
+                resolve(url);
+            })
+        })
     }
 }
 

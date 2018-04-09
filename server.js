@@ -155,7 +155,7 @@ app.post('/api/update-meme-rating', function (req, res) {
 
 app.post('/api/save-new-meme', function (req, res) {
     console.log('before saving new meme')
-    StorageService.uploadMemeAndSaveToDataBase(req.body).then((result) => {
+    StorageService.uploadNewMemeAndSaveToDataBase(req.body).then((result) => {
         res.sendStatus(200)
 
     })
@@ -176,7 +176,17 @@ app.post('/api/save-user-meme', function (req, res) {
    console.log('save user meme ', req.body.isMobile)
     StorageService.saveUserMeme(req.body, true)
     res.sendStatus(200)
-})
+});
+
+app.post('/api/upload-suggested-new-meme', function (req, res) {
+    console.log('save suggested meme');
+    StorageService.saveSuggestedMeme(req.body).then(url => {
+        res.status(200);
+        res.send(url);
+    });
+});
+
+
 
 
 // START

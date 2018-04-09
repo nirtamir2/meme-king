@@ -130,6 +130,11 @@ class DatabaseService {
         table.ref.child(meme.id).set(meme);
     }
 
+    saveSuggestedMeme ({ meme }){
+        const table = this.database.ref(dbConstants.suggestedMemesTable);
+        table.ref.child(meme.id).set(meme);
+    }
+
 }
 
 

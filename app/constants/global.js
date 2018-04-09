@@ -3,7 +3,8 @@ module.exports = {
        memesTable : 'memesdb',
        weeklyPopularTable : 'weeklyPopularTable',
        userSavedMemesTable: 'userMemes',
-       personalMessageTable: 'personalMessages'
+       personalMessageTable: 'personalMessages',
+       suggestedMemesTable: 'suggestedMemes',
    },
 
    format : {

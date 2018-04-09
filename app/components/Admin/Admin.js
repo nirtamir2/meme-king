@@ -252,6 +252,7 @@ class Admin extends Component {
                             </div>
                             <p>Date : {new Date(meme.date) && new Date(meme.date).toDateString()}</p>
                         </div>
+
                     )
                 })}
 
