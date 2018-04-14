@@ -120,6 +120,11 @@ class StorageService {
             const fileName = uniqueId();
             const url = `https://storage.googleapis.com/meme-king-storage/suggested-memes/${fileName}.jpg`;
 
+            if(!_.isString(meme.urlPath)) {
+                resolve(`error, urlPath must be a string`);
+                return;
+            }
+
             this.uploadToStorage({ image: meme.urlPath, destination: `/suggested-memes/${fileName}.jpg` }).then(() => {
                 DatabaseService.saveSuggestedMeme({ meme: { ...meme, id: fileName, urlPath: url } });
                 resolve(url);
