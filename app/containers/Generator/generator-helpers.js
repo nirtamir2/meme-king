@@ -4,9 +4,9 @@ import _ from 'lodash';
 import helpers from'helpers/helpers';
 import colors from 'constants/colors';
 
-export const getCanvasContainerWidth = () => (document.querySelector('.generator__canvas-wrapper').offsetWidth);
+export const getCanvasContainerWidth = () => (_.get(document.querySelector('.generator__canvas-wrapper'), 'offsetWidth'));
 
-export const addImageAsync = ({ image, dontPerformConversion }) => {
+export const addImageAsync = ({ image }) => {
 
     if(!image) {
         return new Promise(resolve => resolve());
@@ -14,7 +14,7 @@ export const addImageAsync = ({ image, dontPerformConversion }) => {
 
     return new Promise(resolve => {
 
-        if (dontPerformConversion || isDataURL(image)) {
+        if (isDataURL(image) || _.includes(image, 'blob')) {
 
             fabric.Image.fromURL(image, (image) => {
 

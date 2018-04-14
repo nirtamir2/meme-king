@@ -2,16 +2,18 @@ import _ from 'lodash'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import config from 'config/config';
+import { withRouter } from 'react-router';
 
 // components
 import Button from 'components/Button/Button';
-import ItemsArea from '../ItemsArea/ItemsArea'
+import ItemsArea from 'components/ItemsArea/ItemsArea'
 import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContainer'
 import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
 import Modal from 'components/Modal/Modal'
 import Icon from 'components/Icon/Icon';
 import Col from 'react-bootstrap/lib/Col';
-import GeneratorDashboardSkeleton from 'components/GeneratorDashboard/DashboardSkeleton';
+import GeneratorDashboardSkeleton from 'containers/GeneratorDashboard/DashboardSkeleton';
+import MemeSuggestionsContainer from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer';
 
 // services
 import AnalyticsService from 'services/Analytics'
@@ -57,7 +59,7 @@ const Buttons = ({ className, canvas, isCleanSlateState, format, actions }) => (
 )
 
 
-export default class GeneratorDashboard extends Component {
+class GeneratorDashboard extends Component {
 
     state = {
         isItemsAreaOpen: false,
@@ -147,12 +149,15 @@ export default class GeneratorDashboard extends Component {
 
         AnalyticsService.sendEvent('Cropping from inside Generator');
 
-        const { canvas, history, setUploadImage } = this.props;
+        const { canvas, history, setUploadImage, match, meme = {} } = this.props;
 
         canvas.deactivateAll().renderAll();
 
-        setUploadImage(canvas.toDataURL()).then(() => {
-            history.push({ pathname: '/cropper' });
+        const memeId = meme.id;
+
+        setUploadImage({ urlPath: canvas.toDataURL(), id: memeId }).then(() => {
+            //history.push(`${match.url}/cropper`);
+            this.props.activateCropper();
         })
     }
 
@@ -168,7 +173,7 @@ export default class GeneratorDashboard extends Component {
 
     render() {
 
-        const { format, canvas, style, isCleanSlateState, isLoading } = this.props
+        const { format, canvas, style, isCleanSlateState, isLoading, isUpload } = this.props
 
         if (isLoading) {
             return (
@@ -205,6 +210,8 @@ export default class GeneratorDashboard extends Component {
 
                 {!helpers.isMobile() && buttons}
 
+                {(helpers.isMobile() && !isUpload && !isCleanSlateState) && <MemeSuggestionsContainer />}
+
                 <GeneratorSignature className="visible-mobile"/>
 
                 <Modal onHide={() => this.setState({ isItemsAreaOpen: false })}
@@ -217,3 +224,5 @@ export default class GeneratorDashboard extends Component {
     }
 }
 
+
+export default withRouter(GeneratorDashboard);

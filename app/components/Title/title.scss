@@ -1,7 +1,11 @@
 .box-title {
 
-  &.white {
-    color: white;
+  &.theme-white {
+    color: $white;
+  }
+
+  &.theme-black {
+    color: $black;
   }
 
   &.h3 {

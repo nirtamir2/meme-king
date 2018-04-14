@@ -14,6 +14,9 @@ import withModalNavigation from 'components/WithNavigationModal/WithNavigationMo
 // actions
 import { sendMessageToAdmin, fetchUserMessages } from 'actions/user-messages-actions/user-messages-actions';
 
+// helpers
+import helpers from 'helpers/helpers';
+
 class ContactPage extends Component {
 
     render() {
@@ -58,7 +61,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         ...stateProps,
         ...dispatchProps,
         onSubmit: data =>  {
-            return dispatchProps.sendMessageToAdmin({ ...data, date: new Date().toDateString() }).then(() => {
+            return dispatchProps.sendMessageToAdmin({ ...data, id: helpers.uniqueId() }).then(() => {
                 dispatchProps.fetchUserMessages();
                 ownProps.onHide();
             });
