@@ -23,7 +23,7 @@ export default function(state=initialState, action){
 
         case FETCH_SUGGESTIONS_SUCCESS:
             return {
-                ...payload,
+                memes: payload,
                 isFetching: false
             }
             break;
@@ -31,7 +31,7 @@ export default function(state=initialState, action){
 
         case FETCH_SUGGESTIONS_ERROR:
             return {
-                ...payload,
+                memes: {},
                 error: payload,
                 isFetching: false
             }

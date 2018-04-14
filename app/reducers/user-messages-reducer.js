@@ -40,7 +40,7 @@ export default function(state={}, action){
         case actionsConstants.FETCH_USER_MESSAGES_SUCCESS:
             return {
                 isLoading: false,
-                messages: payload.messages
+                messages: payload
             }
             break;
 
@@ -51,15 +51,17 @@ export default function(state={}, action){
             }
             break;
 
-        case actionsConstants.FETCH_SINGLE_MESSAGE: {
+        case actionsConstants.UPDATE_USER_REPORT_SUCCESS:
             return {
                 isLoading: false,
-                messages : {
+                messages: {
                     ...state.messages,
                     [payload.id]: payload
                 }
             }
-        }
+            break;
+
+
 
         default:
             return state

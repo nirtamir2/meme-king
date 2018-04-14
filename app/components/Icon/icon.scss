@@ -123,6 +123,21 @@
     }
   }
 
+  &.theme-gray-dark {
+    color: $gray-dark;
+    border-color: $gray-dark;
+
+    &:hover {
+      background: transparent;
+      color: white;
+      cursor: pointer;
+    }
+
+    &:active {
+      background: darken($gray-dark, 15%);
+    }
+  }
+
   &.theme-white {
     color: white;
     border-color: white;

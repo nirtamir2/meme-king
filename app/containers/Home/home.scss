@@ -2,8 +2,6 @@
   background: $mainColor;
   height: 100vh;
   color: white;
-  padding-top: 200px;
-  position: relative;
 
   @include mobile-medium {
     min-height: 100vh;
@@ -13,9 +11,21 @@
 
   }
 
+  .box-avatar {
+    margin-top: 180px;
+    @include mobile-medium {
+      margin-top: 10px;
+    }
+  }
+
+  .main-title {
+    @include mobile-medium {
+      margin-bottom: 10px;
+    }
+  }
+
   .personal-messages-link {
 
-    display: block;
     margin-top: 80px;
 
     @include mobile-medium {
