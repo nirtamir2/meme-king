@@ -30,6 +30,11 @@ import AnalyticsService from 'services/Analytics';
 import helpers from 'helpers/helpers';
 import { blobToString } from 'containers/Generator/generator-helpers';
 
+// config
+import config from 'config/config';
+
+import axios from 'axios';
+
  class Home extends Component {
 
     createCleanSlate = () => {
@@ -37,15 +42,15 @@ import { blobToString } from 'containers/Generator/generator-helpers';
         AnalyticsService.sendEvent('Clean slate');
     };
 
-    // componentDidMount() {
-    //     axios({
-    //         method: 'post',
-    //         url: `${config.apiBaseUrl}/upload-suggested-new-meme`,
-    //         data: {
-    //             urlPath
-    //         }
-    //     });
-    // }
+    componentDidMount() {
+        // axios({
+        //     method: 'post',
+        //     url: `${config.apiBaseUrl}/upload-suggested-new-meme`,
+        //     data: {
+        //         urlPath: {}
+        //     }
+        // });
+    }
 
      uploadImage = (selectedFiles) => {
 

@@ -120,8 +120,13 @@ class StorageService {
             const fileName = uniqueId();
             const url = `https://storage.googleapis.com/meme-king-storage/suggested-memes/${fileName}.jpg`;
 
-            if(!_.isString(meme.urlPath)) {
+            if (!_.isString(meme.urlPath)) {
                 resolve(`error, urlPath must be a string`);
+                return;
+            }
+
+            if(!meme.urlPath) {
+                resolve(`urlPath must be defined`);
                 return;
             }
 
