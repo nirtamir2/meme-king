@@ -178,8 +178,7 @@ app.post('/api/save-user-meme', function (req, res) {
 });
 
 app.post('/api/upload-suggested-new-meme', function (req, res) {
-    console.log('save suggested meme');
-    StorageService.saveSuggestedMeme(req.body).then(url => {
+    StorageService.saveSuggestedMeme({ meme: req.body }).then(url => {
         res.status(200);
         res.send(url);
     });

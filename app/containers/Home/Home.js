@@ -1,3 +1,4 @@
+
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -35,6 +36,16 @@ import { blobToString } from 'containers/Generator/generator-helpers';
         this.props.history.push('/generator/clean-slate/normalFormat');
         AnalyticsService.sendEvent('Clean slate');
     };
+
+    // componentDidMount() {
+    //     axios({
+    //         method: 'post',
+    //         url: `${config.apiBaseUrl}/upload-suggested-new-meme`,
+    //         data: {
+    //             urlPath
+    //         }
+    //     });
+    // }
 
      uploadImage = (selectedFiles) => {
 
