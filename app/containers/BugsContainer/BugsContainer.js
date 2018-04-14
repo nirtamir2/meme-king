@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Route, Switch } from 'react-router-dom';
 
 // components
 import Col from 'react-bootstrap/lib/Col';
@@ -11,6 +12,7 @@ import Text from 'components/Text/Text'
 import Icon from 'components/Icon/Icon'
 import UserMessage from './UserMessage/UserMessage';
 import Loader from 'components/Loader/Loader';
+import ContactPage from 'containers/BugsContainer/ContactPage/ContactPage';
 
 // actions
 import { fetchUserMessages, updateUserMessageLikes } from 'actions/user-messages-actions/user-messages-actions'
@@ -23,7 +25,7 @@ class BugsContainer extends Component {
     }
 
     render() {
-        const { history, messages , updateUserMessageLikes, isLoading  } = this.props
+        const { history, messages , updateUserMessageLikes, isLoading, match  } = this.props
 
         const arrayMessages = _.values(messages) || [];
 
@@ -49,13 +51,16 @@ class BugsContainer extends Component {
                     </Text>
                 </div>
                 <Row>
-                    {isLoading
-                        ?
+                    {
+                        isLoading
+                            ?
                         <Loader className="margin-top-extra-large" />
-                        :
+                            :
                         _.map(sortedMessages, post => <UserMessage key={post.id} updateUserMessageLikes={updateUserMessageLikes} post={post} />)
                     }
                 </Row>
+
+                <Route path={`${match.url}/contact-page`} component={ContactPage}/>
 
             </Grid>
         )

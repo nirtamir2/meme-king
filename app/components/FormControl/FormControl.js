@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 // components
 import BootstrapFormControl from 'react-bootstrap/lib/FormControl';
@@ -10,7 +11,7 @@ const FormControl = ({ className, theme, ...rest }) => (
 )
 
 FormControl.defaultProps = {
-    theme: 'default'
+    theme: PropTypes.oneOf(['default', 'shadow'])
 }
 
 export default FormControl;

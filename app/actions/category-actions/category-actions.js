@@ -9,15 +9,21 @@ import constants from 'constants/global';
 
 export function fetchCategory(category) {
 
-    return (dispatch) => {
-
-        dispatch({type : dataActionConstants.FETCH_CATEGORY_REQUEST, payload: {name : category}});
-
-        window.firebase.database().ref(`/${constants.database.memesTable}/${category}`).once('value')
-            .then(snapshot => dispatch({type : dataActionConstants.FETCH_CATEGORY_SUCCESS, payload : { memes: snapshot.val() , name: category }}))
-            .catch(error => dispatch({type : dataActionConstants.FETCH_CATEGORY_FAILED, error : error}));
-
-    };
+    return  {
+        [CALL_API]: {
+            endpoint: `${config.apiBaseUrl}/category?category=${category}`,
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            types: [
+                dataActionConstants.FETCH_CATEGORY_REQUEST,
+                dataActionConstants.FETCH_CATEGORY_SUCCESS,
+                dataActionConstants.FETCH_CATEGORY_FAILED
+            ],
+        }
+    }
 }
 
 export function addMemeToCategory(meme) {
@@ -27,16 +33,23 @@ export function addMemeToCategory(meme) {
     }
 }
 
-export function fetchSingleMeme(category, id) {
-    return (dispatch) => {
+export function fetchSingleMeme(id) {
+    return  {
+        [CALL_API]: {
+            endpoint: `${config.apiBaseUrl}/single-meme?id=${id}`,
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            types: [
+                dataActionConstants.FETCH_SINGLE_MEME_REQUEST,
+                dataActionConstants.FETCH_SINGLE_MEME_SUCCESS,
+                dataActionConstants.FETCH_SINGLE_MEME_FAILED
+            ],
+        }
+    }
 
-        dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_REQUEST, payload: []});
-
-        window.firebase.database().ref(`/${constants.database.memesTable}/${category}/${id}`).once('value')
-            .then(snapshot => dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_SUCCESS, payload : snapshot.val()}))
-            .catch(error => dispatch({type : dataActionConstants.FETCH_SINGLE_MEME_FAILED, error : error}));
-
-    };
 }
 
 export function fetchWeeklyPopularMemes() {

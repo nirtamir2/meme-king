@@ -12,6 +12,14 @@ import {fetchSearchResults, cleanSearchResults} from 'actions/search-actions/sea
 import AutoComplete from 'components/AutoComplete/AutoComplete';
 import Text from 'components/Text/Text';
 import Avatar from 'components/Avatar/Avatar';
+import FormControl from 'components/FormControl/FormControl';
+import Panel from 'components/Panel/Panel';
+import MemeThumb from 'components/MemeThumb/MemeThumb'
+import Icon from 'components/Icon/Icon'
+import Title from 'components/Title/Title'
+import SpinnerDots from 'components/SpinnerDots/SpinnerDots';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 // constants
 import globalConstants from 'constants/global'
@@ -19,64 +27,144 @@ import globalConstants from 'constants/global'
 // helpers
 import helpers from 'helpers/helpers';
 
+// assets
+import notFoundImage from 'assets/images/search-404.png';
+import xavier from 'assets/images/xavier-404.png';
+
+
 class Searcher extends Component {
 
     state = {
-        value: ''
+        value: '',
+        displayValue: '',
+        isOpen: false
     }
 
     clearResults = () => {
-        this.setState({ active: false, value: '' })
-        this.props.cleanSearchResults()
+        this.setState({ value: '', displayValue: '', isOpen: false })
+        this.props.cleanSearchResults();
     }
 
-    openGenerator = (meme) => {
-        this.props.history.push(`/search/generator/${meme.id}/${globalConstants.format.normal}`);
+    isOpenGenerator = (meme) => {
+        const { history } = this.props;
+        history.push(`/generator/search/${meme.id}/${globalConstants.format.normal}`);
     };
 
-    loadOptions = (input, callback) => {
+    onSearch = (e) => {
 
-        if (!input) {
-            callback();
+
+        const value = _.get(e, 'target.value') || '';
+
+        this.setState({ displayValue: value });
+
+        if (!value) {
+            this.setState({ value: '', displayValue: '' })
+            this.props.cleanSearchResults();
             return
         }
 
-        if (input.length >= 3) {
-            this.props.fetchSearchResults(input).then(() => {
-                callback(null, { options:  _.map(this.props.searchResults, meme =>  _.assign({}, { label: meme.description }, meme)) });
-            });
+        this.setState({ isOpen: true });
+
+        if (value.length >= 3) {
+            this.fetchResults();
         }
     };
 
-    getSearchResultComponent = ({ option }) => {
-        return (
-            <div onClick={() => this.openGenerator(option)} className="clearfix search-result-component">
-                <Avatar size="sm" imgSrc={option.thumbPath} className="pull-left margin-top-extra-small" />
-                <Text size="md" theme="black" className="pull-right margin-top-small">
-                    {_.truncate(option.description, { length: helpers.isMobile() ? 20 : 40})}
-                </Text>
-            </div>
-        )
+    fetchResults = _.debounce((value) => {
+
+        this.setState({ value: this.state.displayValue }, () => {
+            const { value } = this.state;
+            this.props.fetchSearchResults(value);
+        });
+
+
+    }, 300);
+
+
+    onBlur = () => {
+        const { searchResults } = this.props;
+        if (_.isEmpty(searchResults)) {
+            this.clearResults();
+        };
+
+
     }
+
+    onFocus = () => {
+        this.setState({ isOpen: true });
+    }
+
+    componentDidUpdate( prevProps, prevState) {
+        if(this.state.isOpen !== prevState.isOpen) {
+            document.querySelector('.cover').style.display = this.state.isOpen ? 'block' : 'none';
+        }
+    }
+
+
 
     render() {
 
+        const { className, searchResults, isFetching } = this.props;
+        const { value, displayValue, isOpen } = this.state;
+
+        const foundNoResults = _.isEmpty(searchResults) && _.size(value) > 2 && !isFetching;
+
         return (
-            <AutoComplete.Async
-                id="state-select"
-                loadOptions={this.loadOptions}
-                name="selected-state"
-                placeholder="חיפוש"
-                searchPromptText="חיפוש מימ לפי מילת מפתח"
-                noResultsText="לא נמצאו ממים מתאימים"
-                loadingPlaceholder="מחפש ממים מתאימים..."
-                className="box-searcher"
-                clearable={true}
-                onBlurResetsInput={false}
-                value={this.state.value}
-                onChange={(value) => this.setState({ value })}
-                optionComponent={this.getSearchResultComponent}
-            />
+
+            <div className={classNames('box-searcher', className)}>
+                <div className="input-container">
+                    <Icon
+                        onClick={this.clearResults}
+                        className="search-icon clickable"
+                        name={isOpen ? 'REMOVE' : 'SEARCH'}
+                        theme="main-brand"
+                        size="xxl"
+                    />
+                    <FormControl
+                        placeholder="חיפוש מימז"
+                        bsSize="xl"
+                        onBlur={this.onBlur}
+                        onFocus={this.onFocus}
+                        theme="shadow"
+                        value={displayValue}
+                        onChange={this.onSearch}
+                    />
+                </div>
+                {isOpen && (
+                    <Panel theme="shadow" className="margin-top-small search-result-component text-center">
+
+                        {
+                            !isFetching && !foundNoResults && _.isEmpty(searchResults)
+                                ?
+                                <img src={xavier} className="center-block img-responsive empty-state-img" />
+                                :
+                                isFetching
+                                    ?
+                                    <SpinnerDots size="lg" className="margin-top-medium" />
+                                    :
+                                    foundNoResults
+                                        ?
+                                        <img src={notFoundImage} className="center-block img-responsive empty-state-img" />
+                                        :
+                                        <Row>
+                                            {_.map(searchResults, meme => {
+                                                return (
+                                                    <Col xs={6} sm={2} className="padding-right-none padding-left-none">
+                                                        <MemeThumb
+                                                            theme="full-width"
+                                                            to={`/generator/search/${meme.id}/${globalConstants.format.normal}`}
+                                                            {...meme}
+                                                        />
+                                                    </Col>
+                                                )
+                                            })}
+                                        </Row>
+
+
+                        }
+                    </Panel>
+                )}
+            </div>
         )
 
     }

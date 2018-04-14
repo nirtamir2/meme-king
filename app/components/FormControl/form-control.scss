@@ -8,17 +8,41 @@
 
 .box-form-control {
 
+  font-family: $openSansHebrew;
 
-    height:50px;
-    text-align: right;
-    direction:rtl;
-    font-size: 16px;
-    resize: none;
+  height: 50px;
+  text-align: right;
+  direction: rtl;
+  font-size: 16px;
+  resize: none;
 
   &:focus,
   &:active {
     outline: 0 !important;
     @include focus(2px solid $darkGray, none)
+
+  }
+
+  &.input-xl {
+    height: 80px;
+    font-size: 30px;
+
+    @include placeholder {
+      font-size: 30px;
+      line-height: 80px;;
+      font-family: $openSansHebrew;
+    }
+
+
+    @include mobile-medium {
+      @include placeholder {
+        font-size: 24px;
+        line-height: 50px;;
+        font-family: $openSansHebrew;
+      }
+    }
+
+
 
   }
 
@@ -29,5 +53,16 @@
 
   }
 
+  &.theme-shadow {
+    border: none;
+    color: $mainColor;
+
+    @include placeholder {
+      color: $mainColor;
+    }
+
+    @include focus(none, $shadow-mid)
+
+  }
 
 }

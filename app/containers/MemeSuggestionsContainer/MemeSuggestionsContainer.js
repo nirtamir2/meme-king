@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 // actions
 import { fetchMemeSuggestions } from 'actions/suggestions-actions/suggestions-actions';
 import { addMemeToCategory } from 'actions/category-actions/category-actions';
+
 // components
 import MemeThumb from 'components/MemeThumb/MemeThumb';
 import Row from 'react-bootstrap/lib/Row';
@@ -17,27 +18,45 @@ import helpers from 'helpers/helpers';
 // services
 import AnalyticsService from 'services/Analytics';
 
-
 class MemeSuggestionsContainer extends Component {
+
+    componentDidMount() {
+        const { category, fetchMemeSuggestions } = this.props;
+
+        if (category) {
+            fetchMemeSuggestions(category)
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ((this.props.category !== nextProps.category && nextProps.category) || (this.props.memeId !== nextProps.memeId && nextProps.memeId)) {
+            this.props.fetchMemeSuggestions(nextProps.category)
+        }
+    }
 
 
     openGenerator = (e, meme) => {
+
+        const { location = {}, memeId: currentMemeId, addMemeToCategory, history } = this.props;
+
         e.preventDefault();
 
         AnalyticsService.sendEvent('Similar Memes Clicked');
-        const { category: backgroundCategory, format } = _.get(this.props, 'match.params', {})
-        this.props.addMemeToCategory(meme)
-        const location = {
-            pathname:  `/memes/${backgroundCategory}/generator/${meme.id}/${format || 'normalFormat'}`,
 
-        }
+        addMemeToCategory(meme).then(() => {
+            history.push(_.replace(_.get(location, 'pathname'), currentMemeId, meme.id ))
+        })
 
-        this.props.history.push(location)
     };
 
     render() {
 
-        const { suggestions, isFetching } = this.props;
+        const { suggestions, isFetching, category } = this.props;
+
+
+        if (!category || _.isEmpty(suggestions)) {
+            return null;
+        }
 
         return(
 
@@ -46,11 +65,13 @@ class MemeSuggestionsContainer extends Component {
                         ממים דומים
                     </Label>
                     {_.map(suggestions, (meme) =>
-                        <MemeThumb width={helpers.isMobile() ? 33 : 12.5}
-                                   key={meme.id}
-                                   {...meme}
-                                    onClick={e => this.openGenerator(e, meme)}
-                                   className="margin-right-tiny margin-left-tiny"
+                        <MemeThumb
+                            width={helpers.isMobile() ? 33 : 12.5}
+                            key={meme.id}
+                            {...meme}
+                            to={''}
+                            onClick={e => this.openGenerator(e, meme)}
+                            className="margin-right-tiny margin-left-tiny"
                         />
                     )}
                 </Row>
@@ -59,4 +80,18 @@ class MemeSuggestionsContainer extends Component {
 
 }
 
-export default withRouter(connect(null, { addMemeToCategory })(MemeSuggestionsContainer));
+function mapStateToProps(state, ownProps) {
+
+    const memeId = _.get(ownProps, 'match.params.id');
+
+    return {
+        suggestions: _.get(state, 'suggestions.memes') || {},
+        category: _.get(state, ['category', 'memes', memeId, 'category' ]) ||
+                  _.get(state, ['search', 'searchResults', memeId, 'category' ]) ||
+                  _.get(ownProps, 'category'),
+        memeId,
+        format: _.get(ownProps, 'match.params.format')
+    }
+}
+
+export default withRouter(connect(mapStateToProps, { addMemeToCategory, fetchMemeSuggestions })(MemeSuggestionsContainer));
