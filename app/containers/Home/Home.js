@@ -1,14 +1,13 @@
+
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Route, Switch } from 'react-router-dom';
 
 // actions
 import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 import { setUploadImage } from '../../actions/upload-actions/upload-actions';
 import { showNotification } from 'actions/notification-actions/notification-actions';
-import { setCollageMode, resetCollageMemes, addOrRemoveMemeFromCollage } from 'actions/collage-actions/collage-actions';
 
 // components
 import Searcher from '../Searcher/Searcher';
@@ -22,8 +21,7 @@ import Row from 'react-bootstrap/lib/Row';
 import DropZone from 'components/DropZone/DropZone';
 import Text from 'components/Text/Text';
 import Icon from 'components/Icon/Icon'
-import Generator from 'containers/Generator/Generator';
-import Cropper from 'components/Cropper/Cropper';
+import { setCollageMode, resetCollageMemes, addOrRemoveMemeFromCollage } from 'actions/collage-actions/collage-actions';
 
 //  services
 import AnalyticsService from 'services/Analytics';
@@ -40,11 +38,19 @@ import axios from 'axios';
  class Home extends Component {
 
     createCleanSlate = () => {
-        const mockId = helpers.uniqueId();
-
-        this.props.history.push(`/generator/clean-slate/${mockId}/normalFormat`);
+        this.props.history.push('/generator/clean-slate/normalFormat');
         AnalyticsService.sendEvent('Clean slate');
     };
+
+    componentDidMount() {
+        // axios({
+        //     method: 'post',
+        //     url: `${config.apiBaseUrl}/upload-suggested-new-meme`,
+        //     data: {
+        //         urlPath: {}
+        //     }
+        // });
+    }
 
      uploadImage = (selectedFiles) => {
 
@@ -63,30 +69,21 @@ import axios from 'axios';
              })
 
              Promise.all(promises).then(() => {
-                 history.push('/generator/collage/collage-meme/normalFormat');
+                 history.push('/generator-collage');
              })
 
              return;
          }
 
-         const blob = _.head(selectedFiles);
-         const uploadedMemeId = helpers.uniqueId();
-
-         blobToString({ blob }).then(urlPath => {
-             setUploadImage({ urlPath, id: uploadedMemeId }).then(() => {
-
-                 history.push(`/generator/cropper/${uploadedMemeId}/normalFormat`);
-
-             });
-         })
-
-
+         setUploadImage(_.get(_.head(selectedFiles), 'preview')).then(() => {
+             history.push('/cropper');
+         });
 
      }
 
     render(){
 
-        const { toggleSideBar, match } = this.props;
+        const { toggleSideBar } = this.props;
 
         return (
             <div className="home">
@@ -148,10 +145,6 @@ import axios from 'axios';
 
                 </Grid>
 
-                <Switch>
-                    <Route path={`/generator/:type/:id/:format`} component={Generator}/>
-                </Switch>
-
                 <TextLink className="personal-messages-link text-center"  to="bugs-page">
                     בקשות ודיווח על באגים
                 </TextLink>
@@ -162,7 +155,7 @@ import axios from 'axios';
 
 function mapStateToProps(state, ownProps) {
     return {
-
+         history: ownProps.history
     }
 }
 

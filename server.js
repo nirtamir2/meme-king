@@ -1,29 +1,27 @@
-const _ = require('lodash')
 const express = require('express')
 const app = express()
 const fs = require("fs")
 const path = require('path')
 const bodyParser = require('body-parser')
 const appArgs = require('minimist')(process.argv.slice(2))
+const _ = require('lodash')
 
 const NODE_ENVIRONMENT = appArgs.env
 const isProduction = (!(NODE_ENVIRONMENT === 'development'))
 
 // services
-const StorageService = require('./server/services/StorageService');
-const newDataBaseService = require('./server/dataBase/DbService');
+const DatabaseService = require('./server/services/DatabaseService')
+const StorageService = require('./server/services/StorageService')
+
+// init
+DatabaseService.init(isProduction);
+StorageService.init(isProduction);
 
 // helpers
 const helpers = require('./server/helpers/helpers');
 
-// api
-const getApi = require('./server/api/get');
-const postApi = require('./server/api/post');
-const putApi = require('./server/api/put');
 
-// init
-StorageService.init(isProduction);
-newDataBaseService.init({ isProduction });
+
 
 // USE
 
@@ -64,6 +62,7 @@ app.use(function (req, res, next) {
 })
 
 
+// GET
 
 app.use(function (req, res, next) {
 
@@ -72,15 +71,121 @@ app.use(function (req, res, next) {
     if (!isApiRequest) {
         res.sendFile(path.join(__dirname + '/build/index.html'));
     } else {
-        next()
+        next();
     }
 
 })
 
+app.get('/api/get-weekly-popular-memes', async function (req, res) {
+    const data = await DatabaseService.getWeeklyPopularMemes()
+    const topPopularMemes = _.slice(_.reverse(_.sortBy(data.val(), 'rating')), 0, 64)
+    res.send(helpers.arrayToObjById(topPopularMemes))
+})
 
-getApi(app);
-postApi(app);
-putApi(app);
+app.get('/api/search', async function (req, res) {
+    const data = await DatabaseService.getSearchMemes(req.query.search);
+    res.send(data)
+})
+
+app.get('/api/all-time-popular-memes', async function (req, res) {
+    const data = await DatabaseService.getAllMemes();
+    const sortedData = _.slice(data.sort((a, b) => b.rating - a.rating), 0, 72);
+    res.send(helpers.arrayToObjById(sortedData))
+})
+
+app.get('/api/new-memes', async function (req, res) {
+    const data = await DatabaseService.getAllMemes();
+    const filteredData = _.values(data).filter(meme => meme.date);
+    const sortedData = _.slice(filteredData.sort((a, b) => new Date(b.date) - new Date( a.date)), 0, 72)
+    res.send(helpers.arrayToObjById(sortedData))
+});
+
+app.get('/api/meme-suggestions', async function (req, res) {
+    const data = await DatabaseService.getCategory(req.query.category);
+    const response = {
+        category: req.query.category,
+        memes: helpers.arrayToObjById(_.sampleSize(data, req.query.size))
+    }
+    res.send(response);
+
+});
+
+app.get('/api/random-meme', async function (req, res) {
+
+    const randomCategories = [
+        'dank',
+        'israeli',
+        'pop',
+        'parlament',
+        'classic',
+        'general',
+        'eretz_nehederet',
+        'tv_abroad',
+        'mashups',
+        'standup',
+        'goalstar',
+        'israeli_tv',
+        'animals',
+        'commercials',
+        'asi_guri',
+        'media',
+        'jews',
+    ]
+
+    const randomCategoryIndex = Math.floor(Math.random() * ((_.size(randomCategories) - 1 )  + 1));
+    const data = await DatabaseService.getCategory(randomCategories[randomCategoryIndex]);
+    const randomMemeIndex = Math.floor(Math.random() * ((_.size(data) - 1 )  + 1));
+    const randomMeme = _.values(data)[randomMemeIndex];
+
+    const response = {
+        randomMeme
+    }
+
+    res.send(response);
+
+});
+
+
+// POST
+
+app.post('/api/update-meme-rating', function (req, res) {
+    DatabaseService.updatePopularMemeRating(req.body)
+    res.sendStatus(200)
+})
+
+app.post('/api/save-new-meme', function (req, res) {
+    console.log('before saving new meme')
+    StorageService.uploadNewMemeAndSaveToDataBase(req.body).then((result) => {
+        res.sendStatus(200)
+
+    })
+})
+
+app.post('/api/edit-meme', function (req, res) {
+    DatabaseService.saveSingleMemeToDataBase(req.body)
+    res.sendStatus(200)
+})
+
+app.post('/api/delete-meme', function (req, res) {
+    DatabaseService.deleteMeme(req.body)
+    res.sendStatus(200)
+})
+
+app.post('/api/save-user-meme', function (req, res) {
+    console.log(_.keys(req.body))
+    StorageService.saveUserMeme(req.body, true)
+    res.sendStatus(200)
+});
+
+app.post('/api/upload-suggested-new-meme', function (req, res) {
+    StorageService.saveSuggestedMeme({ meme: req.body }).then(url => {
+        res.status(200);
+        res.send(url);
+    });
+});
+
+
+
 
 // START
 

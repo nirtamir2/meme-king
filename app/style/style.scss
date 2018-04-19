@@ -32,7 +32,7 @@
 @import '../components/PopupCover/popup-cover';
 @import '../components/PopupCover/popup-cover';
 @import '../components/GeneratorSignature/generator-signature';
-@import '../components/Admin/Editor/editor';
+@import '../components/Admin/MemeAdminEditor/meme-admin-editor';
 @import '../components/Admin/admin';
 @import '../components/Modal/modal';
 @import '../components/TextFieldsContainer/text-fields-contianer';
@@ -52,8 +52,6 @@
 @import '../components/Popover/popover';
 @import '../components/AutoComplete/autocomplete';
 @import '../components/Radio/radio';
-@import '../containers/GeneratorDashboard/generator-dashboard';
+@import '../components/GeneratorDashboard/generator-dashboard';
 @import '../components/Tooltip/tooltip';
-@import '../components/Admin/UserGeneratedMemesContainer/user-generated-memes';
-@import '../components/Panel/panel';
 

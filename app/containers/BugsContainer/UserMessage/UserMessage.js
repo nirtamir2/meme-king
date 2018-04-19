@@ -39,14 +39,13 @@ class UserMessage extends Component {
                 </Title>
                 <Row className="inner-container" key={post.id} >
                     <Col className="likes-container area" xs={12} sm={1}>
-                        <Icon
-                            theme="success"
-                            size="xl"
-                            isRound
-                            isActive={this.state.likesClicked}
-                            className="margin-right-small"
-                            name="THUMBS_UP"
-                            onClick={!this.state.likesClicked ? this.updateUserLikes : _.noop}
+                        <Icon theme="success"
+                              size="xl"
+                              isRound
+                              isActive={this.state.likesClicked}
+                              className="margin-right-small"
+                              name="THUMBS_UP"
+                              onClick={!this.state.likesClicked ? this.updateUserLikes : _.noop}
                         />
                         <Text className="margin-top-small counter" theme="black">{post.likes || 0}</Text>
                     </Col>
@@ -60,8 +59,7 @@ class UserMessage extends Component {
                     </Col>
 
                     <Col xs={12} sm={3} className="area" >
-                        <Avatar imgSrc={name === 'ניר בן-יאיר' ? logo : defaultAvatar} size="sm"
-                                block
+                        <Avatar imgSrc={name === 'ניר בן-יאיר' ? logo : defaultAvatar} size="sm" block
                                 className="margin-bottom-small center-block"/>
                         {post.name && (
                             <Text align="center" theme="black" size="sm">

@@ -16,8 +16,12 @@ import helpers from 'helpers/helpers';
 // assets
 import smallCrown from 'assets/images/small-crown.png';
 
-export default ({ thumbPath, description, rating, category, id, to, urlPath, onClick=_.noop, shouldShowRatingBadge, query, className, hidden, isInCollage }) => {
+export default ({ thumbPath, description, rating, category, id, urlPath, onClick=_.noop, shouldShowRatingBadge, query, className, hidden, isInCollage }) => {
 
+    const location = {
+        pathname: `/memes/${category}/generator/${id}/${globalConstants.format.normal}`,
+        query
+    }
 
     const computedRating = (rating * 4) + helpers.getRandomNumber(0,1);
 
@@ -27,7 +31,7 @@ export default ({ thumbPath, description, rating, category, id, to, urlPath, onC
 
     return(
 
-        <Link className={classNames(className, 'meme-thumb', { 'marked-in-collage': isInCollage })} to={to} onClick={onClick}>
+        <Link className={classNames(className, 'meme-thumb', { 'marked-in-collage': isInCollage })} to={location} onClick={onClick}>
             <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img" />
             {(shouldShowRatingBadge && rating) && (
                 <span className="meme-thumb__download-counter">

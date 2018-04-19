@@ -2,18 +2,18 @@ import _ from 'lodash'
 import React, { Component } from 'react'
 import ReactCropper from 'react-cropper'
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 // components
 import Button from 'components/Button/Button'
+import GeneratorModal from 'components/GeneratorModal/GeneratorModal'
 import Title from 'components/Title/Title';
 import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 
+// constants
+import globalConstants from 'constants/global'
 
 // helpers
 import helpers from 'helpers/helpers'
-import { blobToString } from 'containers/Generator/generator-helpers';
 
 // services
 import WebViewService from 'services/webViewService';
@@ -28,7 +28,7 @@ class Cropper extends Component {
         isLoading: false
     }
 
-    componentDidMount() {
+    componentWillMount() {
         document.addEventListener('message', (e) => {
             this.setState({ uploadedImageFromWebView: 'data:image/png;base64,' + e.data })
         })
@@ -37,22 +37,13 @@ class Cropper extends Component {
 
     crop = () => {
 
-        const { setUploadImage, history, match, next, close } = this.props;
-
-        const id = _.get(match, 'params.id');
-
         this.setState({ isLoading: true }, () => {
-
             const image = this.cropper.getCroppedCanvas().toDataURL();
 
             _.delay(() => {
-
-                setUploadImage({ urlPath: image, id: id || helpers.uniqueId() }).then(() => {
-
-                    close();
-
+                this.props.setUploadImage(image).then(() => {
+                    this.props.history.push(`/generator/upload/${globalConstants.format.normal}`);
                 })
-
             }, 500);
         });
 
@@ -60,7 +51,7 @@ class Cropper extends Component {
     }
 
     closeCropper = () => {
-        this.props.history.push('../../');
+        this.props.history.push('/')
     }
 
     render() {
@@ -74,10 +65,13 @@ class Cropper extends Component {
             marginLeft: 'auto',
             marginRight: 'auto'
         };
-        return (
-            <div>
 
-                <Title theme="black">
+        return (
+            <GeneratorModal>
+
+                {!WebViewService.isWebView && <GeneratorModal.CloseButton onClick={this.closeCropper}/>}
+
+                <Title>
                     חיתוך התמונה
                 </Title>
 
@@ -89,27 +83,23 @@ class Cropper extends Component {
                     autoCropArea={1}
                 />
 
-                <Row>
-                    <Col xs={12} sm={4} smOffset={4}>
-                        <Button isLoading={isLoading} block onClick={this.crop} center className="center-block margin-top-md">
-                            אישור
-                        </Button>
-                    </Col>
-                </Row>
+                <Col xs={12} sm={4} smOffset={4}>
+                    <Button isLoading={isLoading} block onClick={this.crop} center className="center-block margin-top-md">
+                        אישור
+                    </Button>
+                </Col>
 
-            </div>
+
+            </GeneratorModal>
         )
     }
 
 }
 
-function mapStateToProps(state, ownProps) {
-
-    const memeId = _.get(ownProps, 'match.params.id');
-
+function mapStateToProps(state) {
     return {
-        image: _.get(state, ['upload', 'images', memeId, 'urlPath'])
+        image: _.head(_.get(state, 'upload.images'))
     }
 }
 
-export default withRouter(connect(mapStateToProps, { setUploadImage })(Cropper))
+export default connect(mapStateToProps, { setUploadImage })(Cropper)

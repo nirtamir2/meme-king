@@ -1,91 +1,55 @@
-import { CALL_API } from 'redux-api-middleware'
-
-// actions
-import { showNotification } from 'actions/notification-actions/notification-actions'
+import { showNotification } from 'actions/notification-actions/notification-actions';
 
 // constants
-import actionsConstnats from './user-messages-actions-constants'
+import actionsConstnats from './user-messages-actions-constants';
+import constants from 'constants/global';
 
-// config
-import config from 'config/config'
-
+// helpers
+import helpers from 'helpers/helpers';
 
 export function sendMessageToAdmin(data) {
 
-    return {
-        [CALL_API]: {
-            endpoint: `${config.apiBaseUrl}/save-user-report`,
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            types: [
-                actionsConstnats.POST_PERSONAL_MESSAGE_REQUEST,
-                actionsConstnats.POST_PERSONAL_MESSAGE_SUCCESS,
-                actionsConstnats.POST_PERSONAL_MESSAGE_FAILED
-            ],
-        }
-    }
+    return (dispatch) => {
+
+        dispatch({type : actionsConstnats.POST_PERSONAL_MESSAGE_REQUEST});
+
+        return window.firebase.database().ref(`/${constants.database.personalMessageTable}/${data.id}`).set(data).then(() => {
+            dispatch({type : actionsConstnats.POST_PERSONAL_MESSAGE_SUCCESS})
+        }).catch(error => dispatch({type : actionsConstnats.POST_PERSONAL_MESSAGE_FAILED, error : error}));
+
+
+    };
 }
 
+export function fetchUserMessages(category) {
 
-export function fetchUserMessages() {
-    return {
-        [CALL_API]: {
-            endpoint: `${config.apiBaseUrl}/user-reports`,
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            types: [
-                actionsConstnats.FETCH_USER_MESSAGES_REQUEST,
-                actionsConstnats.FETCH_USER_MESSAGES_SUCCESS,
-                actionsConstnats.FETCH_USER_MESSAGES_FAILED
-            ],
-        }
-    }
+    return (dispatch) => {
+
+        dispatch({type : actionsConstnats.FETCH_USER_MESSAGES_REQUEST});
+
+        window.firebase.database().ref(`/${constants.database.personalMessageTable}`).once('value')
+            .then(snapshot => dispatch({type : actionsConstnats.FETCH_USER_MESSAGES_SUCCESS, payload : { messages: snapshot.val() }}))
+            .catch(error => dispatch({type : actionsConstnats.FETCH_USER_MESSAGES_FAILED, error : error}));
+
+    };
 }
-
 
 export function fetchSingleMessage(id) {
 
-    return {
-        [CALL_API]: {
-            endpoint: `${config.apiBaseUrl}/user-reports?id=${id}`,
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            types: [
-                'REQUEST',
-                actionsConstnats.FETCH_SINGLE_MESSAGE,
-                'FAILURE',
-            ],
-        }
+    return dispatch => {
+
+        window.firebase.database().ref(`/${constants.database.personalMessageTable}/${id}`).once('value')
+            .then(snapshot => dispatch({type : actionsConstnats.FETCH_SINGLE_MESSAGE, payload : snapshot.val()}))
     }
 }
 
-export function updateUserMessageLikes(message) {
-    console.log(message)
-    return {
-        [CALL_API]: {
-            endpoint: `${config.apiBaseUrl}/update-user-report`,
-            method: 'PUT',
-            body: JSON.stringify(message),
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            types: [
-                actionsConstnats.UPDATE_USER_REPORT_REQUEST,
-                actionsConstnats.UPDATE_USER_REPORT_SUCCESS,
-                actionsConstnats.UPDATE_USER_REPORT_FAILED,
-            ],
-        }
-    }
 
+export function updateUserMessageLikes(message) {
+    const wantedLikes = message.likes ? parseInt(message.likes) + 1 : 1;
+    return (dispatch) => {
+        window.firebase.database().ref(`/${constants.database.personalMessageTable}/${message.id}/likes`).set(wantedLikes).then(() => {
+            return dispatch(fetchSingleMessage(message.id))
+        })
+
+    };
 }

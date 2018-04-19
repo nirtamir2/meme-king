@@ -31,8 +31,7 @@ class Searcher extends Component {
     }
 
     openGenerator = (meme) => {
-        const { history } = this.props;
-        history.push(`/generator/search/${meme.id}/${globalConstants.format.normal}`);
+        this.props.history.push(`/search/generator/${meme.id}/${globalConstants.format.normal}`);
     };
 
     loadOptions = (input, callback) => {

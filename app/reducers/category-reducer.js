@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import actionsConstants from 'actions/category-actions/category-actions-constants';
 
 const initialState = {
@@ -15,13 +14,15 @@ export default function(state=initialState, action){
             return {
                 memes: [],
                 isFetching: true,
+                name: payload.name
             }
             break;
 
         case actionsConstants.FETCH_CATEGORY_SUCCESS:
             return {
-                memes: payload,
+                memes: payload.memes,
                 isFetching: false,
+                name: payload.name
             }
             break;
 
@@ -63,6 +64,8 @@ export default function(state=initialState, action){
             return {
                 isFetching: false,
                 memes: payload,
+                name: payload.name
+
             }
             break;
 
@@ -81,6 +84,7 @@ export default function(state=initialState, action){
             return {
                 isFetching: true,
                 memes: [],
+                name: "ממים חדשים"
             }
             break;
 
@@ -133,12 +137,9 @@ export default function(state=initialState, action){
 
 
         case actionsConstants.FETCH_SINGLE_MEME_SUCCESS:
-
-            const meme = _.head(payload);
-
             return {
                 isFetching: false,
-                memes: { ...state.memes, [meme.id] : meme },
+                memes: { ...state.memes, [payload.id] : payload },
             }
             break;
 

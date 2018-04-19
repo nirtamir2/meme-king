@@ -14,11 +14,9 @@ const Button =  ({ onClick, className, children, isLoading, ...rest }) => {
 
     return (
         <BootstrapButton className={classNames("box-cta-button", className)} onClick={onClick} {...rest}>
-            {
-                isLoading
-                    ?
+            {isLoading ?
                 <ActivityIndicator className="center-block" />
-                    :
+                :
                 children
             }
         </BootstrapButton>

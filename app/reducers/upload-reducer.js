@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { SET_UPLOAD_IMAGE, REMOVE_UPLOAD_IMAGES } from '../actions/upload-actions/upload-actions';
+import { SET_UPLOAD_IMAGE } from '../actions/upload-actions/upload-actions';
 
-const initialState = {
-    images: {}
-};
+const initialState = [];
 
 export default function (state = initialState, action) {
 
@@ -13,17 +11,7 @@ export default function (state = initialState, action) {
     switch (type) {
         case SET_UPLOAD_IMAGE:
             return {
-                images: {
-                    ...state.images,
-                    [payload.id]: payload
-                }
-            }
-    }
-
-    switch (type) {
-        case REMOVE_UPLOAD_IMAGES:
-            return {
-                images: {}
+                images: [payload]
             }
     }
 

@@ -1,5 +1,27 @@
 .box-admin {
 
+  color: white;
+
+  h1 {
+    color: black;
+    text-align:center;
+    margin: 30px 40px;
+  }
+
+  h4 {
+    margin: 30px 0;
+    text-align:center;
+    direction: ltr;
+    color: $mainColor;
+
+  }
+
+  h6 {
+    margin: 5px 0;
+    cursor:pointer;
+    font-size: 14px;
+  }
+
   .dashboard {
     @include mobile-medium {
       flex-direction: column;
@@ -9,15 +31,51 @@
 
   select {
     height: 60px;
+    width: 200px;
     display:block;
     margin: 0 4px;
     color: black;
-    width: 100%;
 
 
     @include mobile-medium {
       border: 1px solid black;
+      width: 300px;
+      margin: 10px auto;
 
+    }
+  }
+
+  .box-user-meme {
+    width: 100%;
+    padding: 20px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    input {
+      color: black;
+    }
+
+    p.date {
+      margin: 20px 0;
+    }
+
+    img {
+      width: 350px;
+    }
+  }
+
+  .box-personal-messages {
+    direction: rtl;
+    text-align: center;
+    border: 1px solid white;
+    padding: 20px;
+    
+    h3 {
+      text-decoration: underline;
     }
   }
 

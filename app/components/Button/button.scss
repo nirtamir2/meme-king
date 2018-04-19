@@ -8,12 +8,6 @@
   -webkit-appearance: none !important;
   border: none;
   border-radius: 6px;
-  display: flex;
-  justify-content: center;
-
-  &.space-between {
-    justify-content: space-between;
-  }
 
   &.btn-lg {
     height: 70px;
@@ -23,12 +17,9 @@
     margin-top: inherit;
   }
 
-
-  // themes
-
   &.btn-brand {
     background: $mainColor;
-    border: 2px solid $white;
+    border: 2px solid white;
     border-radius: 6px;
     color: white;
 

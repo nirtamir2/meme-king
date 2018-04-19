@@ -4,10 +4,10 @@ const path = require('path')
 const _ = require('lodash')
 const storage = require('@google-cloud/storage')
 const uniqueId = require('../../app/helpers/uniqueId')
-const stream = require('stream')
+var stream = require('stream')
 
 // services
-const newDataBaseService = require('../dataBase/DbService');
+const DatabaseService = require('./DatabaseService')
 
 class StorageService {
 
@@ -41,24 +41,20 @@ class StorageService {
 
     async uploadNewMemeAndSaveToDataBase(meme) {
 
-        const id = uniqueId();
-        const fileName = id;
+        const fileName = meme.id
         const url = `https://storage.googleapis.com/meme-king-storage/memes/${meme.category}/${fileName}.jpg`
         const thumbUrl = `https://storage.googleapis.com/meme-king-storage/meme-thumbs/${meme.category}/${fileName}.jpg`
 
-        await this.uploadToStorage({ image: meme.urlPath, destination: `/memes/${meme.category}/${fileName}.jpg` })
-        await this.uploadToStorage({ image: meme.thumbPath, destination: `/meme-thumbs/${meme.category}/${fileName}.jpg` })
+        await this.uploadToStorage({ image: meme.urlPath, destination: `/memes/${meme.category}/${meme.id}.jpg` })
+        await this.uploadToStorage({ image: meme.thumbPath, destination: `/meme-thumbs/${meme.category}/${meme.id}.jpg` })
 
         const finalMeme = {
             ...meme,
             urlPath: url,
-            id,
-            thumbPath: thumbUrl,
-            date: new Date()
+            thumbPath: thumbUrl
         }
 
-
-        newDataBaseService.saveMemeToDataBase({ meme: finalMeme })
+       DatabaseService.saveSingleMemeToDataBase(finalMeme)
 
         return url;
     }
@@ -87,10 +83,8 @@ class StorageService {
                 validation: "md5"
             }))
                 .on('error', function (err) {
-                    console.log(err)
                 })
                 .on('finish', function (file) {
-                    console.log('done save file to storage')
                     // The file upload is complete.
                     resolve();
                 })
@@ -101,7 +95,7 @@ class StorageService {
 
         const fileName = uniqueId();
 
-        const url = `https://storage.googleapis.com/meme-king-storage/user-generated-memes/${fileName}.jpg`;
+        const url = `https://storage.googleapis.com/meme-king-storage/user-memes/${fileName}.jpg`;
 
         let memeObj = {
             urlPath: url,
@@ -114,9 +108,10 @@ class StorageService {
 
         const fileData = _.get(meme, 'urlPath');
 
-        await this.uploadToStorage({ image: fileData, destination: `/user-generated-memes/${fileName}.jpg` });
+        DatabaseService.saveUserMeme(memeObj);
 
-        return newDataBaseService.saveUserGeneratedMeme({ meme: memeObj });
+        //  await this.uploadToStorage(fileData, fileName, null, 'user-memes');
+        return await this.uploadToStorage({ image: fileData, destination: `/user-memes/${fileName}.jpg` });
 
     }
 
@@ -136,10 +131,8 @@ class StorageService {
             }
 
             this.uploadToStorage({ image: meme.urlPath, destination: `/suggested-memes/${fileName}.jpg` }).then(() => {
-                newDataBaseService.saveUserSuggestedMeme({ meme: { ...meme, id: fileName, urlPath: url } }).then(() => {
-                    resolve(url);
-                })
-
+                DatabaseService.saveSuggestedMeme({ meme: { ...meme, id: fileName, urlPath: url } });
+                resolve(url);
             })
         })
     }

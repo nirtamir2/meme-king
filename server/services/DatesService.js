@@ -8,7 +8,7 @@ const DateController = (()=> {
         return `${day}_${month}_${year}`;
     };
 
-    const getCurrentDate = () => {
+    const getCurrentDate = ()=> {
 
 
 
@@ -35,7 +35,7 @@ const DateController = (()=> {
         return [d.getFullYear(), weekNo];
     };
 
-    const getCurrentWeekId = () => {
+    const getCurrentWeekId = ()=> {
 
         const weekDetails = getWeekNumber(new Date()),
               weekNumber = weekDetails[1],

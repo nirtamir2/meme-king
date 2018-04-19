@@ -17,9 +17,7 @@ class Toolbar extends React.Component {
 
     openCollageGenerator = () => {
 
-        const { history, match } = this.props;
-
-        history.push(`${match.url}/generator/collage/collage-meme/normalFormat`);
+        this.props.history.push(`/memes/${_.get(this.props, 'match.params.category', this.props.category)}/generator-collage`);
     }
 
     render() {

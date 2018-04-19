@@ -1,9 +1,8 @@
-import _ from 'lodash';
 import helpers from 'helpers/helpers';
 
 export default ({ image, wantedMaxHeight, wantedMaxWidth }) => {
     const isMobile = helpers.isMobile();
-    const containerWidth = (_.get(document.querySelector('.generator__canvas-wrapper'), 'offsetWidth'));
+    const containerWidth = (document.querySelector('.generator__canvas-wrapper').offsetWidth);
     let maxWidth = wantedMaxWidth || (isMobile ? 300 : containerWidth);
     let maxHeight = wantedMaxHeight || (isMobile ? 350 : 500)
     let ratio = 0;  // Used for aspect ratio

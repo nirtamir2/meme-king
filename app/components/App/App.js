@@ -21,6 +21,18 @@ export default class App extends Component {
 
     componentWillMount() {
 
+
+        // Initialize Firebase
+        window.config = {
+            apiKey: "AIzaSyA-f4RHZw205unjWdY4jvh_tJ7E1ZVPYKQ",
+            authDomain: "memeking-80290.firebaseapp.com",
+            databaseURL: "https://memeking-80290.firebaseio.com",
+            storageBucket: "gs://memeking-80290.appspot.com", //"memeking-80290.appspot.com",
+            messagingSenderId: "243226751545"
+        };
+
+        firebase.initializeApp(config);
+
         // google analytics
         AnalyticsService.init();
         AnalyticsService.sendEvent(helpers.isMobile() ? 'Mobile Entrance' : 'Desktop entrance');

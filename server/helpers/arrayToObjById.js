@@ -3,11 +3,6 @@
  */
 const _  = require('lodash');
 
-module.exports =  array => _.assign({}, ..._.map(array, meme => {
-
-    if(!meme) {
-        return {}
-    }
-
+module.exports =  array => _.assign({}, ...array.map(meme => {
     return { [meme.id]: meme }
 }))

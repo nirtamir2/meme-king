@@ -119,11 +119,11 @@ class DatabaseService {
     getAllMemes() {
 
         return new Promise(resolve => {
-            this.database.ref(`/${dbConstants.memesTable}/`).once('value').then(data => {
-                let flattenData = []
-                _.forEach(data.val(), category => flattenData = [...flattenData, ..._.values(category)])
-                resolve(flattenData)
-            });
+             this.database.ref(`/${dbConstants.memesTable}/`).once('value').then(data => {
+                 let flattenData = []
+                 _.forEach(data.val(), category => flattenData = [...flattenData, ..._.values(category)])
+                 resolve(flattenData)
+             });
 
 
         })
@@ -131,6 +131,9 @@ class DatabaseService {
 
     saveUserMeme(meme) {
         const table = this.database.ref(dbConstants.userSavedMemesTable);
+        const other = { ...meme };
+        delete other.urlPath;
+        console.log('firebase meme', other)
         table.ref.child(meme.id).set(meme);
     }
 
