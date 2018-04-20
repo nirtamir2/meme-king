@@ -194,6 +194,7 @@ const deleteMeme = ({ meme = {}, id } = {}) => {
 }
 
 const saveUserGeneratedMeme = ({ meme = {} } = {}) => {
+    console.log('saveing user meme to database')
 
     return new Promise(resolve => {
 

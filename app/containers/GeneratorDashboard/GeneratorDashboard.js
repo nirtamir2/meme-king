@@ -83,7 +83,22 @@ class GeneratorDashboard extends Component {
         canvas.setZoom(zoom)
 
         // need to enlarge canvas otherwise the svg will be clipped
-        canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
+        canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
+
+        if (config.features.saveUserMemeToStorage) {
+
+            const isDesktop = !helpers.isMobile()
+
+            const memeData = {
+                urlPath: canvas.toDataURL(),
+                date: new Date(),
+                isMobile: !!helpers.isMobile(),
+                isMobileApp: !!WebViewService.isWebView,
+                isDesktop: !!isDesktop
+            }
+
+            saveUserMemeToStorage(memeData)
+        }
 
 
         if (WebViewService.isWebView) {
@@ -102,22 +117,6 @@ class GeneratorDashboard extends Component {
 
         if (!isCleanSlateState && !isDataURL(_.get(this.props, 'meme.urlPath')) && !isCollageMode) {
             updateMemeRating(this.props.meme)
-        }
-
-
-        if (config.features.saveUserMemeToStorage) {
-
-            const isDesktop = !helpers.isMobile()
-
-            const memeData = {
-                urlPath: canvas.toDataURL(),
-                date: new Date(),
-                isMobile: !!helpers.isMobile(),
-                isMobileApp: !!WebViewService.isWebView,
-                isDesktop: !!isDesktop
-            }
-
-            saveUserMemeToStorage(memeData)
         }
 
         //!* need to set back canvas dimensions *
