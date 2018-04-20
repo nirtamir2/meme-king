@@ -1,9 +1,17 @@
 import Dropzone from 'components/DropZone/DropZone';
-
+import helpers from 'helpers/helpers';
 import globalConstants from 'constants/global';
+import WebViewService from 'services/webViewService'
 
 export default {
     buttons: {
+        closeGenerator: {
+            icon: 'EXIT',
+            className: '',
+            getLabel: () => 'יציאה',
+            onClick: 'closeGenerator',
+            show: () => helpers.isMobile() && !WebViewService.isWebView
+        },
         addTextLine: {
             icon: 'PLUS',
             className: '',

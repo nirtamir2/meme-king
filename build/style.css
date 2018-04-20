@@ -677,7 +677,7 @@ a:hover, a:active {
 
 @media only screen and (max-width: 939px) {
   .generator {
-    padding-top: 5px !important; } }
+    padding: 0 !important; } }
 
 .generator .generator__wrapper {
   margin: 0 auto;
@@ -840,7 +840,7 @@ header {
       min-height: 100vh;
       display: block;
       position: relative;
-      padding-top: 85px; } }
+      padding-top: 65px; } }
   .home .box-avatar {
     margin-top: 180px; }
     @media only screen and (max-width: 939px) {
@@ -3014,6 +3014,9 @@ LABEL
         justify-content: space-between;
         display: flex; } }
     @media only screen and (max-width: 939px) {
+      .box-generator-dashboard .buttons-container .button-wrapper {
+        width: 13%; } }
+    @media only screen and (max-width: 939px) {
       .box-generator-dashboard .buttons-container .dashboard-button {
         display: flex;
         justify-content: center;
@@ -3023,7 +3026,7 @@ LABEL
           margin-right: 0; }
         .box-generator-dashboard .buttons-container .dashboard-button .dashboard-button-label {
           margin-top: 5px;
-          font-size: 11px; } }
+          font-size: 10px; } }
   @media only screen and (max-width: 939px) {
     .box-generator-dashboard {
       padding-left: 0;

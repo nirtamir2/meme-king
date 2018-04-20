@@ -16,6 +16,12 @@
       display: flex;
     }
 
+    .button-wrapper {
+      @include mobile-medium {
+        width: 13%;
+      }
+    }
+
     .dashboard-button {
       @include mobile-medium {
         display: flex;
@@ -29,7 +35,7 @@
 
         .dashboard-button-label {
           margin-top: 5px;
-          font-size: 11px;
+          font-size: 10px;
         }
       }
     }

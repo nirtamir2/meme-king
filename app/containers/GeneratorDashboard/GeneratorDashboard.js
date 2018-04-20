@@ -34,8 +34,8 @@ const Buttons = ({ className, canvas, isCleanSlateState, format, actions }) => (
             return (
                 button.show({ isCleanSlateState }) && (
                     <Col
-                        className={'padding-right-none padding-left-none'}
-                        xs={2}
+                        className={'button-wrapper padding-right-none padding-left-none'}
+                        xs={1}
                         sm={6}
                     >
                         <Button
@@ -175,7 +175,7 @@ class GeneratorDashboard extends Component {
 
     render() {
 
-        const { format, canvas, style, isCleanSlateState, isLoading, isUpload } = this.props
+        const { format, canvas, style, isCleanSlateState, isLoading, isUpload, closeGenerator } = this.props
 
         if (isLoading) {
             return (
@@ -189,6 +189,7 @@ class GeneratorDashboard extends Component {
                 isCleanSlateState={isCleanSlateState}
                 format={format}
                 actions={{
+                    closeGenerator: closeGenerator,
                     download: this.download,
                     uploadFiles: this.uploadFiles,
                     addTextLine: () => this.TextFieldsContainer.addTextInput(),

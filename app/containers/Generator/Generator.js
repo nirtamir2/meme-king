@@ -211,7 +211,7 @@ class Generator extends Component {
         return (
             <GeneratorModal onClose={this.closeGenerator} className="generator">
 
-                {!isWebView && (<GeneratorModal.CloseButton onClick={this.closeGenerator}/>)}
+                {(!isWebView && !helpers.isMobile()) && (<GeneratorModal.CloseButton onClick={this.closeGenerator}/>)}
 
                 {
                     isCropMode
@@ -251,6 +251,7 @@ class Generator extends Component {
                                         isLoading={isLoading}
                                         saveUserMemeToStorage={saveUserMemeToStorage}
                                         location={location}
+                                        closeGenerator={this.closeGenerator}
                                         meme={meme}
                                         isCollageMode={isCollageMode}
                                         isCleanSlateState={isCleanSlateState}

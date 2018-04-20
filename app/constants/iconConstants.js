@@ -13,6 +13,7 @@ export default {
     DOWNLOAD: 'glyphicon glyphicon-download-alt',
     THRASH: 'fas fa-trash',
     IMAGES: 'fa fa-images',
+    EXIT: 'fas fa-sign-out-alt',
     ZOOM_OUT: 'glyphicon glyphicon-zoom-out action',
     ZOOM_IN: 'glyphicon glyphicon-zoom-in action',
     PICTURE: 'glyphicon glyphicon-picture',
