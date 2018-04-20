@@ -3003,13 +3003,18 @@ LABEL
 .box-generator-dashboard {
   position: relative;
   z-index: 1; }
+  @media only screen and (max-width: 939px) {
+    .box-generator-dashboard {
+      padding-left: 0;
+      padding-right: 0; } }
   .box-generator-dashboard .buttons-container {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row-reverse; }
     @media only screen and (max-width: 939px) {
       .box-generator-dashboard .buttons-container {
-        width: 98%;
+        width: 100%;
+        margin-top: 2px;
         z-index: 9999;
         justify-content: space-between;
         display: flex; } }
@@ -3017,20 +3022,16 @@ LABEL
       .box-generator-dashboard .buttons-container .button-wrapper {
         width: 13%; } }
     @media only screen and (max-width: 939px) {
-      .box-generator-dashboard .buttons-container .dashboard-button {
+      .box-generator-dashboard .buttons-container .button-wrapper .dashboard-button {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column; }
-        .box-generator-dashboard .buttons-container .dashboard-button .box-icon {
+        .box-generator-dashboard .buttons-container .button-wrapper .dashboard-button .box-icon {
           margin-right: 0; }
-        .box-generator-dashboard .buttons-container .dashboard-button .dashboard-button-label {
+        .box-generator-dashboard .buttons-container .button-wrapper .dashboard-button .dashboard-button-label {
           margin-top: 5px;
           font-size: 10px; } }
-  @media only screen and (max-width: 939px) {
-    .box-generator-dashboard {
-      padding-left: 0;
-      padding-right: 0; } }
 
 .box-dashboard-skeleton .mock-text-field {
   margin-bottom: 10px;

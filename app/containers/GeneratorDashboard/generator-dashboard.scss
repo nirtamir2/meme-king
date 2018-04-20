@@ -3,6 +3,11 @@
   position: relative;
   z-index: 1;
 
+  @include mobile-medium {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .buttons-container {
 
     display: flex;
@@ -10,7 +15,8 @@
     flex-direction: row-reverse;
 
     @include mobile-medium {
-      width: 98%;
+      width: 100%;
+      margin-top: 2px;
       z-index: 9999;
       justify-content: space-between;
       display: flex;
@@ -20,33 +26,31 @@
       @include mobile-medium {
         width: 13%;
       }
-    }
 
-    .dashboard-button {
-      @include mobile-medium {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+      .dashboard-button {
+        @include mobile-medium {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
 
-        .box-icon {
-          margin-right: 0;
-        }
+          .box-icon {
+            margin-right: 0;
+          }
 
-        .dashboard-button-label {
-          margin-top: 5px;
-          font-size: 10px;
+          .dashboard-button-label {
+            margin-top: 5px;
+            font-size: 10px;
+          }
         }
       }
+
     }
+
   }
 
-  @include mobile-medium {
-    padding-left: 0;
-    padding-right: 0;
-  }
+
 }
-
 
 .box-dashboard-skeleton {
 
