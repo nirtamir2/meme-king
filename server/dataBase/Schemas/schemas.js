@@ -18,9 +18,9 @@ const memeSchema = mongoose.Schema(commonMemeSchema)
 
 const userGeneratedMemeSchema = mongoose.Schema({
     ...commonMemeSchema,
-    isMobile: { type: String },
-    isDesktop: { type: String },
-    isMobileApp: { type: String },
+    isMobile: { type: Boolean },
+    isDesktop: { type: Boolean },
+    isMobileApp: { type: Boolean },
 
 })
 

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import classNames from 'classnames'
+import classNames from 'classnames';
 
 //helpers
 import helpers from 'helpers/helpers';

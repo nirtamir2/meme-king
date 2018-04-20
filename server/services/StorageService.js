@@ -107,9 +107,9 @@ class StorageService {
             urlPath: url,
             date: new Date().toString(),
             id: fileName,
-            isMobile: meme.isMobile || '',
-            isMobileApp: meme.isMobileApp || '',
-            isDesktop: meme.isDesktop
+            isMobile: meme.isMobile || false,
+            isMobileApp: meme.isMobileApp || false,
+            isDesktop: meme.isDesktop || false
         }
 
         const fileData = _.get(meme, 'urlPath');

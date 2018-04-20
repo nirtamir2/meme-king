@@ -37,7 +37,7 @@ class Cropper extends Component {
 
     crop = () => {
 
-        const { setUploadImage, history, match, next, close } = this.props;
+        const { setUploadImage, match, close } = this.props;
 
         const id = _.get(match, 'params.id');
 

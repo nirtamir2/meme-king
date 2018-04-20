@@ -1,12 +1,12 @@
-import _ from 'lodash';
-import React from 'react';
+import _ from 'lodash'
+import React from 'react'
 
 // components
-import Col from 'react-bootstrap/lib/Col';
-import Button from 'components/Button/Button';
+import Col from 'react-bootstrap/lib/Col'
+import Button from 'components/Button/Button'
 
 // helpers
-import helpers from 'helpers/helpers';
+import helpers from 'helpers/helpers'
 
 const Buttons = () => (
     <div className="buttons-container">
@@ -16,10 +16,10 @@ const Buttons = () => (
                 xs={2}
                 sm={6}
             >
-        <Button
-            bsStyle="brand-gray-border"
-            block
-        />
+                <Button
+                    bsStyle="brand-gray-border"
+                    block
+                />
             </Col>
         ))}
     </div>
@@ -30,13 +30,13 @@ export default ({ style }) => (
         {helpers.isMobile() && <Buttons />}
         <div className="text-fields-container">
             <div className="mock-text-field">
-                <div className="mock-input" />
-                <div className="mock-buttons" />
+                <div className="mock-input"/>
+                <div className="mock-buttons"/>
             </div>
 
             <div className="mock-text-field">
-                <div className="mock-input" />
-                <div className="mock-buttons" />
+                <div className="mock-input"/>
+                <div className="mock-buttons"/>
             </div>
         </div>
         {!helpers.isMobile() && <Buttons />}

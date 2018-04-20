@@ -12,7 +12,10 @@ import Title from 'components/Title/Title'
 
 class UserGeneratedMemesContainer extends React.Component {
 
-    state = {}
+    state = {
+        memes: {},
+        filter: null
+    }
 
 
     getUserMemes = () => {
@@ -33,8 +36,10 @@ class UserGeneratedMemesContainer extends React.Component {
 
     render() {
 
-        const { memes } = this.state
+        const { memes, filter } = this.state;
 
+        const memesToShow = filter ? _.values(memes).filter(meme => meme[filter]) : memes;
+        debugger;
         return (
             <div>
                 <Button
@@ -57,11 +62,17 @@ class UserGeneratedMemesContainer extends React.Component {
                 >
                     CLEAR THEM ALL
                 </Button>
+                <select onChange={e => this.setState({ filter: e.target.value })} value={null}>
+                    <option value={null}>All</option>
+                    <option value="isMobile">mobile android</option>
+                    <option value="isMobileApp">iOs App</option>
+                    <option value="isDesktop">Desktop</option>
+                </select>
 
-                <Title>({_.size(memes)})</Title>
+                <Title>({_.size(memesToShow)})</Title>
 
                 <div className="margin-top-large">
-                    {_.map(memes, meme => {
+                    {_.map(memesToShow, meme => {
                         return (
                             <div key={meme.id} className="box-user-meme margin-top-medium">
                                 <img src={meme.urlPath}/>

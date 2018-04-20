@@ -1,31 +1,36 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import config from 'config/config';
-import { withRouter } from 'react-router';
+import config from 'config/config'
+import { withRouter } from 'react-router'
 
 // components
-import Button from 'components/Button/Button';
+import Button from 'components/Button/Button'
 import ItemsArea from 'components/ItemsArea/ItemsArea'
 import TextFieldsContainer from 'components/TextFieldsContainer/TextFieldsContainer'
 import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
 import Modal from 'components/Modal/Modal'
-import Icon from 'components/Icon/Icon';
-import Col from 'react-bootstrap/lib/Col';
-import GeneratorDashboardSkeleton from 'containers/GeneratorDashboard/DashboardSkeleton';
-import MemeSuggestionsContainer from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer';
+import Icon from 'components/Icon/Icon'
+import Col from 'react-bootstrap/lib/Col'
+import GeneratorDashboardSkeleton from 'containers/GeneratorDashboard/DashboardSkeleton'
+import MemeSuggestionsContainer from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer'
 
 // services
 import AnalyticsService from 'services/Analytics'
-import WebViewService from 'services/webViewService';
+import WebViewService from 'services/webViewService'
 
 // helpers
-import helpers from 'helpers/helpers';
-import { addImageAsync, createCollage, getCanvasContainerWidth, isDataURL } from 'containers/Generator/generator-helpers';
+import helpers from 'helpers/helpers'
+import {
+    addImageAsync,
+    createCollage,
+    getCanvasContainerWidth,
+    isDataURL
+} from 'containers/Generator/generator-helpers'
 
 // constants
-import globalConstants from 'constants/global';
-import dashboardConstants from './dashboard-constants';
+import globalConstants from 'constants/global'
+import dashboardConstants from './dashboard-constants'
 
 const Buttons = ({ className, canvas, isCleanSlateState, format, actions }) => (
     <div className={classNames("buttons-container", className)}>
@@ -47,7 +52,7 @@ const Buttons = ({ className, canvas, isCleanSlateState, format, actions }) => (
                             className="flex space-between dashboard-button weight-600"
                             componentClass={button.componentClass}
                         >
-                            <Icon className="margin-right-small" name={button.icon} />
+                            <Icon className="margin-right-small" name={button.icon}/>
                             <span className="dashboard-button-label">{button.getLabel({ format })}</span>
                         </Button>
                     </Col>
@@ -68,52 +73,56 @@ class GeneratorDashboard extends Component {
     download = () => {
         const { canvas, saveUserMemeToStorage, format, meme, isCollageMode, isCleanSlateState, isUpload, updateMemeRating } = this.props
 
-        helpers.sendDownloadedMemeAnalyticsEvent({ format, meme });
+        helpers.sendDownloadedMemeAnalyticsEvent({ format, meme })
 
-        canvas.deactivateAll().renderAll();
+        canvas.deactivateAll().renderAll()
 
         //saveing the canvas and resizing it before downloading depends on screen resolution.
         const zoom = helpers.isMobile() ? 2.5 : 1.3
 
-        canvas.setZoom(zoom);
+        canvas.setZoom(zoom)
 
         // need to enlarge canvas otherwise the svg will be clipped
         canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
-        const memeData = {
-            urlPath: canvas.toDataURL(),
-            date: new Date(),
-            isMobile: helpers.isMobile(),
-            isMobileApp : WebViewService.isWebView,
-            isDesktop: !helpers.isMobile()
-        }
 
         if (WebViewService.isWebView) {
             this.sendBase64ToNative(canvas.toDataURL())
             //!* need to set back canvas dimensions *
             canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
-            canvas.setZoom(1);
-            helpers.sendDownloadedMemeAnalyticsEvent({ isMobileApp: true, format, meme, isCollageMode });
-            return;
+            canvas.setZoom(1)
+            helpers.sendDownloadedMemeAnalyticsEvent({ isMobileApp: true, format, meme, isCollageMode })
+            return
         }
 
-        const link = document.createElement("a");
-        link.href = canvas.toDataURL();
-        link.download = 'MemeKing';
-        link.click();
+        const link = document.createElement("a")
+        link.href = canvas.toDataURL()
+        link.download = 'MemeKing'
+        link.click()
 
         if (!isCleanSlateState && !isDataURL(_.get(this.props, 'meme.urlPath')) && !isCollageMode) {
-            updateMemeRating(this.props.meme);
+            updateMemeRating(this.props.meme)
         }
 
 
-       if (config.features.saveUserMemeToStorage ) {
-            saveUserMemeToStorage(memeData);
+        if (config.features.saveUserMemeToStorage) {
+
+            const isDesktop = !helpers.isMobile()
+
+            const memeData = {
+                urlPath: canvas.toDataURL(),
+                date: new Date(),
+                isMobile: !!helpers.isMobile(),
+                isMobileApp: !!WebViewService.isWebView,
+                isDesktop: !!isDesktop
+            }
+
+            saveUserMemeToStorage(memeData)
         }
 
         //!* need to set back canvas dimensions *
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
-        canvas.setZoom(1);
+        canvas.setZoom(1)
 
     }
 
@@ -122,44 +131,44 @@ class GeneratorDashboard extends Component {
     }
 
     uploadFiles = acceptedFiles => {
-        const { canvas } = this.props;
+
+        const { canvas } = this.props
 
 
         _.forEach(acceptedFiles, file => {
 
-            const randomX = (Math.floor(Math.random() * canvas.width) + 1) /2;
-            const randomY = (Math.floor(Math.random() * canvas.height) + 1) / 2;
+            const randomX = (Math.floor(Math.random() * canvas.width) + 1) / 2
+            const randomY = (Math.floor(Math.random() * canvas.height) + 1) / 2
 
             fabric.Image.fromURL(file.preview, function (image) {
-                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: 100 });
+                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: 100 })
                 image.left = randomX
-                image.top = randomY;
-                canvas.add(image);
-                image.set({hoverCursor: "default"});
-                image.lockMovementX = false;
-                image.lockMovementY = false;
-                image.hasBorders = true;
-                image.selectable = true;
-                canvas.bringForward(image);
+                image.top = randomY
+                canvas.add(image)
+                image.set({ hoverCursor: "default" })
+                image.lockMovementX = false
+                image.lockMovementY = false
+                image.hasBorders = true
+                image.selectable = true
+                canvas.bringForward(image)
 
-            });
-        });
+            })
+        })
     }
 
 
     sendImageToCropper = () => {
 
-        AnalyticsService.sendEvent('Cropping from inside Generator');
+        AnalyticsService.sendEvent('Cropping from inside Generator')
 
-        const { canvas, history, setUploadImage, match, meme = {} } = this.props;
+        const { canvas, setUploadImage, meme = {} } = this.props
 
-        canvas.deactivateAll().renderAll();
+        canvas.deactivateAll().renderAll()
 
-        const memeId = meme.id;
+        const memeId = meme.id
 
         setUploadImage({ urlPath: canvas.toDataURL(), id: memeId }).then(() => {
-            //history.push(`${match.url}/cropper`);
-            this.props.activateCropper();
+            this.props.activateCropper()
         })
     }
 
@@ -168,7 +177,6 @@ class GeneratorDashboard extends Component {
         const { history, format, location } = this.props
         const wantedFormat = (format === globalConstants.format.normal) ? globalConstants.format.dank : globalConstants.format.normal
         const wantedPath = location.pathname.replace(format, wantedFormat)
-        const from = _.get(location, 'state.from')
 
         history.push(wantedPath)
     }
@@ -178,8 +186,9 @@ class GeneratorDashboard extends Component {
         const { format, canvas, style, isCleanSlateState, isLoading, isUpload, closeGenerator } = this.props
 
         if (isLoading) {
+
             return (
-                <GeneratorDashboardSkeleton style={style} />
+                <GeneratorDashboardSkeleton style={style}/>
             )
         }
 
@@ -217,9 +226,14 @@ class GeneratorDashboard extends Component {
 
                 <GeneratorSignature className="visible-mobile"/>
 
-                <Modal onHide={() => this.setState({ isItemsAreaOpen: false })}
-                       show={this.state.isItemsAreaOpen && canvas}>
-                    <ItemsArea canvas={canvas} closeModal={() => this.setState({ isItemsAreaOpen: false })}/>
+                <Modal
+                    onHide={() => this.setState({ isItemsAreaOpen: false })}
+                    show={this.state.isItemsAreaOpen && canvas}
+                >
+                    <ItemsArea
+                        anvas={canvas}
+                        closeModal={() => this.setState({ isItemsAreaOpen: false })}
+                    />
                 </Modal>
 
             </div>
@@ -228,4 +242,4 @@ class GeneratorDashboard extends Component {
 }
 
 
-export default withRouter(GeneratorDashboard);
+export default withRouter(GeneratorDashboard)

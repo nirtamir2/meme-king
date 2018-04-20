@@ -146,7 +146,7 @@ class Searcher extends Component {
                                         ?
                                         <img src={notFoundImage} className="center-block img-responsive empty-state-img" />
                                         :
-                                        <Row>
+                                        <Row className="padding-right-small padding-left-small">
                                             {_.map(searchResults, meme => {
                                                 return (
                                                     <Col xs={6} sm={2} className="padding-right-none padding-left-none">

@@ -19,9 +19,8 @@ import helpers from 'helpers/helpers';
 
 export default class App extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
 
-        // google analytics
         AnalyticsService.init();
         AnalyticsService.sendEvent(helpers.isMobile() ? 'Mobile Entrance' : 'Desktop entrance');
 
@@ -29,7 +28,7 @@ export default class App extends Component {
 
         WebViewService.setIsWebView(helpers.getQueryVariable('origin') === 'mobile');
 
-        if(WebViewService.isWebView) {
+        if (WebViewService.isWebView) {
             AnalyticsService.sendEvent('Mobile App entrance');
         }
 

@@ -35,7 +35,9 @@ import { setCollageMode } from 'actions/collage-actions/collage-actions'
 class Generator extends Component {
 
     constructor(props) {
+
         super(props);
+
         this.state = {
             isLoading: true,
             canvas: null,
@@ -46,23 +48,26 @@ class Generator extends Component {
 
     componentDidMount() {
 
-        const { isStandAlone, fetchSingleMeme, memeId } = this.props
+        const { isStandAlone, fetchSingleMeme, memeId } = this.props;
+
         if (isStandAlone) {
-            fetchSingleMeme(memeId)
+            fetchSingleMeme(memeId);
         }
 
     }
 
     componentWillReceiveProps(nextProps) {
 
-        const { format, isCleanSlateState, meme } = this.props
+        const { format, isCleanSlateState, meme } = this.props;
+
         if (nextProps.isCleanSlateState || isCleanSlateState) {
-            return
+            return;
         }
 
         if ((format !== nextProps.format) || (meme !== nextProps.meme)) {
+
             this.setState({ isLoading: true }, () => {
-                this.addImage(nextProps.format)
+                this.addImage(nextProps.format);
             })
         }
 
@@ -77,48 +82,51 @@ class Generator extends Component {
         const mobileHeight = generatorConstants.cleanSlate.MOBILE_HEIGHT;
         const width = helpers.isMobile() ? 300 : _.get(document.querySelector('.generator__canvas-wrapper'), 'offsetWidth') - DISTANCE;
         const height = helpers.isMobile() ? mobileHeight : 460;
+
         canvas.backgroundColor = colors.WHITE;
         canvas.setWidth(width);
         canvas.setHeight(height);
+
         this.addWaterMark();
         this.setState({ isLoading: false, canvasHeight: `${mobileHeight}px` });
 
     }
 
     addWaterMark = () => {
-        const { isWebView } = this.props
-        const { canvas } = this.state
 
-        const isMobile = helpers.isMobile()
+        const { isWebView } = this.props;
+        const { canvas } = this.state;
 
-        helpers.addWaterMark({ isMobile, canvas, isWebView })
+        const isMobile = helpers.isMobile();
+
+        helpers.addWaterMark({ isMobile, canvas, isWebView });
 
     }
 
     addImage = (format) => {
 
-        const { isUpload, meme } = this.props
-        const { urlPath } = meme || {}
-        const { canvas } = this.state
+        const { meme } = this.props;
+        const { urlPath } = meme || {};
+        const { canvas } = this.state;
 
         if (!canvas) {
-            return
+            return;
         }
 
-        canvas.backgroundColor = colors.WHITE
-        const isNormalFormat = (format === globalConstants.format.normal)
-        const formatData = _.get(generatorConstants, ['formats', format])
+        canvas.backgroundColor = colors.WHITE;
+        const isNormalFormat = (format === globalConstants.format.normal);
+        const formatData = _.get(generatorConstants, ['formats', format]);
 
-        const canvasContainerWidth = getCanvasContainerWidth()
+        const canvasContainerWidth = getCanvasContainerWidth();
 
-        canvas.setWidth(canvasContainerWidth)
-        canvas.clear()
+        canvas.setWidth(canvasContainerWidth);
+        canvas.clear();
 
 
         addImageAsync({ image: urlPath }).then(image => {
 
             if (!image) {
-                return
+                return;
             }
 
             const wantedMaxHeight = formatData.image.getWantedMaxHeight()
@@ -136,8 +144,7 @@ class Generator extends Component {
             this.setState({ isLoading: false, canvasHeight: `${canvas.height}px` })
 
             if (format !== 'dankFormat') {
-                this.addWaterMark()
-
+                this.addWaterMark();
             }
 
         })
@@ -145,7 +152,7 @@ class Generator extends Component {
     }
 
     closeGenerator = () => {
-        const { isCollageMode, history, setCollageMode, meme = {}, backgroundCategory, clearUploadedImages } = this.props
+        const { isCollageMode, history, setCollageMode, backgroundCategory, clearUploadedImages } = this.props
 
         if (isCollageMode) {
             setCollageMode({ isCollageMode: false })
@@ -170,19 +177,19 @@ class Generator extends Component {
 
                 createCollage({
                     collageMemes, addWaterMark: this.addWaterMark, canvas, callback: canvas => {
-                        this.setState({ isLoading: false, canvasHeight: `${canvas.height}px` })
+                        this.setState({ isLoading: false, canvasHeight: `${canvas.height}px` });
                     }
                 })
 
             } else if (isCleanSlateState) {
 
                 this.setState({ isLoading: true }, () => {
-                    this.createCleanSlate()
+                    this.createCleanSlate();
                 })
 
             } else {
 
-                this.addImage(format)
+                this.addImage(format);
 
             }
         })
@@ -204,6 +211,7 @@ class Generator extends Component {
             setUploadImage,
             category,
             isUpload,
+            updateMemeRating
         } = this.props
 
         const dashboardStyle = { top: helpers.isMobile() ? canvasHeight : null };
@@ -259,7 +267,7 @@ class Generator extends Component {
                                         activateCropper={() => this.setState({ isCropMode: true })}
                                         canvas={canvas}
                                         isUpload={isUpload}
-                                        updateMemeRating={this.props.updateMemeRating}
+                                        updateMemeRating={updateMemeRating}
                                     />
                                 </Col>
 

@@ -21,27 +21,24 @@
       position: absolute;
       left: 15px;
       top: 21px;
+
+      @include mobile-medium {
+        top: 24px;
+      }
+
     }
 
-  }
-
-  .empty-state-img {
-    max-width: 400px;
-    @include mobile-medium {
-      max-width: 100%;
-    }
   }
 
 
   .search-result-component {
-    overflow-x: scroll;
     position: absolute;
     width:100%;
-    border-bottom: 1px solid $lightGray;
     z-index: 9999;
     padding: 10px;
-    cursor: pointer;
     max-height: 600px;
+    overflow-y: hidden;
+    overflow-x: scroll;
 
     @include mobile-medium {
       max-height: 400px;
@@ -51,6 +48,15 @@
     &:hover {
       background: $lightGray;
     }
+
+
+    .empty-state-img {
+      max-width: 400px;
+      @include mobile-medium {
+        max-width: 200px;
+      }
+    }
+
   }
 
 }
