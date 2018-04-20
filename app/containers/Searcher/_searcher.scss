@@ -37,8 +37,8 @@
     z-index: 9999;
     padding: 10px;
     max-height: 600px;
-    overflow-y: hidden;
-    overflow-x: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 
     @include mobile-medium {
       max-height: 400px;
