@@ -18,6 +18,7 @@ export function fetchSearchResults(query) {
 }
 
 export function cleanSearchResults() {
+
     return  {
         type: CLEAN_SEARCH_RESULTS,
         payload: []

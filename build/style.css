@@ -73,6 +73,9 @@
 .padding-right-xs {
   padding-right: 7px; }
 
+.padding-right-small {
+  padding-right: 15px; }
+
 .padding-right-lg {
   padding-right: 30px; }
 
@@ -692,7 +695,7 @@ a:hover, a:active {
       flex-direction: column;
       width: 100%;
       border: none;
-      padding: 0px; } }
+      padding: 0; } }
 
 header {
   height: 60px;
@@ -879,25 +882,27 @@ header {
       position: absolute;
       left: 15px;
       top: 21px; }
-  .box-searcher .empty-state-img {
-    max-width: 400px; }
-    @media only screen and (max-width: 939px) {
-      .box-searcher .empty-state-img {
-        max-width: 100%; } }
+      @media only screen and (max-width: 939px) {
+        .box-searcher .input-container .search-icon {
+          top: 24px; } }
   .box-searcher .search-result-component {
-    overflow-x: scroll;
     position: absolute;
     width: 100%;
-    border-bottom: 1px solid #f1f1f1;
     z-index: 9999;
     padding: 10px;
-    cursor: pointer;
-    max-height: 600px; }
+    max-height: 600px;
+    overflow-y: hidden;
+    overflow-x: scroll; }
     @media only screen and (max-width: 939px) {
       .box-searcher .search-result-component {
         max-height: 400px; } }
     .box-searcher .search-result-component:hover {
       background: #f1f1f1; }
+    .box-searcher .search-result-component .empty-state-img {
+      max-width: 400px; }
+      @media only screen and (max-width: 939px) {
+        .box-searcher .search-result-component .empty-state-img {
+          max-width: 200px; } }
 
 .memes-section {
   position: relative;
@@ -3134,37 +3139,38 @@ LABEL
     .box-panel.theme-shadow:hover {
       background: #fff; }
 
-.lds-ellipsis {
+.box-spinner-dots {
   display: inline-block;
   position: relative; }
-  .lds-ellipsis.md {
+  .box-spinner-dots.md {
     width: 64px;
     height: 64px; }
-    .lds-ellipsis.md div {
+    .box-spinner-dots.md div {
       width: 11px;
       height: 11px; }
-  .lds-ellipsis.size-lg {
+  .box-spinner-dots.size-lg {
     width: 100px;
     height: 100px; }
-    .lds-ellipsis.size-lg div {
+    .box-spinner-dots.size-lg div {
       width: 20px;
       height: 20px; }
-  .lds-ellipsis div {
+  .box-spinner-dots.theme-black div {
+    background: black; }
+  .box-spinner-dots div {
     position: absolute;
     top: 27px;
     border-radius: 50%;
-    background: black;
     animation-timing-function: cubic-bezier(0, 1, 1, 0); }
-    .lds-ellipsis div:nth-child(1) {
+    .box-spinner-dots div:nth-child(1) {
       left: 6px;
       animation: lds-ellipsis1 0.6s infinite; }
-    .lds-ellipsis div:nth-child(2) {
+    .box-spinner-dots div:nth-child(2) {
       left: 10px;
       animation: lds-ellipsis2 0.6s infinite; }
-    .lds-ellipsis div:nth-child(3) {
+    .box-spinner-dots div:nth-child(3) {
       left: 34px;
       animation: lds-ellipsis2 0.6s infinite; }
-    .lds-ellipsis div:nth-child(4) {
+    .box-spinner-dots div:nth-child(4) {
       left: 45px;
       animation: lds-ellipsis3 0.6s infinite; }
 
