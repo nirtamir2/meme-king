@@ -39,7 +39,6 @@ class UserGeneratedMemesContainer extends React.Component {
         const { memes, filter } = this.state;
 
         const memesToShow = filter ? _.values(memes).filter(meme => meme[filter]) : memes;
-        debugger;
         return (
             <div>
                 <Button

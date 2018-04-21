@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 // containers
 import Header from 'containers/Header/Header';
@@ -17,7 +17,7 @@ import WebViewService from 'services/webViewService';
 // helpers
 import helpers from 'helpers/helpers';
 
-export default class App extends Component {
+class App extends Component {
 
     componentDidMount() {
 
@@ -27,6 +27,7 @@ export default class App extends Component {
         SentryService.init();
 
         WebViewService.setIsWebView(helpers.getQueryVariable('origin') === 'mobile');
+        WebViewService.setIsAndroid(helpers.getQueryVariable('platform') === 'android');
 
         if (WebViewService.isWebView) {
             AnalyticsService.sendEvent('Mobile App entrance');
@@ -50,5 +51,5 @@ export default class App extends Component {
 
 
 
-
+export default withRouter(App);
 

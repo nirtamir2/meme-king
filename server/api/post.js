@@ -25,8 +25,9 @@ const post = (app) => {
     })
 
     app.post('/api/save-user-meme', function (req, res) {
-        StorageService.saveUserMeme(req.body);
-        res.sendStatus(200)
+        StorageService.saveUserMeme(req.body).then(url => {
+            res.send(url);
+        });
     })
 
     app.post('/api/upload-suggested-new-meme', function (req, res) {

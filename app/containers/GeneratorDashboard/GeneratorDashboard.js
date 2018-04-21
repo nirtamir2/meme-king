@@ -71,7 +71,7 @@ class GeneratorDashboard extends Component {
     }
 
     download = () => {
-        const { canvas, saveUserMemeToStorage, format, meme, isCollageMode, isCleanSlateState, isUpload, updateMemeRating } = this.props
+        const { canvas, saveUserMemeToStorage, format, meme, isCollageMode, isCleanSlateState, updateMemeRating } = this.props;
 
         helpers.sendDownloadedMemeAnalyticsEvent({ format, meme })
 
@@ -83,32 +83,27 @@ class GeneratorDashboard extends Component {
         canvas.setZoom(zoom)
 
         // need to enlarge canvas otherwise the svg will be clipped
-        canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom);
+        canvas.setWidth(canvas.getWidth() * zoom).setHeight(canvas.getHeight() * zoom)
 
-        if (config.features.saveUserMemeToStorage) {
 
-            const isDesktop = !helpers.isMobile()
+        const isDesktop = !helpers.isMobile()
 
-            const memeData = {
-                urlPath: canvas.toDataURL(),
-                date: new Date(),
-                isMobile: !!helpers.isMobile(),
-                isMobileApp: !!WebViewService.isWebView,
-                isDesktop: !!isDesktop
-            }
-
-            saveUserMemeToStorage(memeData)
+        const memeData = {
+            urlPath: canvas.toDataURL(),
+            date: new Date(),
+            isMobile: !!helpers.isMobile(),
+            isMobileApp: !!WebViewService.isWebView,
+            isDesktop: !!isDesktop
         }
 
 
         if (WebViewService.isWebView) {
-            this.sendBase64ToNative(canvas.toDataURL())
-            //!* need to set back canvas dimensions *
-            canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom)
-            canvas.setZoom(1)
-            helpers.sendDownloadedMemeAnalyticsEvent({ isMobileApp: true, format, meme, isCollageMode })
+            this.handleSaveToWebView({ memeData, zoom })
             return
         }
+
+        saveUserMemeToStorage(memeData)
+
 
         const link = document.createElement("a")
         link.href = canvas.toDataURL()
@@ -125,8 +120,26 @@ class GeneratorDashboard extends Component {
 
     }
 
-    sendBase64ToNative = (base64) => {
-        window.postMessage(base64)
+    handleSaveToWebView = ({ memeData, zoom }) => {
+
+        const { saveUserMemeToStorage, format, meme, isCollageMode, canvas } = this.props;
+        debugger;
+        //!* need to set back canvas dimensions *
+        canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
+        canvas.setZoom(1);
+
+        helpers.sendDownloadedMemeAnalyticsEvent({ isMobileApp: true, format, meme, isCollageMode });
+
+        alert(WebViewService.isAndroid);
+
+        if (WebViewService.isAndroid) {
+            saveUserMemeToStorage(memeData).then(response => {
+                window.postMessage(response.data)
+            });
+        } else {
+            window.postMessage(memeData.urlPath)
+            saveUserMemeToStorage(memeData)
+        }
     }
 
     uploadFiles = acceptedFiles => {

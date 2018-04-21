@@ -115,8 +115,9 @@ class StorageService {
         const fileData = _.get(meme, 'urlPath');
 
         await this.uploadToStorage({ image: fileData, destination: `/user-generated-memes/${fileName}.jpg` });
+        newDataBaseService.saveUserGeneratedMeme({ meme: memeObj });
 
-        return newDataBaseService.saveUserGeneratedMeme({ meme: memeObj });
+        return url
 
     }
 

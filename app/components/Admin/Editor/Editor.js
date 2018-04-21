@@ -74,7 +74,6 @@ class Editor extends Component {
 
 
     onSave = (meme) => {
-        debugger;
         const { meme: { urlPath, thumbPath } = {}, saveMeme } = this.props
 
         saveMeme({ meme: { ...meme, urlPath, thumbPath } })

@@ -24,7 +24,6 @@ export function saveNewMeme({ meme }) {
 }
 
 export function saveEditedMeme({ meme }) {
-    debugger;
     return {
         [CALL_API]: {
             endpoint: `${config.apiBaseUrl}/save-edited-meme`,
