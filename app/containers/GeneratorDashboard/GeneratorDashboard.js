@@ -32,7 +32,7 @@ import {
 import globalConstants from 'constants/global'
 import dashboardConstants from './dashboard-constants'
 
-const Buttons = ({ className, canvas, isCleanSlateState, format, actions }) => (
+const Buttons = ({ className, canvas, isCleanSlateState, format, actions, isDownloadLoading }) => (
     <div className={classNames("buttons-container", className)}>
 
         {_.map(_.values(dashboardConstants.buttons), (button) => {
@@ -48,6 +48,7 @@ const Buttons = ({ className, canvas, isCleanSlateState, format, actions }) => (
                             onDrop={actions[button.onDrop]}
                             block
                             multiple
+                            isLoading={button.getLoadingState({ isDownloadLoading })}
                             bsStyle="brand-gray-border"
                             className="flex space-between dashboard-button weight-600"
                             componentClass={button.componentClass}
@@ -68,6 +69,7 @@ class GeneratorDashboard extends Component {
 
     state = {
         isItemsAreaOpen: false,
+        isDownloadLoading: false
     }
 
     download = () => {
@@ -123,7 +125,7 @@ class GeneratorDashboard extends Component {
     handleSaveToWebView = ({ memeData, zoom }) => {
 
         const { saveUserMemeToStorage, format, meme, isCollageMode, canvas } = this.props;
-        debugger;
+
         //!* need to set back canvas dimensions *
         canvas.setWidth(canvas.getWidth() / zoom).setHeight(canvas.getHeight() / zoom);
         canvas.setZoom(1);
@@ -131,8 +133,13 @@ class GeneratorDashboard extends Component {
         helpers.sendDownloadedMemeAnalyticsEvent({ isMobileApp: true, format, meme, isCollageMode });
 
         if (WebViewService.isAndroid) {
+
+            this.setState({ isDownloadLoading: true });
+
             saveUserMemeToStorage(memeData).then(response => {
-                debugger;
+
+                this.setState({ isDownloadLoading: false });
+
                 window.postMessage(response.payload.data)
             });
         } else {
@@ -195,6 +202,7 @@ class GeneratorDashboard extends Component {
     render() {
 
         const { format, canvas, style, isCleanSlateState, isLoading, isUpload, closeGenerator } = this.props
+        const { isDownloadLoading } = this.state;
 
         if (isLoading) {
 
@@ -208,6 +216,7 @@ class GeneratorDashboard extends Component {
                 canvas={canvas}
                 isCleanSlateState={isCleanSlateState}
                 format={format}
+                isDownloadLoading={isDownloadLoading}
                 actions={{
                     closeGenerator: closeGenerator,
                     download: this.download,
