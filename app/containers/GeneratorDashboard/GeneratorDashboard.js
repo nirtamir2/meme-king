@@ -130,11 +130,10 @@ class GeneratorDashboard extends Component {
 
         helpers.sendDownloadedMemeAnalyticsEvent({ isMobileApp: true, format, meme, isCollageMode });
 
-        alert(WebViewService.isAndroid);
-
         if (WebViewService.isAndroid) {
             saveUserMemeToStorage(memeData).then(response => {
-                window.postMessage(response.data)
+                debugger;
+                window.postMessage(response.payload.data)
             });
         } else {
             window.postMessage(memeData.urlPath)
