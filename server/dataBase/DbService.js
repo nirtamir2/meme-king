@@ -1,44 +1,44 @@
-const _ = require('lodash');
-const mongoose = require('mongoose');
+const _ = require('lodash')
+const mongoose = require('mongoose')
 
 // schemas
-const schemas = require('./Schemas/schemas');
-const { memeSchema, userGeneratedMemeSchema, weeklyMemeSchema, suggestedMemeSchema, userReportSchema } = schemas;
+const schemas = require('./Schemas/schemas')
+const { memeSchema, userGeneratedMemeSchema, weeklyMemeSchema, suggestedMemeSchema, userReportSchema } = schemas
 
 // helpers
-const uniqueId = require('../../app/helpers/uniqueId');
-const helpers = require('../helpers/helpers');
+const uniqueId = require('../../app/helpers/uniqueId')
+const helpers = require('../helpers/helpers')
 
 // services
-const DatesService = require('../services/DatesService');
+const DatesService = require('../services/DatesService')
 
 // models
 const Meme = mongoose.model('Meme', memeSchema)
-const UserGeneratedMeme = mongoose.model('UserGeneratedMeme', userGeneratedMemeSchema);
-const WeeklyMeme = mongoose.model('WeeklyMeme', weeklyMemeSchema);
-const SuggestedMeme = mongoose.model('SuggestedMeme', suggestedMemeSchema);
-const UserReport = mongoose.model('UserReport', userReportSchema);
+const UserGeneratedMeme = mongoose.model('UserGeneratedMeme', userGeneratedMemeSchema)
+const WeeklyMeme = mongoose.model('WeeklyMeme', weeklyMemeSchema)
+const SuggestedMeme = mongoose.model('SuggestedMeme', suggestedMemeSchema)
+const UserReport = mongoose.model('UserReport', userReportSchema)
 
 
-let db;
+let db
 
 const init = ({ isProduction }) => {
 
-    let dbPath;
+    let dbPath
 
     if (!isProduction) {
-        const dbConstants = require('../../anigma/dbConstants');
-        dbPath = dbConstants.testDatabasePath;
+        const dbConstants = require('../../anigma/dbConstants')
+        dbPath = dbConstants.testDatabasePath
     }
 
     const database = (
 
         isProduction
             ?
-        JSON.parse(process.env.MONGO_PATH)
+            JSON.parse(process.env.MONGO_PATH)
             :
-        dbPath
-    );
+            dbPath
+    )
 
 
     mongoose.connect(database)
@@ -112,18 +112,20 @@ const incrementMemeRating = ({ meme = {} } = {}) => {
         })
 
         const week = helpers.getWeekNumber()
-
         WeeklyMeme.findOneAndUpdate({ id: meme.id, week }, { $inc: { 'rating': 1 } }).exec(function (err, res) {
 
             WeeklyMeme.remove({ week: week - 1 })
 
             if (!res) {
 
-                const newMeme = new WeeklyMeme({ ...meme, rating: 1, week })
+                const newMemeOBject = { ...meme, rating: 1, week };
+                delete newMemeOBject['_id'];
+
+                const newMeme = new WeeklyMeme(newMemeOBject);
 
                 newMeme.save(function (err, weeklyRes) {
 
-                    console.log('increment weekly Meme', _.get(weeklyRes, 'description'), _.get(weeklyRes, 'rating'))
+                    console.log('save new weekly Meme', _.get(weeklyRes, 'description'), _.get(weeklyRes, 'rating'))
                     resolve(weeklyRes)
 
                 })
@@ -240,7 +242,7 @@ const getWeeklyPopularMemes = () => {
 
 const getSearchMemes = ({ description } = {}) => {
     return new Promise(resolve => {
-        Meme.find({ description : { $regex : `.*${description}*`} }, function (err, memes) {
+        Meme.find({ description: { $regex: `.*${description}*` } }, function (err, memes) {
             console.log('searched memes', _.size(memes))
             resolve(helpers.arrayToObjById(memes))
         })
@@ -251,7 +253,7 @@ const saveUserSuggestedMeme = ({ meme } = {}) => {
     return new Promise(resolve => {
         const newMeme = new SuggestedMeme(meme)
         saveUserSuggestedMeme.save(newMeme, function (err, res) {
-            resolve(res);
+            resolve(res)
         })
     })
 }

@@ -251,7 +251,7 @@ class GeneratorDashboard extends Component {
                     show={this.state.isItemsAreaOpen && canvas}
                 >
                     <ItemsArea
-                        anvas={canvas}
+                        canvas={canvas}
                         closeModal={() => this.setState({ isItemsAreaOpen: false })}
                     />
                 </Modal>

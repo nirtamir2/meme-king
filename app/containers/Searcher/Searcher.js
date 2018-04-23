@@ -82,7 +82,9 @@ class Searcher extends Component {
 
 
     onBlur = () => {
+
         const { searchResults } = this.props;
+
         if (_.isEmpty(searchResults)) {
             this.clearResults();
         };

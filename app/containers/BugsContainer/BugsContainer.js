@@ -25,11 +25,11 @@ class BugsContainer extends Component {
     }
 
     render() {
-        const { history, messages , updateUserMessageLikes, isLoading, match  } = this.props
+        const { history, messages , updateUserMessageLikes, isLoading, match  } = this.props;
 
         const arrayMessages = _.values(messages) || [];
 
-        const sortedMessages = arrayMessages.sort((a, b) => new Date(b.date) - new Date(a.date))
+        const sortedMessages = arrayMessages.sort((a, b) => new Date(b.date) - new Date(a.date));
 
 
         return (
@@ -56,7 +56,13 @@ class BugsContainer extends Component {
                             ?
                         <Loader className="margin-top-extra-large" />
                             :
-                        _.map(sortedMessages, post => <UserMessage key={post.id} updateUserMessageLikes={updateUserMessageLikes} post={post} />)
+                        _.map(sortedMessages, post => (
+                            <UserMessage
+                                key={post.id}
+                                updateUserMessageLikes={updateUserMessageLikes}
+                                post={post}
+                            />
+                        ))
                     }
                 </Row>
 

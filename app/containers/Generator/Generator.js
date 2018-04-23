@@ -1,36 +1,35 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import classNames from 'classnames'
 
 // components
-import GeneratorDashboard from 'containers/GeneratorDashboard/GeneratorDashboard'
-import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature'
-import GeneratorModal from 'components/GeneratorModal/GeneratorModal'
-import Canvas from 'components/Canvas/Canvas'
-import Col from 'react-bootstrap/lib/Col'
-import Title from 'components/Title/Title'
-import MemeSuggestionsContainer from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer'
-import Cropper from 'components/Cropper/Cropper';
+import GeneratorDashboard from 'containers/GeneratorDashboard/GeneratorDashboard';
+import GeneratorSignature from 'components/GeneratorSignature/GeneratorSignature';
+import GeneratorModal from 'components/GeneratorModal/GeneratorModal';
+import Canvas from 'components/Canvas/Canvas';
+import Col from 'react-bootstrap/lib/Col';
+import Title from 'components/Title/Title';
+import MemeSuggestionsContainer from 'containers/MemeSuggestionsContainer/MemeSuggestionsContainer';
+import Cropper from 'components/Cropper/Cropper';;
 
 // helpers
-import helpers from 'helpers/helpers'
-import { addImageAsync, createCollage, getCanvasContainerWidth } from './generator-helpers'
+import helpers from 'helpers/helpers';
+import { addImageAsync, createCollage, getCanvasContainerWidth } from './generator-helpers';
 
 // constants
-import colors from 'constants/colors'
-import globalConstants from 'constants/global'
-import generatorConstants from './generator-constants'
+import colors from 'constants/colors';
+import globalConstants from 'constants/global';
+import generatorConstants from './generator-constants';
 
 // services
-import WebViewService from 'services/webViewService'
+import WebViewService from 'services/webViewService';
 
 // actions
-import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions'
-import { fetchSingleMeme } from 'actions/category-actions/category-actions'
-import { fetchMemeSuggestions } from 'actions/suggestions-actions/suggestions-actions'
-import { setUploadImage, clearUploadedImages } from 'actions/upload-actions/upload-actions'
-import { setCollageMode } from 'actions/collage-actions/collage-actions'
+import { updateMemeRating, saveUserMemeToStorage } from 'actions/meme-actions/meme-actions';
+import { fetchSingleMeme } from 'actions/category-actions/category-actions';
+import { fetchMemeSuggestions } from 'actions/suggestions-actions/suggestions-actions';
+import { setUploadImage, clearUploadedImages } from 'actions/upload-actions/upload-actions';
+import { setCollageMode } from 'actions/collage-actions/collage-actions';
 
 class Generator extends Component {
 
@@ -55,7 +54,6 @@ class Generator extends Component {
         }
 
     }
-
     componentWillReceiveProps(nextProps) {
 
         const { format, isCleanSlateState, meme } = this.props;
@@ -72,7 +70,6 @@ class Generator extends Component {
         }
 
     }
-
 
     createCleanSlate = () => {
 
@@ -112,6 +109,7 @@ class Generator extends Component {
         if (!canvas) {
             return;
         }
+
 
         canvas.backgroundColor = colors.WHITE;
         const isNormalFormat = (format === globalConstants.format.normal);
@@ -176,9 +174,10 @@ class Generator extends Component {
             if (isCollageMode) {
 
                 createCollage({
-                    collageMemes, addWaterMark: this.addWaterMark, canvas, callback: canvas => {
-                        this.setState({ isLoading: false, canvasHeight: `${canvas.height}px` });
-                    }
+                    collageMemes,
+                    addWaterMark: this.addWaterMark,
+                    canvas,
+                    callback: canvas => this.setState({ isLoading: false, canvasHeight: `${canvas.height}px` })
                 })
 
             } else if (isCleanSlateState) {

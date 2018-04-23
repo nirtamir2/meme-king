@@ -8,7 +8,7 @@ export const getCanvasContainerWidth = () => (_.get(document.querySelector('.gen
 
 export const addImageAsync = ({ image }) => {
 
-    if(!image) {
+    if (!image) {
         return new Promise(resolve => resolve());
     }
 
@@ -80,21 +80,24 @@ export const createCollage = ({ collageMemes, canvas, callback, addWaterMark }) 
     canvas.backgroundColor = colors.WHITE;
 
     const imagesPromises = _.map(collageMemes, meme => addImageAsync({ image: meme.urlPath }));
+
     Promise.all(imagesPromises).then(images => {
 
         _.forEach(images, image => {
 
             if(canvas.height < 10) {
-                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: helpers.isMobile() ? 180 : 300,  })
-                canvas.setWidth(image.width)
+
+                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: helpers.isMobile() ? 180 : 300,  });
+                canvas.setWidth(image.width);
                 canvas.setHeight(image.height);
                 image.set({
                     top: 0,
                     ...commonImageProperties
                 })
             } else {
+
                 const currentCanvasHeight = canvas.height;
-                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: helpers.isMobile() ? 180 : 500, wantedMaxWidth: canvas.width })
+                image = helpers.modifyImageDimensions({ image, wantedMaxHeight: helpers.isMobile() ? 180 : 500, wantedMaxWidth: canvas.width });
                 canvas.setHeight(_.parseInt(canvas.height) + _.parseInt(image.height));
 
                 image.set({
@@ -105,8 +108,6 @@ export const createCollage = ({ collageMemes, canvas, callback, addWaterMark }) 
             }
 
             canvas.add(image);
-
-
 
             callback(canvas);
         })
