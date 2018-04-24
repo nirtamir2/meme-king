@@ -13,11 +13,8 @@ const sendDownloadedMemeAnalyticsEvent = ({ isMobileApp ,meme, format, isCollage
 
     const textAreas = document.getElementsByTagName('TEXTAREA')
     const description = _.get(meme, 'description');
-    let text = `${description || 'User typed text'} : ${_.get(_.head(textAreas), 'value', '')} ${_.get(_.tail(textAreas), 'value', '')}`
+    let text = `${description || 'User typed text'} : ${_.get(_.head(textAreas), 'value', '')} ${_.get(_.last(textAreas), 'value', '')}`
     AnalyticsService.sendEvent('Meme Downloaded', `${format}, ${text}`)
-    if (format === 'dank') {
-        AnalyticsService.sendEvent('Dank', text)
-    }
 }
 
 export default sendDownloadedMemeAnalyticsEvent;

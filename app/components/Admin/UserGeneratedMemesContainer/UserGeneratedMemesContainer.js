@@ -62,7 +62,7 @@ class UserGeneratedMemesContainer extends React.Component {
                     CLEAR THEM ALL
                 </Button>
                 <select onChange={e => this.setState({ filter: e.target.value })} value={null}>
-                    <option value={null}>All</option>
+                    <option value={''}>All</option>
                     <option value="isMobile">mobile android</option>
                     <option value="isMobileApp">iOs App</option>
                     <option value="isDesktop">Desktop</option>
