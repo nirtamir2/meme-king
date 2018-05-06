@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { CALL_API } from 'redux-api-middleware';
 
 // config
@@ -23,6 +24,18 @@ export function fetchCategory(category) {
                 dataActionConstants.FETCH_CATEGORY_FAILED
             ],
         }
+    }
+}
+
+export function fetchMyMemes() {
+    return (dispatch, getState) => {
+        const state = getState();
+        const personalMemes = _.get(state, 'auth.user.personalMemes');
+
+        return dispatch({
+            type: dataActionConstants.FETCH_CATEGORY_SUCCESS,
+            payload: personalMemes
+        })
     }
 }
 

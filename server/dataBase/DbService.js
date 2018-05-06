@@ -1,10 +1,6 @@
 const _ = require('lodash')
 const mongoose = require('mongoose')
 
-// schemas
-const schemas = require('./Schemas/schemas')
-const { memeSchema, userGeneratedMemeSchema, weeklyMemeSchema, suggestedMemeSchema, userReportSchema } = schemas
-
 // helpers
 const uniqueId = require('../../app/helpers/uniqueId')
 const helpers = require('../helpers/helpers')
@@ -13,11 +9,12 @@ const helpers = require('../helpers/helpers')
 const DatesService = require('../services/DatesService')
 
 // models
-const Meme = mongoose.model('Meme', memeSchema)
-const UserGeneratedMeme = mongoose.model('UserGeneratedMeme', userGeneratedMemeSchema)
-const WeeklyMeme = mongoose.model('WeeklyMeme', weeklyMemeSchema)
-const SuggestedMeme = mongoose.model('SuggestedMeme', suggestedMemeSchema)
-const UserReport = mongoose.model('UserReport', userReportSchema)
+const Meme = require('../models/meme');
+const UserGeneratedMeme = require('../models/userGeneratedMeme');
+const WeeklyMeme = require('../models/weeklyMeme');
+const SuggestedMeme = require('../models/suggestedMeme');
+const UserReport = require('../models/userReport');
+const User = require('../models/user');
 
 
 let db
@@ -241,6 +238,8 @@ const getWeeklyPopularMemes = () => {
 }
 
 const getSearchMemes = ({ description } = {}) => {
+
+    console.log('9999', description)
     return new Promise(resolve => {
         Meme.find({ description: { $regex: `.*${description}*` } }, function (err, memes) {
             console.log('searched memes', _.size(memes))
@@ -318,6 +317,35 @@ const updateMeme = ({ meme = {} } = {}) => {
     })
 }
 
+const addPersonalMeme = ({ id, meme } = {}) => {
+    return new Promise((resolve, reject) => {
+        User.findOneAndUpdate({ _id: id }, { $push: { personalMemes: meme  } },
+            function (error, success) {
+                if (error) {
+                    console.log(error, '----');
+                    reject(error);
+                } else {
+                    console.log(success, '+++');
+                    resolve({ ...success, personalMemes: [  ...success.personalMemes, meme ]});
+                }
+            });
+
+    })
+}
+
+const removePersonalMemes = ({ id } = {}) => {
+    return new Promise((resolve, reject) => {
+        User.findOne({ _id: id }, function(err, userData){
+            if(userData){
+                userData.personalMemes = [];
+                userData.save(function(err) {
+                    resolve();
+                });
+            }
+        });
+    })
+}
+
 const get = {
     getCategory,
     getPopularMemes,
@@ -335,6 +363,7 @@ const get = {
 const put = {
     updateMeme,
     updateUserReportLikes,
+    removePersonalMemes,
 
 }
 
@@ -346,6 +375,7 @@ const post = {
     saveUserGeneratedMeme,
     saveUserReport,
     removeUserGeneratedMemes,
+    addPersonalMeme,
 }
 
 

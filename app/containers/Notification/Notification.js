@@ -15,7 +15,8 @@ import logo from 'assets/images/logo.png';
 export class Notification extends Component {
 
     static defaultProps = {
-        type: 'success'
+        type: 'modal',
+        kind: 'success'
     }
 
     state = {
@@ -26,6 +27,10 @@ export class Notification extends Component {
         if(nextProps.message !== this.props.message && nextProps.message) {
             this.setState({ show: true })
         }
+
+        if (nextProps.type === 'notification' && nextProps.message !== this.props.message) {
+            _.delay(this.props.clearNotifications, 5000);
+        }
     }
 
     hide = () => {
@@ -35,21 +40,33 @@ export class Notification extends Component {
 
     render(){
 
-        const { message, type } = this.props;
+        const { message, type, kind } = this.props;
 
         if(!message) {
             return null;
         }
 
-        return (
-           <Modal className="box-modal-notification" onHide={this.hide} show={this.state.show}>
-               <Modal.CloseButton onClick={this.hide} />
-               <img src={logo} className="margin-top-small margin-bottom-small center-block" />
+        if(type === 'modal') {
+            return (
+                <Modal className="box-modal-notification" onHide={this.hide} show={this.state.show}>
+                    <Modal.CloseButton onClick={this.hide} />
+                    <img src={logo} className="margin-top-small margin-bottom-small center-block" />
 
-               <Title size="h2">{type === 'danger' ? 'אופס!' : 'הודעה'}</Title>
-               <Text align="center" theme="black">{message}</Text>
-           </Modal>
-        )
+                    <Title size="h2">{kind === 'danger' ? 'אופס!' : 'הודעה'}</Title>
+                    <Text align="center" theme="black">{message}</Text>
+                </Modal>
+            )
+
+        }
+
+        else {
+            return (
+                <div className={classNames('box-notification', kind )}>
+                    {message}
+                </div>
+            )
+        }
+
     }
 }
 
@@ -57,7 +74,8 @@ export class Notification extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         message: state.notifications.message,
-        type: state.notifications.type
+        type: state.notifications.type,
+        kind: state.notifications.kind,
     }
 }
 

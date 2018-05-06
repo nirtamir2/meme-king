@@ -7,8 +7,12 @@ const StorageService = require('../services/StorageService');
 // helpers
 const helpers = require('../helpers/helpers');
 
+// controllers
+const Authentication = require('../controllers/auth');
+
 
 const post = (app) => {
+
     app.post('/api/update-meme-rating', function (req, res) {
         newDataBaseService.incrementMemeRating({ meme: req.body })
         res.sendStatus(200)

@@ -1,20 +1,18 @@
 .home {
   background: $mainColor;
-  height: 100vh;
   color: white;
 
   @include mobile-medium {
-    min-height: 100vh;
     display: block;
     position: relative;
-    padding-top: 65px;
+    padding-top: 50px;
 
   }
 
   .box-avatar {
     margin-top: 180px;
     @include mobile-medium {
-      margin-top: 10px;
+      margin-top: 50px;
     }
   }
 
@@ -24,15 +22,8 @@
     }
   }
 
-  .personal-messages-link {
-
+  .personal-messages-links {
     margin-top: 80px;
-
-    @include mobile-medium {
-      position: absolute;
-      @include absolute-center();
-      bottom: 20px;
-    }
   }
 
 }

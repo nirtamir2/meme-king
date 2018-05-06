@@ -11,10 +11,6 @@ header {
 
   transition: 0.5s;
 
-  &.collage-mode {
-    background: $pink;
-  }
-
   display: none;
 
   @include mobile-and-tablet {

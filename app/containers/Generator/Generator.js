@@ -161,7 +161,7 @@ class Generator extends Component {
         if (backgroundCategory) {
             history.push(`/memes/${backgroundCategory}`);
         } else {
-            history.push(`/`);
+            history.goBack();
         }
     }
 
@@ -225,7 +225,7 @@ class Generator extends Component {
                     
                         ?
                         <Cropper
-                            close={() => this.setState({ isCropMode: false })}
+                            onClose={() => this.setState({ isCropMode: false })}
                         />
                         :
                         <span>

@@ -39,11 +39,11 @@ export class SideMenu extends Component {
 
     render = () => {
 
-        const { isSideBarOpen } = this.props
+        const { isSideBarOpen, isLoggedIn, isAdmin } = this.props
 
         const { onClose } = this
 
-        const visibleMenu = _.filter({ ...menu }, item => item.visible)
+        const visibleMenu = _.filter({ ...menu }, item => item.isVisible({ isLoggedIn, isAdmin }))
 
         if (!isSideBarOpen) {
             return null
@@ -79,6 +79,9 @@ function mapStateToProps(state, ownProps) {
 
     return {
         isSideBarOpen: state.isSideBarOpen,
+        isLoggedIn: _.get(state, 'auth.authenticated'),
+        isAdmin: _.get(state, 'auth.user.isAdmin'),
+
     }
 }
 

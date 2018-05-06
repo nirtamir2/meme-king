@@ -33,6 +33,12 @@ export default {
     LAMP: 'glyphicon glyphicon-lamp',
     TEXT_SIZE: 'fas fa-text-height',
     MINUS: 'fas fa-minus',
-    PLUS: 'fas fa-plus'
+    PLUS: 'fas fa-plus',
+    HOME: 'fa fa-home',
+    TROPHY: 'fa fa-trophy',
+    BADGE: 'fa fa-certificate',
+    USER: 'fa fa-user',
+    COG: 'fa fa-cog',
+    HEART: 'fa fa-heart',
 
 }

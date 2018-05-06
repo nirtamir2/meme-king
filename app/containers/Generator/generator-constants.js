@@ -1,7 +1,7 @@
 import helpers from 'helpers/helpers';
 import { getCanvasContainerWidth } from './generator-helpers';
 
-const spaceToAddForDankFormatStyle = helpers.isMobile() ? 120 : 150;
+const spaceToAddForDankFormatStyle = helpers.isMobile() ? 80 : 150;
 
 export default {
 
@@ -14,7 +14,7 @@ export default {
         'normalFormat': {
 
             image: {
-                getWantedMaxHeight: () => null,
+                getWantedMaxHeight: () => helpers.isMobile() ? 350 : null,
                 getWantedMaxWidth: () => getCanvasContainerWidth(),
                 style: {
                     top:  0,
@@ -41,7 +41,7 @@ export default {
         'dankFormat': {
 
             image: {
-                getWantedMaxHeight: () => helpers.isMobile() ? 280 : null,
+                getWantedMaxHeight: () => helpers.isMobile() ? 250 : null,
                 getWantedMaxWidth: () => (getCanvasContainerWidth() - (helpers.isMobile() ? 100 : 120)),
                 style: {
                     top: spaceToAddForDankFormatStyle - 15,

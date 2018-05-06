@@ -30,9 +30,9 @@ import {
 
 // constants
 import globalConstants from 'constants/global'
-import dashboardConstants from './dashboard-constants'
+import dashboardConstants from './dashboard-constants';
 
-const Buttons = ({ className, canvas, isCleanSlateState, format, actions, isDownloadLoading }) => (
+const Buttons = ({ className, canvas, isCleanSlateState, format, actions, isDownloadLoading }) =>  (
     <div className={classNames("buttons-container", className)}>
 
         {_.map(_.values(dashboardConstants.buttons), (button) => {
@@ -63,6 +63,7 @@ const Buttons = ({ className, canvas, isCleanSlateState, format, actions, isDown
 
     </div>
 )
+
 
 
 class GeneratorDashboard extends Component {

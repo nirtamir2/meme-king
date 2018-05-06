@@ -10,7 +10,7 @@ export default function(state=initialState, action){
 
     switch(type){
         case actionsConstants.SHOW_NOTIFICATION:
-            return {...payload}
+            return payload
             break;
 
         case actionsConstants.CLEAR_NOTIFICATIONS:

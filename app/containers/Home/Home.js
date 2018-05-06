@@ -9,9 +9,9 @@ import { toggleSideBar } from '../../actions/sidebar-actions/sidebar-actions';
 import { setUploadImage } from '../../actions/upload-actions/upload-actions';
 import { showNotification } from 'actions/notification-actions/notification-actions';
 import { setCollageMode, resetCollageMemes, addOrRemoveMemeFromCollage } from 'actions/collage-actions/collage-actions';
+import { signOut } from 'actions/user-actions/user-actions';
 
 // components
-import Searcher from '../Searcher/Searcher';
 import Avatar from 'components/Avatar/Avatar';
 import Button from 'components/Button/Button';
 import Title from 'components/Title/Title';
@@ -24,6 +24,7 @@ import Text from 'components/Text/Text';
 import Icon from 'components/Icon/Icon'
 import Generator from 'containers/Generator/Generator';
 import Cropper from 'components/Cropper/Cropper';
+import Searcher from 'containers/Searcher/Searcher';
 
 //  services
 import AnalyticsService from 'services/Analytics';
@@ -86,12 +87,12 @@ import axios from 'axios';
 
     render(){
 
-        const { toggleSideBar, match } = this.props;
+         const { isLoggedIn, signOut } = this.props;
 
         return (
             <div className="home">
 
-                <Searcher className="margin-left-small margin-right-small margin-top-small margin-bottom-large" />
+                {!helpers.isMobile() && <Searcher className="margin-top-small" />}
 
                 <Avatar isCentered className="margin-top-medium"/>
 
@@ -99,23 +100,12 @@ import axios from 'axios';
                   מימ קינג
                 </Title>
 
+
+
                 <Grid>
                     <Row>
 
                         <Col xs={10} xsOffset={1} smOffset={3} sm={6} className="padding-right-none padding-left-none">
-
-                            <Button
-                                block
-                                bsSize="lg"
-                                onClick={()=> toggleSideBar(true)}
-                                className="flex space-between align-items-center hide-desktop margin-bottom-none margin-top-small"
-                            >
-                                <Text className="margin-bottom-none margin-top-none" weight={600}>
-                                    קטגוריות ממים
-                                </Text>
-                                <Icon className="pull-left" name="LIST" />
-                            </Button>
-
                             <Button
                                 bsSize="lg"
                                 className="flex space-between align-items-center margin-bottom-none margin-top-small"
@@ -152,10 +142,32 @@ import axios from 'axios';
                     <Route path={`/generator/:type/:id/:format`} component={Generator}/>
                 </Switch>
 
-                <div className="personal-messages-link text-center">
+                <div className="personal-messages-links text-center">
                     <TextLink   to="bugs-page">
-                        בקשות ודיווח על באגים
+                        <small>בקשות ודיווח על באגים</small>
                     </TextLink>
+                    {!isLoggedIn && (
+                        <TextLink className="margin-right-small" to="sign-in">
+                            <small>התחברות</small>
+                        </TextLink>
+                    )}
+                    {!isLoggedIn && (
+                        <TextLink className="margin-right-small" to="sign-up">
+                            <small>הרשמה</small>
+                        </TextLink>
+                    )}
+
+                    {isLoggedIn && (
+                        <TextLink className="margin-right-small" to="" onClick={signOut} >
+                            <small>התנתקות</small>
+                        </TextLink>
+                    )}
+
+                    {(isLoggedIn && !helpers.isMobile()) && (
+                        <TextLink className="margin-right-small" to="settings" >
+                            <small>הגדרות</small>
+                        </TextLink>
+                    )}
                 </div>
             </div>
         );
@@ -164,12 +176,12 @@ import axios from 'axios';
 
 function mapStateToProps(state, ownProps) {
     return {
-
+        isLoggedIn: state.auth.authenticated,
     }
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({ toggleSideBar, setUploadImage, setCollageMode, showNotification, resetCollageMemes, addOrRemoveMemeFromCollage }, dispatch)
+    return bindActionCreators({ toggleSideBar, setUploadImage, setCollageMode, signOut, showNotification, resetCollageMemes, addOrRemoveMemeFromCollage }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

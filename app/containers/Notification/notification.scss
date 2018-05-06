@@ -12,9 +12,14 @@
   left: 0;
   color: $green-success;
 
+  &.danger {
+    background: $danger;
+    color: $white;
+  }
+
   @include mobile-medium {
     width: 100%;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
     height: 60px;

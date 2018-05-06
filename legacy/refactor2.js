@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
-const oldDataBaseService = require('../services/DatabaseService');
-const newDataBaseService = require('./DbService');
+const oldDataBaseService = require('DatabaseService');
+const newDataBaseService = require('./../server/dataBase/DbService');
 
 newDataBaseService.init({ isProduction: false })
 oldDataBaseService.init(false)

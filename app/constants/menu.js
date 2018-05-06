@@ -1,4 +1,8 @@
 
+// helpers
+import helpers from 'helpers/helpers';
+
+
 // menu icons
 
 import mainIcon from 'assets/images/logo.png';
@@ -32,161 +36,169 @@ const menu = {
         icon: mainIcon,
         linkText: 'ראשי',
         path: '/',
-        visible: true
+        isVisible: () => !helpers.isMobile()
+    },
+
+    admin: {
+        title: 'מלך הממים',
+        icon: mainIcon,
+        linkText: 'אדמין',
+        path: '/admin',
+        isVisible: ({ isLoggedIn, isAdmin }) => isAdmin && isLoggedIn
     },
 
     "all-time-popular": {
         title: 'הפופולאריים בכל הזמנים',
         icon: crownIcon,
         path: '/memes/all-time-popular',
-        visible: true
+        isVisible: () => !helpers.isMobile()
     },
 
     "popular": {
         title: 'הפופולאריים השבוע',
         icon: popularIcon,
         path: '/memes/popular',
-        visible: true
+        isVisible: () => !helpers.isMobile()
     },
-
-    // "my-memes": {
-    //     title: 'הממים האחרונים שלי',
-    //     icon: myMemesIcon,
-    //     path: '/memes/my-memes',
-    //     visible: true
-    // },
 
     "new-memes": {
         title: 'ממים חדשים',
         icon: newMemesIcon,
         path: '/memes/new-memes',
-        visible: true
+        isVisible: () => !helpers.isMobile()
+    },
+
+    "my-memes": {
+        title: 'הממים המועדפים שלי',
+        icon: myMemesIcon,
+        path: '/memes/my-memes',
+        isVisible: ({ isLoggedIn }) => !helpers.isMobile() && isLoggedIn
     },
 
     dank: {
         title: "דאנק מימז",
         icon: dankIcon,
         path: `/memes/dank`,
-        visible: true
+        isVisible: () => true
     },
 
     israeli: {
         title: "ממים ישראליים",
         icon: israeliIcon,
         path: `/memes/israeli`,
-        visible: true
+        isVisible: () => true
     },
 
     pop: {
         title: "תרבות הפופ",
         icon: popIcon,
         path: `/memes/pop`,
-        visible: true
+        isVisible: () => true
     },
 
     parlament: {
         title: "הפרלמנט",
         icon: parlamentIcon,
         path: `/memes/parlament`,
-        visible: true
+        isVisible: () => true
     },
 
     classic: {
         title: "ממים קלאסיים",
         icon: classicIcon,
         path: `/memes/classic`,
-        visible: true
+        isVisible: () => true
     },
 
     general: {
         title: "כללי",
         icon: generalIcon,
         path: `/memes/general`,
-        visible: true
+        isVisible: () => true
     },
 
     eretz_nehederet: {
         title: "ארץ נהדרת",
         icon: eretzIcon,
         path: `/memes/eretz_nehederet`,
-        visible: true
+        isVisible: () => true
     },
 
     tv_abroad: {
         title: "תכניות טלויזיה",
         icon: tvAbroadIcon,
         path: `/memes/tv_abroad`,
-        visible: true
+        isVisible: () => true
     },
 
     mashups: {
         title: "מאשאפים",
         icon: mashupsIcon,
         path: `/memes/mashups`,
-        visible: true
+        isVisible: () => true
     },
 
     standup: {
         title: "סטנדאפ",
         icon: standupIcon,
         path: `/memes/standup`,
-        visible: true
+        isVisible: () => true
     },
 
     goalstar: {
         title: "גולסטאר",
         icon: goalstarIcon,
         path: `/memes/goalstar`,
-        visible: true
+        isVisible: () => true
     },
 
     israeli_tv: {
         title: "סדרות ישראליות",
         icon: israeliTvIcon,
         path: `/memes/israeli_tv`,
-        visible: true
+        isVisible: () => true
     },
 
     animals: {
         title: "חיות",
         icon: animalsIcon,
         path: `/memes/animals`,
-        visible: true
+        isVisible: () => true
     }
     ,
     reality: {
         title: "ריאליטי",
         icon: realityIcon,
         path: `/memes/reality`,
-        visible: true
+        isVisible: () => true
     },
 
     commercials: {
         title: "פרסומות",
         icon: commercialsIcon,
         path: `/memes/commercials`,
-        visible: true
+        isVisible: () => true
     },
 
     asi_guri: {
         title: "אסי וגורי",
         icon: asiguriIcon,
         path: `/memes/asi_guri`,
-        visible: true
+        isVisible: () => true
     },
 
     media: {
         title: "מדיה",
         icon: mediaIcon,
         path: `/memes/media`,
-        visible: true
+        isVisible: () => true
     },
 
     jews: {
         title: "היהודים באים",
         icon: jewsIcon,
         path: `/memes/jews`,
-        visible: true
+        isVisible: () => true
     }
 
 };

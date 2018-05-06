@@ -599,7 +599,8 @@ body {
   overflow-x: hidden !important;
   font-size: 16px;
   background: white;
-  min-height: 100vh; }
+  min-height: 100vh;
+  background: #0097EB; }
 
 .cover {
   background-color: rgba(0, 0, 0, 0.7);
@@ -709,8 +710,6 @@ header {
   z-index: 8000;
   transition: 0.5s;
   display: none; }
-  header.collage-mode {
-    background: #ff8898; }
   @media only screen and (min-width: 320px) and (max-width: 1023px) {
     header {
       height: 60px;
@@ -836,33 +835,22 @@ header {
 
 .home {
   background: #0097EB;
-  height: 100vh;
   color: white; }
   @media only screen and (max-width: 939px) {
     .home {
-      min-height: 100vh;
       display: block;
       position: relative;
-      padding-top: 65px; } }
+      padding-top: 50px; } }
   .home .box-avatar {
     margin-top: 180px; }
     @media only screen and (max-width: 939px) {
       .home .box-avatar {
-        margin-top: 10px; } }
+        margin-top: 50px; } }
   @media only screen and (max-width: 939px) {
     .home .main-title {
       margin-bottom: 10px; } }
-  .home .personal-messages-link {
+  .home .personal-messages-links {
     margin-top: 80px; }
-    @media only screen and (max-width: 939px) {
-      .home .personal-messages-link {
-        position: absolute;
-        position: absolute;
-        margin-right: auto;
-        margin-left: auto;
-        left: 0;
-        right: 0;
-        bottom: 20px; } }
 
 .box-searcher {
   width: 87%;
@@ -907,21 +895,42 @@ header {
 .memes-section {
   position: relative;
   overflow-x: hidden;
-  padding-left: 15px;
-  display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background: #000; }
-  @media only screen and (max-width: 939px) {
-    .memes-section {
-      padding-top: 60px;
-      padding-left: 12px; } }
   .memes-section .memes-container {
     display: flex;
     flex-flow: row-reverse wrap;
     margin-left: -8px;
     /* Adjustment for the gutter */ }
+    @media only screen and (max-width: 939px) {
+      .memes-section .memes-container {
+        padding-left: 12px; } }
+    .memes-section .memes-container.popular {
+      padding-top: 50px; }
+  .memes-section .box-round-empty-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; }
+  .memes-section .popular-tabs {
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    position: fixed;
+    z-index: 9998; }
+    .memes-section .popular-tabs .popular-tab {
+      padding: 10px;
+      border-bottom: 3px solid #ddd;
+      width: 50%;
+      border-top: 1px solid #ddd;
+      background: #f6f6f6; }
+      .memes-section .popular-tabs .popular-tab:first-child {
+        border-left: 1px solid #ddd; }
+      .memes-section .popular-tabs .popular-tab.active {
+        border-bottom: 3px solid #0097EB; }
 
 .box-notification {
   background: #C3F3D4;
@@ -936,10 +945,13 @@ header {
   bottom: 0;
   left: 0;
   color: #519D7C; }
+  .box-notification.danger {
+    background: #ED5E68;
+    color: #fff; }
   @media only screen and (max-width: 939px) {
     .box-notification {
       width: 100%;
-      top: 0;
+      bottom: 0;
       left: 0;
       right: 0;
       height: 60px; } }
@@ -1065,6 +1077,40 @@ header {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   box-shadow: 2px 4px 18px -6px black; }
+
+.box-tab small {
+  font-size: 10px; }
+
+.box-tab.active small {
+  color: #0097EB; }
+
+.tabs-container {
+  padding: 5px 3px;
+  display: flex;
+  position: fixed;
+  height: 50px;
+  top: 0;
+  z-index: 9998;
+  left: 0;
+  right: 0;
+  width: 100%;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  background: #f6f6f6;
+  box-shadow: 4px 9px 11px -8px rgba(0, 0, 0, 0.4); }
+
+.box-categories-container {
+  background: #f6f6f6; }
+
+.sign-up-container {
+  padding-top: 200px; }
+  @media only screen and (max-width: 939px) {
+    .sign-up-container {
+      padding-top: 80px; } }
+
+@media only screen and (max-width: 939px) {
+  .search-container {
+    height: 100vh; } }
 
 .box-meme-text-field {
   border: 2px solid #637DCF;
@@ -1205,7 +1251,11 @@ header {
           width: 60px; }
         .masonry .meme-thumb:nth-child(4n+4) {
           width: 130px; } }
-  .meme-thumb .meme-thumb__download-counter {
+  .meme-thumb .like-heart {
+    position: absolute;
+    right: 5px;
+    top: 5px; }
+  .meme-thumb .rating-crown {
     background: rgba(0, 0, 0, 0.5);
     color: white;
     position: absolute;
@@ -1217,14 +1267,15 @@ header {
     align-items: center;
     justify-content: center;
     border-radius: 200px;
-    font-size: 12px; }
+    font-size: 8px;
+    flex-direction: column; }
     @media only screen and (max-width: 939px) {
-      .meme-thumb .meme-thumb__download-counter {
+      .meme-thumb .rating-crown {
         left: 3px;
         width: 18px;
         height: 18px;
         font-size: 10px; } }
-    .meme-thumb .meme-thumb__download-counter .crown {
+    .meme-thumb .rating-crown .crown {
       position: absolute;
       top: -10px;
       width: 20px;
@@ -1233,13 +1284,17 @@ header {
       margin-left: auto;
       margin-right: auto; }
       @media only screen and (max-width: 939px) {
-        .meme-thumb .meme-thumb__download-counter .crown {
+        .meme-thumb .rating-crown .crown {
           width: 15px; } }
   @media only screen and (max-width: 939px) {
     .meme-thumb {
       width: 33.333333333333%; } }
   .meme-thumb:hover .meme-thumb__overlay {
     opacity: 1; }
+    .meme-thumb:hover .meme-thumb__overlay .description {
+      display: block; }
+  .meme-thumb:hover .like-heart.outside {
+    display: none; }
   .meme-thumb .meme-thumb__img {
     width: 100%;
     height: 100%;
@@ -1254,25 +1309,18 @@ header {
     transition: 0.4s;
     background: rgba(0, 0, 0, 0.7);
     z-index: 500; }
-    .meme-thumb .meme-thumb__overlay .meme-thumb__details {
+    .meme-thumb .meme-thumb__overlay .description {
       color: white;
       position: absolute;
-      top: 0;
       width: 100%;
       text-align: center;
       padding: 8px;
       text-transform: capitalize;
-      display: block; }
-      .meme-thumb .meme-thumb__overlay .meme-thumb__details .meme-thumb__description {
-        font-size: 14px;
-        display: block;
-        margin-top: 20px; }
-        @media only screen and (max-width: 939px) {
-          .meme-thumb .meme-thumb__overlay .meme-thumb__details .meme-thumb__description {
-            font-size: 12px;
-            margin-top: 5px; } }
+      bottom: 0;
+      font-size: 12px;
+      display: none; }
       @media only screen and (max-width: 939px) {
-        .meme-thumb .meme-thumb__overlay .meme-thumb__details {
+        .meme-thumb .meme-thumb__overlay .description {
           display: block;
           font-size: 10px; } }
 
@@ -1312,7 +1360,6 @@ header {
   justify-content: space-between;
   min-height: 50px;
   align-items: center;
-  padding: 7px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   font-weight: 500; }
   .menu-item:hover {
@@ -2028,6 +2075,10 @@ canvas {
   .box-icon.theme-gray-dark:active {
     background: #737373; }
 
+.box-icon.theme-gray-dark-no-hover {
+  color: #999;
+  border-color: #999; }
+
 .box-icon.theme-white {
   color: white;
   border-color: white; }
@@ -2035,12 +2086,26 @@ canvas {
     color: white;
     cursor: pointer; }
 
+.box-icon.theme-success {
+  color: #6db495; }
+  .box-icon.theme-success:hover {
+    color: #488c6f; }
+  .box-icon.theme-success:active {
+    color: #407b61; }
+
 .box-icon.theme-black {
   color: black;
   border-color: black; }
   .box-icon.theme-black:hover {
     color: black;
     cursor: pointer; }
+
+.box-icon.theme-white-success {
+  color: #fff; }
+  .box-icon.theme-white-success:hover {
+    color: #6db495; }
+  .box-icon.theme-white-success:active {
+    color: #5cab89; }
 
 .box-icon.size-xs {
   font-size: 10px; }
@@ -3191,3 +3256,10 @@ LABEL
     transform: translate(0, 0); }
   100% {
     transform: translate(19px, 0); } }
+
+.app-container {
+  height: 100vh; }
+  @media only screen and (max-width: 939px) {
+    .app-container {
+      margin-top: 50px;
+      height: auto; } }

@@ -76,7 +76,7 @@ let size = 0;
 
 
     const admin = require("firebase-admin");
-    const serviceAccount = require("./anigma/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js");
+    const serviceAccount = require("./../anigma/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js");
 
 
     admin.initializeApp({

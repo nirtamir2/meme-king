@@ -1,6 +1,6 @@
 const _ = require('lodash');
-const DatesService =  require('./DatesService');
-const constants = require('../../app/constants/global');
+const DatesService =  require('./../server/services/DatesService');
+const constants = require('../app/constants/global');
 
 const admin = require("firebase-admin");
 const dbConstants = constants.database;
@@ -13,7 +13,7 @@ class DatabaseService {
         let fireBaseConfig = {};
 
         if (!isProduction) {
-            fireBaseConfig = require('../../anigma/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js');
+            fireBaseConfig = require('../anigma/memeking-80290-firebase-adminsdk-tvh87-fcd47e07c4.js');
 
         } else {
             fireBaseConfig = {

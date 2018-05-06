@@ -1,13 +1,15 @@
-const _ = require('lodash')
-const express = require('express')
-const app = express()
-const fs = require("fs")
-const path = require('path')
-const bodyParser = require('body-parser')
-const appArgs = require('minimist')(process.argv.slice(2))
+const _ = require('lodash');
+const express = require('express');
+const app = express();
+const fs = require("fs");
+const path = require('path');
+const bodyParser = require('body-parser');
+const appArgs = require('minimist')(process.argv.slice(2));
+const morgan = require('morgan');
+const cors = require('cors')
 
-const NODE_ENVIRONMENT = appArgs.env
-const isProduction = (!(NODE_ENVIRONMENT === 'development'))
+const NODE_ENVIRONMENT = appArgs.env;
+const isProduction = (!(NODE_ENVIRONMENT === 'development'));
 
 // services
 const StorageService = require('./server/services/StorageService');
@@ -20,6 +22,9 @@ const helpers = require('./server/helpers/helpers');
 const getApi = require('./server/api/get');
 const postApi = require('./server/api/post');
 const putApi = require('./server/api/put');
+const router = require('./server/router');
+
+
 
 // init
 StorageService.init(isProduction);
@@ -27,11 +32,15 @@ newDataBaseService.init({ isProduction });
 
 // USE
 
-app.use(bodyParser({ limit: '50mb' }))
+app.use(cors())
+app.use(bodyParser({ limit: '50mb' }));
 
 app.use(bodyParser.urlencoded({
     extended: true
-}))
+}));
+
+//app.use(morgan('combined'));
+
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -53,7 +62,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
 
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type' , 'authorization')
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -81,6 +90,9 @@ app.use(function (req, res, next) {
 getApi(app);
 postApi(app);
 putApi(app);
+
+// router
+router(app);
 
 // START
 

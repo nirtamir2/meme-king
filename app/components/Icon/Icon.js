@@ -23,7 +23,7 @@ Icon.defaultProps = {
 }
 
 Icon.propTypes = {
-    theme: PropTypes.oneOf(['default', 'white', 'black', 'pink-dark', 'pink', 'main-brand', 'gray-dark']),
+    theme: PropTypes.oneOf(['default', 'white', 'black', 'pink-dark', 'pink', 'main-brand', 'gray-dark', 'gray-dark-no-hover', 'white-success', 'success']),
     size: PropTypes.oneOf(['xl', 'md' , 'xs', 'xxl', 'su[er'])
 }
 

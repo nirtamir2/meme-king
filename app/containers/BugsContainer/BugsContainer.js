@@ -5,8 +5,8 @@ import { Route, Switch } from 'react-router-dom';
 
 // components
 import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row'
-import Grid from 'react-bootstrap/lib/Grid'
+import Row from 'react-bootstrap/lib/Row';
+import Grid from 'react-bootstrap/lib/Grid';
 import Title from 'components/Title/Title'
 import Text from 'components/Text/Text'
 import Icon from 'components/Icon/Icon'

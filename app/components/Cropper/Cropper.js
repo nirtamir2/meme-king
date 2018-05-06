@@ -37,7 +37,7 @@ class Cropper extends Component {
 
     crop = () => {
 
-        const { setUploadImage, match, close } = this.props;
+        const { setUploadImage, match, onClose } = this.props;
 
         const id = _.get(match, 'params.id');
 
@@ -45,22 +45,11 @@ class Cropper extends Component {
 
             const image = this.cropper.getCroppedCanvas().toDataURL();
 
-            _.delay(() => {
-
-                setUploadImage({ urlPath: image, id: id || helpers.uniqueId() }).then(() => {
-
-                    close();
-
-                })
-
-            }, 500);
+            _.delay(() => setUploadImage({ urlPath: image, id: id || helpers.uniqueId() }).then(() =>  onClose()), 500);
+            
         });
 
 
-    }
-
-    closeCropper = () => {
-        this.props.history.push('../../');
     }
 
     render() {
@@ -90,7 +79,7 @@ class Cropper extends Component {
                 />
 
                 <Row>
-                    <Col xs={12} sm={4} smOffset={4}>
+                    <Col xs={10} xsOffset={1} sm={4} smOffset={4}>
                         <Button isLoading={isLoading} block onClick={this.crop} center className="center-block margin-top-md">
                             אישור
                         </Button>

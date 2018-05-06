@@ -18,7 +18,10 @@
 @import '../containers/BugsContainer/UserMessage/user-message';
 @import '../containers/BugsContainer/ContactPage/contact-page';
 @import '../containers/Toolbar/toolbar';
-
+@import '../containers/TabsContainer/tabs-container';
+@import '../containers/CategoriesContainer/categories-container';
+@import '../containers/Login/sign-up-container';
+@import '../containers/SearchContainer/search-container';
 
 @import '../components/MemeTextField/text-input';
 @import '../components/ItemsArea/items_area';
@@ -57,4 +60,5 @@
 @import '../components/Admin/UserGeneratedMemesContainer/user-generated-memes';
 @import '../components/Panel/panel';
 @import '../components/SpinnerDots/spinner-dots';
+@import '../components/App/app';
 

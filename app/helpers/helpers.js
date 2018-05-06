@@ -8,6 +8,9 @@ import isWebview from './isWebview';
 import getQueryVariable from './getQueryVariable';
 import addWaterMark from './addWaterMark';
 import sendDownloadedMemeAnalyticsEvent from './sendDownloadedMemeAnlyticsEvent';
+import apiMiddleware from './apiMiddleware';
+
+
 class Helpers {
 
     constructor() {
@@ -21,6 +24,7 @@ class Helpers {
         this.getQueryVariable = getQueryVariable;
         this.addWaterMark = addWaterMark;
         this.sendDownloadedMemeAnalyticsEvent = sendDownloadedMemeAnalyticsEvent;
+        this.apiMiddleware = apiMiddleware;
     }
 
 }
