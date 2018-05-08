@@ -55,7 +55,7 @@ const MemeThumb = ({ thumbPath, description, rating, theme, isFavourite, isLogge
             {/*)}*/}
 
             <div className="meme-thumb__overlay">
-                <p className="description">
+                <p className="description weight-600">
                     {description}
                 </p>
 

@@ -53,17 +53,21 @@ class Admin extends Component {
 
     render() {
 
-        const { isSuperAdmin = true, isAuthenticated } = this.state;
-        const { match } = this.props;
+        const { isSuperAdmin = true } = this.state;
+        const { match, isAdmin } = this.props;
 
-        if (!isAuthenticated) {
-            return (
-                <LoginArea
-                    value={this.state.anigma}
-                    onSubmit={this.onSubmit}
-                    onChange={event => this.setState({ anigma: event.target.value })}
-                />
-            )
+        // if (!isAdmin) {
+        //     return (
+        //         <LoginArea
+        //             value={this.state.anigma}
+        //             onSubmit={this.onSubmit}
+        //             onChange={event => this.setState({ anigma: event.target.value })}
+        //         />
+        //     )
+        // }
+
+        if(!isAdmin) {
+            return null;
         }
 
 
@@ -74,42 +78,36 @@ class Admin extends Component {
                 </Title>
 
                 <div className="flex space-between dashboard">
-                    {isSuperAdmin && (
-                        <div>
-                            <Button
-                                size="sm"
-                                center
-                                componentClass={Link}
-                                to={`${match.url}/user-generated-memes`}
-                            >
-                                user generated memes
-                            </Button>
-                        </div>
-                    )}
-                    {isSuperAdmin && (
-                        <div>
-                            <Button
-                                size="sm"
-                                center
-                                componentClass={Link}
-                                to={`${match.url}/edit-memes`}
-                            >
-                                Edit Existing memes
-                            </Button>
-                        </div>
-                    )}
-                    {isSuperAdmin && (
-                        <div>
-                            <Button
-                                size="sm"
-                                center
-                                componentClass={Link}
-                                to={`${match.url}/new-memes`}
-                            >
-                                Upload New Memes
-                            </Button>
-                        </div>
-                    )}
+                    <div>
+                        <Button
+                            size="sm"
+                            center
+                            componentClass={Link}
+                            to={`${match.url}/user-generated-memes`}
+                        >
+                            user generated memes
+                        </Button>
+                    </div>
+                    <div>
+                        <Button
+                            size="sm"
+                            center
+                            componentClass={Link}
+                            to={`${match.url}/edit-memes`}
+                        >
+                            Edit Existing memes
+                        </Button>
+                    </div>
+                    <div>
+                        <Button
+                            size="sm"
+                            center
+                            componentClass={Link}
+                            to={`${match.url}/new-memes`}
+                        >
+                            Upload New Memes
+                        </Button>
+                    </div>
                 </div>
 
                 <Panel className="containers margin-top-large">
@@ -127,7 +125,7 @@ class Admin extends Component {
 function mapStateToProps(state) {
 
     return {
-
+        isAdmin: _.get(state, 'auth.user.isAdmin')
     }
 }
 
