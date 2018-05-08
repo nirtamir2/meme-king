@@ -293,11 +293,11 @@ function mapStateToProps(state, ownProps) {
 
     const memeId = params.id;
     const type = params.type;
+    const user = _.get(state, 'auth.user')
 
     const uploadedImages = _.get(state, 'upload.images');
 
-    const currentMemeObj =  uploadedImages[memeId] || state.category.memes[memeId] || state.search.searchResults[memeId];
-
+    const currentMemeObj =  uploadedImages[memeId] || state.category.memes[memeId] || state.search.searchResults[memeId] || _.find(_.get(user, 'personalMemes'), { id: memeId }) ;
     return {
         category: _.get(currentMemeObj, 'category'),
         meme: currentMemeObj,

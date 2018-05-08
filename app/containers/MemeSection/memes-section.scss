@@ -16,7 +16,9 @@
     }
 
     &.popular {
-      padding-top: 50px;
+      @include mobile-medium {
+        padding-top: 50px;
+      }
     }
   }
 

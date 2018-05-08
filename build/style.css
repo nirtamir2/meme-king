@@ -907,8 +907,9 @@ header {
     @media only screen and (max-width: 939px) {
       .memes-section .memes-container {
         padding-left: 12px; } }
-    .memes-section .memes-container.popular {
-      padding-top: 50px; }
+    @media only screen and (max-width: 939px) {
+      .memes-section .memes-container.popular {
+        padding-top: 50px; } }
   .memes-section .box-round-empty-loader {
     position: absolute;
     top: 50%;

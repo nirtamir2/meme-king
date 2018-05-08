@@ -104,26 +104,6 @@ export default function (state = initialState, action) {
             break
         }
 
-        case REMOVE_PERSONAL_MEMES_FAILED: {
-            return {
-                ...state,
-                isFetching: false,
-            }
-            break
-        }
-
-        case REMOVE_PERSONAL_MEMES_SUCCESS: {
-            return {
-                ...state,
-                isFetching: false,
-                user: {
-                    ...state.user,
-                    personalMemes: []
-                }
-            }
-            break
-        }
-
     }
 
     return state

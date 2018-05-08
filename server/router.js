@@ -20,7 +20,6 @@ module.exports = function(app) {
 
 
     app.get('/api/user', requireAuth,  function(req, res) {
-        console.log('heyyy')
         res.send(req.user);
     });
 
