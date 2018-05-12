@@ -112,6 +112,7 @@ class GeneratorDashboard extends Component {
         link.href = canvas.toDataURL()
         link.download = 'MemeKing'
         link.click()
+        console.log(canvas.toDataURL())
 
         if (!isCleanSlateState && !isDataURL(_.get(this.props, 'meme.urlPath')) && !isCollageMode) {
             updateMemeRating(this.props.meme)

@@ -8,12 +8,7 @@ const DateController = (()=> {
         return `${day}_${month}_${year}`;
     };
 
-    const getCurrentDate = () => {
-
-
-
-        return getDateAsString();
-    };
+    const getCurrentDate = () => getDateAsString();
 
     const getYesterdayDate = ()=> {
         const yesterdayDate = new Date().setDate(date.getDate() - 1);

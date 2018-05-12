@@ -8,7 +8,7 @@ import Button from 'components/Button/Button'
 import Modal from 'components/Modal/Modal'
 import GeneratorModal from 'components/GeneratorModal/GeneratorModal';
 import { reduxForm, Field } from 'redux-form';
-import { renderField, renderColoredRadio } from 'components/FormComponents/FormComponents';
+import { renderField, renderColoredRadio, renderWithError } from 'components/FormComponents/FormComponents';
 import withModalNavigation from 'components/WithNavigationModal/WithNavigationModal';
 
 // actions
@@ -16,6 +16,9 @@ import { sendMessageToAdmin, fetchUserMessages } from 'actions/user-messages-act
 
 // helpers
 import helpers from 'helpers/helpers';
+import { required } from 'utils/validation';
+
+const renderFieldWithError = renderWithError(renderField);
 
 class ContactPage extends Component {
 
@@ -31,11 +34,11 @@ class ContactPage extends Component {
                         <Field className="block margin-top-small" component={renderField}  name="email" placeholder="אי-מייל"/>
                         <Field className="block margin-top-small" component={renderColoredRadio} value="proposal"  type="radio" name="type" label="הצעה" />
                         <Field className="block margin-top-small" component={renderColoredRadio} value="bug" type="radio" name="type" label="באג" />
-                        <Field
+                        <Field validate={required}
                             className="block margin-top-small"
                             componentClass="textarea"
                             placeholder="הודעה"
-                            component={renderField}
+                            component={renderFieldWithError}
                             name="message"
                             type="textarea"
                         />

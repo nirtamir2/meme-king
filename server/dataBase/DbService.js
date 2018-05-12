@@ -251,7 +251,12 @@ const getSearchMemes = ({ description } = {}) => {
 const saveUserSuggestedMeme = ({ meme } = {}) => {
     return new Promise(resolve => {
         const newMeme = new SuggestedMeme(meme)
-        saveUserSuggestedMeme.save(newMeme, function (err, res) {
+        newMeme.save(function (err, res) {
+
+            if (err) return console.error(err)
+
+            console.log(`saved user suggested meme`)
+
             resolve(res)
         })
     })

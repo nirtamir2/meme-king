@@ -1,14 +1,18 @@
+import _ from 'lodash';
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-const SpinnerDots = ({ className, size, theme,  ...rest }) => (
-    <div className={classNames("box-spinner-dots", `theme-${theme}`, `size-${size}`, className)}><div></div><div></div><div></div><div></div></div>
+const SpinnerDots = ({ className, size, numberOfDots, theme,  ...rest }) => (
+    <div className={classNames("box-spinner-dots", `theme-${theme}`, `size-${size}`, className)}>
+        {_.times(numberOfDots, dot => <div/>)}
+    </div>
 );
 
 SpinnerDots.defaultProps = {
     size: 'sm',
-    theme: 'black'
+    theme: 'black',
+    numberOfDots: 4
 }
 
 SpinnerDots.propTypes = {
