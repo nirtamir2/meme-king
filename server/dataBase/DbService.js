@@ -25,7 +25,7 @@ const init = ({ isProduction }) => {
 
     if (!isProduction) {
         const dbConstants = require('../../anigma/dbConstants')
-        dbPath = dbConstants.testDatabasePath
+        dbPath = dbConstants.prodDataBasePath
     }
 
     const database = (

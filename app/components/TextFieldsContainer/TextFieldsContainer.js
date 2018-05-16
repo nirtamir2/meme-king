@@ -57,14 +57,16 @@ export default class TextFieldsContainer extends Component {
                 id={_.uniqueId()}
                 remove={this.removeTextInput}
                 canvas={canvas}
-                position="top" />,
+                position="top"
+            />,
             <MemeTextField
                 format={this.props.format}
                 key={_.uniqueId()}
                 id={_.uniqueId()} r
                 remove={this.removeTextInput}
                 canvas={canvas}
-                position="bottom" /> ,
+                position="bottom"
+            /> ,
         ];
 
         this.setState({
@@ -75,7 +77,6 @@ export default class TextFieldsContainer extends Component {
      addTextInput = () => {
         this.setState({
             textInputs: [
-                ...this.state.textInputs,
                 <MemeTextField
                     key={_.uniqueId()}
                     format={this.props.format}
@@ -83,7 +84,8 @@ export default class TextFieldsContainer extends Component {
                     remove={this.removeTextInput}
                     canvas={this.props.canvas}
                     position="middle"
-                />
+                />,
+                ...this.state.textInputs,
             ]
         })
     }
