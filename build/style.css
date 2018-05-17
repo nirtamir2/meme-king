@@ -3204,7 +3204,8 @@ LABEL
   .box-user-meme p.date {
     margin: 20px 0; }
   .box-user-meme img {
-    width: 350px; }
+    max-width: 350px;
+    align-self: flex-start; }
 
 .box-panel {
   cursor: default; }

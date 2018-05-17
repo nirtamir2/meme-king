@@ -17,6 +17,8 @@
   }
 
   img {
-    width: 350px;
+    max-width: 350px;
+    align-self: flex-start;
+
   }
 }
