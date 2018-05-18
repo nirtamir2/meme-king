@@ -107,7 +107,7 @@ class MemeSection extends Component {
 
     handleButtonPress = (meme) => {
 
-        this.buttonPressTimer = setTimeout(() => this.setState({ showPreviewModal: true, currentPreviewMeme: meme }), 1000);
+        this.buttonPressTimer = setTimeout(() => this.setState({ showPreviewModal: true, currentPreviewMeme: meme }), 1500);
     }
 
     handleButtonRelease = () => {

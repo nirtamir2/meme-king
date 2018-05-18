@@ -939,14 +939,6 @@ header {
       .memes-section .popular-tabs .popular-tab.active {
         border-bottom: 3px solid #0097EB; }
 
-.preview {
-  height: 300px;
-  z-index: 9999;
-  width: 300px;
-  position: absolute;
-  background: #f6f6f6;
-  left: 20px; }
-
 .box-notification {
   background: #C3F3D4;
   display: flex;
@@ -3293,7 +3285,8 @@ LABEL
       height: auto; } }
 
 .box-meme-preview-modal img {
-  margin-top: 100px; }
+  margin-top: 100px;
+  max-height: 300px; }
 
 .box-meme-preview-modal .labels-container {
   justify-content: center; }

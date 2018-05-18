@@ -27,7 +27,7 @@ class MemePreviewModal extends React.Component {
                 <Grid>
                     <Row>
                         <Col xs={12}>
-                            <img onLoad={() => this.setState({ isLoading: false })} className="margin-top-medium img-responsive" src={urlPath} />
+                            <img onLoad={() => this.setState({ isLoading: false })} className="center-block margin-top-medium img-responsive" src={urlPath} />
                             <Text dir="rtl" className="margin-top-medium" align="center" theme="white">{description}</Text>
                             <div className="flex labels-container margin-top-medium">
                                 <Label dir="rtl">{rating * 4} הורדות </Label>
