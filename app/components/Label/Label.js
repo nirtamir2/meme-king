@@ -57,9 +57,9 @@ export const Badge = ({ icon, onClick, theme }) => (
 );
 
 
-const LabelComponent = ({ children, block, className, onClick, size, bold, bsStyle, upperCase, weight, ...rest }) => (
+const LabelComponent = ({ children, block, className, onClick, size, bold, bsStyle, upperCase, weight, dir, ...rest }) => (
 
-    <BootstrapLabel bsStyle={bsStyle} className={classNames('box-label', { block }, className, size, {'clickable': onClick}, `weight-${weight}`, { 'uppercase': upperCase }, { 'bold': bold })} onClick={onClick} {...rest}>
+    <BootstrapLabel bsStyle={bsStyle} className={classNames('box-label', { block }, dir, className, size, {'clickable': onClick}, `weight-${weight}`, { 'uppercase': upperCase }, { 'bold': bold })} onClick={onClick} {...rest}>
         {children}
     </BootstrapLabel>
 

@@ -184,6 +184,12 @@ MIXINS
 .italic {
   font-style: italic; }
 
+.rtl {
+  direction: rtl; }
+
+.ltr {
+  direction: ltr; }
+
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Change the default font family in all browsers (opinionated).
@@ -933,6 +939,14 @@ header {
       .memes-section .popular-tabs .popular-tab.active {
         border-bottom: 3px solid #0097EB; }
 
+.preview {
+  height: 300px;
+  z-index: 9999;
+  width: 300px;
+  position: absolute;
+  background: #f6f6f6;
+  left: 20px; }
+
 .box-notification {
   background: #C3F3D4;
   display: flex;
@@ -1292,6 +1306,9 @@ header {
       width: 33.333333333333%; } }
   .meme-thumb:hover .meme-thumb__overlay {
     opacity: 1; }
+    @media only screen and (max-width: 939px) {
+      .meme-thumb:hover .meme-thumb__overlay {
+        display: none; } }
     .meme-thumb:hover .meme-thumb__overlay .description {
       display: block; }
   .meme-thumb:hover .like-heart.outside {
@@ -3274,3 +3291,9 @@ LABEL
     .app-container {
       margin-top: 50px;
       height: auto; } }
+
+.box-meme-preview-modal img {
+  margin-top: 100px; }
+
+.box-meme-preview-modal .labels-container {
+  justify-content: center; }

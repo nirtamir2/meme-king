@@ -23,6 +23,8 @@ import Loader from 'components/Loader/Loader'
 import Toolbar from 'containers/Toolbar/Toolbar'
 import Generator from 'containers/Generator/Generator'
 import LargeTabs from './LargeTabs'
+import GeneratorModal from 'components/GeneratorModal/GeneratorModal';
+import MemePreviewModal from 'components/MemePreviewModal/MemePreviewModal';
 
 // services
 import AnalyticsService from 'services/Analytics'
@@ -32,8 +34,13 @@ import helpers from 'helpers/helpers'
 
 class MemeSection extends Component {
 
+    state = {
+        showPreviewModal : false,
+        currentPreviewMeme: {}
+    }
+
     componentDidMount() {
-        this.loadData(_.get(this.props, 'match.params.category'))
+        this.loadData(_.get(this.props, 'match.params.category'));
     };
 
     componentWillReceiveProps(nextProps) {
@@ -98,10 +105,20 @@ class MemeSection extends Component {
         this.props.addToFavourites({ thumbPath, id, urlPath, description })
     }
 
+    handleButtonPress = (meme) => {
+
+        this.buttonPressTimer = setTimeout(() => this.setState({ showPreviewModal: true, currentPreviewMeme: meme }), 1000);
+    }
+
+    handleButtonRelease = () => {
+        this.setState({ showPreviewModal: false });
+        clearTimeout(this.buttonPressTimer);
+    }
 
     render() {
 
         const { memes, isFetching, isCollageMode, collageMemes, isLoggedIn, match, history, personalMemes } = this.props
+        const { currentPreviewMeme, showPreviewModal } = this.state;
 
         const category = _.get(match, 'params.category')
 
@@ -111,6 +128,8 @@ class MemeSection extends Component {
 
         return (
             <div className="memes-section">
+
+                {showPreviewModal && <MemePreviewModal {...currentPreviewMeme}/>}
 
                 {!isFetching && <Toolbar />}
 
@@ -129,6 +148,8 @@ class MemeSection extends Component {
                         {_.map(orderedByDate, meme =>
                             meme && (
                                 <MemeThumb
+                                    onTouchStart={() => this.handleButtonPress(meme)}
+                                    onTouchEnd={this.handleButtonRelease}
                                     shouldShowRatingBadge={isPopularSection}
                                     key={meme.id}
                                     isLoggedIn={isLoggedIn}

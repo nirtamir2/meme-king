@@ -25,7 +25,7 @@ const RatingCrown = ({ left, right, icon, rating }) => (
     </span>
 )
 
-const MemeThumb = ({ thumbPath, description, rating, theme, isFavourite, isLoggedIn, to, urlPath, addToFavourites, onClick, shouldShowRatingBadge, className, hidden, isInCollage }) => {
+const MemeThumb = ({ thumbPath, description, rating, theme, isFavourite, isLoggedIn, to, urlPath, addToFavourites, onClick, shouldShowRatingBadge, className, hidden, isInCollage, ...rest }) => {
 
 
     const computedRating = (rating * 4) + helpers.getRandomNumber(0, 1)
@@ -36,7 +36,7 @@ const MemeThumb = ({ thumbPath, description, rating, theme, isFavourite, isLogge
 
     return (
 
-        <Link to={to} className={classNames(className, 'meme-thumb', `theme-${theme}`, { 'marked-in-collage': isInCollage })} onClick={onClick}>
+        <Link to={to} className={classNames(className, 'meme-thumb', `theme-${theme}`, { 'marked-in-collage': isInCollage })} onClick={onClick} {...rest}>
             <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img"/>
             {(shouldShowRatingBadge && rating) && (
                 <RatingCrown rating={computedRating} />
