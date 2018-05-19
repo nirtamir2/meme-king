@@ -14,6 +14,7 @@ import Settings from 'containers/SettingsContainer/SettingsContainer';
 // components
 import Admin from 'components/Admin/Admin';
 import BugsPage from 'containers/BugsContainer/BugsContainer';
+import MemeSuggestionsForm from 'components/MemeSuggestionsForm/MemeSuggestionsForm';
 
 export default class MainView extends Component {
 
@@ -23,6 +24,7 @@ export default class MainView extends Component {
             <div style={{width: '100%', backgroundColor:'#0097EB', overflow: 'scroll'}}>
                 <Switch>
                     <Route path='/memes/:category' component={MemeSection} />
+                    <Route path='/suggest-memes' component={MemeSuggestionsForm} />
                     <Route path="/bugs-page" component={BugsPage}/>
                     <Route path="/categories" component={CategoriesContainer}/>
                     <Route path="/search" component={SearchContainer}/>

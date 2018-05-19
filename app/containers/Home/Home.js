@@ -168,9 +168,9 @@ import axios from 'axios';
                             <small>הגדרות</small>
                         </TextLink>
                     )}
-                    <a className="box-text-link margin-right-small" href="http://imri-memes-features.000webhostapp.com/">
+                    <TextLink className="box-text-link margin-right-small" to="suggest-memes">
                         <small>הוספת מם למאגר</small>
-                    </a>
+                    </TextLink>
                 </div>
             </div>
         );
