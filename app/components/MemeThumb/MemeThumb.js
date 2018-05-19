@@ -25,54 +25,66 @@ const RatingCrown = ({ left, right, icon, rating }) => (
     </span>
 )
 
-const MemeThumb = ({ thumbPath, description, rating, theme, isFavourite, isLoggedIn, to, urlPath, addToFavourites, onClick, shouldShowRatingBadge, className, hidden, isInCollage, ...rest }) => {
+const MemeThumb = ({
+                       thumbPath,
+                       description,
+                       rating,
+                       theme,
+                       isFavourite,
+                       isLoggedIn,
+                       to,
+                       urlPath,
+                       addToFavourites,
+                       onClick,
+                       shouldShowRatingBadge,
+                       className,
+                       hidden,
+                       isInCollage,
+                       ...rest
 
+                }) => {
 
-    const computedRating = (rating * 4) + helpers.getRandomNumber(0, 1)
+                    const computedRating = (rating * 4) + helpers.getRandomNumber(0, 1)
 
-    if (hidden) {
-        return null
-    }
+                    if (hidden) {
+                        return null;
+                    }
 
-    return (
+                    return (
 
-        <Link to={to} className={classNames(className, 'meme-thumb', `theme-${theme}`, { 'marked-in-collage': isInCollage })} onClick={onClick} {...rest}>
-            <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img"/>
-            {(shouldShowRatingBadge && rating) && (
-                <RatingCrown rating={computedRating} />
-            )}
-            {isInCollage && (
-                <Icon className="in-collage-badge" theme="pink" name="CHECK"/>
-            )}
+                        <Link
+                            to={to}
+                            className={classNames(className, 'meme-thumb', `theme-${theme}`, { 'marked-in-collage': isInCollage })}
+                            onClick={onClick}
+                            {...rest}
+                        >
+                            <img src={thumbPath || urlPath} alt={description} className="meme-thumb__img"/>
+                            {(shouldShowRatingBadge && rating) && (
+                                <RatingCrown rating={computedRating} />
+                            )}
+                            {isInCollage && (
+                                <Icon className="in-collage-badge" theme="pink" name="CHECK"/>
+                            )}
 
-            {/*{isLoggedIn && (*/}
-                {/*<Icon*/}
-                    {/*name="HEART"*/}
-                    {/*onClick={addToFavourites}*/}
-                    {/*className="like-heart outside"*/}
-                    {/*theme={isFavourite ? 'success': "white-success"}*/}
-                {/*/>*/}
-            {/*)}*/}
+                            <div className="meme-thumb__overlay">
+                                <p className="description weight-600">
+                                    {description}
+                                </p>
 
-            <div className="meme-thumb__overlay">
-                <p className="description weight-600">
-                    {description}
-                </p>
+                                {isLoggedIn && (
+                                    <Icon
+                                        name="HEART"
+                                        onClick={addToFavourites}
+                                        className="like-heart"
+                                        theme={isFavourite ? 'success': "white-success"}
+                                    />
+                                )}
 
-                {isLoggedIn && (
-                    <Icon
-                        name="HEART"
-                        onClick={addToFavourites}
-                        className="like-heart"
-                        theme={isFavourite ? 'success': "white-success"}
-                    />
-                )}
+                                {!shouldShowRatingBadge && <RatingCrown rating={computedRating} icon />}
+                            </div>
+                        </Link>
 
-                {!shouldShowRatingBadge && <RatingCrown rating={computedRating} icon />}
-            </div>
-        </Link>
-
-    )
+                    )
 }
 
 MemeThumb.propTypes = {

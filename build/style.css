@@ -1298,9 +1298,6 @@ header {
       width: 33.333333333333%; } }
   .meme-thumb:hover .meme-thumb__overlay {
     opacity: 1; }
-    @media only screen and (max-width: 939px) {
-      .meme-thumb:hover .meme-thumb__overlay {
-        display: none; } }
     .meme-thumb:hover .meme-thumb__overlay .description {
       display: block; }
   .meme-thumb:hover .like-heart.outside {

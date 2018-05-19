@@ -25,12 +25,17 @@ import Generator from 'containers/Generator/Generator'
 import LargeTabs from './LargeTabs'
 import GeneratorModal from 'components/GeneratorModal/GeneratorModal';
 import MemePreviewModal from 'components/MemePreviewModal/MemePreviewModal';
+import LongPress from 'components/LongPress/LongPress';
 
 // services
 import AnalyticsService from 'services/Analytics'
 
 // helpers
-import helpers from 'helpers/helpers'
+import helpers from 'helpers/helpers';
+
+// config
+import config from 'config/config';
+
 
 class MemeSection extends Component {
 
@@ -106,13 +111,14 @@ class MemeSection extends Component {
     }
 
     showMemePreviewModal = (meme) => {
-        AnalyticsService.sendEvent('meme preview modal opened');
-        this.buttonPressTimer = setTimeout(() => this.setState({ showPreviewModal: true, currentPreviewMeme: meme }), 1500);
+        if (_.get(config, 'features.showPreviewModal')) {
+            AnalyticsService.sendEvent('meme preview modal opened');
+            this.setState({ showPreviewModal: true, currentPreviewMeme: meme });
+        }
     }
 
     hideMemePreviewModal = () => {
         this.setState({ showPreviewModal: false });
-        clearTimeout(this.buttonPressTimer);
     }
 
     render() {
@@ -147,20 +153,23 @@ class MemeSection extends Component {
                     <div className={classNames("memes-container masonry", { 'popular': isPopularSection })}>
                         {_.map(orderedByDate, meme =>
                             meme && (
-                                <MemeThumb
-                                    onTouchStart={() => this.showMemePreviewModal(meme)}
+                                <LongPress
+                                    onLongPress={() => this.showMemePreviewModal(meme)}
                                     onTouchEnd={this.hideMemePreviewModal}
-                                    shouldShowRatingBadge={isPopularSection}
-                                    key={meme.id}
-                                    isLoggedIn={isLoggedIn}
-                                    isInCollage={_.find(collageMemes, { id: meme.id })}
-                                    isFavourite={_.find(personalMemes, { id: meme.id })}
-                                    {...meme}
-                                    to={`${match.url}/generator/normal/${meme.id}/normalFormat`}
-                                    addToFavourites={(e) => this.addToFavourites(e, meme)}
-                                    onClick={isCollageMode ? (e) => this.handleCollageClick(e, meme) : null}
-                                    category={category || meme.category }
-                                />
+                                >
+                                    <MemeThumb
+                                        shouldShowRatingBadge={isPopularSection}
+                                        key={meme.id}
+                                        isLoggedIn={isLoggedIn}
+                                        isInCollage={_.find(collageMemes, { id: meme.id })}
+                                        isFavourite={_.find(personalMemes, { id: meme.id })}
+                                        {...meme}
+                                        to={`${match.url}/generator/normal/${meme.id}/normalFormat`}
+                                        addToFavourites={(e) => this.addToFavourites(e, meme)}
+                                        onClick={isCollageMode ? (e) => this.handleCollageClick(e, meme) : null}
+                                        category={category || meme.category }
+                                    />
+                                </LongPress>
                             )
                         )}
                     </div>

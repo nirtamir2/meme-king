@@ -13,7 +13,8 @@ export default {
 
     features: {
         memeSuggestions: false,
-        saveUserMemeToStorage: true
+        saveUserMemeToStorage: true,
+        showPreviewModal: true,
     }
 
 

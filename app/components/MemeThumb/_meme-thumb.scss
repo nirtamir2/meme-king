@@ -138,10 +138,6 @@
     .meme-thumb__overlay{
       opacity : 1;
 
-      @include mobile-medium {
-        display: none;
-      }
-
       .description {
         display: block;
       }
