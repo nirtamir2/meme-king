@@ -105,12 +105,12 @@ class MemeSection extends Component {
         this.props.addToFavourites({ thumbPath, id, urlPath, description })
     }
 
-    handleButtonPress = (meme) => {
-
+    showMemePreviewModal = (meme) => {
+        AnalyticsService.sendEvent('meme preview modal opened');
         this.buttonPressTimer = setTimeout(() => this.setState({ showPreviewModal: true, currentPreviewMeme: meme }), 1500);
     }
 
-    handleButtonRelease = () => {
+    hideMemePreviewModal = () => {
         this.setState({ showPreviewModal: false });
         clearTimeout(this.buttonPressTimer);
     }
@@ -148,8 +148,8 @@ class MemeSection extends Component {
                         {_.map(orderedByDate, meme =>
                             meme && (
                                 <MemeThumb
-                                    onTouchStart={() => this.handleButtonPress(meme)}
-                                    onTouchEnd={this.handleButtonRelease}
+                                    onTouchStart={() => this.showMemePreviewModal(meme)}
+                                    onTouchEnd={this.hideMemePreviewModal}
                                     shouldShowRatingBadge={isPopularSection}
                                     key={meme.id}
                                     isLoggedIn={isLoggedIn}
