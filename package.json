@@ -48,6 +48,7 @@
     "prop-types": "^15.6.0",
     "rc-switch": "1.4.4",
     "react": "15.6.1",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap": "^0.32.1",
     "react-cropper": "1.0.0",
     "react-dom": "15.5.4",

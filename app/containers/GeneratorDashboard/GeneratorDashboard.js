@@ -94,6 +94,7 @@ class GeneratorDashboard extends Component {
         const memeData = {
             urlPath: canvas.toDataURL(),
             date: new Date(),
+            description: _.get(meme, 'description'),
             isMobile: !!helpers.isMobile(),
             isMobileApp: !!WebViewService.isWebView,
             isDesktop: !!isDesktop
