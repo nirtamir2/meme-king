@@ -81,6 +81,13 @@ const get = (app) => {
             console.log('sending generated memes to client', _.size(memes))
             res.send(memes);
         })
+    });
+
+    app.get('/api/user-suggested-memes', function (req, res) {
+        newDataBaseService.getUserSuggestedMemes().then(memes => {
+            console.log('sending suggested memes to client', _.size(memes))
+            res.send(memes);
+        })
     })
 
 }

@@ -22,6 +22,7 @@ const helpers = require('./server/helpers/helpers');
 const getApi = require('./server/api/get');
 const postApi = require('./server/api/post');
 const putApi = require('./server/api/put');
+const deleteApi = require('./server/api/delete');
 const router = require('./server/router');
 
 
@@ -90,6 +91,7 @@ app.use(function (req, res, next) {
 getApi(app);
 postApi(app);
 putApi(app);
+deleteApi(app);
 
 // router
 router(app);

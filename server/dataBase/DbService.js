@@ -271,6 +271,11 @@ const getUserSuggestedMemes = () => {
     })
 }
 
+const removeMemeSuggestions = () => {
+    SuggestedMeme.collection.drop()
+
+}
+
 const saveUserReport = ({ report }) => {
     return new Promise(resolve => {
 
@@ -372,6 +377,10 @@ const put = {
 
 }
 
+const deleteApi = {
+    removeMemeSuggestions,
+}
+
 const post = {
     saveMemeToDataBase,
     incrementMemeRating,
@@ -386,6 +395,7 @@ const post = {
 
 const DbService = {
     init,
+    ...deleteApi,
     ...put,
     ...get,
     ...post
