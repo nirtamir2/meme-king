@@ -74,7 +74,7 @@ class UserGeneratedMemesContainer extends React.Component {
                     {_.map(memesToShow, meme => {
                         return (
                             <div key={meme.id} className="box-user-meme margin-top-medium">
-                                <img className="img-responsive" src={meme.urlPath}/>
+                                <img className="img-responsive center-block" src={meme.urlPath}/>
                                 <div className="margin-top-medium">
                                     {meme.isMobile && <p>Mobile Device</p>}
                                     {meme.isDesktop && <p>Desktop</p>}
