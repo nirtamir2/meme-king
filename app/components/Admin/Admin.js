@@ -11,6 +11,7 @@ import { blobToString } from 'containers/Generator/generator-helpers';
 // components
 import Button from 'components/Button/Button';
 import NewMemesContainer from './NewMemesContainer/NewMemesContainer';
+import SuggestedMemesContainer from './SuggestedMemesContainer/SuggestedMemesContainer';
 import UserGeneratedMemesContainer from './UserGeneratedMemesContainer/UserGeneratedMemesContainer';
 import EditMemeContainer from './EditMemesContainer/EditMemesContainer';
 import Panel from 'components/Panel/Panel';
@@ -56,15 +57,6 @@ class Admin extends Component {
         const { isSuperAdmin = true } = this.state;
         const { match, isAdmin } = this.props;
 
-        // if (!isAdmin) {
-        //     return (
-        //         <LoginArea
-        //             value={this.state.anigma}
-        //             onSubmit={this.onSubmit}
-        //             onChange={event => this.setState({ anigma: event.target.value })}
-        //         />
-        //     )
-        // }
 
         if(!isAdmin) {
             return null;
@@ -103,6 +95,16 @@ class Admin extends Component {
                             size="sm"
                             center
                             componentClass={Link}
+                            to={`${match.url}/suggested-memes`}
+                        >
+                            Show Suggested Memes
+                        </Button>
+                    </div>
+                    <div>
+                        <Button
+                            size="sm"
+                            center
+                            componentClass={Link}
                             to={`${match.url}/new-memes`}
                         >
                             Upload New Memes
@@ -114,6 +116,8 @@ class Admin extends Component {
                     <Route path={`${match.url}/new-memes`} component={NewMemesContainer} />
                     <Route path={`${match.url}/user-generated-memes`} component={UserGeneratedMemesContainer} />
                     <Route path={`${match.url}/edit-memes`} component={EditMemeContainer} />
+                    <Route path={`${match.url}/suggested-memes`} component={SuggestedMemesContainer} />
+
                 </Panel>
 
             </div>
