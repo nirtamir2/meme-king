@@ -46,6 +46,7 @@ class MemePreviewModal extends React.Component {
                                     className="margin-top-medium"
                                     align="center"
                                     theme="white"
+                                    capitalized
                                 >
                                     {description}
                                 </Text>
