@@ -14,7 +14,7 @@ export default {
         'normalFormat': {
 
             image: {
-                getWantedMaxHeight: () => helpers.isMobile() ? 350 : null,
+                getWantedMaxHeight: () => helpers.isMobile() ? 250 : null,
                 getWantedMaxWidth: () => getCanvasContainerWidth(),
                 style: {
                     top:  0,

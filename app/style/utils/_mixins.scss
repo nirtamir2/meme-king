@@ -142,3 +142,12 @@ MIXINS
     }
   }
 }
+
+
+@mixin blur($size : 7px) {
+  -webkit-filter: blur($size);
+  -moz-filter: blur($size);
+  -o-filter: blur($size);
+  -ms-filter: blur($size);
+  filter: blur($size);
+}

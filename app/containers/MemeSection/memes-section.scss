@@ -7,7 +7,7 @@
   background: $black;
 
   &.blur {
-    filter: blur(7px);
+    @include blur(7px);
   }
 
   .memes-container {
