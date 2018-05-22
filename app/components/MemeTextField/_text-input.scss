@@ -25,6 +25,10 @@ $text-control-color-lighten: lighten($text-control-btn-color, 20%);
 
     border:none;
 
+    @include mobile-medium {
+      height: 50px;
+    }
+
     &:focus,
     &:active {
       border: none !important;
