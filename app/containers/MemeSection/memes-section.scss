@@ -6,6 +6,9 @@
   min-height: 100vh;
   background: $black;
 
+  &.blur {
+    filter: blur(7px);
+  }
 
   .memes-container {
     display: flex;
@@ -20,6 +23,7 @@
         padding-top: 50px;
       }
     }
+
   }
 
   .box-round-empty-loader {

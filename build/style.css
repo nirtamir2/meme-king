@@ -908,6 +908,8 @@ header {
   align-items: center;
   min-height: 100vh;
   background: #000; }
+  .memes-section.blur {
+    filter: blur(7px); }
   .memes-section .memes-container {
     display: flex;
     flex-flow: row-reverse wrap;
@@ -3309,3 +3311,10 @@ LABEL
 .transition-appear.transition-appear-active {
   opacity: 1;
   transition: opacity .5s ease-in; }
+
+.slide-down-appear {
+  height: 0.1px; }
+
+.slide-down-appear.slide-down-appear-active {
+  height: 200px;
+  transition: .5s ease-in; }

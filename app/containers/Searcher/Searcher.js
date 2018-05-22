@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import classNames from 'classnames'
 import { withRouter } from 'react-router-dom';
+import Transition from 'components/Transition/Transition'
 
 // actions
 import {fetchSearchResults, cleanSearchResults} from 'actions/search-actions/search-actions'
@@ -133,38 +134,41 @@ class Searcher extends Component {
                     />
                 </div>
                 {isOpen && (
-                    <Panel theme="shadow" className="margin-top-small search-result-component text-center">
+                    <Transition name="slide-down">
+                        <Panel theme="shadow" className="margin-top-small search-result-component text-center">
 
-                        {
-                            !isFetching && !foundNoResults && _.isEmpty(searchResults)
-                                ?
-                                <img src={xavier} className="center-block img-responsive empty-state-img" />
-                                :
-                                isFetching
+                            {
+                                !isFetching && !foundNoResults && _.isEmpty(searchResults)
                                     ?
-                                    <SpinnerDots size="lg" className="margin-top-medium" />
+                                    <img src={xavier} className="center-block img-responsive empty-state-img" />
                                     :
-                                    foundNoResults
+                                    isFetching
                                         ?
-                                        <img src={notFoundImage} className="center-block img-responsive empty-state-img" />
+                                        <SpinnerDots size="lg" className="margin-top-medium" />
                                         :
-                                        <Row className="padding-right-small padding-left-small">
-                                            {_.map(searchResults, meme => {
-                                                return (
-                                                    <Col xs={6} sm={2} className="padding-right-none padding-left-none">
-                                                        <MemeThumb
-                                                            theme="full-width"
-                                                            to={`/generator/search/${meme.id}/${globalConstants.format.normal}`}
-                                                            {...meme}
-                                                        />
-                                                    </Col>
-                                                )
-                                            })}
-                                        </Row>
+                                        foundNoResults
+                                            ?
+                                            <img src={notFoundImage} className="center-block img-responsive empty-state-img" />
+                                            :
+                                            <Row className="padding-right-small padding-left-small">
+                                                {_.map(searchResults, meme => {
+                                                    return (
+                                                        <Col xs={6} sm={2} className="padding-right-none padding-left-none">
+                                                            <MemeThumb
+                                                                theme="full-width"
+                                                                to={`/generator/search/${meme.id}/${globalConstants.format.normal}`}
+                                                                {...meme}
+                                                            />
+                                                        </Col>
+                                                    )
+                                                })}
+                                            </Row>
 
 
-                        }
-                    </Panel>
+                            }
+                        </Panel>
+
+                    </Transition>
                 )}
             </div>
         )

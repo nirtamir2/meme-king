@@ -6,3 +6,12 @@
   opacity: 1;
   transition: opacity .5s ease-in;
 }
+
+.slide-down-appear {
+  height: 0.1px;
+}
+
+.slide-down-appear.slide-down-appear-active {
+  height: 200px;
+  transition: .5s ease-in;
+}

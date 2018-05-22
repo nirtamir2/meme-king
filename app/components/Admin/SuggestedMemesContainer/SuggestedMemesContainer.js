@@ -9,6 +9,7 @@ import config from 'config/config'
 // components
 import Button from 'components/Button/Button'
 import Title from 'components/Title/Title'
+import Text from 'components/Text/Text'
 
 class UserGeneratedMemesContainer extends React.Component {
 
@@ -66,13 +67,20 @@ class UserGeneratedMemesContainer extends React.Component {
                 <Title>({_.size(memesToShow)})</Title>
 
                 <div className="margin-top-large">
-                    {_.map(memesToShow, meme => {
-                        return (
-                            <div key={meme.id} className="box-user-meme margin-top-medium">
-                                <img className="img-responsive center-block" src={meme.urlPath}/>
-                            </div>
-                        )
-                    })}
+                    {_.map(memesToShow, meme => (
+                        <div key={meme.id} className="box-user-meme margin-top-medium">
+                            <img className="img-responsive center-block" src={meme.urlPath}/>
+                            <Text theme="black" align="center" >
+                                {_.get(meme, 'description')}
+                            </Text>
+                            <Text theme="black"  align="center" >
+                                {_.get(meme, 'name')}
+                            </Text>
+                            <Text theme="black"  align="center" >
+                                {_.get(meme, 'email')}
+                            </Text>
+                        </div>
+                    ))}
 
                 </div>
             </div>
