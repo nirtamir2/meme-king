@@ -58,10 +58,6 @@ class Admin extends Component {
         const { match, isAdmin } = this.props;
 
 
-        if(!isAdmin) {
-            return null;
-        }
-
 
         return (
             <div className="box-admin container">

@@ -17,7 +17,8 @@ class UserGeneratedMemesContainer extends React.Component {
 
     state = {
         memes: {},
-        filter: null
+        filter: '',
+        filterByDevice: null,
     }
 
 
@@ -39,10 +40,13 @@ class UserGeneratedMemesContainer extends React.Component {
 
     render() {
 
-        const { memes, filter } = this.state;
+        const { memes, filter, filterByDevice } = this.state;
 
-        const memesToShow = filter ? _.values(memes).filter(meme => _.includes(_.toLower(meme.description), filter)) : memes;
+        let memesToShow = filter ? _.values(memes).filter(meme => _.includes(_.toLower(meme.description), filter)) : memes;
 
+        if (filterByDevice) {
+            memesToShow = _.values(memes).filter(meme => meme[filterByDevice]);
+        }
 
         return (
             <div>
@@ -66,7 +70,7 @@ class UserGeneratedMemesContainer extends React.Component {
                 >
                     CLEAR THEM ALL
                 </Button>
-                <select onChange={e => this.setState({ filter: e.target.value })} value={null}>
+                <select onChange={e => this.setState({ filterByDevice: e.target.value })} value={null}>
                     <option value={''}>All</option>
                     <option value="isMobile">mobile android</option>
                     <option value="isMobileApp">iOs App</option>

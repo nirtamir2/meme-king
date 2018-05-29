@@ -16,15 +16,15 @@ class StorageService {
             this.gcs = storage({
                 credentials: {
                     "type": "service_account",
-                    "project_id": "memeking-80290",
-                    "private_key_id": "a2d02c0f317a9cceff4dd2abbaf2110db0ecbdbc",
+                    "project_id": JSON.parse(process.env.GOOGLE_PROJECT_ID),
+                    "private_key_id": JSON.parse(process.env.GOOGLE_PRIVATE_KEY_ID),
                     "private_key": JSON.parse(process.env.GOOGLE_STORAGE_KEY),
-                    "client_email": "storager@memeking-80290.iam.gserviceaccount.com",
-                    "client_id": "111504596396275984699",
+                    "client_email": JSON.parse(process.env.GOOGLE_CLIENT_EMAIL) ,
+                    "client_id": JSON.parse(process.env.GOOGLE_CLIENT_ID),
                     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
                     "token_uri": "https://accounts.google.com/o/oauth2/token",
                     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-                    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storager%40memeking-80290.iam.gserviceaccount.com"
+                    "client_x509_cert_url": JSON.parse(process.env.GOOGLE_CERT_URL),
                 }
 
             })
