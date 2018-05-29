@@ -41,6 +41,9 @@ class Admin extends Component {
 
     }
 
+    componentDidMount() {
+        console.log('in admin');
+    }
 
     onSubmit = () => {
         if (this.state.anigma === '~memeking07') {
@@ -57,6 +60,10 @@ class Admin extends Component {
         const { isSuperAdmin = true } = this.state;
         const { match, isAdmin } = this.props;
 
+
+        if(!isAdmin) {
+            return null;
+        }
 
 
         return (
