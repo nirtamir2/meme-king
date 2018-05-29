@@ -107,6 +107,7 @@ class StorageService {
             urlPath: url,
             date: new Date().toString(),
             id: fileName,
+            description: _.get(meme, 'description'),
             isMobile: meme.isMobile || false,
             isMobileApp: meme.isMobileApp || false,
             isDesktop: meme.isDesktop || false

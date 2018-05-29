@@ -9,6 +9,9 @@ import config from 'config/config'
 // components
 import Button from 'components/Button/Button'
 import Title from 'components/Title/Title'
+import FormControl from 'components/FormControl/FormControl';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 class UserGeneratedMemesContainer extends React.Component {
 
@@ -38,7 +41,9 @@ class UserGeneratedMemesContainer extends React.Component {
 
         const { memes, filter } = this.state;
 
-        const memesToShow = filter ? _.values(memes).filter(meme => meme[filter]) : memes;
+        const memesToShow = filter ? _.values(memes).filter(meme => _.includes(_.toLower(meme.description), filter)) : memes;
+
+
         return (
             <div>
                 <Button
@@ -70,6 +75,16 @@ class UserGeneratedMemesContainer extends React.Component {
 
                 <Title>({_.size(memesToShow)})</Title>
 
+                <Row className="margin-top-large">
+                    <Col xs={10} xsOffset={1} >
+                        <FormControl
+                            placeholder="Filter memes"
+                            className=" center-block"
+                            value={this.state.filter}
+                            onChange={e => this.setState({ filter: e.target.value })}
+                        />
+                    </Col>
+                </Row>
                 <div className="margin-top-large">
                     {_.map(memesToShow, meme => {
                         return (
@@ -80,6 +95,7 @@ class UserGeneratedMemesContainer extends React.Component {
                                     {meme.isDesktop && <p>Desktop</p>}
                                     {meme.isMobileApp && <p>iOS Mobile App</p>}
                                 </div>
+                                <p>{meme.description} </p>
                                 <p>Date : {new Date(meme.date) && new Date(meme.date).toDateString()}</p>
                             </div>
                         )
