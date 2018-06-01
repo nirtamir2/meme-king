@@ -44,7 +44,7 @@ const menu = {
         icon: mainIcon,
         linkText: 'אדמין',
         path: '/admin',
-        isVisible: ({ isLoggedIn, isAdmin }) => isAdmin && isLoggedIn
+        isVisible: ({ isLoggedIn, isAdmin }) => isAdmin
     },
 
     "all-time-popular": {

@@ -11,6 +11,10 @@ export default {
         }
     },
 
+    admin: {
+        isOn: true,
+    },
+
     features: {
         memeSuggestions: false,
         saveUserMemeToStorage: true,

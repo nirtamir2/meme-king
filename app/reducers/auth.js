@@ -1,3 +1,4 @@
+import _ from 'lodash';
 // actions
 import {
     AUTH_USER,
@@ -13,13 +14,18 @@ import {
 } from 'actions/user-actions/user-actions-constants';
 
 // services
-import LocalStorage from 'services/LocalStorage'
+import LocalStorage from 'services/LocalStorage';
 
+// config
+import config from 'config/config';
 const initialState = {
     authenticated: false,
-    user: {},
+    user: {
+        isAdmin:  _.get(config, 'admin.isOn')
+    },
     personalMemes: {}
 }
+debugger;
 
 export default function (state = initialState, action) {
 

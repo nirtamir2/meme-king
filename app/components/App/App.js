@@ -27,6 +27,8 @@ class App extends Component {
 
     componentDidMount() {
 
+        console.log('env', process.env.NODE_ENV, ENV)
+
        this.props.fetchUser();
 
         AnalyticsService.init();

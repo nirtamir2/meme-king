@@ -23,41 +23,15 @@ import config from 'config/config';
 // constants
 import constants from 'constants/global'
 
-const LoginArea = ({ onChange, value, onSubmit }) => {
-    return (
-        <form onSubmit={onSubmit} className="login-area">
-            <input type="password" value={value} onChange={onChange}/>
-            <Button center className="login-btn" onClick={onSubmit} >
-                Login
-            </Button>
-        </form>
-    )
-}
-
 class Admin extends Component {
-
-    state = {
-        anigma: '',
-
-    }
 
     componentDidMount() {
         console.log('in admin');
     }
 
-    onSubmit = () => {
-        if (this.state.anigma === '~memeking07') {
-            this.setState({ isAuthenticated: true, isSuperAdmin: true }, () => {
-            })
-        } else if (this.state.anigma === 'admin1234') {
-            this.setState({ isAuthenticated: true }, () => {
-            })
-        }
-    }
 
     render() {
 
-        const { isSuperAdmin = true } = this.state;
         const { match, isAdmin } = this.props;
 
 

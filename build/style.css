@@ -854,7 +854,7 @@ header {
     margin-top: 180px; }
     @media only screen and (max-width: 939px) {
       .home .box-avatar {
-        margin-top: 50px; } }
+        margin-top: 10px; } }
   @media only screen and (max-width: 939px) {
     .home .main-title {
       margin-bottom: 10px; } }
