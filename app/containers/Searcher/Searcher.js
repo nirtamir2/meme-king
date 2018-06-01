@@ -32,6 +32,8 @@ import helpers from 'helpers/helpers';
 import notFoundImage from 'assets/images/search-404.png';
 import xavier from 'assets/images/xavier-404.png';
 
+// services
+import AnalyticsService from 'services/Analytics';
 
 class Searcher extends Component {
 
@@ -67,6 +69,7 @@ class Searcher extends Component {
         this.setState({ isOpen: true });
 
         if (value.length >= 3) {
+            AnalyticsService.sendEvent('Search happened', value);
             this.fetchResults();
         }
     };
