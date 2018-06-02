@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { CALL_API } from 'redux-api-middleware';
 
 // constants
@@ -10,7 +11,7 @@ import config from 'config/config';
 export function fetchSearchResults(query) {
    return  {
        [CALL_API]: {
-           endpoint: `${config.apiBaseUrl}/search?search=${query}`,
+           endpoint: `${config.apiBaseUrl}/search?search=${_.toLower(query)}`,
            method: 'GET',
            types: [ FETCH_SEARCH_RESULTS_REQUEST, FETCH_SEARCH_RESULTS_SUCCESS, FETCH_SEARCH_RESULTS_ERROR ]
        }
