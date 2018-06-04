@@ -9,6 +9,8 @@ import helpers  from 'helpers/helpers';
 import ItemRemover from './ItemRemover';
 import SpinnerDots from 'components/SpinnerDots/SpinnerDots';
 import Text from 'components/Text/Text';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 import { fetchItems } from 'actions/item-actions/item-actions';
 
@@ -70,14 +72,19 @@ import AnalyticsService from 'services/Analytics';
 
         return (
             <div className="box-items-area">
+                <Text weight={700} className="margin-top-small margin-bottom-small" size="sm" align="center" theme="black">
+                    לחצו על פריט כדי להוסיפו למם
+                </Text>
+
                 {isFetching
                     ?
                     <SpinnerDots size="lg" className="margin-top-medium center-block" />
                     :
-                    <span className="items-container">
+                    <Row className="items-container">
                         { _.map(_.reverse(items), (item = {}) => (
-                            <div
-                                className="item margin-right-small margin-left-small"
+                            <Col
+                                xs={4}
+                                className="item"
                                 key={_.uniqueId()}
                             >
                                     <img
@@ -86,9 +93,9 @@ import AnalyticsService from 'services/Analytics';
                                         src={item.image}
                                     />
                                 <Text className="margin-top-small" size="sm" align="center" theme="black">{item.name}</Text>
-                            </div>
+                            </Col>
                         ))}
-                    </span>
+                    </Row>
                 }
             </div>
         );

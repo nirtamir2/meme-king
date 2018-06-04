@@ -1173,25 +1173,19 @@ header {
       color: #b1bee7 !important; }
 
 .box-items-area .items-container {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  padding: 5px;
-  margin-top: 7px;
-  cursor: pointer; }
+  margin-top: 7px; }
   .box-items-area .items-container .item {
-    width: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 10px;
     padding: 5px;
     transition: 0.3s; }
     .box-items-area .items-container .item:hover {
       border: 1px solid #000; }
     .box-items-area .items-container .item img {
-      max-height: 60px; }
+      width: 60px;
+      height: 60px; }
     .box-items-area .items-container .item .box-text {
       height: 30px; }
 
@@ -2376,15 +2370,13 @@ LABEL
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAACq0lEQVQ4y42Vv2tUeRTFP2ecGTUmRjf+iOsvFHHDwoKwqNhYiNgIWruw3RaChX+JhZVoJTY2ooWtjauwxbIiiotaGEVNNEajcRMzk8wcC89zH48x8QvD4/ve/Z7vvfeccwd6LNuyrdJ+t+2btm/bHuE7Vr0HaD/wG7DK9jlJc8A2YBdgYAvw0HYNWAd0gClJ3UWBgTXASWAFMAVcDGBx0HmuBYayny59B6DWA/gdcAnYABy3PQTMAfOASsCDQCPxnSpILeX32R62vULSLHAFuAfsAX4HZoCPBbDtQWAl8Al4L6lru2a7mRZRC0lHgQvACdvDwGvgLLAaOJhePgb+Ad4m22XABDBvu5kKf0p7vvZ4AGgCp4BD6esj4Hze3wdOJ+Nx4EdgEmiHk2FgVfZ1Eojt5cn6CDAC9AOXJZ2x3ZTUrspRkm1vBTYCC8BsyH4rqfsFXWoBV23/CRwD9gJN240qaOKdFiqKmAYmJS18jUlPh7JfSPAAMCppcjET2G4AfSWlFKZq1YE/gPWVM09C1lJLaUV/5X2rVrmpfEDfAexv3lhpRSH0BvBM0vQSrWhGDZ1Kgm31mBP7o8c3wLUyIVVlREF9cd/LMtH1Egl747RtmRPjkhZsL5PUqYDW4rYu8EPIXmt7AhiT1C3G4+E4bAB4AdyI+36Jw26VyjXwc4bOk1h7e1zaBp5LGi2c9ylD5jpwJ7rcDewDRsPBjvTwUVSwMe4bAz7EfZsjWeoR+9/AA2BGUjtD5kAufJpnmeCJjM0R4J2kWdvPgVdJ8Mt0k9SSNBXQRkrdlMC7PSQ4GvuuAbYWPEiaK/joNY/7gF+B/4B/Jc0EsPu/o9UKF3PATmD5kn9NKfuvkHK/VP581FJk/SyTbz6kLQ6cdtwphk0h+NJvJt86wMNvmeczwEcsQrkO8VoAAAAASUVORK5CYII=);
   opacity: 1;
   display: block;
-  z-index: 9999;
+  z-index: 100;
   width: 22px;
   height: 22px;
   background-repeat: no-repeat;
   -webkit-animation: activity-indicator 1s linear 0s infinite normal;
   -moz-animation: activity-indicator 1s linear 0s infinite normal;
   -o-animation: activity-indicator 1s linear 0s infinite normal; }
-  .box-activity-indicator * {
-    z-index: 9999; }
 
 @keyframes activity-indicator {
   from {

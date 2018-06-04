@@ -1,20 +1,13 @@
 .box-items-area {
 
   .items-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    padding: 5px;
     margin-top: 7px;
-    cursor: pointer;
 
     .item {
-      width: 100px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 10px;
       padding: 5px;
       transition: 0.3s;
 
@@ -23,7 +16,8 @@
       }
 
       img {
-        max-height: 60px;
+        width: 60px;
+        height: 60px;
       }
 
       .box-text {
