@@ -1,24 +1,34 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-
-import items from './items';
+import { connect } from 'react-redux';
 
 // helpers
 import helpers  from 'helpers/helpers';
 
 // components
 import ItemRemover from './ItemRemover';
+import SpinnerDots from 'components/SpinnerDots/SpinnerDots';
+import Text from 'components/Text/Text';
 
-export default class ItemsArea extends Component {
+import { fetchItems } from 'actions/item-actions/item-actions';
 
-    state = {
-        items : items
+// services
+import AnalyticsService from 'services/Analytics';
+
+ class ItemsArea extends Component {
+
+
+    componentDidMount = () => {
+        this.props.fetchItems();
     }
 
-    addItem = (event) => {
-        const src = event.target.src;
+    addItem = (item) => {
+        const src = item.image;
         const { canvas } = this.props;
         const self = this;
+
+        AnalyticsService.sendEvent('Item Added', item.name);
+
         fabric.Image.fromURL(src, (image) => {
             const size = helpers.isMobile() ? 60 : 120;
             image = helpers.modifyImageDimensions({ image, wantedMaxWidth: size, wantedMaxHeight: size });
@@ -53,15 +63,49 @@ export default class ItemsArea extends Component {
             this.props.canvas.getActiveObject().remove();
         }
     };
-    
+
     render(){
+
+        const { isFetching, items } = this.props;
+
         return (
-            <div className="items_area">
-                <div className="items_wrapper">
-                    <ItemRemover canvas={this.props.canvas}/>
-                    { _.map(this.state.items, (item) => <div key={_.uniqueId()}><img onClick={this.addItem} src={item.file} /></div>)}
-                </div>
+            <div className="box-items-area">
+                {isFetching
+                    ?
+                    <SpinnerDots size="lg" className="margin-top-medium center-block" />
+                    :
+                    <span className="items-container">
+                        { _.map(_.reverse(items), (item = {}) => (
+                            <div
+                                className="item margin-right-small margin-left-small"
+                                key={_.uniqueId()}
+                            >
+                                    <img
+                                        className="img-responsive"
+                                        onClick={() => this.addItem(item)}
+                                        src={item.image}
+                                    />
+                                <Text className="margin-top-small" size="sm" align="center" theme="black">{item.name}</Text>
+                            </div>
+                        ))}
+                    </span>
+                }
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        items: _.get(state, 'items.items'),
+        isFetching:  _.get(state, 'items.isFetching'),
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+     return {
+         fetchItems: () => dispatch(fetchItems()),
+     }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps )(ItemsArea);

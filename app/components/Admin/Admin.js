@@ -16,6 +16,7 @@ import UserGeneratedMemesContainer from './UserGeneratedMemesContainer/UserGener
 import EditMemeContainer from './EditMemesContainer/EditMemesContainer';
 import Panel from 'components/Panel/Panel';
 import Title from 'components/Title/Title'
+import EditItemsContainer from './EditItemsContainer/EditItemsContainer';
 
 // config
 import config from 'config/config';
@@ -57,6 +58,17 @@ class Admin extends Component {
                             user generated memes
                         </Button>
                     </div>
+
+                    <div>
+                        <Button
+                            size="sm"
+                            center
+                            componentClass={Link}
+                            to={`${match.url}/items`}
+                        >
+                            items
+                        </Button>
+                    </div>
                     <div>
                         <Button
                             size="sm"
@@ -94,6 +106,7 @@ class Admin extends Component {
                     <Route path={`${match.url}/user-generated-memes`} component={UserGeneratedMemesContainer} />
                     <Route path={`${match.url}/edit-memes`} component={EditMemeContainer} />
                     <Route path={`${match.url}/suggested-memes`} component={SuggestedMemesContainer} />
+                    <Route path={`${match.url}/items`} component={EditItemsContainer} />
 
                 </Panel>
 

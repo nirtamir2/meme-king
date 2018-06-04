@@ -54,6 +54,13 @@ const post = (app) => {
         res.send(200);
     })
 
+    app.post('/api/items', function (req, res) {
+
+        StorageService.addMemeItem({ item: req.body });
+
+        res.send(200);
+    });
+
 
 }
 

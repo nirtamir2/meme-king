@@ -253,6 +253,8 @@ class GeneratorDashboard extends Component {
                     onHide={() => this.setState({ isItemsAreaOpen: false })}
                     show={this.state.isItemsAreaOpen && canvas}
                 >
+
+                    <Modal.CloseButton onClick={() => this.setState({ isItemsAreaOpen: false })} />
                     <ItemsArea
                         canvas={canvas}
                         closeModal={() => this.setState({ isItemsAreaOpen: false })}

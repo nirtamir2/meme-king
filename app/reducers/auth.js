@@ -25,7 +25,6 @@ const initialState = {
     },
     personalMemes: {}
 }
-debugger;
 
 export default function (state = initialState, action) {
 

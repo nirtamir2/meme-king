@@ -15,6 +15,7 @@ const WeeklyMeme = require('../models/weeklyMeme');
 const SuggestedMeme = require('../models/suggestedMeme');
 const UserReport = require('../models/userReport');
 const User = require('../models/user');
+const Item = require('../models/item');
 
 
 let db
@@ -356,6 +357,31 @@ const removePersonalMemes = ({ id } = {}) => {
     })
 }
 
+const getMemeItems = () => {
+    return new Promise(resolve => {
+        Item.find({}).exec(function (err, res) {
+            console.log('items fetched', _.size(res))
+            resolve(res)
+        })
+    })
+}
+
+const saveNewItem = ({ item = {} } = {}) => {
+    return new Promise(resolve => {
+
+        const newItem = new Item(item)
+
+        newItem.save(function (err, res) {
+
+            if (err) return console.error(err)
+
+            console.log(`saved new item`)
+
+            resolve(res)
+        })
+    })
+}
+
 const get = {
     getCategory,
     getPopularMemes,
@@ -368,6 +394,7 @@ const get = {
     getSingleMeme,
     getUserGeneratedMemes,
     getUserReports,
+    getMemeItems,
 }
 
 const put = {
@@ -390,6 +417,7 @@ const post = {
     saveUserReport,
     removeUserGeneratedMemes,
     addPersonalMeme,
+    saveNewItem,
 }
 
 

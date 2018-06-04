@@ -11,6 +11,7 @@ import collageReducer from './collage-reducer';
 import uploadReducer from './upload-reducer';
 import { reducer as formReducers } from 'redux-form';
 import authReducer from './auth';
+import itemsReducer from './items-reducer';
 
 const rootReducer = combineReducers({
     isSideBarOpen: isSideBarOpen,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     upload: uploadReducer,
     form: formReducers,
     auth: authReducer,
+    items: itemsReducer,
 });
 
 export default rootReducer;

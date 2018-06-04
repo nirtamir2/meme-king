@@ -21,9 +21,6 @@ class LongPress extends Component {
         try {
             document.createEvent('TouchEvent')
         } catch (e) {
-            console.error(
-                'The LongPress component can be used only with touch devices.'
-            )
             this.setState({ touch: false })
         }
     }

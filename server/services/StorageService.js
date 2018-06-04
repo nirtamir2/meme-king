@@ -145,6 +145,22 @@ class StorageService {
             })
         })
     }
+
+    addMemeItem({ item = {} } = {}) {
+        return new Promise(resolve => {
+            const fileName = uniqueId();
+            const url = `https://storage.googleapis.com/meme-king-storage/items/${fileName}.png`;
+
+
+            this.uploadToStorage({ image: item.image, destination: `/items/${fileName}.png` }).then(() => {
+                newDataBaseService.saveNewItem({ item: { ...item, image: url } }).then(() => {
+                    resolve();
+                })
+
+            })
+        })
+
+    }
 }
 
 module.exports = new StorageService()

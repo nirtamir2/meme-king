@@ -2,6 +2,10 @@
   display: inline-block;
   position: relative;
 
+  &.center-block {
+    display: block;
+  }
+
   &.md {
     width: 64px;
     height: 64px;
