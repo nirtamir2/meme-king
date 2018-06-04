@@ -1173,14 +1173,17 @@ header {
       color: #b1bee7 !important; }
 
 .box-items-area .items-container {
-  margin-top: 7px; }
+  margin-top: 7px;
+  padding: 5px; }
   .box-items-area .items-container .item {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 5px;
-    transition: 0.3s; }
+    transition: 0.3s;
+    border: 1px solid transparent;
+    cursor: pointer; }
     .box-items-area .items-container .item:hover {
       border: 1px solid #000; }
     .box-items-area .items-container .item img {

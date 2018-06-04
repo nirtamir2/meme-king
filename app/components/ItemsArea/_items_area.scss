@@ -2,6 +2,7 @@
 
   .items-container {
     margin-top: 7px;
+    padding: 5px;
 
     .item {
       display: flex;
@@ -10,6 +11,8 @@
       justify-content: center;
       padding: 5px;
       transition: 0.3s;
+      border: 1px solid transparent;
+      cursor: pointer;
 
       &:hover {
         border: 1px solid $black;
