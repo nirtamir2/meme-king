@@ -84,12 +84,12 @@ import AnalyticsService from 'services/Analytics';
                         { _.map(_.reverse(items), (item = {}) => (
                             <Col
                                 xs={4}
+                                onClick={() => this.addItem(item)}
                                 className="item"
                                 key={_.uniqueId()}
                             >
                                     <img
                                         className="img-responsive"
-                                        onClick={() => this.addItem(item)}
                                         src={item.image}
                                     />
                                 <Text className="margin-top-small" size="sm" align="center" theme="black">{item.name}</Text>
