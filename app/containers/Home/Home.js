@@ -36,7 +36,6 @@ import { blobToString } from 'containers/Generator/generator-helpers'
 // config
 import config from 'config/config'
 
-import axios from 'axios'
 
 class Home extends Component {
 

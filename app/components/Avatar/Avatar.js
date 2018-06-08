@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 // assets
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/logo-pride.png';
 
  class Avatar extends Component {
 
