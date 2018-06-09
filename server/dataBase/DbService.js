@@ -18,7 +18,8 @@ const User = require('../models/user');
 const Item = require('../models/item');
 
 
-let db
+let db;
+const sectionLimit = 68;
 
 const init = ({ isProduction }) => {
 
@@ -78,7 +79,7 @@ const getCategory = ({ category } = {}) => {
 
 const getPopularMemes = () => {
     return new Promise(resolve => {
-        Meme.find({}).sort('-rating').limit(48).exec(function (err, memes) {
+        Meme.find({}).sort('-rating').limit(sectionLimit).exec(function (err, memes) {
             console.log(`popular memes fetched`, _.size(memes))
             resolve(helpers.arrayToObjById(memes))
         })
@@ -88,7 +89,7 @@ const getPopularMemes = () => {
 
 const getNewMemes = () => {
     return new Promise(resolve => {
-        Meme.find({}).sort('-date').limit(48).exec(function (err, memes) {
+        Meme.find({}).sort('-date').limit(sectionLimit).exec(function (err, memes) {
             console.log(`new memes memes fetched`, _.size(memes))
             resolve(helpers.arrayToObjById(memes))
         })
@@ -231,7 +232,7 @@ const getWeeklyPopularMemes = () => {
 
         const week = helpers.getWeekNumber()
 
-        WeeklyMeme.find({ week }).limit(48).sort('-rating').exec(function (err, res) {
+        WeeklyMeme.find({ week }).limit(sectionLimit).sort('-rating').exec(function (err, res) {
             console.log('weekly popular memes', _.size(res))
             resolve(helpers.arrayToObjById(res))
         })
