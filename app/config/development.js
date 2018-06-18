@@ -1,6 +1,6 @@
 export default {
 
-    apiBaseUrl: 'http://localhost:8081/api',
+    apiBaseUrl: 'http://www.memeking.co.il/api',
 
     services : {
         analytics: {

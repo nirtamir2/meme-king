@@ -175,7 +175,8 @@ class Home extends Component {
                 <div className="text-center margin-top-small">
                     <a
                         style={{ color: 'white', direction: 'ltr', textDecoration: 'underline' }}
-                        href={helpers.isMobile() ? undefined : 'https://www.facebook.com/nir.benyair'}>
+                        href={helpers.isMobile() ? undefined : 'https://www.facebook.com/nir.benyair'}
+                    >
 
                         <small> המחולל נבנה ע״י
 
