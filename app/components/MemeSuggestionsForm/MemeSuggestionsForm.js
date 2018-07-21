@@ -14,7 +14,7 @@ class MemeSuggestionsForm extends React.Component {
     render() {
         return (
             <div>
-                <iframe src="http://imri-memes-features.000webhostapp.com/" style={{ overflow: 'hidden', height: '100vh', width: '100%' }} />
+                <iframe src="http://upload-meme.surge.sh/" style={{ overflow: 'hidden', height: '100vh', width: '100%' }} />
             </div>
         )
     }
