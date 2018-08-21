@@ -21,7 +21,7 @@ const RatingCrown = ({ left, right, icon, rating }) => (
     <span className={classNames("rating-crown", { top }, { right }, { left })}>
         {!icon && <img src={smallCrown} className="crown"/>}
         {icon && <Icon name="TROPHY" block />}
-        <span className="block">{rating}</span>
+        <span className="block">{rating.toLocaleString()}</span>
     </span>
 )
 
